@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/11/23/linux/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="Linux是一款免费的操作系统，用户可以通过网络或其他途径免费获得，并可以任意修改其源代码。">
-<meta property="og:updated_time" content="2016-11-23T11:40:33.159Z">
+<meta property="og:updated_time" content="2016-11-25T02:03:04.156Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux常用命令">
 <meta name="twitter:description" content="Linux是一款免费的操作系统，用户可以通过网络或其他途径免费获得，并可以任意修改其源代码。">
@@ -393,6 +393,19 @@ dpkg --purge postgresql-client-common 卸载软件
 </code></pre><p>###21、统计行数</p>
 <pre><code>wc -l *
 wc -l filename
+</code></pre><p>###22、chmod文件授权</p>
+<pre><code>chmod [-cfhvR] [--help] [--version] user[:group] file...
+
+参数       描述
+user    新的档案拥有者的使用者 ID    
+group    新的档案拥有者的使用者群体(group)    
+-c    若该档案拥有者确实已经更改，才显示其更改动作    
+-f    若该档案拥有者无法被更改也不要显示错误讯息    
+-h    只对于连结(link)进行变更，而非该 link 真正指向的档案    
+-v    显示拥有者变更的详细资料    
+-R    对目前目录下的所有档案与子目录进行相同的拥有者变更(即以递回的方式逐个变更)    
+</code></pre><h4 id="将rootfs文件夹及其子录的权限和组均改为root"><a href="#将rootfs文件夹及其子录的权限和组均改为root" class="headerlink" title="将rootfs文件夹及其子录的权限和组均改为root"></a>将rootfs文件夹及其子录的权限和组均改为root</h4><pre><code>chown –R root:root rootfs
+</code></pre><h4 id="将目录rootfs文件夹及子目录的所有者和组更改为用-户liufan和组liufan-desktop"><a href="#将目录rootfs文件夹及子目录的所有者和组更改为用-户liufan和组liufan-desktop" class="headerlink" title="将目录rootfs文件夹及子目录的所有者和组更改为用  户liufan和组liufan-desktop"></a>将目录rootfs文件夹及子目录的所有者和组更改为用  户liufan和组liufan-desktop</h4><pre><code>chown –R liufan:liufan-desktop rootfs
 </code></pre>
       
     </div>
@@ -434,6 +447,10 @@ wc -l filename
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/25/理解Git的工作流程/" rel="prev" title="理解Git的工作流程">
+                理解Git的工作流程 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -480,8 +497,17 @@ wc -l filename
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -492,7 +518,7 @@ wc -l filename
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -500,7 +526,7 @@ wc -l filename
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -509,7 +535,7 @@ wc -l filename
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -534,6 +560,22 @@ wc -l filename
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#将rootfs文件夹及其子录的权限和组均改为root"><span class="nav-number">1.</span> <span class="nav-text">将rootfs文件夹及其子录的权限和组均改为root</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将目录rootfs文件夹及子目录的所有者和组更改为用-户liufan和组liufan-desktop"><span class="nav-number">2.</span> <span class="nav-text">将目录rootfs文件夹及子目录的所有者和组更改为用  户liufan和组liufan-desktop</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
