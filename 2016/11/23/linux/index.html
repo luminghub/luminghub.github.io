@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/11/23/linux/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="Linux是一款免费的操作系统，用户可以通过网络或其他途径免费获得，并可以任意修改其源代码。">
-<meta property="og:updated_time" content="2016-11-30T07:53:39.579Z">
+<meta property="og:updated_time" content="2016-11-30T07:58:25.706Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux常用命令">
 <meta name="twitter:description" content="Linux是一款免费的操作系统，用户可以通过网络或其他途径免费获得，并可以任意修改其源代码。">
@@ -333,68 +333,46 @@
       
 
       
-        <p>###1、查看当前文件夹文件大小</p>
-<pre><code>du -sh
-</code></pre><p>###2、查看防火墙状态</p>
-<pre><code>service iptables status
-</code></pre><p>###3、文件删除</p>
-<pre><code>rm -rf 强制删除
-</code></pre><p>###4、文件剪切</p>
-<pre><code>mv 文件名 文件名A ：修改文件名
-</code></pre><p>###5、查看硬盘使用情况</p>
-<pre><code>df -h
-</code></pre><p>###6、查看内存使用情况</p>
-<pre><code>free -h 
-</code></pre><p>###7、创建文件夹</p>
-<pre><code>mkdir xx 
-</code></pre><p>###8、复制文件</p>
-<pre><code>cp xx.xx xx.xxx_bak 
-</code></pre><p>###9、解压文件：将xxx.zip 解压到xxx路径目录下</p>
-<pre><code>unzip xxx.zip -d xxx 
-</code></pre><p>###10、查看网络带宽</p>
-<pre><code>iftop 
-</code></pre><p>###11、查看网络信息</p>
-<pre><code>ifconfig
-</code></pre><p>###12、yum使用</p>
-<pre><code>yum install xx ：安装xx
+        <h3 id="1、查看当前文件夹文件大小"><a href="#1、查看当前文件夹文件大小" class="headerlink" title="1、查看当前文件夹文件大小"></a>1、查看当前文件夹文件大小</h3><pre><code>du -sh
+</code></pre><h3 id="2、查看防火墙状态"><a href="#2、查看防火墙状态" class="headerlink" title="2、查看防火墙状态"></a>2、查看防火墙状态</h3><pre><code>service iptables status
+</code></pre><h3 id="3、文件删除"><a href="#3、文件删除" class="headerlink" title="3、文件删除"></a>3、文件删除</h3><pre><code>rm -rf 强制删除
+</code></pre><h3 id="4、文件剪切"><a href="#4、文件剪切" class="headerlink" title="4、文件剪切"></a>4、文件剪切</h3><pre><code>mv 文件名 文件名A ：修改文件名
+</code></pre><h3 id="5、查看硬盘使用情况"><a href="#5、查看硬盘使用情况" class="headerlink" title="5、查看硬盘使用情况"></a>5、查看硬盘使用情况</h3><pre><code>df -h
+</code></pre><h3 id="6、查看内存使用情况"><a href="#6、查看内存使用情况" class="headerlink" title="6、查看内存使用情况"></a>6、查看内存使用情况</h3><pre><code>free -h 
+</code></pre><h3 id="7、创建文件夹"><a href="#7、创建文件夹" class="headerlink" title="7、创建文件夹"></a>7、创建文件夹</h3><pre><code>mkdir xx 
+</code></pre><h3 id="8、复制文件"><a href="#8、复制文件" class="headerlink" title="8、复制文件"></a>8、复制文件</h3><pre><code>cp xx.xx xx.xxx_bak 
+</code></pre><h3 id="9、解压文件：将xxx-zip-解压到xxx路径目录下"><a href="#9、解压文件：将xxx-zip-解压到xxx路径目录下" class="headerlink" title="9、解压文件：将xxx.zip 解压到xxx路径目录下"></a>9、解压文件：将xxx.zip 解压到xxx路径目录下</h3><pre><code>unzip xxx.zip -d xxx 
+</code></pre><h3 id="10、查看网络带宽"><a href="#10、查看网络带宽" class="headerlink" title="10、查看网络带宽"></a>10、查看网络带宽</h3><pre><code>iftop 
+</code></pre><h3 id="11、查看网络信息"><a href="#11、查看网络信息" class="headerlink" title="11、查看网络信息"></a>11、查看网络信息</h3><pre><code>ifconfig
+</code></pre><h3 id="12、yum使用"><a href="#12、yum使用" class="headerlink" title="12、yum使用"></a>12、yum使用</h3><pre><code>yum install xx ：安装xx
 yum search xx:查询
 yum list 列表
 yum list |grep xx :查询
-</code></pre><p>###13、文件传输：本地文件传输到 linux上</p>
-<pre><code>scp filepath hostname@ip:savepath
+</code></pre><h3 id="13、文件传输：本地文件传输到-linux上"><a href="#13、文件传输：本地文件传输到-linux上" class="headerlink" title="13、文件传输：本地文件传输到 linux上"></a>13、文件传输：本地文件传输到 linux上</h3><pre><code>scp filepath hostname@ip:savepath
 
 scp  -i xx.pem -r  filepath hostname@ip:savepath
 
 scp -r filepath hostname@ip:savepath
-</code></pre><p>###14、ssh连接</p>
-<pre><code>ssh -l 主机名字 -p 端口&lt;一般是22&gt; root@ip
+</code></pre><h3 id="14、ssh连接"><a href="#14、ssh连接" class="headerlink" title="14、ssh连接"></a>14、ssh连接</h3><pre><code>ssh -l 主机名字 -p 端口&lt;一般是22&gt; root@ip
 
 ssh -l -p 22 hostname@ip
 
 ssh -i xx.pem hostname@ip
-</code></pre><p>###15、文件滚动</p>
-<pre><code>tail -f xx.log
+</code></pre><h3 id="15、文件滚动"><a href="#15、文件滚动" class="headerlink" title="15、文件滚动"></a>15、文件滚动</h3><pre><code>tail -f xx.log
 vi/vim + 文件名字 =&gt;编辑文件  insert /esc  转换模式  :q 不保存退出 :wq! 保存退出
-</code></pre><p>###16、vim</p>
-<pre><code>vim xx.txt  =&gt; shit + g 跳转到最后一页
-</code></pre><p>###17、查看任务进程</p>
-<pre><code>ps -aux
+</code></pre><h3 id="16、vim"><a href="#16、vim" class="headerlink" title="16、vim"></a>16、vim</h3><pre><code>vim xx.txt  =&gt; shit + g 跳转到最后一页
+</code></pre><h3 id="17、查看任务进程"><a href="#17、查看任务进程" class="headerlink" title="17、查看任务进程"></a>17、查看任务进程</h3><pre><code>ps -aux
 ps -ef|grep java =&gt;java 搜索任务关键字
 kill -s 9 PID =&gt;结束进程
-</code></pre><p>###18、ubutu 查看外网IP</p>
-<pre><code>echo `nc ns1.dnspod.net 6666`
-</code></pre><p>###19、apt安装软件</p>
-<pre><code>sudo apt-get update 更新
+</code></pre><h3 id="18、ubutu-查看外网IP"><a href="#18、ubutu-查看外网IP" class="headerlink" title="18、ubutu 查看外网IP"></a>18、ubutu 查看外网IP</h3><pre><code>echo `nc ns1.dnspod.net 6666`
+</code></pre><h3 id="19、apt安装软件"><a href="#19、apt安装软件" class="headerlink" title="19、apt安装软件"></a>19、apt安装软件</h3><pre><code>sudo apt-get update 更新
 sudo apt-get install  *** 安装
 apt list 软件列表
-</code></pre><p>###20、apt卸载</p>
-<pre><code>dpkg --list |grep postgr   查询需要卸载的软件
+</code></pre><h3 id="20、apt卸载"><a href="#20、apt卸载" class="headerlink" title="20、apt卸载"></a>20、apt卸载</h3><pre><code>dpkg --list |grep postgr   查询需要卸载的软件
 dpkg --purge postgresql-client-common 卸载软件
-</code></pre><p>###21、统计行数</p>
-<pre><code>wc -l *
+</code></pre><h3 id="21、统计行数"><a href="#21、统计行数" class="headerlink" title="21、统计行数"></a>21、统计行数</h3><pre><code>wc -l *
 wc -l filename
-</code></pre><p>###22、chmod文件授权</p>
-<pre><code>chmod [-cfhvR] [--help] [--version] user[:group] file...
+</code></pre><h3 id="22、chmod文件授权"><a href="#22、chmod文件授权" class="headerlink" title="22、chmod文件授权"></a>22、chmod文件授权</h3><pre><code>chmod [-cfhvR] [--help] [--version] user[:group] file...
 
 参数       描述
 user    新的档案拥有者的使用者 ID    
@@ -570,7 +548,7 @@ group    新的档案拥有者的使用者群体(group)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#将rootfs文件夹及其子录的权限和组均改为root"><span class="nav-number">1.</span> <span class="nav-text">将rootfs文件夹及其子录的权限和组均改为root</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将目录rootfs文件夹及子目录的所有者和组更改为用-户liufan和组liufan-desktop"><span class="nav-number">2.</span> <span class="nav-text">将目录rootfs文件夹及子目录的所有者和组更改为用  户liufan和组liufan-desktop</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、查看当前文件夹文件大小"><span class="nav-number">1.</span> <span class="nav-text">1、查看当前文件夹文件大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、查看防火墙状态"><span class="nav-number">2.</span> <span class="nav-text">2、查看防火墙状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、文件删除"><span class="nav-number">3.</span> <span class="nav-text">3、文件删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、文件剪切"><span class="nav-number">4.</span> <span class="nav-text">4、文件剪切</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、查看硬盘使用情况"><span class="nav-number">5.</span> <span class="nav-text">5、查看硬盘使用情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、查看内存使用情况"><span class="nav-number">6.</span> <span class="nav-text">6、查看内存使用情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、创建文件夹"><span class="nav-number">7.</span> <span class="nav-text">7、创建文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、复制文件"><span class="nav-number">8.</span> <span class="nav-text">8、复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、解压文件：将xxx-zip-解压到xxx路径目录下"><span class="nav-number">9.</span> <span class="nav-text">9、解压文件：将xxx.zip 解压到xxx路径目录下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、查看网络带宽"><span class="nav-number">10.</span> <span class="nav-text">10、查看网络带宽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11、查看网络信息"><span class="nav-number">11.</span> <span class="nav-text">11、查看网络信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12、yum使用"><span class="nav-number">12.</span> <span class="nav-text">12、yum使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13、文件传输：本地文件传输到-linux上"><span class="nav-number">13.</span> <span class="nav-text">13、文件传输：本地文件传输到 linux上</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14、ssh连接"><span class="nav-number">14.</span> <span class="nav-text">14、ssh连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15、文件滚动"><span class="nav-number">15.</span> <span class="nav-text">15、文件滚动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16、vim"><span class="nav-number">16.</span> <span class="nav-text">16、vim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17、查看任务进程"><span class="nav-number">17.</span> <span class="nav-text">17、查看任务进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18、ubutu-查看外网IP"><span class="nav-number">18.</span> <span class="nav-text">18、ubutu 查看外网IP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19、apt安装软件"><span class="nav-number">19.</span> <span class="nav-text">19、apt安装软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20、apt卸载"><span class="nav-number">20.</span> <span class="nav-text">20、apt卸载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21、统计行数"><span class="nav-number">21.</span> <span class="nav-text">21、统计行数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22、chmod文件授权"><span class="nav-number">22.</span> <span class="nav-text">22、chmod文件授权</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#将rootfs文件夹及其子录的权限和组均改为root"><span class="nav-number">22.1.</span> <span class="nav-text">将rootfs文件夹及其子录的权限和组均改为root</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将目录rootfs文件夹及子目录的所有者和组更改为用-户liufan和组liufan-desktop"><span class="nav-number">22.2.</span> <span class="nav-text">将目录rootfs文件夹及子目录的所有者和组更改为用  户liufan和组liufan-desktop</span></a></li></ol></li></ol></div>
             
 
           </div>
