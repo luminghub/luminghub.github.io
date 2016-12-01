@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
+<meta name="description" content="Git操作分支及tag。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git 使用简易指南">
-<meta property="og:url" content="http://yoursite.com/2016/11/22/git/index.html">
+<meta property="og:title" content="Git查看、删除、重命名远程分支和tag">
+<meta property="og:url" content="http://yoursite.com/2016/12/01/git分支标签管理/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
-<meta property="og:updated_time" content="2016-11-25T06:04:34.287Z">
+<meta property="og:description" content="Git操作分支及tag。">
+<meta property="og:updated_time" content="2016-12-01T08:36:54.591Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git 使用简易指南">
-<meta name="twitter:description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
+<meta name="twitter:title" content="Git查看、删除、重命名远程分支和tag">
+<meta name="twitter:description" content="Git操作分支及tag。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/22/git/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/01/git分支标签管理/"/>
 
 
 
 
 
-  <title> Git 使用简易指南 | 一条缝小眼睛的个人博客 </title>
+  <title> Git查看、删除、重命名远程分支和tag | 一条缝小眼睛的个人博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -238,7 +238,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/22/git/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/01/git分支标签管理/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="小明同学">
@@ -262,7 +262,7 @@
             
             
               
-                Git 使用简易指南
+                Git查看、删除、重命名远程分支和tag
               
             
           </h1>
@@ -275,8 +275,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-22T00:00:00+08:00">
-                2016-11-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-01T00:00:00+08:00">
+                2016-12-01
               </time>
             
 
@@ -318,7 +318,7 @@
 
           
               <div class="post-description">
-                  Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。
+                  Git操作分支及tag。
               </div>
           
 
@@ -333,68 +333,50 @@
       
 
       
-        <h3 id="1、创建新仓库"><a href="#1、创建新仓库" class="headerlink" title="1、创建新仓库:"></a>1、创建新仓库:</h3><pre><code>创建新文件夹-&gt;打开  git init
-</code></pre><h3 id="2、检出仓库"><a href="#2、检出仓库" class="headerlink" title="2、检出仓库"></a>2、检出仓库</h3><pre><code>git clone + 地址/路径
-</code></pre><h3 id="3、添加与提交"><a href="#3、添加与提交" class="headerlink" title="3、添加与提交"></a>3、添加与提交</h3><blockquote>
-<p>添加（缓存区）：</p>
-</blockquote>
-<pre><code>git add &lt;filename&gt;  /  git add *
-</code></pre><blockquote>
-<p>提交（HEAD）：</p>
-</blockquote>
-<pre><code>git commit -m &quot;代码提交信息&quot;
-</code></pre><h3 id="4、推送与改动"><a href="#4、推送与改动" class="headerlink" title="4、推送与改动"></a>4、推送与改动</h3><blockquote>
-<p>推送（分支，默认master）：</p>
-</blockquote>
-<pre><code>git push origin master(master可以替换成想推送的分支)
-</code></pre><blockquote>
-<p>改动：</p>
-</blockquote>
-<pre><code>git remote add origin &lt;server&gt;
-</code></pre><h3 id="5、分支"><a href="#5、分支" class="headerlink" title="5、分支"></a>5、分支</h3><blockquote>
-<p>创建分支：</p>
-</blockquote>
-<pre><code>git checkout -b feature_x (feature_x：分支名字)
-</code></pre><blockquote>
-<p>切换到主分支：</p>
-</blockquote>
-<pre><code>git checkout master
-</code></pre><blockquote>
-<p>删除分支：</p>
-</blockquote>
-<pre><code>git branch -d feature_x
-</code></pre><blockquote>
-<p>将分支推送：</p>
-</blockquote>
-<pre><code>git push origin &lt;branch&gt;
-</code></pre><h3 id="6、更新与合并"><a href="#6、更新与合并" class="headerlink" title="6、更新与合并"></a>6、更新与合并</h3><blockquote>
-<p>将本地仓库更新至最新改动：</p>
-</blockquote>
-<pre><code>git pull
-</code></pre><blockquote>
-<p>合并其他分支到你的当前分支，如master：</p>
-</blockquote>
-<pre><code>git merge &lt;branch&gt;
-</code></pre><blockquote>
-<p>查看差异：</p>
-</blockquote>
-<pre><code>git diss &lt;source_branch&gt; &lt;target_branch&gt;
-</code></pre><h3 id="7、标签"><a href="#7、标签" class="headerlink" title="7、标签"></a>7、标签</h3><blockquote>
-<p>创建一个叫做1.0.0的标签：</p>
-</blockquote>
-<pre><code>git tag 1.0.0 1b2e1d63ff  (1b2e1d63ff是你想要标记的提交ID的前10位自负）
-</code></pre><blockquote>
-<p>获取提交ID：</p>
-</blockquote>
-<pre><code>git log
-</code></pre><h3 id="8、替换本地改动"><a href="#8、替换本地改动" class="headerlink" title="8、替换本地改动"></a>8、替换本地改动</h3><pre><code>git checkout -- &lt;filename&gt;
-</code></pre><h3 id="9、丢弃所有本地改动："><a href="#9、丢弃所有本地改动：" class="headerlink" title="9、丢弃所有本地改动："></a>9、丢弃所有本地改动：</h3><pre><code>git fetch origin
-git reset --hard origin/master
-</code></pre><h3 id="10、显示历史记录时，只显示一行注释信息："><a href="#10、显示历史记录时，只显示一行注释信息：" class="headerlink" title="10、显示历史记录时，只显示一行注释信息："></a>10、显示历史记录时，只显示一行注释信息：</h3><pre><code>git config format.pretty oneline
-</code></pre><h3 id="11、交互的添加文件至缓存区"><a href="#11、交互的添加文件至缓存区" class="headerlink" title="11、交互的添加文件至缓存区"></a>11、交互的添加文件至缓存区</h3><pre><code>git add -i
-</code></pre><h3 id="12、显示提交历史详细"><a href="#12、显示提交历史详细" class="headerlink" title="12、显示提交历史详细"></a>12、显示提交历史详细</h3><pre><code>git log -p 
-</code></pre><h3 id="13、将当前改动提交到缓存区"><a href="#13、将当前改动提交到缓存区" class="headerlink" title="13、将当前改动提交到缓存区"></a>13、将当前改动提交到缓存区</h3><pre><code>git stash
-</code></pre><h3 id="14、从缓存区取出第一个"><a href="#14、从缓存区取出第一个" class="headerlink" title="14、从缓存区取出第一个"></a>14、从缓存区取出第一个</h3><pre><code>git stash pop
+        <h3 id="1、查看远程分支-（远程分支会用红色表示出来）"><a href="#1、查看远程分支-（远程分支会用红色表示出来）" class="headerlink" title="1、查看远程分支:（远程分支会用红色表示出来）"></a>1、查看远程分支:（远程分支会用红色表示出来）</h3><pre><code>git branch -a
+</code></pre><h3 id="2、删除远程分支和tag"><a href="#2、删除远程分支和tag" class="headerlink" title="2、删除远程分支和tag"></a>2、删除远程分支和tag</h3><h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>在Git v1.7.0 之后，</p>
+<pre><code>git push origin --delete &lt;branchName&gt;
+
+git push origin --delete tag &lt;tagname&gt;
+</code></pre><p>例如，删除远端dev分支</p>
+<pre><code>git push origin --delete dev
+</code></pre><h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>推送一个空分支到远程分支，其实就相当于删除远程分支：</p>
+<pre><code>git tag -d &lt;tagname&gt;    
+git push origin :refs/tags/&lt;tagname&gt;
+</code></pre><p>例如，删除远端dev分支</p>
+<pre><code>git tag -d dev
+git push origin :dev
+</code></pre><h2 id="3、删除不存在对应远程分支的本地分支"><a href="#3、删除不存在对应远程分支的本地分支" class="headerlink" title="3、删除不存在对应远程分支的本地分支"></a>3、删除不存在对应远程分支的本地分支</h2><p>假设这样一种情况：</p>
+<ol>
+<li>我创建了本地分支b1并pull到远程分支 origin/b1；</li>
+</ol>
+<ol>
+<li>其他人在本地使用fetch或pull创建了本地的b1分支；</li>
+</ol>
+<ol>
+<li>我删除了 origin/b1 远程分支；</li>
+</ol>
+<ol>
+<li><p>其他人再次执行fetch或者pull并不会删除这个他们本地的 b1 分支，运行 git branch -a 也不能看出这个branch被删除了，如何处理？</p>
+<pre><code>git remote show origin
+</code></pre></li>
+</ol>
+<p>这时候能够看到b1是stale的，使用 git remote prune origin 可以将其从本地版本库中去除。</p>
+<p>更简单的方法是使用这个命令，它在fetch之后删除掉没有与远程分支对应的本地分支：</p>
+<pre><code>git fetch -p
+</code></pre><h2 id="4、重命名远程分支"><a href="#4、重命名远程分支" class="headerlink" title="4、重命名远程分支"></a>4、重命名远程分支</h2><p>在git中重命名远程分支，其实就是先删除远程分支，然后重命名本地分支，再重新提交一个远程分支。</p>
+<p>例如下面的例子中，我需要把 devel 分支重命名为 develop 分支：</p>
+<pre><code>git branch -av
+</code></pre><p>删除远程分支：</p>
+<pre><code>git push --delete origin devel
+</code></pre><p>重命名本地分支：</p>
+<pre><code>git branch -m devel develop
+</code></pre><p>推送本地分支：</p>
+<pre><code>git push origin develop
+</code></pre><h2 id="5、把本地tag推送到远程"><a href="#5、把本地tag推送到远程" class="headerlink" title="5、把本地tag推送到远程"></a>5、把本地tag推送到远程</h2><pre><code>git push --tags
+</code></pre><p>例如，我想讲v0.0.1tag推送到远端</p>
+<pre><code>git push origin tag v0.0.1
+</code></pre><h2 id="6、获取远程tag"><a href="#6、获取远程tag" class="headerlink" title="6、获取远程tag"></a>6、获取远程tag</h2><pre><code>git fetch origin tag &lt;tagname&gt;
 </code></pre>
       
     </div>
@@ -427,8 +409,8 @@ git reset --hard origin/master
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/22/postgres/" rel="next" title="postgresql常用知识点一览">
-                <i class="fa fa-chevron-left"></i> postgresql常用知识点一览
+              <a href="/2016/11/25/理解Git的工作流程/" rel="next" title="理解Git的工作流程">
+                <i class="fa fa-chevron-left"></i> 理解Git的工作流程
               </a>
             
           </div>
@@ -436,10 +418,6 @@ git reset --hard origin/master
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/23/linux/" rel="prev" title="linux常用命令">
-                linux常用命令 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -559,7 +537,7 @@ git reset --hard origin/master
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建新仓库"><span class="nav-number">1.</span> <span class="nav-text">1、创建新仓库:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、检出仓库"><span class="nav-number">2.</span> <span class="nav-text">2、检出仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、添加与提交"><span class="nav-number">3.</span> <span class="nav-text">3、添加与提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、推送与改动"><span class="nav-number">4.</span> <span class="nav-text">4、推送与改动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、分支"><span class="nav-number">5.</span> <span class="nav-text">5、分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、更新与合并"><span class="nav-number">6.</span> <span class="nav-text">6、更新与合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、标签"><span class="nav-number">7.</span> <span class="nav-text">7、标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、替换本地改动"><span class="nav-number">8.</span> <span class="nav-text">8、替换本地改动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、丢弃所有本地改动："><span class="nav-number">9.</span> <span class="nav-text">9、丢弃所有本地改动：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、显示历史记录时，只显示一行注释信息："><span class="nav-number">10.</span> <span class="nav-text">10、显示历史记录时，只显示一行注释信息：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11、交互的添加文件至缓存区"><span class="nav-number">11.</span> <span class="nav-text">11、交互的添加文件至缓存区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12、显示提交历史详细"><span class="nav-number">12.</span> <span class="nav-text">12、显示提交历史详细</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13、将当前改动提交到缓存区"><span class="nav-number">13.</span> <span class="nav-text">13、将当前改动提交到缓存区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14、从缓存区取出第一个"><span class="nav-number">14.</span> <span class="nav-text">14、从缓存区取出第一个</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、查看远程分支-（远程分支会用红色表示出来）"><span class="nav-number">1.</span> <span class="nav-text">1、查看远程分支:（远程分支会用红色表示出来）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、删除远程分支和tag"><span class="nav-number">2.</span> <span class="nav-text">2、删除远程分支和tag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一"><span class="nav-number">3.</span> <span class="nav-text">方法一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二"><span class="nav-number">4.</span> <span class="nav-text">方法二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、删除不存在对应远程分支的本地分支"><span class="nav-number"></span> <span class="nav-text">3、删除不存在对应远程分支的本地分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、重命名远程分支"><span class="nav-number"></span> <span class="nav-text">4、重命名远程分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、把本地tag推送到远程"><span class="nav-number"></span> <span class="nav-text">5、把本地tag推送到远程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、获取远程tag"><span class="nav-number"></span> <span class="nav-text">6、获取远程tag</span></a></div>
             
 
           </div>
