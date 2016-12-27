@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="GIT," />
+  <meta name="keywords" content="ECS," />
 
 
 
@@ -84,16 +84,23 @@
 
 
 
-<meta name="description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
+<meta name="description" content="阿里云服务器ECS挂载数据盘。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git 使用简易指南">
-<meta property="og:url" content="http://yoursite.com/2016/11/22/git/index.html">
+<meta property="og:title" content="阿里云服务器Ubuntu挂载数据盘">
+<meta property="og:url" content="http://yoursite.com/2016/12/27/阿里云服务器Ubuntu挂载数据盘/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
-<meta property="og:updated_time" content="2016-11-25T06:04:34.287Z">
+<meta property="og:description" content="阿里云服务器ECS挂载数据盘。">
+<meta property="og:image" content="http://115.28.87.95/articleDirectory/B3CDF515D8A155A9F9D4C13F90A440A7.jpg">
+<meta property="og:image" content="http://115.28.87.95/articleDirectory/EA99C6AD244AC4B7FFC1C863B42E24FD.jpg">
+<meta property="og:image" content="http://115.28.87.95/articleDirectory/323DABBE0996FB6E5F96D0FB02F49929.jpg">
+<meta property="og:image" content="http://115.28.87.95/articleDirectory/723421E3623C9A30043A96E864852331.jpg">
+<meta property="og:image" content="http://115.28.87.95/articleDirectory/9AF7B5862AC203472780CA2A4369E752.jpg">
+<meta property="og:image" content="http://115.28.87.95/articleDirectory/7B3C75945C68191738B74CDBB1D3CFE2.jpg">
+<meta property="og:updated_time" content="2016-12-27T09:27:52.181Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git 使用简易指南">
-<meta name="twitter:description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
+<meta name="twitter:title" content="阿里云服务器Ubuntu挂载数据盘">
+<meta name="twitter:description" content="阿里云服务器ECS挂载数据盘。">
+<meta name="twitter:image" content="http://115.28.87.95/articleDirectory/B3CDF515D8A155A9F9D4C13F90A440A7.jpg">
 
 
 
@@ -121,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/22/git/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/27/阿里云服务器Ubuntu挂载数据盘/"/>
 
 
 
 
 
-  <title> Git 使用简易指南 | 一条缝小眼睛的个人博客 </title>
+  <title> 阿里云服务器Ubuntu挂载数据盘 | 一条缝小眼睛的个人博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -238,7 +245,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/22/git/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/27/阿里云服务器Ubuntu挂载数据盘/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="小明同学">
@@ -262,7 +269,7 @@
             
             
               
-                Git 使用简易指南
+                阿里云服务器Ubuntu挂载数据盘
               
             
           </h1>
@@ -275,8 +282,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-22T00:00:00+08:00">
-                2016-11-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-27T00:00:00+08:00">
+                2016-12-27
               </time>
             
 
@@ -318,7 +325,7 @@
 
           
               <div class="post-description">
-                  Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。
+                  阿里云服务器ECS挂载数据盘。
               </div>
           
 
@@ -333,69 +340,32 @@
       
 
       
-        <h3 id="1、创建新仓库"><a href="#1、创建新仓库" class="headerlink" title="1、创建新仓库:"></a>1、创建新仓库:</h3><pre><code>创建新文件夹-&gt;打开  git init
-</code></pre><h3 id="2、检出仓库"><a href="#2、检出仓库" class="headerlink" title="2、检出仓库"></a>2、检出仓库</h3><pre><code>git clone + 地址/路径
-</code></pre><h3 id="3、添加与提交"><a href="#3、添加与提交" class="headerlink" title="3、添加与提交"></a>3、添加与提交</h3><blockquote>
-<p>添加（缓存区）：</p>
+        <h3 id="操作案例说明"><a href="#操作案例说明" class="headerlink" title="操作案例说明"></a>操作案例说明</h3><p>将新增的盘符挂载到alidata目录下。以下是步骤。</p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>在系统盘的根目录新建alidata目录，或者您自己命名，但是要记得修改教程中的相关关键字（alidata换成您自己的目录）。</p>
+<p>该教程适用系统：Linux（Redhat , CentOS，Debian，Ubuntu）</p>
+<h3 id="查看数据盘"><a href="#查看数据盘" class="headerlink" title="查看数据盘"></a>查看数据盘</h3><p>在没有分区和格式化数据盘之前，使用 “df –h”命令，是无法看到数据盘的，可以使用“fdisk -l”命令查看。</p>
+<p><img src="http://115.28.87.95/articleDirectory/B3CDF515D8A155A9F9D4C13F90A440A7.jpg" alt=""></p>
+<p>友情提示：若您执行fdisk -l命令，发现没有 /dev/xvdb 标明您的云服务无数据盘，那么您无需进行挂载。</p>
+<h3 id="对数据盘进行分区"><a href="#对数据盘进行分区" class="headerlink" title="对数据盘进行分区"></a>对数据盘进行分区</h3><p>执行“fdisk -S 56 /dev/xvdb”命令，对数据盘进行分区；<br>根据提示，依次输入“n”，“p”“1”，两次回车，“wq”，分区就开始了，很快就会完成。</p>
+<p><img src="http://115.28.87.95/articleDirectory/EA99C6AD244AC4B7FFC1C863B42E24FD.jpg" alt=""></p>
+<h3 id="查看新的分区"><a href="#查看新的分区" class="headerlink" title="查看新的分区"></a>查看新的分区</h3><p>使用“fdisk -l”命令可以看到，新的分区xvdb1已经建立完成了。</p>
+<p><img src="http://115.28.87.95/articleDirectory/323DABBE0996FB6E5F96D0FB02F49929.jpg" alt=""></p>
+<h3 id="格式化新分区"><a href="#格式化新分区" class="headerlink" title="格式化新分区"></a>格式化新分区</h3><p>使用“mkfs.ext4 /dev/xvdb1”命令对新分区进行格式化，格式化的时间根据硬盘大小有所不同。(也可自主决定选用 ext3 格式)，建议使用ext4</p>
+<p><img src="http://115.28.87.95/articleDirectory/723421E3623C9A30043A96E864852331.jpg" alt=""></p>
+<h3 id="添加分区信息（开机自动挂载-dev-xvdb1-到-alidata）"><a href="#添加分区信息（开机自动挂载-dev-xvdb1-到-alidata）" class="headerlink" title="添加分区信息（开机自动挂载/dev/xvdb1 到 /alidata）"></a>添加分区信息（开机自动挂载/dev/xvdb1 到 /alidata）</h3><p>使用“echo ‘/dev/xvdb1   /alidata ext4    defaults    0  0’ &gt;&gt; /etc/fstab”（不含引号）命令写入新分区信息。<br>然后使用“cat /etc/fstab”命令查看，出现以下信息就表示写入成功。</p>
+<blockquote>
+<p>注：ubuntu12.04不支持barrier，所以正确写法是：echo ‘/dev/xvdb1   /alidata ext4    barrier=0  0  0’ &gt;/etc/fstab</p>
 </blockquote>
-<pre><code>git add &lt;filename&gt;  /  git add *
-</code></pre><blockquote>
-<p>提交（HEAD）：</p>
-</blockquote>
-<pre><code>git commit -m &quot;代码提交信息&quot;
-</code></pre><h3 id="4、推送与改动"><a href="#4、推送与改动" class="headerlink" title="4、推送与改动"></a>4、推送与改动</h3><blockquote>
-<p>推送（分支，默认master）：</p>
-</blockquote>
-<pre><code>git push origin master(master可以替换成想推送的分支)
-</code></pre><blockquote>
-<p>改动：</p>
-</blockquote>
-<pre><code>git remote add origin &lt;server&gt;
-</code></pre><h3 id="5、分支"><a href="#5、分支" class="headerlink" title="5、分支"></a>5、分支</h3><blockquote>
-<p>创建分支：</p>
-</blockquote>
-<pre><code>git checkout -b feature_x (feature_x：分支名字)
-</code></pre><blockquote>
-<p>切换到主分支：</p>
-</blockquote>
-<pre><code>git checkout master
-</code></pre><blockquote>
-<p>删除分支：</p>
-</blockquote>
-<pre><code>git branch -d feature_x
-</code></pre><blockquote>
-<p>将分支推送：</p>
-</blockquote>
-<pre><code>git push origin &lt;branch&gt;
-</code></pre><h3 id="6、更新与合并"><a href="#6、更新与合并" class="headerlink" title="6、更新与合并"></a>6、更新与合并</h3><blockquote>
-<p>将本地仓库更新至最新改动：</p>
-</blockquote>
-<pre><code>git pull
-</code></pre><blockquote>
-<p>合并其他分支到你的当前分支，如master：</p>
-</blockquote>
-<pre><code>git merge &lt;branch&gt;
-</code></pre><blockquote>
-<p>查看差异：</p>
-</blockquote>
-<pre><code>git diss &lt;source_branch&gt; &lt;target_branch&gt;
-</code></pre><h3 id="7、标签"><a href="#7、标签" class="headerlink" title="7、标签"></a>7、标签</h3><blockquote>
-<p>创建一个叫做1.0.0的标签：</p>
-</blockquote>
-<pre><code>git tag 1.0.0 1b2e1d63ff  (1b2e1d63ff是你想要标记的提交ID的前10位自负）
-</code></pre><blockquote>
-<p>获取提交ID：</p>
-</blockquote>
-<pre><code>git log
-</code></pre><h3 id="8、替换本地改动"><a href="#8、替换本地改动" class="headerlink" title="8、替换本地改动"></a>8、替换本地改动</h3><pre><code>git checkout -- &lt;filename&gt;
-</code></pre><h3 id="9、丢弃所有本地改动："><a href="#9、丢弃所有本地改动：" class="headerlink" title="9、丢弃所有本地改动："></a>9、丢弃所有本地改动：</h3><pre><code>git fetch origin
-git reset --hard origin/master
-</code></pre><h3 id="10、显示历史记录时，只显示一行注释信息："><a href="#10、显示历史记录时，只显示一行注释信息：" class="headerlink" title="10、显示历史记录时，只显示一行注释信息："></a>10、显示历史记录时，只显示一行注释信息：</h3><pre><code>git config format.pretty oneline
-</code></pre><h3 id="11、交互的添加文件至缓存区"><a href="#11、交互的添加文件至缓存区" class="headerlink" title="11、交互的添加文件至缓存区"></a>11、交互的添加文件至缓存区</h3><pre><code>git add -i
-</code></pre><h3 id="12、显示提交历史详细"><a href="#12、显示提交历史详细" class="headerlink" title="12、显示提交历史详细"></a>12、显示提交历史详细</h3><pre><code>git log -p 
-</code></pre><h3 id="13、将当前改动提交到缓存区"><a href="#13、将当前改动提交到缓存区" class="headerlink" title="13、将当前改动提交到缓存区"></a>13、将当前改动提交到缓存区</h3><pre><code>git stash
-</code></pre><h3 id="14、从缓存区取出第一个"><a href="#14、从缓存区取出第一个" class="headerlink" title="14、从缓存区取出第一个"></a>14、从缓存区取出第一个</h3><pre><code>git stash pop
-</code></pre>
+<ul>
+<li>如果需要把数据盘单独挂载到某个文件夹，比如单独用来存放网页，可以修改以上命令中的/alidata 部分</li>
+</ul>
+<p><img src="http://115.28.87.95/articleDirectory/9AF7B5862AC203472780CA2A4369E752.jpg" alt=""></p>
+<h3 id="挂载新分区"><a href="#挂载新分区" class="headerlink" title="挂载新分区"></a>挂载新分区</h3><p>使用“mount -a”命令挂载新分区，然后用“df -h”命令查看，出现以下信息就说明挂载成功，可以开始使用新的分区了。</p>
+<p><img src="http://115.28.87.95/articleDirectory/7B3C75945C68191738B74CDBB1D3CFE2.jpg" alt=""></p>
+<p>以上即在阿里云服务器的Ubuntu 12.04 64位下挂载数据盘的操作过程，需要注意的是，首先得在根目录下创建alidata目录，然后再按顺序操作。</p>
+<hr>
+<p>原文参考 <a href="http://www.codingyun.com/article/24.html" target="_blank" rel="external">http://www.codingyun.com/article/24.html</a></p>
+
       
     </div>
 
@@ -418,7 +388,7 @@ git reset --hard origin/master
       
         <div class="post-tags">
           
-            <a href="/tags/GIT/" rel="tag"># GIT</a>
+            <a href="/tags/ECS/" rel="tag"># ECS</a>
           
         </div>
       
@@ -427,8 +397,8 @@ git reset --hard origin/master
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/22/postgres/" rel="next" title="postgresql常用知识点一览">
-                <i class="fa fa-chevron-left"></i> postgresql常用知识点一览
+              <a href="/2016/12/22/gRPC快速上手指南/" rel="next" title="gRPC JAVA快速入门指南">
+                <i class="fa fa-chevron-left"></i> gRPC JAVA快速入门指南
               </a>
             
           </div>
@@ -437,8 +407,8 @@ git reset --hard origin/master
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/23/linux/" rel="prev" title="linux常用命令">
-                linux常用命令 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/27/Cassandra集群搭建/" rel="prev" title="cassandra 集群的简单搭建">
+                cassandra 集群的简单搭建 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -559,7 +529,7 @@ git reset --hard origin/master
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建新仓库"><span class="nav-number">1.</span> <span class="nav-text">1、创建新仓库:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、检出仓库"><span class="nav-number">2.</span> <span class="nav-text">2、检出仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、添加与提交"><span class="nav-number">3.</span> <span class="nav-text">3、添加与提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、推送与改动"><span class="nav-number">4.</span> <span class="nav-text">4、推送与改动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、分支"><span class="nav-number">5.</span> <span class="nav-text">5、分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、更新与合并"><span class="nav-number">6.</span> <span class="nav-text">6、更新与合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、标签"><span class="nav-number">7.</span> <span class="nav-text">7、标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、替换本地改动"><span class="nav-number">8.</span> <span class="nav-text">8、替换本地改动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、丢弃所有本地改动："><span class="nav-number">9.</span> <span class="nav-text">9、丢弃所有本地改动：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、显示历史记录时，只显示一行注释信息："><span class="nav-number">10.</span> <span class="nav-text">10、显示历史记录时，只显示一行注释信息：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11、交互的添加文件至缓存区"><span class="nav-number">11.</span> <span class="nav-text">11、交互的添加文件至缓存区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12、显示提交历史详细"><span class="nav-number">12.</span> <span class="nav-text">12、显示提交历史详细</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13、将当前改动提交到缓存区"><span class="nav-number">13.</span> <span class="nav-text">13、将当前改动提交到缓存区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14、从缓存区取出第一个"><span class="nav-number">14.</span> <span class="nav-text">14、从缓存区取出第一个</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#操作案例说明"><span class="nav-number">1.</span> <span class="nav-text">操作案例说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看数据盘"><span class="nav-number">3.</span> <span class="nav-text">查看数据盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对数据盘进行分区"><span class="nav-number">4.</span> <span class="nav-text">对数据盘进行分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看新的分区"><span class="nav-number">5.</span> <span class="nav-text">查看新的分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#格式化新分区"><span class="nav-number">6.</span> <span class="nav-text">格式化新分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加分区信息（开机自动挂载-dev-xvdb1-到-alidata）"><span class="nav-number">7.</span> <span class="nav-text">添加分区信息（开机自动挂载/dev/xvdb1 到 /alidata）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载新分区"><span class="nav-number">8.</span> <span class="nav-text">挂载新分区</span></a></li></ol></div>
             
 
           </div>

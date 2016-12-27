@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="GIT," />
+  <meta name="keywords" content="cassandra," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
+<meta name="description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git 使用简易指南">
-<meta property="og:url" content="http://yoursite.com/2016/11/22/git/index.html">
+<meta property="og:title" content="cassandra 集群的简单搭建">
+<meta property="og:url" content="http://yoursite.com/2016/12/27/Cassandra集群搭建/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
-<meta property="og:updated_time" content="2016-11-25T06:04:34.287Z">
+<meta property="og:description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
+<meta property="og:updated_time" content="2016-12-27T09:18:20.599Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git 使用简易指南">
-<meta name="twitter:description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
+<meta name="twitter:title" content="cassandra 集群的简单搭建">
+<meta name="twitter:description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/22/git/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/27/Cassandra集群搭建/"/>
 
 
 
 
 
-  <title> Git 使用简易指南 | 一条缝小眼睛的个人博客 </title>
+  <title> cassandra 集群的简单搭建 | 一条缝小眼睛的个人博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -238,7 +238,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/22/git/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/27/Cassandra集群搭建/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="小明同学">
@@ -262,7 +262,7 @@
             
             
               
-                Git 使用简易指南
+                cassandra 集群的简单搭建
               
             
           </h1>
@@ -275,8 +275,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-22T00:00:00+08:00">
-                2016-11-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-27T00:00:00+08:00">
+                2016-12-27
               </time>
             
 
@@ -318,7 +318,7 @@
 
           
               <div class="post-description">
-                  Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。
+                  Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。
               </div>
           
 
@@ -333,69 +333,33 @@
       
 
       
-        <h3 id="1、创建新仓库"><a href="#1、创建新仓库" class="headerlink" title="1、创建新仓库:"></a>1、创建新仓库:</h3><pre><code>创建新文件夹-&gt;打开  git init
-</code></pre><h3 id="2、检出仓库"><a href="#2、检出仓库" class="headerlink" title="2、检出仓库"></a>2、检出仓库</h3><pre><code>git clone + 地址/路径
-</code></pre><h3 id="3、添加与提交"><a href="#3、添加与提交" class="headerlink" title="3、添加与提交"></a>3、添加与提交</h3><blockquote>
-<p>添加（缓存区）：</p>
-</blockquote>
-<pre><code>git add &lt;filename&gt;  /  git add *
-</code></pre><blockquote>
-<p>提交（HEAD）：</p>
-</blockquote>
-<pre><code>git commit -m &quot;代码提交信息&quot;
-</code></pre><h3 id="4、推送与改动"><a href="#4、推送与改动" class="headerlink" title="4、推送与改动"></a>4、推送与改动</h3><blockquote>
-<p>推送（分支，默认master）：</p>
-</blockquote>
-<pre><code>git push origin master(master可以替换成想推送的分支)
-</code></pre><blockquote>
-<p>改动：</p>
-</blockquote>
-<pre><code>git remote add origin &lt;server&gt;
-</code></pre><h3 id="5、分支"><a href="#5、分支" class="headerlink" title="5、分支"></a>5、分支</h3><blockquote>
-<p>创建分支：</p>
-</blockquote>
-<pre><code>git checkout -b feature_x (feature_x：分支名字)
-</code></pre><blockquote>
-<p>切换到主分支：</p>
-</blockquote>
-<pre><code>git checkout master
-</code></pre><blockquote>
-<p>删除分支：</p>
-</blockquote>
-<pre><code>git branch -d feature_x
-</code></pre><blockquote>
-<p>将分支推送：</p>
-</blockquote>
-<pre><code>git push origin &lt;branch&gt;
-</code></pre><h3 id="6、更新与合并"><a href="#6、更新与合并" class="headerlink" title="6、更新与合并"></a>6、更新与合并</h3><blockquote>
-<p>将本地仓库更新至最新改动：</p>
-</blockquote>
-<pre><code>git pull
-</code></pre><blockquote>
-<p>合并其他分支到你的当前分支，如master：</p>
-</blockquote>
-<pre><code>git merge &lt;branch&gt;
-</code></pre><blockquote>
-<p>查看差异：</p>
-</blockquote>
-<pre><code>git diss &lt;source_branch&gt; &lt;target_branch&gt;
-</code></pre><h3 id="7、标签"><a href="#7、标签" class="headerlink" title="7、标签"></a>7、标签</h3><blockquote>
-<p>创建一个叫做1.0.0的标签：</p>
-</blockquote>
-<pre><code>git tag 1.0.0 1b2e1d63ff  (1b2e1d63ff是你想要标记的提交ID的前10位自负）
-</code></pre><blockquote>
-<p>获取提交ID：</p>
-</blockquote>
-<pre><code>git log
-</code></pre><h3 id="8、替换本地改动"><a href="#8、替换本地改动" class="headerlink" title="8、替换本地改动"></a>8、替换本地改动</h3><pre><code>git checkout -- &lt;filename&gt;
-</code></pre><h3 id="9、丢弃所有本地改动："><a href="#9、丢弃所有本地改动：" class="headerlink" title="9、丢弃所有本地改动："></a>9、丢弃所有本地改动：</h3><pre><code>git fetch origin
-git reset --hard origin/master
-</code></pre><h3 id="10、显示历史记录时，只显示一行注释信息："><a href="#10、显示历史记录时，只显示一行注释信息：" class="headerlink" title="10、显示历史记录时，只显示一行注释信息："></a>10、显示历史记录时，只显示一行注释信息：</h3><pre><code>git config format.pretty oneline
-</code></pre><h3 id="11、交互的添加文件至缓存区"><a href="#11、交互的添加文件至缓存区" class="headerlink" title="11、交互的添加文件至缓存区"></a>11、交互的添加文件至缓存区</h3><pre><code>git add -i
-</code></pre><h3 id="12、显示提交历史详细"><a href="#12、显示提交历史详细" class="headerlink" title="12、显示提交历史详细"></a>12、显示提交历史详细</h3><pre><code>git log -p 
-</code></pre><h3 id="13、将当前改动提交到缓存区"><a href="#13、将当前改动提交到缓存区" class="headerlink" title="13、将当前改动提交到缓存区"></a>13、将当前改动提交到缓存区</h3><pre><code>git stash
-</code></pre><h3 id="14、从缓存区取出第一个"><a href="#14、从缓存区取出第一个" class="headerlink" title="14、从缓存区取出第一个"></a>14、从缓存区取出第一个</h3><pre><code>git stash pop
-</code></pre>
+        <h3 id="安装cassndra"><a href="#安装cassndra" class="headerlink" title="安装cassndra"></a>安装cassndra</h3><pre><code>1、将apache-cassandra-3.9.tar.gz安装包拷贝到我们的指定目录下
+
+2、使用命令tar -zxvf apache-cassandra-3.9.tar.gz将tar包解压缩，得到apache-cassandra-3.9目录
+</code></pre><h3 id="简单配置cassandra"><a href="#简单配置cassandra" class="headerlink" title="简单配置cassandra"></a>简单配置cassandra</h3><pre><code>进入apache-cassandra-3.9/conf目录，找到cassandra.yaml
+
+修改：data_file_directories 数据存放路径
+修改：seed_provider下的parameters的seeds，如下所示：
+
+    seed_provider:
+    # Addresses of hosts that are deemed contact points.
+    # Cassandra nodes use this list of hosts to find each other and learn
+    # the topology of the ring.  You must change this if you are running
+    # multiple nodes!
+    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+      parameters:
+          # seeds is actually a comma-delimited list of addresses.
+          # Ex: &quot;&lt;ip1&gt;,&lt;ip2&gt;,&lt;ip3&gt;&quot;
+          - seeds: &quot;127.0.0.1,127.0.0.2&quot;
+修改：listen_address 本机监听IP
+修改：rpc_address 本机IP（同listen_address即可）
+</code></pre><h3 id="启动cassandra"><a href="#启动cassandra" class="headerlink" title="启动cassandra"></a>启动cassandra</h3><pre><code>进入bin目录，执行    ./cassandra
+</code></pre><h3 id="进入cansandra"><a href="#进入cansandra" class="headerlink" title="进入cansandra"></a>进入cansandra</h3><pre><code>配置CQLSH_HOST
+    修改 /etc/profile 添加：export CQLSH_HOST=127.0.0.1
+    source /etc/profile
+进入bin目录，执行    ./cqlsh  
+</code></pre><h3 id="查看集群状态"><a href="#查看集群状态" class="headerlink" title="查看集群状态"></a>查看集群状态</h3><pre><code>进入bin目录，执行    ./nodetool status
+</code></pre><h3 id="更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><a href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org" class="headerlink" title="更多详细信息，请参考cassandra官网：http://cassandra.apache.org/"></a>更多详细信息，请参考cassandra官网：<a href="http://cassandra.apache.org/" target="_blank" rel="external">http://cassandra.apache.org/</a></h3>
       
     </div>
 
@@ -418,7 +382,7 @@ git reset --hard origin/master
       
         <div class="post-tags">
           
-            <a href="/tags/GIT/" rel="tag"># GIT</a>
+            <a href="/tags/cassandra/" rel="tag"># cassandra</a>
           
         </div>
       
@@ -427,8 +391,8 @@ git reset --hard origin/master
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/22/postgres/" rel="next" title="postgresql常用知识点一览">
-                <i class="fa fa-chevron-left"></i> postgresql常用知识点一览
+              <a href="/2016/12/27/阿里云服务器Ubuntu挂载数据盘/" rel="next" title="阿里云服务器Ubuntu挂载数据盘">
+                <i class="fa fa-chevron-left"></i> 阿里云服务器Ubuntu挂载数据盘
               </a>
             
           </div>
@@ -436,10 +400,6 @@ git reset --hard origin/master
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/23/linux/" rel="prev" title="linux常用命令">
-                linux常用命令 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -559,7 +519,7 @@ git reset --hard origin/master
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建新仓库"><span class="nav-number">1.</span> <span class="nav-text">1、创建新仓库:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、检出仓库"><span class="nav-number">2.</span> <span class="nav-text">2、检出仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、添加与提交"><span class="nav-number">3.</span> <span class="nav-text">3、添加与提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、推送与改动"><span class="nav-number">4.</span> <span class="nav-text">4、推送与改动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、分支"><span class="nav-number">5.</span> <span class="nav-text">5、分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、更新与合并"><span class="nav-number">6.</span> <span class="nav-text">6、更新与合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、标签"><span class="nav-number">7.</span> <span class="nav-text">7、标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、替换本地改动"><span class="nav-number">8.</span> <span class="nav-text">8、替换本地改动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、丢弃所有本地改动："><span class="nav-number">9.</span> <span class="nav-text">9、丢弃所有本地改动：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、显示历史记录时，只显示一行注释信息："><span class="nav-number">10.</span> <span class="nav-text">10、显示历史记录时，只显示一行注释信息：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11、交互的添加文件至缓存区"><span class="nav-number">11.</span> <span class="nav-text">11、交互的添加文件至缓存区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12、显示提交历史详细"><span class="nav-number">12.</span> <span class="nav-text">12、显示提交历史详细</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13、将当前改动提交到缓存区"><span class="nav-number">13.</span> <span class="nav-text">13、将当前改动提交到缓存区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14、从缓存区取出第一个"><span class="nav-number">14.</span> <span class="nav-text">14、从缓存区取出第一个</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装cassndra"><span class="nav-number">1.</span> <span class="nav-text">安装cassndra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单配置cassandra"><span class="nav-number">2.</span> <span class="nav-text">简单配置cassandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动cassandra"><span class="nav-number">3.</span> <span class="nav-text">启动cassandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入cansandra"><span class="nav-number">4.</span> <span class="nav-text">进入cansandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看集群状态"><span class="nav-number">5.</span> <span class="nav-text">查看集群状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><span class="nav-number">6.</span> <span class="nav-text">更多详细信息，请参考cassandra官网：http://cassandra.apache.org/</span></a></li></ol></div>
             
 
           </div>
