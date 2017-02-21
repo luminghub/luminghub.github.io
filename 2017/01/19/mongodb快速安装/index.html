@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="cassandra," />
+  <meta name="keywords" content="mongodb," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
+<meta name="description" content="快速有效安装mongodb的方法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cassandra 集群的简单搭建">
-<meta property="og:url" content="http://yoursite.com/2016/12/27/Cassandra集群搭建/index.html">
+<meta property="og:title" content="ubuntu上安装mongodb">
+<meta property="og:url" content="http://yoursite.com/2017/01/19/mongodb快速安装/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
-<meta property="og:updated_time" content="2016-12-27T09:33:24.022Z">
+<meta property="og:description" content="快速有效安装mongodb的方法。">
+<meta property="og:updated_time" content="2017-01-19T01:50:09.600Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cassandra 集群的简单搭建">
-<meta name="twitter:description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
+<meta name="twitter:title" content="ubuntu上安装mongodb">
+<meta name="twitter:description" content="快速有效安装mongodb的方法。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/27/Cassandra集群搭建/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/01/19/mongodb快速安装/"/>
 
 
 
 
 
-  <title> cassandra 集群的简单搭建 | 一条缝小眼睛的个人博客 </title>
+  <title> ubuntu上安装mongodb | 一条缝小眼睛的个人博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -238,7 +238,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/27/Cassandra集群搭建/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/19/mongodb快速安装/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="小明同学">
@@ -262,7 +262,7 @@
             
             
               
-                cassandra 集群的简单搭建
+                ubuntu上安装mongodb
               
             
           </h1>
@@ -275,8 +275,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-27T00:00:00+08:00">
-                2016-12-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T00:00:00+08:00">
+                2017-01-19
               </time>
             
 
@@ -318,7 +318,7 @@
 
           
               <div class="post-description">
-                  Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。
+                  快速有效安装mongodb的方法。
               </div>
           
 
@@ -333,34 +333,52 @@
       
 
       
-        <h3 id="安装cassndra"><a href="#安装cassndra" class="headerlink" title="安装cassndra"></a>安装cassndra</h3><pre><code>1、将apache-cassandra-3.9.tar.gz安装包拷贝到我们的指定目录下
+        <h2 id="安装mongodb"><a href="#安装mongodb" class="headerlink" title="安装mongodb"></a>安装mongodb</h2><h3 id="更多信息，请参看-https-docs-mongodb-com-v3-2-tutorial-install-mongodb-on-ubuntu"><a href="#更多信息，请参看-https-docs-mongodb-com-v3-2-tutorial-install-mongodb-on-ubuntu" class="headerlink" title="更多信息，请参看 https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-ubuntu/"></a>更多信息，请参看 <a href="https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-ubuntu/" title="mongo3.2版本" target="_blank" rel="external">https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-ubuntu/</a></h3><h3 id="1、Import-the-public-key-used-by-the-package-management-system"><a href="#1、Import-the-public-key-used-by-the-package-management-system" class="headerlink" title="1、Import the public key used by the package management system"></a>1、Import the public key used by the package management system</h3><pre><code>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+</code></pre><h3 id="2、Create-a-list-file-for-MongoDB"><a href="#2、Create-a-list-file-for-MongoDB" class="headerlink" title="2、Create a list file for MongoDB　"></a>2、Create a list file for MongoDB　</h3><p>Ubuntu 12.04</p>
+<pre><code>echo &quot;deb http://repo.mongodb.org/apt/ubuntu precise/mongodb-org/3.2 multiverse&quot; | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+</code></pre><p>Ubuntu 14.04</p>
+<pre><code>echo &quot;deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse&quot; | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+</code></pre><p>Ubuntu 16.04</p>
+<pre><code>echo &quot;deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse&quot; | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+</code></pre><h3 id="3、Reload-local-package-database"><a href="#3、Reload-local-package-database" class="headerlink" title="3、Reload local package database"></a>3、Reload local package database</h3><pre><code>sudo apt-get update
+</code></pre><h3 id="4、Install-the-MongoDB-packages"><a href="#4、Install-the-MongoDB-packages" class="headerlink" title="4、Install the MongoDB packages"></a>4、Install the MongoDB packages</h3><blockquote>
+<p>Install the latest stable version of MongoDB</p>
+</blockquote>
+<pre><code>sudo apt-get install -y mongodb-org
+</code></pre><blockquote>
+<p>Install a specific release of MongoDB</p>
+</blockquote>
+<pre><code>sudo apt-get install -y mongodb-org=3.2.11 mongodb-org-server=3.2.11 mongodb-org-shell=3.2.11 mongodb-org-mongos=3.2.11 mongodb-org-tools=3.2.11
+</code></pre><p> Pin a specific version of MongoDB</p>
+<pre><code>echo &quot;mongodb-org hold&quot; | sudo dpkg --set-selections
+echo &quot;mongodb-org-server hold&quot; | sudo dpkg --set-selections
+echo &quot;mongodb-org-shell hold&quot; | sudo dpkg --set-selections
+echo &quot;mongodb-org-mongos hold&quot; | sudo dpkg --set-selections
+echo &quot;mongodb-org-tools hold&quot; | sudo dpkg --set-selections
+</code></pre><h3 id="5、-Ubuntu-16-04-only-Create-systemd-service-file"><a href="#5、-Ubuntu-16-04-only-Create-systemd-service-file" class="headerlink" title="5、(Ubuntu 16.04-only) Create systemd service file"></a>5、(Ubuntu 16.04-only) Create systemd service file</h3><p>Create a new file at /lib/systemd/system/mongod.service with the following contents:</p>
+<pre><code>[Unit]
+Description=High-performance, schema-free document-oriented database
+After=network.target
+Documentation=https://docs.mongodb.org/manual
 
-2、使用命令tar -zxvf apache-cassandra-3.9.tar.gz将tar包解压缩，得到apache-cassandra-3.9目录
-</code></pre><h3 id="简单配置cassandra"><a href="#简单配置cassandra" class="headerlink" title="简单配置cassandra"></a>简单配置cassandra</h3><pre><code>进入apache-cassandra-3.9/conf目录，找到cassandra.yaml
+[Service]
+User=mongodb
+Group=mongodb
+ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf
 
-修改：data_file_directories 数据存放路径
-修改：seed_provider下的parameters的seeds，如下所示：
-
-    seed_provider:
-    # Addresses of hosts that are deemed contact points.
-    # Cassandra nodes use this list of hosts to find each other and learn
-    # the topology of the ring.  You must change this if you are running
-    # multiple nodes!
-    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
-      parameters:
-          # seeds is actually a comma-delimited list of addresses.
-          # Ex: &quot;&lt;ip1&gt;,&lt;ip2&gt;,&lt;ip3&gt;&quot;
-          - seeds: &quot;127.0.0.1,127.0.0.2&quot;
-修改：listen_address 本机监听IP
-修改：rpc_address 本机IP（同listen_address即可）
-</code></pre><h3 id="启动cassandra"><a href="#启动cassandra" class="headerlink" title="启动cassandra"></a>启动cassandra</h3><pre><code>进入bin目录，执行    ./cassandra
-</code></pre><h3 id="进入cansandra"><a href="#进入cansandra" class="headerlink" title="进入cansandra"></a>进入cansandra</h3><pre><code>配置CQLSH_HOST
-    修改 /etc/profile 添加：export CQLSH_HOST=127.0.0.1
-    source /etc/profile
-进入bin目录，执行    ./cqlsh  
-</code></pre><h3 id="查看集群状态"><a href="#查看集群状态" class="headerlink" title="查看集群状态"></a>查看集群状态</h3><pre><code>进入bin目录，执行    ./nodetool status
-</code></pre><h3 id="强制移除节点"><a href="#强制移除节点" class="headerlink" title="强制移除节点"></a>强制移除节点</h3><pre><code>./nodetool removenode force
-</code></pre><h3 id="更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><a href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org" class="headerlink" title="更多详细信息，请参考cassandra官网：http://cassandra.apache.org/"></a>更多详细信息，请参考cassandra官网：<a href="http://cassandra.apache.org/" target="_blank" rel="external">http://cassandra.apache.org/</a></h3>
+[Install]
+WantedBy=multi-user.target
+</code></pre><h2 id="Run-MongoDB-Community-Edition"><a href="#Run-MongoDB-Community-Edition" class="headerlink" title="Run MongoDB Community Edition"></a>Run MongoDB Community Edition</h2><h3 id="1、Start-MongoDB"><a href="#1、Start-MongoDB" class="headerlink" title="1、Start MongoDB"></a>1、Start MongoDB</h3><pre><code>sudo service mongod start
+</code></pre><h3 id="2、Verify-that-MongoDB-has-started-successfully"><a href="#2、Verify-that-MongoDB-has-started-successfully" class="headerlink" title="2、Verify that MongoDB has started successfully"></a>2、Verify that MongoDB has started successfully</h3><p>Verify that the mongod process has started successfully by checking the contents of the log file at /var/log/mongodb/mongod.log for a line reading</p>
+<pre><code>[initandlisten] waiting for connections on port &lt;port&gt;
+</code></pre><p>where <port> is the port configured in /etc/mongod.conf, 27017 by default.</port></p>
+<h3 id="3、Stop-MongoDB"><a href="#3、Stop-MongoDB" class="headerlink" title="3、Stop MongoDB"></a>3、Stop MongoDB</h3><pre><code>sudo service mongod stop
+</code></pre><h3 id="4、Restart-MongoDB"><a href="#4、Restart-MongoDB" class="headerlink" title="4、Restart MongoDB"></a>4、Restart MongoDB</h3><pre><code>sudo service mongod restart
+</code></pre><h2 id="Uninstall-MongoDB-Community-Edition"><a href="#Uninstall-MongoDB-Community-Edition" class="headerlink" title="Uninstall MongoDB Community Edition"></a>Uninstall MongoDB Community Edition</h2><h3 id="1、Stop-MongoDB"><a href="#1、Stop-MongoDB" class="headerlink" title="1、Stop MongoDB"></a>1、Stop MongoDB</h3><pre><code>sudo service mongod stop
+</code></pre><h3 id="2、Remove-Packages"><a href="#2、Remove-Packages" class="headerlink" title="2、Remove Packages"></a>2、Remove Packages</h3><pre><code>sudo apt-get purge mongodb-org*
+</code></pre><h3 id="3、Remove-Data-Directories"><a href="#3、Remove-Data-Directories" class="headerlink" title="3、Remove Data Directories"></a>3、Remove Data Directories</h3><pre><code>sudo rm -r /var/log/mongodb
+sudo rm -r /var/lib/mongodb
+</code></pre>
       
     </div>
 
@@ -383,7 +401,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/cassandra/" rel="tag"># cassandra</a>
+            <a href="/tags/mongodb/" rel="tag"># mongodb</a>
           
         </div>
       
@@ -392,8 +410,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/22/gRPC快速上手指南/" rel="next" title="gRPC JAVA快速入门指南">
-                <i class="fa fa-chevron-left"></i> gRPC JAVA快速入门指南
+              <a href="/2017/01/13/linux使用小贴士/" rel="next" title="linux使用小贴士">
+                <i class="fa fa-chevron-left"></i> linux使用小贴士
               </a>
             
           </div>
@@ -402,8 +420,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/27/阿里云服务器Ubuntu挂载数据盘/" rel="prev" title="阿里云服务器Ubuntu挂载数据盘">
-                阿里云服务器Ubuntu挂载数据盘 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/02/17/Cassandra基本用法/" rel="prev" title="cassandra 入门学习">
+                cassandra 入门学习 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -524,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装cassndra"><span class="nav-number">1.</span> <span class="nav-text">安装cassndra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单配置cassandra"><span class="nav-number">2.</span> <span class="nav-text">简单配置cassandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动cassandra"><span class="nav-number">3.</span> <span class="nav-text">启动cassandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入cansandra"><span class="nav-number">4.</span> <span class="nav-text">进入cansandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看集群状态"><span class="nav-number">5.</span> <span class="nav-text">查看集群状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#强制移除节点"><span class="nav-number">6.</span> <span class="nav-text">强制移除节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><span class="nav-number">7.</span> <span class="nav-text">更多详细信息，请参考cassandra官网：http://cassandra.apache.org/</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装mongodb"><span class="nav-number">1.</span> <span class="nav-text">安装mongodb</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更多信息，请参看-https-docs-mongodb-com-v3-2-tutorial-install-mongodb-on-ubuntu"><span class="nav-number">1.1.</span> <span class="nav-text">更多信息，请参看 https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-ubuntu/</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Import-the-public-key-used-by-the-package-management-system"><span class="nav-number">1.2.</span> <span class="nav-text">1、Import the public key used by the package management system</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、Create-a-list-file-for-MongoDB"><span class="nav-number">1.3.</span> <span class="nav-text">2、Create a list file for MongoDB　</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Reload-local-package-database"><span class="nav-number">1.4.</span> <span class="nav-text">3、Reload local package database</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、Install-the-MongoDB-packages"><span class="nav-number">1.5.</span> <span class="nav-text">4、Install the MongoDB packages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、-Ubuntu-16-04-only-Create-systemd-service-file"><span class="nav-number">1.6.</span> <span class="nav-text">5、(Ubuntu 16.04-only) Create systemd service file</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Run-MongoDB-Community-Edition"><span class="nav-number">2.</span> <span class="nav-text">Run MongoDB Community Edition</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Start-MongoDB"><span class="nav-number">2.1.</span> <span class="nav-text">1、Start MongoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、Verify-that-MongoDB-has-started-successfully"><span class="nav-number">2.2.</span> <span class="nav-text">2、Verify that MongoDB has started successfully</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Stop-MongoDB"><span class="nav-number">2.3.</span> <span class="nav-text">3、Stop MongoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、Restart-MongoDB"><span class="nav-number">2.4.</span> <span class="nav-text">4、Restart MongoDB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Uninstall-MongoDB-Community-Edition"><span class="nav-number">3.</span> <span class="nav-text">Uninstall MongoDB Community Edition</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Stop-MongoDB"><span class="nav-number">3.1.</span> <span class="nav-text">1、Stop MongoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、Remove-Packages"><span class="nav-number">3.2.</span> <span class="nav-text">2、Remove Packages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Remove-Data-Directories"><span class="nav-number">3.3.</span> <span class="nav-text">3、Remove Data Directories</span></a></li></ol></li></ol></div>
             
 
           </div>
