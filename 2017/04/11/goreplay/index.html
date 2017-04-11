@@ -1,0 +1,692 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="goreplay," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="goreplay构建测试环境">
+<meta property="og:url" content="http://yoursite.com/2017/04/11/goreplay/index.html">
+<meta property="og:site_name" content="一条缝小眼睛的个人博客">
+<meta property="og:description" content="GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in">
+<meta property="og:image" content="http://i.imgur.com/BwjK3aa.png">
+<meta property="og:image" content="http://i.imgur.com/MFORaux.png">
+<meta property="og:image" content="http://i.imgur.com/UYayPOl.png">
+<meta property="og:image" content="http://i.imgur.com/SMZJx7w.png">
+<meta property="og:updated_time" content="2017-04-11T09:26:53.965Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="goreplay构建测试环境">
+<meta name="twitter:description" content="GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in">
+<meta name="twitter:image" content="http://i.imgur.com/BwjK3aa.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/11/goreplay/"/>
+
+
+
+
+
+  <title> goreplay构建测试环境 | 一条缝小眼睛的个人博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">一条缝小眼睛的个人博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">这个人的眼睛很小很小，笑起来的时候就会变成一条缝</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/11/goreplay/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="小明同学">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="一条缝小眼睛的个人博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="一条缝小眼睛的个人博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                goreplay构建测试环境
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-11T00:00:00+08:00">
+                2017-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study/" itemprop="url" rel="index">
+                    <span itemprop="name">Study</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+              <div class="post-description">
+                  GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in code deployments, configuration changes and infrastructure changes. https://goreplay.org
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="goreplay简介-官方网站-github地址"><a href="#goreplay简介-官方网站-github地址" class="headerlink" title="goreplay简介 官方网站 github地址"></a>goreplay简介 <a href="https://goreplay.org/" target="_blank" rel="external">官方网站</a> <a href="https://github.com/buger/goreplay" target="_blank" rel="external">github地址</a></h2><p>GoReplay is the simplest and safest way to test your app using real traffic before you put it into production.</p>
+<p>As your application grows, the effort required to test it also grows exponentially. GoReplay offers you the simple idea of reusing your existing traffic for testing, which makes it incredibly powerful. Our state of art technique allows to analyze and record your application traffic without affecting it. This eliminates the risks that come with putting a third party component in the critical path.</p>
+<p>GoReplay increases your confidence in code deployments, configuration changes and infrastructure changes. Did we mention that no coding is required?</p>
+<p>Here is basic workflow: The listener server catches http traffic and sends it to the replay server or saves to file. The replay server forwards traffic to a given address.</p>
+<p><img src="http://i.imgur.com/BwjK3aa.png" alt=""></p>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>Download latest binary from <a href="https://github.com/buger/goreplay/releases" target="_blank" rel="external">https://github.com/buger/gor/releases</a> or <a href="https://github.com/buger/goreplay/wiki/Compilation" target="_blank" rel="external">compile by yourself</a>.</p>
+<blockquote>
+<p>这里用方法1进行操作。下面是详细步骤</p>
+</blockquote>
+<h3 id="1、下载goreplay最新发布版本"><a href="#1、下载goreplay最新发布版本" class="headerlink" title="1、下载goreplay最新发布版本"></a>1、下载goreplay最新发布版本</h3><p><a href="https://github.com/buger/goreplay/releases" target="_blank" rel="external">https://github.com/buger/gor/releases</a></p>
+<p>目前的最新版本是v0.16.0。这里我们下载最新的linux环境版本 gor_0.16.0_x64.tar.gz。</p>
+<h3 id="2、将下载好的文件解压"><a href="#2、将下载好的文件解压" class="headerlink" title="2、将下载好的文件解压"></a>2、将下载好的文件解压</h3><pre><code>tar -zxf gor_0.16.0_x64.tar.gz
+</code></pre><h2 id="Getting-started"><a href="#Getting-started" class="headerlink" title="Getting started"></a>Getting started</h2><p>The most basic setup will be </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-stdout
+</code></pre><p> which acts like tcpdump. If you already have test environment you can start replaying: </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-http http://staging.env.
+</code></pre><p>See the our <a href="https://github.com/buger/goreplay/wiki" target="_blank" rel="external">documentation</a> and <a href="https://github.com/buger/goreplay/wiki/Getting-Started" target="_blank" rel="external">Getting started</a> page for more info.</p>
+<h3 id="1、测试环境准备"><a href="#1、测试环境准备" class="headerlink" title="1、测试环境准备"></a>1、测试环境准备</h3><p>假设正式环境App部署端口为 8080，测试环境部署端口为 8090（同一台机器），均正常运行。</p>
+<h3 id="2、测试goreplay是否可以正常运行。"><a href="#2、测试goreplay是否可以正常运行。" class="headerlink" title="2、测试goreplay是否可以正常运行。"></a>2、测试goreplay是否可以正常运行。</h3><p>启动gor，监听正式环境http请求，并列印到日志中</p>
+<pre><code>sudo ./gor --input-raw :8080 --output-stdout
+</code></pre><p>在浏览器中点击正式环境链接，在goreplay的控制台输出为：</p>
+<p><img src="http://i.imgur.com/MFORaux.png" alt=""></p>
+<h3 id="正式运行，有以下两种模式可供选择"><a href="#正式运行，有以下两种模式可供选择" class="headerlink" title="正式运行，有以下两种模式可供选择"></a>正式运行，有以下两种模式可供选择</h3><h4 id="1、Replaying"><a href="#1、Replaying" class="headerlink" title="1、Replaying"></a>1、Replaying</h4><p>Now it’s time to replay your original traffic to another environment. Let’s start the same file web server but on a different port: gor file-server :8001.</p>
+<p>Instead of –output-stdout we will use –output-http and provide URL of second server: </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-http=&quot;http://localhost:8001&quot;
+</code></pre><h4 id="2、Saving-requests-to-file-and-replaying-them-later"><a href="#2、Saving-requests-to-file-and-replaying-them-later" class="headerlink" title="2、Saving requests to file and replaying them later"></a>2、Saving requests to file and replaying them later</h4><p>Sometimes it’s not possible to replay requests in real time; Gor allows you to save requests to the file and replay them later.</p>
+<p>First use –output-file to save them: </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-file=requests.gor
+</code></pre><p>This will create new file and continuously write all captured requests to it.</p>
+<p>Let’s re-run Gor, but now to replay requests from file: </p>
+<pre><code>./gor --input-file requests.gor --output-http=&quot;http://localhost:8001&quot;
+</code></pre><p>You should see all the recorded requests coming to the second server, and they will be replayed in the same order and with exactly same timing as they were recorded.</p>
+<blockquote>
+<p>这里用Replaying进行操作。下面是详细步骤</p>
+</blockquote>
+<h3 id="1、运行goreplay"><a href="#1、运行goreplay" class="headerlink" title="1、运行goreplay"></a>1、运行goreplay</h3><pre><code>sudo ./gor --input-raw :8080 --output-http=&quot;http://localhost:8090&quot;
+</code></pre><p><img src="http://i.imgur.com/UYayPOl.png" alt=""></p>
+<h3 id="2、查看app1、app2的运行日志"><a href="#2、查看app1、app2的运行日志" class="headerlink" title="2、查看app1、app2的运行日志"></a>2、查看app1、app2的运行日志</h3><p>可以看到app1和app2都被访问了，但是app1的正常访问不受任何影响。</p>
+<p><img src="http://i.imgur.com/SMZJx7w.png" alt=""></p>
+<h3 id="3、后台自动运行goreplay"><a href="#3、后台自动运行goreplay" class="headerlink" title="3、后台自动运行goreplay"></a>3、后台自动运行goreplay</h3><pre><code>sudo nohup ./gor --input-raw :8080 --output-http=&quot;http://localhost:8090&quot; &amp;
+
+tail -500f nohup.out
+</code></pre><h2 id="附录：go环境构建"><a href="#附录：go环境构建" class="headerlink" title="附录：go环境构建"></a>附录：go环境构建</h2><p>goreplay是用go语言编写，所以运行需要go语言环境。下面是go环境构建的步骤。</p>
+<h3 id="下载linux版本的go"><a href="#下载linux版本的go" class="headerlink" title="下载linux版本的go"></a>下载linux版本的go</h3><p><a href="https://golang.org/dl/" target="_blank" rel="external">https://golang.org/dl/</a></p>
+<p>目前官方最新版本为：go1.8.1，下载文件go1.8.1.linux-amd64.tar.gz</p>
+<h3 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h3><pre><code>tar -C /usr/local -xzf go1.8.1.linux-amd64.tar.gz
+</code></pre><h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><pre><code>export PATH=$PATH:/usr/local/go/bin
+</code></pre><p>更多详细信息，请访问go官方网站 <a href="https://golang.org/" target="_blank" rel="external">https://golang.org/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/goreplay/" rel="tag"># goreplay</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/14/mongodb创建空间索引/" rel="next" title="mongodb创建空间索引">
+                <i class="fa fa-chevron-left"></i> mongodb创建空间索引
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="小明同学" />
+          <p class="site-author-name" itemprop="name">小明同学</p>
+          <p class="site-description motion-element" itemprop="description">java</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#goreplay简介-官方网站-github地址"><span class="nav-number">1.</span> <span class="nav-text">goreplay简介 官方网站 github地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation"><span class="nav-number">2.</span> <span class="nav-text">Installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、下载goreplay最新发布版本"><span class="nav-number">2.1.</span> <span class="nav-text">1、下载goreplay最新发布版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、将下载好的文件解压"><span class="nav-number">2.2.</span> <span class="nav-text">2、将下载好的文件解压</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-started"><span class="nav-number">3.</span> <span class="nav-text">Getting started</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、测试环境准备"><span class="nav-number">3.1.</span> <span class="nav-text">1、测试环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、测试goreplay是否可以正常运行。"><span class="nav-number">3.2.</span> <span class="nav-text">2、测试goreplay是否可以正常运行。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正式运行，有以下两种模式可供选择"><span class="nav-number">3.3.</span> <span class="nav-text">正式运行，有以下两种模式可供选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、Replaying"><span class="nav-number">3.3.1.</span> <span class="nav-text">1、Replaying</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、Saving-requests-to-file-and-replaying-them-later"><span class="nav-number">3.3.2.</span> <span class="nav-text">2、Saving requests to file and replaying them later</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、运行goreplay"><span class="nav-number">3.4.</span> <span class="nav-text">1、运行goreplay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、查看app1、app2的运行日志"><span class="nav-number">3.5.</span> <span class="nav-text">2、查看app1、app2的运行日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、后台自动运行goreplay"><span class="nav-number">3.6.</span> <span class="nav-text">3、后台自动运行goreplay</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录：go环境构建"><span class="nav-number">4.</span> <span class="nav-text">附录：go环境构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载linux版本的go"><span class="nav-number">4.1.</span> <span class="nav-text">下载linux版本的go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解压"><span class="nav-number">4.2.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置环境变量"><span class="nav-number">4.3.</span> <span class="nav-text">配置环境变量</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小明同学</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
