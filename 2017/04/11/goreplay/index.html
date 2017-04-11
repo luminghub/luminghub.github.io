@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://i.imgur.com/MFORaux.png">
 <meta property="og:image" content="http://i.imgur.com/UYayPOl.png">
 <meta property="og:image" content="http://i.imgur.com/SMZJx7w.png">
-<meta property="og:updated_time" content="2017-04-11T09:26:53.965Z">
+<meta property="og:updated_time" content="2017-04-11T10:21:48.541Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="goreplay构建测试环境">
 <meta name="twitter:description" content="GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in">
@@ -380,7 +380,47 @@
 <h3 id="3、后台自动运行goreplay"><a href="#3、后台自动运行goreplay" class="headerlink" title="3、后台自动运行goreplay"></a>3、后台自动运行goreplay</h3><pre><code>sudo nohup ./gor --input-raw :8080 --output-http=&quot;http://localhost:8090&quot; &amp;
 
 tail -500f nohup.out
-</code></pre><h2 id="附录：go环境构建"><a href="#附录：go环境构建" class="headerlink" title="附录：go环境构建"></a>附录：go环境构建</h2><p>goreplay是用go语言编写，所以运行需要go语言环境。下面是go环境构建的步骤。</p>
+</code></pre><h3 id="4、不使用root用户运行-Running-as-non-root-user"><a href="#4、不使用root用户运行-Running-as-non-root-user" class="headerlink" title="4、不使用root用户运行 Running as non root user"></a>4、不使用root用户运行 Running as non root user</h3><p>You can enable Gor for non-root users in a secure method by using the following commands</p>
+<pre><code># Following commands assume that you put `gor` binary to /usr/local/bin
+add gor
+addgroup &lt;username&gt; gor
+chgrp gor /usr/local/bin/gor
+chmod 0750 /usr/local/bin/gor
+setcap &quot;cap_net_raw,cap_net_admin+eip&quot; /usr/local/bin/gor
+</code></pre><p>As a brief explanation of the above.</p>
+<ul>
+<li>We create a group called gor.</li>
+<li>We then add the user you want to the new group so they will be able to use gor without sudo</li>
+<li>We then change the user/group of gor binary the new group.</li>
+<li>We then make sure the permissions are set on gor binary so that members of the group can execute it but other normal users cannot.</li>
+<li>We then use setcap to give the CAP_NET_RAW and CAP_NET_ADMIN privilege to the executable when it runs. This is so that Gor can open its raw socket which is not normally permitted unless you are root.</li>
+</ul>
+<p>上述大意为</p>
+<ul>
+<li>创建一个组gor</li>
+<li>将对应用户添加到gor组</li>
+<li>授权</li>
+</ul>
+<p>下面是详细步骤</p>
+<h4 id="1、创建gor组"><a href="#1、创建gor组" class="headerlink" title="1、创建gor组"></a>1、创建gor组</h4><pre><code>groupadd gor
+</code></pre><h4 id="2、将需要执行的用户添加到gor组"><a href="#2、将需要执行的用户添加到gor组" class="headerlink" title="2、将需要执行的用户添加到gor组"></a>2、将需要执行的用户添加到gor组</h4><p>将ubuntu用户加入gor组</p>
+<pre><code>addgroup ubuntu gor
+</code></pre><h4 id="3、授权"><a href="#3、授权" class="headerlink" title="3、授权"></a>3、授权</h4><p>编译好的gor二进制文件所在路径为：/usr/local/bin/gor</p>
+<pre><code>chgrp gor /usr/local/bin/gor
+
+chmod 0750 /usr/local/bin/gor
+
+setcap &quot;cap_net_raw,cap_net_admin+eip&quot; /usr/local/bin/gor
+</code></pre><h4 id="4、运行"><a href="#4、运行" class="headerlink" title="4、运行"></a>4、运行</h4><p>切换到ubuntu用户</p>
+<pre><code>su ubuntu
+</code></pre><p>切换到gor组</p>
+<pre><code>newgrp gor
+</code></pre><p>进入gor目录</p>
+<pre><code>cd /usr/local/bin
+</code></pre><p>运行gor</p>
+<pre><code>./gor --input-raw :8000 --output-stdout
+</code></pre><h2 id="附录：go环境构建"><a href="#附录：go环境构建" class="headerlink" title="附录：go环境构建"></a>附录：go环境构建</h2><p>goreplay是用go语言编写，如果自己手动编译goreplay的二进制文件，需要go语言环境。下面是go环境构建的步骤。</p>
+<p>如果是使用官方编译好的二进制文件则不需要运行环境，如本案例。</p>
 <h3 id="下载linux版本的go"><a href="#下载linux版本的go" class="headerlink" title="下载linux版本的go"></a>下载linux版本的go</h3><p><a href="https://golang.org/dl/" target="_blank" rel="external">https://golang.org/dl/</a></p>
 <p>目前官方最新版本为：go1.8.1，下载文件go1.8.1.linux-amd64.tar.gz</p>
 <h3 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h3><pre><code>tar -C /usr/local -xzf go1.8.1.linux-amd64.tar.gz
@@ -546,7 +586,7 @@ tail -500f nohup.out
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#goreplay简介-官方网站-github地址"><span class="nav-number">1.</span> <span class="nav-text">goreplay简介 官方网站 github地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation"><span class="nav-number">2.</span> <span class="nav-text">Installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、下载goreplay最新发布版本"><span class="nav-number">2.1.</span> <span class="nav-text">1、下载goreplay最新发布版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、将下载好的文件解压"><span class="nav-number">2.2.</span> <span class="nav-text">2、将下载好的文件解压</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-started"><span class="nav-number">3.</span> <span class="nav-text">Getting started</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、测试环境准备"><span class="nav-number">3.1.</span> <span class="nav-text">1、测试环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、测试goreplay是否可以正常运行。"><span class="nav-number">3.2.</span> <span class="nav-text">2、测试goreplay是否可以正常运行。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正式运行，有以下两种模式可供选择"><span class="nav-number">3.3.</span> <span class="nav-text">正式运行，有以下两种模式可供选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、Replaying"><span class="nav-number">3.3.1.</span> <span class="nav-text">1、Replaying</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、Saving-requests-to-file-and-replaying-them-later"><span class="nav-number">3.3.2.</span> <span class="nav-text">2、Saving requests to file and replaying them later</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、运行goreplay"><span class="nav-number">3.4.</span> <span class="nav-text">1、运行goreplay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、查看app1、app2的运行日志"><span class="nav-number">3.5.</span> <span class="nav-text">2、查看app1、app2的运行日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、后台自动运行goreplay"><span class="nav-number">3.6.</span> <span class="nav-text">3、后台自动运行goreplay</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录：go环境构建"><span class="nav-number">4.</span> <span class="nav-text">附录：go环境构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载linux版本的go"><span class="nav-number">4.1.</span> <span class="nav-text">下载linux版本的go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解压"><span class="nav-number">4.2.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置环境变量"><span class="nav-number">4.3.</span> <span class="nav-text">配置环境变量</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#goreplay简介-官方网站-github地址"><span class="nav-number">1.</span> <span class="nav-text">goreplay简介 官方网站 github地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation"><span class="nav-number">2.</span> <span class="nav-text">Installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、下载goreplay最新发布版本"><span class="nav-number">2.1.</span> <span class="nav-text">1、下载goreplay最新发布版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、将下载好的文件解压"><span class="nav-number">2.2.</span> <span class="nav-text">2、将下载好的文件解压</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-started"><span class="nav-number">3.</span> <span class="nav-text">Getting started</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、测试环境准备"><span class="nav-number">3.1.</span> <span class="nav-text">1、测试环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、测试goreplay是否可以正常运行。"><span class="nav-number">3.2.</span> <span class="nav-text">2、测试goreplay是否可以正常运行。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正式运行，有以下两种模式可供选择"><span class="nav-number">3.3.</span> <span class="nav-text">正式运行，有以下两种模式可供选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、Replaying"><span class="nav-number">3.3.1.</span> <span class="nav-text">1、Replaying</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、Saving-requests-to-file-and-replaying-them-later"><span class="nav-number">3.3.2.</span> <span class="nav-text">2、Saving requests to file and replaying them later</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、运行goreplay"><span class="nav-number">3.4.</span> <span class="nav-text">1、运行goreplay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、查看app1、app2的运行日志"><span class="nav-number">3.5.</span> <span class="nav-text">2、查看app1、app2的运行日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、后台自动运行goreplay"><span class="nav-number">3.6.</span> <span class="nav-text">3、后台自动运行goreplay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、不使用root用户运行-Running-as-non-root-user"><span class="nav-number">3.7.</span> <span class="nav-text">4、不使用root用户运行 Running as non root user</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、创建gor组"><span class="nav-number">3.7.1.</span> <span class="nav-text">1、创建gor组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、将需要执行的用户添加到gor组"><span class="nav-number">3.7.2.</span> <span class="nav-text">2、将需要执行的用户添加到gor组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、授权"><span class="nav-number">3.7.3.</span> <span class="nav-text">3、授权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、运行"><span class="nav-number">3.7.4.</span> <span class="nav-text">4、运行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录：go环境构建"><span class="nav-number">4.</span> <span class="nav-text">附录：go环境构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载linux版本的go"><span class="nav-number">4.1.</span> <span class="nav-text">下载linux版本的go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解压"><span class="nav-number">4.2.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置环境变量"><span class="nav-number">4.3.</span> <span class="nav-text">配置环境变量</span></a></li></ol></li></ol></div>
             
 
           </div>
