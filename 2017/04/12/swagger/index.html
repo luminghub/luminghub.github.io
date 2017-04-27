@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Swagger is a powerful open source framework backed by a large ecosystem of tools that helps you design, build, document, and consume your RESTful APIs.[http://swagger.io/](http://swagger.io/)">
+<meta name="description" content="Swagger is a powerful open source framework backed by a large ecosystem of tools that helps you design, build, document, and consume your RESTful APIs.http://swagger.io/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring boot + swagger 快速简单集成">
 <meta property="og:url" content="http://yoursite.com/2017/04/12/swagger/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="Swagger is a powerful open source framework backed by a large ecosystem of tools that helps you design, build, document, and consume your RESTful APIs.[http://swagger.io/](http://swagger.io/)">
-<meta property="og:updated_time" content="2017-04-12T12:49:38.649Z">
+<meta property="og:description" content="Swagger is a powerful open source framework backed by a large ecosystem of tools that helps you design, build, document, and consume your RESTful APIs.http://swagger.io/">
+<meta property="og:updated_time" content="2017-04-13T02:04:34.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring boot + swagger 快速简单集成">
-<meta name="twitter:description" content="Swagger is a powerful open source framework backed by a large ecosystem of tools that helps you design, build, document, and consume your RESTful APIs.[http://swagger.io/](http://swagger.io/)">
+<meta name="twitter:description" content="Swagger is a powerful open source framework backed by a large ecosystem of tools that helps you design, build, document, and consume your RESTful APIs.http://swagger.io/">
 
 
 
@@ -318,7 +318,7 @@
 
           
               <div class="post-description">
-                  Swagger is a powerful open source framework backed by a large ecosystem of tools that helps you design, build, document, and consume your RESTful APIs.[http://swagger.io/](http://swagger.io/)
+                  Swagger is a powerful open source framework backed by a large ecosystem of tools that helps you design, build, document, and consume your RESTful APIs.http://swagger.io/
               </div>
           
 
@@ -489,7 +489,7 @@ public String updateUser(@RequestParam(name = &quot;username&quot;) String usern
 </blockquote>
 <p>示例</p>
 <pre><code>@ApiResponses(value = {
-            @ApiResponse(code = 200, message = &quot;更新后的用户信息&quot;)
+            @ApiResponse(code = 200, message = &quot;更新后的用户信息&quot;),
             @ApiResponse(code = 401, message = &quot;用户名校验错误&quot;, response = User.class),
             @ApiResponse(code = 404, message = &quot;查询的资源不存在&quot;, response = User.class) })
 public List&lt;User&gt; updateUser(@RequestParam(name = &quot;username&quot;) String username, @PathVariable Long id, @RequestBody User user);
@@ -594,6 +594,10 @@ public class Swagger2 {
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/04/14/gradle/" rel="prev" title="gradle 在windows环境下快速搭建">
+                gradle 在windows环境下快速搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -660,7 +664,7 @@ public class Swagger2 {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -677,7 +681,7 @@ public class Swagger2 {
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
