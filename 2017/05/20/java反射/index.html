@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux," />
+  <meta name="keywords" content="JAVA," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="一些常用的linux使用技巧。">
+<meta name="description" content="JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux使用小贴士">
-<meta property="og:url" content="http://yoursite.com/2017/01/13/linux使用小贴士/index.html">
+<meta property="og:title" content="java 反射相关">
+<meta property="og:url" content="http://yoursite.com/2017/05/20/java反射/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="一些常用的linux使用技巧。">
-<meta property="og:updated_time" content="2017-01-19T01:47:49.457Z">
+<meta property="og:description" content="JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。">
+<meta property="og:updated_time" content="2017-05-19T11:04:24.036Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux使用小贴士">
-<meta name="twitter:description" content="一些常用的linux使用技巧。">
+<meta name="twitter:title" content="java 反射相关">
+<meta name="twitter:description" content="JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/01/13/linux使用小贴士/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/20/java反射/"/>
 
 
 
 
 
-  <title> linux使用小贴士 | 一条缝小眼睛的个人博客 </title>
+  <title> java 反射相关 | 一条缝小眼睛的个人博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -238,7 +238,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/13/linux使用小贴士/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/20/java反射/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="小明同学">
@@ -262,7 +262,7 @@
             
             
               
-                linux使用小贴士
+                java 反射相关
               
             
           </h1>
@@ -275,8 +275,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-13T00:00:00+08:00">
-                2017-01-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-20T00:00:00+08:00">
+                2017-05-20
               </time>
             
 
@@ -318,7 +318,7 @@
 
           
               <div class="post-description">
-                  一些常用的linux使用技巧。
+                  JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。
               </div>
           
 
@@ -333,15 +333,110 @@
       
 
       
-        <h2 id="一、ubuntu配置jdk环境变量"><a href="#一、ubuntu配置jdk环境变量" class="headerlink" title="一、ubuntu配置jdk环境变量"></a>一、ubuntu配置jdk环境变量</h2><h3 id="1、编辑bashrc文件"><a href="#1、编辑bashrc文件" class="headerlink" title="1、编辑bashrc文件"></a>1、编辑bashrc文件</h3><pre><code>vim .bashrc 或者 vim /etc/bash.bashrc
-</code></pre><h3 id="2、新增JAVA-HOME和PATH两个变量"><a href="#2、新增JAVA-HOME和PATH两个变量" class="headerlink" title="2、新增JAVA_HOME和PATH两个变量"></a>2、新增JAVA_HOME和PATH两个变量</h3><p>JAVA_HOME为jdk安装路径，例如jdk安装在：/usr/java/jdk1.8.0_102，则添加的变量为</p>
-<pre><code>export JAVA_HOME=/usr/java/jdk1.8.0_102
-export PATH=$PATH:$JAVA_HOME/bin
-</code></pre><h3 id="3、使bashrc生效"><a href="#3、使bashrc生效" class="headerlink" title="3、使bashrc生效"></a>3、使bashrc生效</h3><pre><code>source .bashrc
-</code></pre><h3 id="4、检查环境变量是否配置正确"><a href="#4、检查环境变量是否配置正确" class="headerlink" title="4、检查环境变量是否配置正确"></a>4、检查环境变量是否配置正确</h3><pre><code>java -version
-</code></pre><h2 id="二、从windows转到（scp）linux上后，bash文件编码错误解决方案"><a href="#二、从windows转到（scp）linux上后，bash文件编码错误解决方案" class="headerlink" title="二、从windows转到（scp）linux上后，bash文件编码错误解决方案"></a>二、从windows转到（scp）linux上后，bash文件编码错误解决方案</h2><h3 id="1、安装dos2unix"><a href="#1、安装dos2unix" class="headerlink" title="1、安装dos2unix"></a>1、安装dos2unix</h3><pre><code>sudo apt-get install dos2unix
-</code></pre><h3 id="2、对bash文件重新编码"><a href="#2、对bash文件重新编码" class="headerlink" title="2、对bash文件重新编码"></a>2、对bash文件重新编码</h3><p>例如，对start.sh进行重新编码</p>
-<pre><code>dos2unix start.sh
+        <h3 id="获取某个类的构造方法"><a href="#获取某个类的构造方法" class="headerlink" title="获取某个类的构造方法"></a>获取某个类的构造方法</h3><ul>
+<li>Constructor getConstructor(Class[] params)     根据构造函数的参数，返回一个具体的具有public属性的构造函数</li>
+<li>Constructor getConstructors()     返回所有具有public属性的构造函数数组</li>
+<li>Constructor getDeclaredConstructor(Class[] params)     根据构造函数的参数，返回一个具体的构造函数（不分public和非public属性）</li>
+<li>Constructor getDeclaredConstructors()    返回该类中所有的构造函数数组（不分public和非public属性）</li>
+</ul>
+<h3 id="获取成员方法"><a href="#获取成员方法" class="headerlink" title="获取成员方法"></a>获取成员方法</h3><ul>
+<li>Method getMethod(String name, Class[] params)    根据方法名和参数，返回一个具体的具有public属性的方法</li>
+<li>Method[] getMethods()    返回所有具有public属性的方法数组</li>
+<li>Method getDeclaredMethod(String name, Class[] params)    根据方法名和参数，返回一个具体的方法（不分public和非public属性）</li>
+<li>Method[] getDeclaredMethods()    返回该类中的所有的方法数组（不分public和非public属性）</li>
+</ul>
+<h3 id="获取成员属性"><a href="#获取成员属性" class="headerlink" title="获取成员属性"></a>获取成员属性</h3><ul>
+<li>Field getField(String name)    根据变量名，返回一个具体的具有public属性的成员变量</li>
+<li>Field[] getFields()    返回具有public属性的成员变量的数组</li>
+<li>Field getDeclaredField(String name)    根据变量名，返回一个成员变量（不分public和非public属性）</li>
+<li>Field[] getDelcaredField()    返回所有成员变量组成的数组（不分public和非public属性）</li>
+</ul>
+<h3 id="获取类注解"><a href="#获取类注解" class="headerlink" title="获取类注解"></a>获取类注解</h3><p> Annotation[] annotations = clazz.getAnnotations();</p>
+<h3 id="方法返回类型"><a href="#方法返回类型" class="headerlink" title="方法返回类型"></a>方法返回类型</h3><pre><code> Type tp = method.getGenericReturnType();
+if(tp instanceof ParameterizedType){
+    tp =(ParameterizedType) method.getGenericReturnType();
+}
+// 返回类型名称
+System.out.println(tp.getTypeName());
+</code></pre><h3 id="方法形参名字"><a href="#方法形参名字" class="headerlink" title="方法形参名字"></a>方法形参名字</h3><pre><code>//org.springframework.core.LocalVariableTableParameterNameDiscoverer
+ LocalVariableTableParameterNameDiscoverer parameterNameDiscoverer =
+          new LocalVariableTableParameterNameDiscoverer();
+  String[] paramNames = parameterNameDiscoverer.getParameterNames(method);
+</code></pre><h3 id="形参类型"><a href="#形参类型" class="headerlink" title="形参类型"></a>形参类型</h3><pre><code>Type[] parameterTypes = method.getGenericParameterTypes();
+</code></pre><h3 id="包扫描"><a href="#包扫描" class="headerlink" title="包扫描"></a>包扫描</h3><p>获取jar中的class</p>
+<pre><code>public static void getJarClass(JarFile jarFile, String filepath, Set&lt;Class&lt;?&gt;&gt; clazzs)
+    throws IOException {
+  List&lt;JarEntry&gt; jarEntryList = new ArrayList&lt;JarEntry&gt;();
+  Enumeration&lt;JarEntry&gt; enumes = jarFile.entries();
+  while (enumes.hasMoreElements()) {
+    JarEntry entry = (JarEntry) enumes.nextElement();
+    // 过滤出满足我们需求的东西
+    if (entry.getName().startsWith(filepath) &amp;&amp; entry.getName().endsWith(&quot;.class&quot;)) {
+      jarEntryList.add(entry);
+    }
+  }
+  for (JarEntry entry : jarEntryList) {
+    String className = entry.getName().replace(&apos;/&apos;, &apos;.&apos;);
+    className = className.substring(0, className.length() - 6);
+    try {
+      clazzs.add(Thread.currentThread().getContextClassLoader().loadClass(className));
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+}
+</code></pre><p>获取文件中的class</p>
+<pre><code>public static void getFileClass(String packName, String filePath, Set&lt;Class&lt;?&gt;&gt; clazzs) {
+    File dir = new File(filePath);
+    if (!dir.exists() || !dir.isDirectory()) {
+      System.out.println(&quot;包目录不存在!&quot;);
+      return;
+    }
+    File[] dirFiles = dir.listFiles(new FileFilter() {
+      public boolean accept(File file) {
+        boolean acceptDir = file.isDirectory();// 接受dir目录
+        boolean acceptClass = file.getName().endsWith(&quot;.class&quot;);// 接受class文件
+        return acceptDir || acceptClass;
+      }
+    });
+    for (File file : dirFiles) {
+      if (file.isDirectory()) {
+        getFileClass(packName + &quot;.&quot; + file.getName(), file.getAbsolutePath(), clazzs);
+      } else {
+        String className = file.getName().substring(0, file.getName().length() - 6);
+        try {
+          Class&lt;?&gt; clazz =
+              Thread.currentThread().getContextClassLoader().loadClass(packName + &quot;.&quot; + className);
+          clazzs.add(clazz);
+        } catch (ClassNotFoundException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+ }
+</code></pre><p>扫描指定包下的class</p>
+<pre><code>public static Set&lt;Class&lt;?&gt;&gt; findFileClass(String packName) {
+   Set&lt;Class&lt;?&gt;&gt; clazzs = new LinkedHashSet&lt;Class&lt;?&gt;&gt;();
+   String packageDirName = packName.replace(&apos;.&apos;, &apos;/&apos;);
+   Enumeration&lt;URL&gt; dirs;
+   try {
+     dirs = Thread.currentThread().getContextClassLoader().getResources(packageDirName);
+     while (dirs.hasMoreElements()) {
+       URL url = dirs.nextElement();
+       String protocol = url.getProtocol();
+       if (&quot;file&quot;.equals(protocol)) {// 扫描file包中的类
+         String filePath = URLDecoder.decode(url.getFile(), &quot;UTF-8&quot;);
+         getFileClass(packName, filePath, clazzs);
+       } else if (&quot;jar&quot;.equals(protocol)) {// 扫描jar包中的类
+         JarFile jarFile = ((JarURLConnection) url.openConnection()).getJarFile();
+         getJarClass(jarFile, packageDirName, clazzs);
+       }
+     }
+   } catch (Exception e) {
+     e.getStackTrace();
+   }
+   return clazzs;
+}
 </code></pre>
       
     </div>
@@ -365,7 +460,7 @@ export PATH=$PATH:$JAVA_HOME/bin
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
           
         </div>
       
@@ -374,8 +469,8 @@ export PATH=$PATH:$JAVA_HOME/bin
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/04/protobuf语法指南/" rel="next" title="protobuf 语法指南">
-                <i class="fa fa-chevron-left"></i> protobuf 语法指南
+              <a href="/2017/05/01/软件架构师的12项修炼2/" rel="next" title="关系技能修炼篇<二>">
+                <i class="fa fa-chevron-left"></i> 关系技能修炼篇<二>
               </a>
             
           </div>
@@ -383,10 +478,6 @@ export PATH=$PATH:$JAVA_HOME/bin
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/19/mongodb快速安装/" rel="prev" title="ubuntu上安装mongodb">
-                ubuntu上安装mongodb <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -506,7 +597,7 @@ export PATH=$PATH:$JAVA_HOME/bin
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、ubuntu配置jdk环境变量"><span class="nav-number">1.</span> <span class="nav-text">一、ubuntu配置jdk环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、编辑bashrc文件"><span class="nav-number">1.1.</span> <span class="nav-text">1、编辑bashrc文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、新增JAVA-HOME和PATH两个变量"><span class="nav-number">1.2.</span> <span class="nav-text">2、新增JAVA_HOME和PATH两个变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、使bashrc生效"><span class="nav-number">1.3.</span> <span class="nav-text">3、使bashrc生效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、检查环境变量是否配置正确"><span class="nav-number">1.4.</span> <span class="nav-text">4、检查环境变量是否配置正确</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、从windows转到（scp）linux上后，bash文件编码错误解决方案"><span class="nav-number">2.</span> <span class="nav-text">二、从windows转到（scp）linux上后，bash文件编码错误解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、安装dos2unix"><span class="nav-number">2.1.</span> <span class="nav-text">1、安装dos2unix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、对bash文件重新编码"><span class="nav-number">2.2.</span> <span class="nav-text">2、对bash文件重新编码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取某个类的构造方法"><span class="nav-number">1.</span> <span class="nav-text">获取某个类的构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取成员方法"><span class="nav-number">2.</span> <span class="nav-text">获取成员方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取成员属性"><span class="nav-number">3.</span> <span class="nav-text">获取成员属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取类注解"><span class="nav-number">4.</span> <span class="nav-text">获取类注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法返回类型"><span class="nav-number">5.</span> <span class="nav-text">方法返回类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法形参名字"><span class="nav-number">6.</span> <span class="nav-text">方法形参名字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#形参类型"><span class="nav-number">7.</span> <span class="nav-text">形参类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包扫描"><span class="nav-number">8.</span> <span class="nav-text">包扫描</span></a></li></ol></div>
             
 
           </div>
