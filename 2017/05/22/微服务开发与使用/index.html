@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/microservice/koalaService/003.png">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/microservice/koalaService/001.png">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/microservice/koalaService/002.png">
-<meta property="og:updated_time" content="2017-05-22T08:36:31.739Z">
+<meta property="og:updated_time" content="2017-05-24T09:29:56.556Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微服务使用">
 <meta name="twitter:description" content="Microservice架构模式就是将整个Web应用组织为一系列小的Web服务。这些小的Web服务可以独立地编译及部署，并通过各自暴露的API接口相互通讯。它们彼此相互协作，作为一个整体为用户提供功能，却可以独立地进行扩容。">
@@ -726,9 +726,22 @@ public class DisasterDataController extends BaseController {
 </code></pre><p>如：<br>假设微服务网关host地址为 <a href="http://10.10.10.10:8080，" target="_blank" rel="external">http://10.10.10.10:8080，</a><br>微服务A的SERVICEID为:APP-1，其中有一个接口地址为 /hello/world，那么网关的调取地址为：</p>
 <p><a href="http://10.10.10.10:8080/APP/v1/hello/world" target="_blank" rel="external">http://10.10.10.10:8080/APP/v1/hello/world</a></p>
 <p>注意：为了规范url调取路径，serviceid和版本将统一转换为小写</p>
-<h3 id="java-SDK调用"><a href="#java-SDK调用" class="headerlink" title="java SDK调用"></a>java SDK调用</h3><p>在pom.xml中引入对应的微服务发布的SDK包（sharelib），扫描service包路径，自动注入Service接口实例。</p>
-<p>在配置文件中加入服务中心的地址，</p>
+<h3 id="java-SDK调用"><a href="#java-SDK调用" class="headerlink" title="java SDK调用"></a>java SDK调用</h3><p>在pom.xml中引入对应的微服务发布的SDK包（sharelib），注意不能使用@ComponentScan扫描Feigin接口<br>// @EnableFeignClients(basePackageClasses = NationStationService.class)<br>@EnableFeignClients(basePackages = “com.mlog.koala.meta.service*”)</p>
+<pre><code>@SpringBootApplication
+@EnableDiscoveryClient
+// @EnableFeignClients(basePackageClasses = NationStationService.class)
+@EnableFeignClients(basePackages = &quot;com.mlog.koala.meta.service*&quot;)
+public class TestMicroApp {
+
+  public static void main(String[] args) {
+    SpringApplication.run(TestMicroApp.class, args);
+  }
+}
+</code></pre><p>在配置文件中加入服务中心的地址，</p>
 <pre><code>eureka.client.serviceUrl.defaultZone
+</code></pre><p>自动注入Service接口对象</p>
+<pre><code>@Autowired
+  private NationStationService nationStationService;
 </code></pre>
       
     </div>
@@ -770,6 +783,10 @@ public class DisasterDataController extends BaseController {
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/25/Tomcat配置编码集/" rel="prev" title="Tomcat配置编码集">
+                Tomcat配置编码集 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -837,7 +854,7 @@ public class DisasterDataController extends BaseController {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -854,7 +871,7 @@ public class DisasterDataController extends BaseController {
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
