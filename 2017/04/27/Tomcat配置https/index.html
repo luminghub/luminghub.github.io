@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Https," />
+  <meta name="keywords" content="Tomcat," />
 
 
 
@@ -84,22 +84,22 @@
 
 
 
-<meta name="description" content="配置tomcat的https访问">
+<meta name="description" content="配置tomcat的https访问。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tomcat配置Https">
 <meta property="og:url" content="http://yoursite.com/2017/04/27/Tomcat配置https/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="配置tomcat的https访问">
+<meta property="og:description" content="配置tomcat的https访问。">
 <meta property="og:image" content="http://i.imgur.com/hXp5XSB.png">
 <meta property="og:image" content="http://i.imgur.com/SeZDz9v.png">
 <meta property="og:image" content="http://i.imgur.com/G9DMZ0A.png">
 <meta property="og:image" content="http://i.imgur.com/rdqkeq9.png">
 <meta property="og:image" content="http://i.imgur.com/gn2udMP.png">
 <meta property="og:image" content="http://i.imgur.com/fc8L9l9.png">
-<meta property="og:updated_time" content="2017-04-27T06:00:15.548Z">
+<meta property="og:updated_time" content="2017-05-25T08:25:50.553Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tomcat配置Https">
-<meta name="twitter:description" content="配置tomcat的https访问">
+<meta name="twitter:description" content="配置tomcat的https访问。">
 <meta name="twitter:image" content="http://i.imgur.com/hXp5XSB.png">
 
 
@@ -325,7 +325,7 @@
 
           
               <div class="post-description">
-                  配置tomcat的https访问
+                  配置tomcat的https访问。
               </div>
           
 
@@ -340,7 +340,8 @@
       
 
       
-        <h2 id="1、生成证书"><a href="#1、生成证书" class="headerlink" title="1、生成证书"></a>1、生成证书</h2><p>用java jdk自带的keytool生成keystore密钥文件，<a href="http://www.micmiu.com/lang/java/keytool-start-guide/" target="_blank" rel="external">更多信息</a></p>
+        <h2 id="1、生成证书"><a href="#1、生成证书" class="headerlink" title="1、生成证书"></a>1、生成证书</h2><p>用java jdk自带的keytool生成keystore密钥文件</p>
+<p><a href="http://www.micmiu.com/lang/java/keytool-start-guide/" target="_blank" rel="external">更多信息</a></p>
 <pre><code>keytool -genkey -alias casserver -keyalg RSA -keysize 1024 -keypass lumingclient -validity 365 -keystore d:\sso\casserver.keystore -storepass lumingclient
 </code></pre><p><img src="http://i.imgur.com/hXp5XSB.png" alt=""></p>
 <blockquote>
@@ -400,7 +401,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Https/" rel="tag"># Https</a>
+            <a href="/tags/Tomcat/" rel="tag"># Tomcat</a>
           
         </div>
       
@@ -409,8 +410,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/27/Nginx配置https/" rel="next" title="Nginx配置Https">
-                <i class="fa fa-chevron-left"></i> Nginx配置Https
+              <a href="/2017/04/17/Spring相关/" rel="next" title="springBoot常用配置">
+                <i class="fa fa-chevron-left"></i> springBoot常用配置
               </a>
             
           </div>
@@ -419,8 +420,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/30/软件架构师的12项修炼1/" rel="prev" title="关系技能修炼篇<一>">
-                关系技能修炼篇<一> <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/27/Nginx配置https/" rel="prev" title="Nginx配置Https">
+                Nginx配置Https <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
