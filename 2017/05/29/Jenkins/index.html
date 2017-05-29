@@ -105,6 +105,7 @@
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/009.png">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/010.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/011.png">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/012.png">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/018.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/019.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/020.jpg">
@@ -117,7 +118,7 @@
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/026.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/027.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/028.jpg">
-<meta property="og:updated_time" content="2017-05-29T06:29:58.611Z">
+<meta property="og:updated_time" content="2017-05-29T14:59:31.670Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins">
 <meta name="twitter:description" content="Jenkins是一个开源软件项目，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。">
@@ -429,10 +430,10 @@ source /etc/profile
 <p><img src="https://luminghub.github.io/images/imgs/jenkins/009.png" alt=""></p>
 <h4 id="源码管理"><a href="#源码管理" class="headerlink" title="源码管理"></a>源码管理</h4><p>选择Git，填写源码GIT地址和分支</p>
 <p><img src="https://luminghub.github.io/images/imgs/jenkins/010.jpg" alt=""></p>
-<h4 id="构建触发器"><a href="#构建触发器" class="headerlink" title="构建触发器"></a>构建触发器</h4><p>选择当gitlab分支发生push动作的时候构建。<code>Build when a change is pushed to GitLab</code>。</p>
+<h4 id="构建触发器"><a href="#构建触发器" class="headerlink" title="构建触发器"></a>构建触发器</h4><p>选择当gitlab分支发生push动作的时候构建。<code>Build when a change is pushed to GitLab</code>。并填写允许的分支。</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/011.png" alt=""></p>
 <p>将<code>GitLab CI Service URL</code>填入到gitlab项目中。</p>
-<pre><code>![](https://luminghub.github.io/images/imgs/jenkins/012.png)
-</code></pre><p><img src="https://luminghub.github.io/images/imgs/jenkins/011.png" alt=""></p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/012.png" alt=""></p>
 <h4 id="build"><a href="#build" class="headerlink" title="build"></a>build</h4><p>填写需要编译的pom.xml文件，并填写mvn编译命令</p>
 <pre><code>clean install -Dmaven.test.skip=true
 </code></pre><p><img src="https://luminghub.github.io/images/imgs/jenkins/018.jpg" alt=""></p>
