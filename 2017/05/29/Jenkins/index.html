@@ -1,0 +1,901 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Jenkins," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Jenkins是一个开源软件项目，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins">
+<meta property="og:url" content="http://yoursite.com/2017/05/29/Jenkins/index.html">
+<meta property="og:site_name" content="一条缝小眼睛的个人博客">
+<meta property="og:description" content="Jenkins是一个开源软件项目，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/001.png">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/003.png">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/004.png">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/002.png">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/005.png">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/006.png">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/013.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/014.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/015.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/016.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/007.png">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/008.png">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/009.png">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/010.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/011.png">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/018.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/019.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/020.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/021.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/022.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/017.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/023.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/024.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/025.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/026.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/027.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/028.jpg">
+<meta property="og:updated_time" content="2017-05-29T06:29:58.611Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jenkins">
+<meta name="twitter:description" content="Jenkins是一个开源软件项目，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。">
+<meta name="twitter:image" content="https://luminghub.github.io/images/imgs/jenkins/001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/29/Jenkins/"/>
+
+
+
+
+
+  <title> Jenkins | 一条缝小眼睛的个人博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">一条缝小眼睛的个人博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">这个人的眼睛很小很小，笑起来的时候就会变成一条缝</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/29/Jenkins/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="小明同学">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="一条缝小眼睛的个人博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="一条缝小眼睛的个人博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Jenkins
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-29T00:00:00+08:00">
+                2017-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study/" itemprop="url" rel="index">
+                    <span itemprop="name">Study</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+              <div class="post-description">
+                  Jenkins是一个开源软件项目，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Jenkins功能"><a href="#Jenkins功能" class="headerlink" title="Jenkins功能"></a>Jenkins功能</h2><p>Jenkins是基于Java开发的一种持续集成工具，用于监控持续重复的工作，功能包括：</p>
+<ol>
+<li><p>持续的软件版本发布/测试项目。</p>
+</li>
+<li><p>监控外部调用执行的工作。</p>
+</li>
+</ol>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>这里简单介绍如何搭建jenkins运行环境。</p>
+<h3 id="安装jdk"><a href="#安装jdk" class="headerlink" title="安装jdk"></a>安装jdk</h3><p><a href="https://www.oracle.com/index.html" target="_blank" rel="external">oracle官网</a></p>
+<h3 id="安装jenkins"><a href="#安装jenkins" class="headerlink" title="安装jenkins"></a>安装jenkins</h3><p>JDK 1.8.x + tomcat 8.x + Jenkins 2.62</p>
+<p><a href="http://tomcat.apache.org/" target="_blank" rel="external">tomcat官网</a></p>
+<pre><code>wget http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.15/bin/apache-tomcat-8.5.15.zip
+</code></pre><p><a href="https://jenkins.io/download/" target="_blank" rel="external">Jenkins官网</a></p>
+<pre><code>wget http://mirrors.jenkins.io/war/latest/jenkins.war
+</code></pre><p><img src="https://luminghub.github.io/images/imgs/jenkins/001.png" alt=""></p>
+<p>将 jenkins.war 复制到tomcat的webapp目录下，启动tomcat。（默认端口为8080）</p>
+<p>如果tomcat权限不够无法启动，修改bin目录的下的执行文件权限</p>
+<pre><code>chmod u+x *.sh
+</code></pre><p>输入 <code>http://ip:8080/jenkins/</code>访问jenkins的dashboard。</p>
+<h3 id="找到登录密码"><a href="#找到登录密码" class="headerlink" title="找到登录密码"></a>找到登录密码</h3><p><img src="https://luminghub.github.io/images/imgs/jenkins/003.png" alt=""></p>
+<pre><code>cat /home/ubuntu/.jenkins/secrets/initialAdminPassword
+</code></pre><h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><p>选择自定义安装插件</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/004.png" alt=""></p>
+<h3 id="创建管理员用户"><a href="#创建管理员用户" class="headerlink" title="创建管理员用户"></a>创建管理员用户</h3><p>创建完管理员用户，成功后会跳到dashboard的首页。</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/002.png" alt=""></p>
+<h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><p><a href="https://git-scm.com/download/linux" target="_blank" rel="external">官网</a></p>
+<pre><code>apt-get install git
+</code></pre><p>配置gitlab的ssh密钥</p>
+<pre><code>ssh-keygen -t rsa -C &quot;luming@mlogcn.com&quot;
+</code></pre><p>生成路径变换成    <code>/home/ubuntu/.ssh/gitlab_rsa</code></p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/005.png" alt=""></p>
+<p>获取公钥信息，并复制到gitlab中</p>
+<pre><code>cat ~/.ssh/gitlab_rsa.pub
+</code></pre><p><img src="https://luminghub.github.io/images/imgs/jenkins/006.png" alt=""></p>
+<p>编辑~/.ssh/config文件，如果没有，就创建一个，在其中写入如下配置内容</p>
+<pre><code>Host gitlab.mlogcn.com
+     IdentityFile ~/.ssh/gitlab_rsa
+</code></pre><p>初始化GIT信息</p>
+<pre><code>git config --global user.name &quot;luming&quot;
+git config --global user.email &quot;luming@mlogcn.com&quot;
+</code></pre><p>测试git的ssh key 配置情况</p>
+<pre><code>git clone xxx
+</code></pre><h3 id="安装maven"><a href="#安装maven" class="headerlink" title="安装maven"></a>安装maven</h3><p><a href="http://maven.apache.org/download.cgi" target="_blank" rel="external">官网</a></p>
+<pre><code>wget http://apache.fayea.com/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.zip
+</code></pre><p>设置maven环境变量</p>
+<pre><code>vim /etc/profile
+export PATH=/home/ubuntu/apache-maven-3.3.9/bin:$PATH
+source /etc/profile
+</code></pre><p>测试maven：编译git中clone下来的项目</p>
+<pre><code>mvn clean install -Dmaven.test.skip=true
+</code></pre><h3 id="配置jenkins"><a href="#配置jenkins" class="headerlink" title="配置jenkins"></a>配置jenkins</h3><p>系统管理 -&gt; Global Tool Configuration</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/013.jpg" alt=""></p>
+<h4 id="配置JDK"><a href="#配置JDK" class="headerlink" title="配置JDK"></a>配置JDK</h4><p>如图，勾掉自动安装，填写jdk环境信息</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/014.jpg" alt=""></p>
+<h4 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a>配置git</h4><p>如图，勾掉自动安装，填写git环境信息</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/015.jpg" alt=""></p>
+<h4 id="配置maven"><a href="#配置maven" class="headerlink" title="配置maven"></a>配置maven</h4><p>查看maven安装信息</p>
+<pre><code>mvn --version
+</code></pre><p>如图，勾掉自动安装，填写maven环境信息</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/016.jpg" alt=""></p>
+<h2 id="使用jenkins"><a href="#使用jenkins" class="headerlink" title="使用jenkins"></a>使用jenkins</h2><h3 id="创建一个新任务"><a href="#创建一个新任务" class="headerlink" title="创建一个新任务"></a>创建一个新任务</h3><p>点击创建一个新任务，进入任务创建页面</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/007.png" alt=""></p>
+<p>创建一个maven工程</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/008.png" alt=""></p>
+<h3 id="配置项目属性"><a href="#配置项目属性" class="headerlink" title="配置项目属性"></a>配置项目属性</h3><h4 id="General"><a href="#General" class="headerlink" title="General"></a>General</h4><p>填写项目名称和描述信息。</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/009.png" alt=""></p>
+<h4 id="源码管理"><a href="#源码管理" class="headerlink" title="源码管理"></a>源码管理</h4><p>选择Git，填写源码GIT地址和分支</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/010.jpg" alt=""></p>
+<h4 id="构建触发器"><a href="#构建触发器" class="headerlink" title="构建触发器"></a>构建触发器</h4><p>选择当gitlab分支发生push动作的时候构建。<code>Build when a change is pushed to GitLab</code>。</p>
+<p>将<code>GitLab CI Service URL</code>填入到gitlab项目中。</p>
+<pre><code>![](https://luminghub.github.io/images/imgs/jenkins/012.png)
+</code></pre><p><img src="https://luminghub.github.io/images/imgs/jenkins/011.png" alt=""></p>
+<h4 id="build"><a href="#build" class="headerlink" title="build"></a>build</h4><p>填写需要编译的pom.xml文件，并填写mvn编译命令</p>
+<pre><code>clean install -Dmaven.test.skip=true
+</code></pre><p><img src="https://luminghub.github.io/images/imgs/jenkins/018.jpg" alt=""></p>
+<h4 id="立即构建"><a href="#立即构建" class="headerlink" title="立即构建"></a>立即构建</h4><p>保存设置，进入刚刚创建的任务，然后执行立即构建来创建工作区。</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/019.jpg" alt=""></p>
+<p>点击当前编译，可以查看编译信息，如日志：</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/020.jpg" alt=""></p>
+<p>编译完成后，进入到jenkins的工作目录，可以看到成功创建了workspace目录，并从git上获取了对应的项目代码， 并执行了maven编译。</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/021.jpg" alt=""></p>
+<p>在jenkins的工作区间页面上也能看到项目文件</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/022.jpg" alt=""></p>
+<p>到目前为止，我们只完成了在指定分支上push代码的时候，自动获取并编译项目的步骤。接下来我们配置自动部署编译好的文件到指定目标服务器。</p>
+<h3 id="自动部署"><a href="#自动部署" class="headerlink" title="自动部署"></a>自动部署</h3><p>如何让jenkins实现自动部署呢？这里提供我的思路：</p>
+<p>让jenkins在编译成功后，执行shell脚本，将工作目录下的编译好的包扔到目标服务器上，然后运行。</p>
+<h4 id="设置任务Post-Steps"><a href="#设置任务Post-Steps" class="headerlink" title="设置任务Post Steps"></a>设置任务Post Steps</h4><p>选择当编译成功的时候执行Shell脚本</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/017.jpg" alt=""></p>
+<p>这里我们执行编写的deploy.bash 脚本</p>
+<pre><code>bash deploy.bash koala
+</code></pre><h4 id="编写运行脚本"><a href="#编写运行脚本" class="headerlink" title="编写运行脚本"></a>编写运行脚本</h4><p>下面是我自己写的执行脚本，主要功能是从config.json中读取配置信息，将编译好的包扔到指定服务器，并传送一个执行脚本到该服务器，执行该脚本，完成自动部署流程。</p>
+<blockquote>
+<p>因为是用json做的配置文件，这里用jq作为json解析器</p>
+</blockquote>
+<p>安装jq</p>
+<pre><code>apt-get install jq
+</code></pre><p>下面是config.sh配置文件</p>
+<pre><code>[
+ {
+   &quot;name&quot;: &quot;koala-meta&quot;,
+   &quot;version&quot;: &quot;v1&quot;,
+   &quot;path&quot;: &quot;koala-meta/koala-meta-service&quot;,
+   &quot;deploys&quot;: [
+   {
+   &quot;ip&quot;: &quot;10.172.167.0&quot;,
+   &quot;port&quot;: &quot;8085&quot;,
+   &quot;dpath&quot;: &quot;/home/ubuntu/apps/koala&quot;
+   },
+   {
+   &quot;ip&quot;: &quot;10.172.167.0&quot;,
+   &quot;port&quot;: &quot;8086&quot;,
+   &quot;dpath&quot;: &quot;/home/ubuntu/apps/koala&quot;
+   }
+  ]
+ }
+]
+</code></pre><p>下面是deploy.sh 脚本</p>
+<pre><code>#!/bin/bash
+#定义配置文件
+JENKINSPACE=/home/ubuntu/.jenkins/workspace
+BASH_PATH=/home/ubuntu/.jenkins/workspace/publish.sh
+PROJECTNAME=$1
+CONFIG_FILE=${JENKINSPACE}/${PROJECTNAME}/config.json
+INDEX=0
+for NAME in `cat $CONFIG_FILE | jq -r .[].name` ; do
+ VERSION=`cat $CONFIG_FILE | jq -r .[$INDEX].version`
+ FPATH=`cat $CONFIG_FILE | jq -r .[$INDEX].path`
+ echo &quot;MODULE : $NAME  $VERSION $FPATH&quot;
+ D_INDEX=0
+ for IP in `cat $CONFIG_FILE | jq -r .[$INDEX].deploys[].ip` ; do
+  PORT=`cat $CONFIG_FILE | jq -r .[$INDEX].deploys[$D_INDEX].port`
+  DPATH=`cat $CONFIG_FILE | jq -r .[$INDEX].deploys[$D_INDEX].dpath`
+  ((D_INDEX++))
+  echo &quot;IP is $IP PORT is $PORT dpath is $DPATH&quot;
+  #创建目标服务器目录
+  ssh -t -t -p 1022 $IP &quot;mkdir -p $DPATH&quot;
+  #将文件scp到目标服务器
+  scp -P 1022 ${JENKINSPACE}/${PROJECTNAME}/${FPATH}/target/*.zip ${IP}:${DPATH}/${NAME}_${VERSION}_${PORT}.zip
+  scp -P 1022 ${BASH_PATH} ${IP}:${DPATH}/.
+  ssh -t -t -p 1022 $IP &quot;bash $DPATH/publish.sh $PORT ${DPATH}/${NAME}_${VERSION}_${PORT} ${DPATH}/${NAME}_${VERSION}_${PORT}.zip&quot;
+  done
+ ((INDEX++))
+done
+#结束退出
+exit
+</code></pre><p>下面是publish.sh脚本</p>
+<pre><code>#!/bin/bash
+PORT=$1
+FILEPATH=$2
+ZIPPATH=$3
+function killByPort(){
+ for kpid in `sudo lsof -t -i:${PORT}` ; do
+ echo &quot;THE PID IS $kpid&quot;
+ kill $kpid
+ done
+}
+function readandreplace(){
+ compstr=$1
+ replacestr=$2
+ filepath=$3
+ filebakpath=$filepath&quot;_bak&quot;
+ mv $filepath $filebakpath
+ while read LINE
+ do
+  echo &quot;READ LINE INFO : $LINE&quot;
+  case &quot;$LINE&quot; in
+   &quot;$compstr&quot;* ) LINE=$compstr&quot;=&quot;$replacestr
+   ;;
+  esac
+ echo $LINE &gt;&gt; $filepath
+ done &lt; $filebakpath
+}
+killByPort
+rm -rf $2
+unzip -o -d $2 $3
+readandreplace server.port $PORT ${FILEPATH}/conf/bootstrap.properties
+readandreplace port $PORT ${FILEPATH}/conf/appinfo.properties
+pwd
+cd ${FILEPATH}
+pwd
+nohup bash start.sh
+exit
+</code></pre><p>下面是start.sh 执行文件</p>
+<pre><code>#!/bin/sh
+source config.sh
+nohup java $JAVA_OPTS  $AGENT_OPTS -cp $classpath com.mlog.koala.meta.MetaStationApplication  &gt;&gt;out.log &amp;
+pid=$!
+echo $pid&gt;koala.pid
+</code></pre><p>下面是config.sh 执行文件</p>
+<pre><code>#!/bin/sh
+classpath=&quot;./conf&quot;
+for file in lib/*.jar
+do
+  if [[ ! -f &quot;$file&quot; ]]
+  then
+      continue
+  fi
+  classpath=&quot;$classpath:$file&quot;
+done
+JAVA_OPTS=&quot;-Duser.timezone=GMT+08&quot;
+AGENT_OPTS=&quot;&quot;
+if [ -f lib/sharelibs-health*.jar ];then
+    healthAgent=`ls -lrt lib/sharelibs-health-*.jar |awk -F&quot; &quot; &apos;{print $NF}&apos;`
+    AGENT_OPTS=&quot;$AGENT_OPTS  -javaagent:$healthAgent&quot;
+fi
+
+if [ -f lib/mlog-log*.jar ];then
+    logAgent=`ls -lrt lib/mlog-log*.jar |awk -F&quot; &quot; &apos;{print $NF}&apos;`
+    AGENT_OPTS=&quot;$AGENT_OPTS  -javaagent:$logAgent=catch_error=true&quot;
+fi
+export AGENT_OPTS
+export classpath
+export JAVA_OPTS
+echo $AGENT_OPTS
+</code></pre><h4 id="设置jenkins服务器到目标服务器的免密登录"><a href="#设置jenkins服务器到目标服务器的免密登录" class="headerlink" title="设置jenkins服务器到目标服务器的免密登录"></a>设置jenkins服务器到目标服务器的免密登录</h4><p>生成ssh key</p>
+<pre><code>ssh-keygen -t rsa -f jenkins_rsa
+</code></pre><p>将公钥scp到目标服务器</p>
+<pre><code>scp -p 22 ~/.ssh/jenkins_rsa.pub 10.172.167.0:~/.ssh/.
+</code></pre><p>配置config文件</p>
+<pre><code>Host 10.172.167.0
+     IdentityFile ~/.ssh/jenkins_rsa
+</code></pre><h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>将脚本放到jenkins目录下。</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/023.jpg" alt=""></p>
+<p>在koala项目下，进行一次代码提交。</p>
+<h5 id="在非发布分支下提交"><a href="#在非发布分支下提交" class="headerlink" title="在非发布分支下提交"></a>在非发布分支下提交</h5><p>在luming分支下做代码提交</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/024.jpg" alt=""></p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/025.jpg" alt=""></p>
+<p>进入jenkins的koala任务页面，可以看到jenkins并没有反应。</p>
+<p>切换到testpub分支，重复一遍上述步骤</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/026.jpg" alt=""></p>
+<p>然后在jenkins上看到了我们想要的结果</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/027.jpg" alt=""></p>
+<p>进入部署服务器，确认一下部署结果</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/028.jpg" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Jenkins/" rel="tag"># Jenkins</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/27/sudo权限配置/" rel="next" title="sudo权限配置">
+                <i class="fa fa-chevron-left"></i> sudo权限配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="小明同学" />
+          <p class="site-author-name" itemprop="name">小明同学</p>
+          <p class="site-description motion-element" itemprop="description">java</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Jenkins功能"><span class="nav-number">1.</span> <span class="nav-text">Jenkins功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装jdk"><span class="nav-number">2.1.</span> <span class="nav-text">安装jdk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装jenkins"><span class="nav-number">2.2.</span> <span class="nav-text">安装jenkins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找到登录密码"><span class="nav-number">2.3.</span> <span class="nav-text">找到登录密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装插件"><span class="nav-number">2.4.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建管理员用户"><span class="nav-number">2.5.</span> <span class="nav-text">创建管理员用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装git"><span class="nav-number">2.6.</span> <span class="nav-text">安装git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装maven"><span class="nav-number">2.7.</span> <span class="nav-text">安装maven</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置jenkins"><span class="nav-number">2.8.</span> <span class="nav-text">配置jenkins</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置JDK"><span class="nav-number">2.8.1.</span> <span class="nav-text">配置JDK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置git"><span class="nav-number">2.8.2.</span> <span class="nav-text">配置git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置maven"><span class="nav-number">2.8.3.</span> <span class="nav-text">配置maven</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用jenkins"><span class="nav-number">3.</span> <span class="nav-text">使用jenkins</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个新任务"><span class="nav-number">3.1.</span> <span class="nav-text">创建一个新任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置项目属性"><span class="nav-number">3.2.</span> <span class="nav-text">配置项目属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#General"><span class="nav-number">3.2.1.</span> <span class="nav-text">General</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#源码管理"><span class="nav-number">3.2.2.</span> <span class="nav-text">源码管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建触发器"><span class="nav-number">3.2.3.</span> <span class="nav-text">构建触发器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#build"><span class="nav-number">3.2.4.</span> <span class="nav-text">build</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#立即构建"><span class="nav-number">3.2.5.</span> <span class="nav-text">立即构建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动部署"><span class="nav-number">3.3.</span> <span class="nav-text">自动部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置任务Post-Steps"><span class="nav-number">3.3.1.</span> <span class="nav-text">设置任务Post Steps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写运行脚本"><span class="nav-number">3.3.2.</span> <span class="nav-text">编写运行脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置jenkins服务器到目标服务器的免密登录"><span class="nav-number">3.3.3.</span> <span class="nav-text">设置jenkins服务器到目标服务器的免密登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试"><span class="nav-number">3.3.4.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在非发布分支下提交"><span class="nav-number">3.3.4.1.</span> <span class="nav-text">在非发布分支下提交</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小明同学</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
