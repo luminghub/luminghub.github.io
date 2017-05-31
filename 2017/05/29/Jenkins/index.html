@@ -106,19 +106,19 @@
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/010.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/011.png">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/012.png">
-<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/018.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/017.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/019.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/020.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/021.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/022.jpg">
-<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/017.jpg">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/018.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/023.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/024.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/025.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/026.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/027.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/028.jpg">
-<meta property="og:updated_time" content="2017-05-29T14:59:31.670Z">
+<meta property="og:updated_time" content="2017-05-31T06:32:05.384Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins">
 <meta name="twitter:description" content="Jenkins是一个开源软件项目，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。">
@@ -436,7 +436,7 @@ source /etc/profile
 <p><img src="https://luminghub.github.io/images/imgs/jenkins/012.png" alt=""></p>
 <h4 id="build"><a href="#build" class="headerlink" title="build"></a>build</h4><p>填写需要编译的pom.xml文件，并填写mvn编译命令</p>
 <pre><code>clean install -Dmaven.test.skip=true
-</code></pre><p><img src="https://luminghub.github.io/images/imgs/jenkins/018.jpg" alt=""></p>
+</code></pre><p><img src="https://luminghub.github.io/images/imgs/jenkins/017.jpg" alt=""></p>
 <h4 id="立即构建"><a href="#立即构建" class="headerlink" title="立即构建"></a>立即构建</h4><p>保存设置，进入刚刚创建的任务，然后执行立即构建来创建工作区。</p>
 <p><img src="https://luminghub.github.io/images/imgs/jenkins/019.jpg" alt=""></p>
 <p>点击当前编译，可以查看编译信息，如日志：</p>
@@ -449,7 +449,7 @@ source /etc/profile
 <h3 id="自动部署"><a href="#自动部署" class="headerlink" title="自动部署"></a>自动部署</h3><p>如何让jenkins实现自动部署呢？这里提供我的思路：</p>
 <p>让jenkins在编译成功后，执行shell脚本，将工作目录下的编译好的包扔到目标服务器上，然后运行。</p>
 <h4 id="设置任务Post-Steps"><a href="#设置任务Post-Steps" class="headerlink" title="设置任务Post Steps"></a>设置任务Post Steps</h4><p>选择当编译成功的时候执行Shell脚本</p>
-<p><img src="https://luminghub.github.io/images/imgs/jenkins/017.jpg" alt=""></p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/018.jpg" alt=""></p>
 <p>这里我们执行编写的deploy.bash 脚本</p>
 <pre><code>bash deploy.bash koala
 </code></pre><h4 id="编写运行脚本"><a href="#编写运行脚本" class="headerlink" title="编写运行脚本"></a>编写运行脚本</h4><p>下面是我自己写的执行脚本，主要功能是从config.json中读取配置信息，将编译好的包扔到指定服务器，并传送一个执行脚本到该服务器，执行该脚本，完成自动部署流程。</p>
