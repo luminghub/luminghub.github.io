@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/26/Ubuntu免密登录/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="作为一个开发者，经常要面对管理一大堆服务器的情况，对unix类服务器，我们一般用ssh连接来管理。">
-<meta property="og:updated_time" content="2017-05-25T10:28:36.240Z">
+<meta property="og:updated_time" content="2017-06-01T12:05:47.654Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSH免密登录">
 <meta name="twitter:description" content="作为一个开发者，经常要面对管理一大堆服务器的情况，对unix类服务器，我们一般用ssh连接来管理。">
@@ -379,7 +379,13 @@ my-key-file     my-key-file.pub
 </code></pre><blockquote>
 <p>在后面我们都用loginname来特指你自己的登录名，用yourdomain.com来特指你的服务器地址，请自行脑补</p>
 </blockquote>
-<p>其中my-key-file.pub是我们刚刚上传的公钥文件名。现在我们还要告诉本机，连接yourdomain.com的时候使用my-key-file这个私钥来登录</p>
+<p>将文件拷贝到.ssh目录下（确认已经安装ssh），目录下是否存在一个名为“authorized_keys”的文件，<br>若不存在，创建一个空文件，</p>
+<pre><code>touch authorized_keys 
+</code></pre><p>然后将公钥信息写入该文件</p>
+<pre><code>cat my-key-file.pub &gt;&gt; authorized_keys
+</code></pre><p>为了安全起见，将authorized_keys文件权限修改为600。</p>
+<pre><code>chmod 600  authorized_keys
+</code></pre><p>现在我们还要告诉本机，连接yourdomain.com的时候使用my-key-file这个私钥来登录</p>
 <p>退出ssh连接，回到本地。将刚才生成的my-key-file文件拷贝到~/.ssh目录下</p>
 <pre><code>cp my-key-file ~/.ssh/
 </code></pre><p>然后编辑~/.ssh/config文件，如果没有，就创建一个，在其中写入如下配置内容</p>
@@ -498,7 +504,7 @@ Are you sure you want to continue connecting (yes/no)?
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">33</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

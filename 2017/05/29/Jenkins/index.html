@@ -118,7 +118,8 @@
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/026.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/027.jpg">
 <meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/028.jpg">
-<meta property="og:updated_time" content="2017-05-31T06:32:05.384Z">
+<meta property="og:image" content="https://luminghub.github.io/images/imgs/jenkins/018.jpg">
+<meta property="og:updated_time" content="2017-05-31T08:51:33.507Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins">
 <meta name="twitter:description" content="Jenkins是一个开源软件项目，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。">
@@ -596,7 +597,18 @@ echo $AGENT_OPTS
 <p><img src="https://luminghub.github.io/images/imgs/jenkins/027.jpg" alt=""></p>
 <p>进入部署服务器，确认一下部署结果</p>
 <p><img src="https://luminghub.github.io/images/imgs/jenkins/028.jpg" alt=""></p>
-
+<h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><h4 id="jenkins执行Shell脚本结束后，显示执行失败如果解决？"><a href="#jenkins执行Shell脚本结束后，显示执行失败如果解决？" class="headerlink" title="jenkins执行Shell脚本结束后，显示执行失败如果解决？"></a>jenkins执行Shell脚本结束后，显示执行失败如果解决？</h4><p>在最末尾加上</p>
+<pre><code>echo commonder quit!
+</code></pre><p>修改 设置任务Post Steps</p>
+<p>选择当编译成功的时候执行Shell脚本</p>
+<p><img src="https://luminghub.github.io/images/imgs/jenkins/018.jpg" alt=""></p>
+<p>这里我们执行编写的deploy.bash 脚本</p>
+<pre><code>bash /home/ubuntu/.jenkins/workspace/deploy.bash koala
+</code></pre><p>调整为</p>
+<pre><code>#!/bin/bash
+bash /home/ubuntu/.jenkins/workspace/deploy.sh koala 
+echo commonder quit!
+</code></pre>
       
     </div>
 
@@ -637,6 +649,10 @@ echo $AGENT_OPTS
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/10/软件架构师的12项修炼3/" rel="prev" title="关系技能修炼篇<三>">
+                关系技能修炼篇<三> <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -704,7 +720,7 @@ echo $AGENT_OPTS
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">33</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -756,7 +772,7 @@ echo $AGENT_OPTS
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Jenkins功能"><span class="nav-number">1.</span> <span class="nav-text">Jenkins功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装jdk"><span class="nav-number">2.1.</span> <span class="nav-text">安装jdk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装jenkins"><span class="nav-number">2.2.</span> <span class="nav-text">安装jenkins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找到登录密码"><span class="nav-number">2.3.</span> <span class="nav-text">找到登录密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装插件"><span class="nav-number">2.4.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建管理员用户"><span class="nav-number">2.5.</span> <span class="nav-text">创建管理员用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装git"><span class="nav-number">2.6.</span> <span class="nav-text">安装git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装maven"><span class="nav-number">2.7.</span> <span class="nav-text">安装maven</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置jenkins"><span class="nav-number">2.8.</span> <span class="nav-text">配置jenkins</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置JDK"><span class="nav-number">2.8.1.</span> <span class="nav-text">配置JDK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置git"><span class="nav-number">2.8.2.</span> <span class="nav-text">配置git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置maven"><span class="nav-number">2.8.3.</span> <span class="nav-text">配置maven</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用jenkins"><span class="nav-number">3.</span> <span class="nav-text">使用jenkins</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个新任务"><span class="nav-number">3.1.</span> <span class="nav-text">创建一个新任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置项目属性"><span class="nav-number">3.2.</span> <span class="nav-text">配置项目属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#General"><span class="nav-number">3.2.1.</span> <span class="nav-text">General</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#源码管理"><span class="nav-number">3.2.2.</span> <span class="nav-text">源码管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建触发器"><span class="nav-number">3.2.3.</span> <span class="nav-text">构建触发器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#build"><span class="nav-number">3.2.4.</span> <span class="nav-text">build</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#立即构建"><span class="nav-number">3.2.5.</span> <span class="nav-text">立即构建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动部署"><span class="nav-number">3.3.</span> <span class="nav-text">自动部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置任务Post-Steps"><span class="nav-number">3.3.1.</span> <span class="nav-text">设置任务Post Steps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写运行脚本"><span class="nav-number">3.3.2.</span> <span class="nav-text">编写运行脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置jenkins服务器到目标服务器的免密登录"><span class="nav-number">3.3.3.</span> <span class="nav-text">设置jenkins服务器到目标服务器的免密登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试"><span class="nav-number">3.3.4.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在非发布分支下提交"><span class="nav-number">3.3.4.1.</span> <span class="nav-text">在非发布分支下提交</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Jenkins功能"><span class="nav-number">1.</span> <span class="nav-text">Jenkins功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装jdk"><span class="nav-number">2.1.</span> <span class="nav-text">安装jdk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装jenkins"><span class="nav-number">2.2.</span> <span class="nav-text">安装jenkins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找到登录密码"><span class="nav-number">2.3.</span> <span class="nav-text">找到登录密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装插件"><span class="nav-number">2.4.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建管理员用户"><span class="nav-number">2.5.</span> <span class="nav-text">创建管理员用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装git"><span class="nav-number">2.6.</span> <span class="nav-text">安装git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装maven"><span class="nav-number">2.7.</span> <span class="nav-text">安装maven</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置jenkins"><span class="nav-number">2.8.</span> <span class="nav-text">配置jenkins</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置JDK"><span class="nav-number">2.8.1.</span> <span class="nav-text">配置JDK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置git"><span class="nav-number">2.8.2.</span> <span class="nav-text">配置git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置maven"><span class="nav-number">2.8.3.</span> <span class="nav-text">配置maven</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用jenkins"><span class="nav-number">3.</span> <span class="nav-text">使用jenkins</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个新任务"><span class="nav-number">3.1.</span> <span class="nav-text">创建一个新任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置项目属性"><span class="nav-number">3.2.</span> <span class="nav-text">配置项目属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#General"><span class="nav-number">3.2.1.</span> <span class="nav-text">General</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#源码管理"><span class="nav-number">3.2.2.</span> <span class="nav-text">源码管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建触发器"><span class="nav-number">3.2.3.</span> <span class="nav-text">构建触发器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#build"><span class="nav-number">3.2.4.</span> <span class="nav-text">build</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#立即构建"><span class="nav-number">3.2.5.</span> <span class="nav-text">立即构建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动部署"><span class="nav-number">3.3.</span> <span class="nav-text">自动部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置任务Post-Steps"><span class="nav-number">3.3.1.</span> <span class="nav-text">设置任务Post Steps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写运行脚本"><span class="nav-number">3.3.2.</span> <span class="nav-text">编写运行脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置jenkins服务器到目标服务器的免密登录"><span class="nav-number">3.3.3.</span> <span class="nav-text">设置jenkins服务器到目标服务器的免密登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试"><span class="nav-number">3.3.4.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在非发布分支下提交"><span class="nav-number">3.3.4.1.</span> <span class="nav-text">在非发布分支下提交</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他问题"><span class="nav-number">3.4.</span> <span class="nav-text">其他问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#jenkins执行Shell脚本结束后，显示执行失败如果解决？"><span class="nav-number">3.4.1.</span> <span class="nav-text">jenkins执行Shell脚本结束后，显示执行失败如果解决？</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
