@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/27/mybaties/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="MyBatis 本是apache的一个开源项目iBatis, 2010年这个项目由apache software foundation 迁移到了google code，并且改名为MyBatis。2013年11月迁移到Github。">
-<meta property="og:updated_time" content="2017-06-27T13:28:36.053Z">
+<meta property="og:updated_time" content="2017-06-27T13:30:59.239Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mybatis常用语法">
 <meta name="twitter:description" content="MyBatis 本是apache的一个开源项目iBatis, 2010年这个项目由apache software foundation 迁移到了google code，并且改名为MyBatis。2013年11月迁移到Github。">
@@ -375,7 +375,7 @@
 </code></pre><h3 id="Mybatis自动生成key值（selectKey和useGeneratedKeys）"><a href="#Mybatis自动生成key值（selectKey和useGeneratedKeys）" class="headerlink" title="Mybatis自动生成key值（selectKey和useGeneratedKeys）"></a>Mybatis自动生成key值（selectKey和useGeneratedKeys）</h3><p>如果数据库支持自增长主键字段（比如MySQL、sql server）设置useGeneratedKeys=”true”和keyProperty，这样就可以插入主键id值<br>Oracle则不支持自增长id，设置useGeneratedKey=”false”，如果设置true则会有报错信息。</p>
 <pre><code>&lt;!-- 插入新的问题件 --&gt;
 &lt;!-- useGeneratedKeys=&quot;true&quot;把新增加的主键赋值到自己定义的keyProperty（id）中 --&gt;
-&lt;insert id=&quot;insert&quot; parameterType=&quot;jw.base.entity.WrongRecApply&quot; useGeneratedKeys=&quot;true&quot; keyProperty=&quot;cid&quot; keyColumn=&quot;cid&quot;&gt;
+&lt;insert id=&quot;insert&quot; parameterType=&quot;jw.base.entity.WrongRecApply&quot; useGeneratedKeys=&quot;true&quot; keyProperty=&quot;id&quot; keyColumn=&quot;id&quot;&gt;
     insert into tb_wrong_rec_apply (num, cid,
         `type`, `describe`, solution,
         seller_tel, seller_qq, seller_email,
