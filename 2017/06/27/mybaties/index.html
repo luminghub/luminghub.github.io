@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/27/mybaties/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="MyBatis 本是apache的一个开源项目iBatis, 2010年这个项目由apache software foundation 迁移到了google code，并且改名为MyBatis。2013年11月迁移到Github。">
-<meta property="og:updated_time" content="2017-06-27T13:02:11.709Z">
+<meta property="og:updated_time" content="2017-06-27T13:28:36.053Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mybatis常用语法">
 <meta name="twitter:description" content="MyBatis 本是apache的一个开源项目iBatis, 2010年这个项目由apache software foundation 迁移到了google code，并且改名为MyBatis。2013年11月迁移到Github。">
@@ -372,6 +372,25 @@
     &lt;/set&gt;     
     WHERE STUDENT_TBL.STUDENT_ID = #{studentID};      
 &lt;/update&gt;   
+</code></pre><h3 id="Mybatis自动生成key值（selectKey和useGeneratedKeys）"><a href="#Mybatis自动生成key值（selectKey和useGeneratedKeys）" class="headerlink" title="Mybatis自动生成key值（selectKey和useGeneratedKeys）"></a>Mybatis自动生成key值（selectKey和useGeneratedKeys）</h3><p>如果数据库支持自增长主键字段（比如MySQL、sql server）设置useGeneratedKeys=”true”和keyProperty，这样就可以插入主键id值<br>Oracle则不支持自增长id，设置useGeneratedKey=”false”，如果设置true则会有报错信息。</p>
+<pre><code>&lt;!-- 插入新的问题件 --&gt;
+&lt;!-- useGeneratedKeys=&quot;true&quot;把新增加的主键赋值到自己定义的keyProperty（id）中 --&gt;
+&lt;insert id=&quot;insert&quot; parameterType=&quot;jw.base.entity.WrongRecApply&quot; useGeneratedKeys=&quot;true&quot; keyProperty=&quot;cid&quot; keyColumn=&quot;cid&quot;&gt;
+    insert into tb_wrong_rec_apply (num, cid,
+        `type`, `describe`, solution,
+        seller_tel, seller_qq, seller_email,
+        buyer_tel, buyer_qq, buyer_email,
+        submit_time, update_time, r_wrong_id,
+        ext1, ext2, img,state
+      )
+     values (#{num,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER},
+        #{type,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, #{solution,jdbcType=VARCHAR},
+        #{sellerTel,jdbcType=VARCHAR}, #{sellerQq,jdbcType=VARCHAR}, #{sellerEmail,jdbcType=VARCHAR},
+        #{buyerTel,jdbcType=VARCHAR}, #{buyerQq,jdbcType=VARCHAR}, #{buyerEmail,jdbcType=VARCHAR},
+        #{submitTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{rWrongId,jdbcType=INTEGER},
+        #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{img,jdbcType=LONGVARBINARY},#{state,jdbcType=INTEGER}
+    )
+&lt;/insert&gt;
 </code></pre><h3 id="mybatis的trim是更灵活的去处多余关键字的标签，他可以实践where和set的效果。"><a href="#mybatis的trim是更灵活的去处多余关键字的标签，他可以实践where和set的效果。" class="headerlink" title="mybatis的trim是更灵活的去处多余关键字的标签，他可以实践where和set的效果。"></a>mybatis的trim是更灵活的去处多余关键字的标签，他可以实践where和set的效果。</h3><p> where例子的等效trim语句：</p>
 <pre><code>&lt;!-- 查询学生list，like姓名，=性别 --&gt;     
 &lt;select id=&quot;getStudentListWhere&quot; parameterType=&quot;StudentEntity&quot; resultMap=&quot;studentResultMap&quot;&gt;     
@@ -610,7 +629,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis判断是否为空或null"><span class="nav-number">1.</span> <span class="nav-text">mybatis判断是否为空或null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis判断集合为空或者元素个数为零"><span class="nav-number">2.</span> <span class="nav-text">mybatis判断集合为空或者元素个数为零</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis-插入多条记录"><span class="nav-number">3.</span> <span class="nav-text">mybatis 插入多条记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis使用set-if标签修改后，如果某项为null则不进行更新，而是保持数据库原值。如下示例："><span class="nav-number">4.</span> <span class="nav-text">mybatis使用set+if标签修改后，如果某项为null则不进行更新，而是保持数据库原值。如下示例：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis的trim是更灵活的去处多余关键字的标签，他可以实践where和set的效果。"><span class="nav-number">5.</span> <span class="nav-text">mybatis的trim是更灵活的去处多余关键字的标签，他可以实践where和set的效果。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#choose-when-otherwise"><span class="nav-number">6.</span> <span class="nav-text">choose (when, otherwise)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#foreach"><span class="nav-number">7.</span> <span class="nav-text">foreach</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数为list实例的写法："><span class="nav-number">7.1.</span> <span class="nav-text">参数为list实例的写法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数为Array实例的写法："><span class="nav-number">7.2.</span> <span class="nav-text">参数为Array实例的写法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis-与-的区别"><span class="nav-number">8.</span> <span class="nav-text">mybatis ${}与#{}的区别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis判断是否为空或null"><span class="nav-number">1.</span> <span class="nav-text">mybatis判断是否为空或null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis判断集合为空或者元素个数为零"><span class="nav-number">2.</span> <span class="nav-text">mybatis判断集合为空或者元素个数为零</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis-插入多条记录"><span class="nav-number">3.</span> <span class="nav-text">mybatis 插入多条记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis使用set-if标签修改后，如果某项为null则不进行更新，而是保持数据库原值。如下示例："><span class="nav-number">4.</span> <span class="nav-text">mybatis使用set+if标签修改后，如果某项为null则不进行更新，而是保持数据库原值。如下示例：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis自动生成key值（selectKey和useGeneratedKeys）"><span class="nav-number">5.</span> <span class="nav-text">Mybatis自动生成key值（selectKey和useGeneratedKeys）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis的trim是更灵活的去处多余关键字的标签，他可以实践where和set的效果。"><span class="nav-number">6.</span> <span class="nav-text">mybatis的trim是更灵活的去处多余关键字的标签，他可以实践where和set的效果。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#choose-when-otherwise"><span class="nav-number">7.</span> <span class="nav-text">choose (when, otherwise)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#foreach"><span class="nav-number">8.</span> <span class="nav-text">foreach</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数为list实例的写法："><span class="nav-number">8.1.</span> <span class="nav-text">参数为list实例的写法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数为Array实例的写法："><span class="nav-number">8.2.</span> <span class="nav-text">参数为Array实例的写法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mybatis-与-的区别"><span class="nav-number">9.</span> <span class="nav-text">mybatis ${}与#{}的区别</span></a></li></ol></div>
             
 
           </div>
