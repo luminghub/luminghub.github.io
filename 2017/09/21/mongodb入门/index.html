@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/21/mongodb入门/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="mongodb常用的简单基本操作。">
-<meta property="og:updated_time" content="2017-09-21T12:41:18.673Z">
+<meta property="og:updated_time" content="2017-09-21T13:01:11.651Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mongodb入门">
 <meta name="twitter:description" content="mongodb常用的简单基本操作。">
@@ -404,8 +404,7 @@ db.inventory.deleteMany({ status : &quot;A&quot; })
 
 删除一条：
 db.inventory.deleteOne( { status: &quot;D&quot; } )
-</code></pre><p>###　Text Search</p>
-<pre><code>db.stores.insert(
+</code></pre><h3 id="文本搜索"><a href="#文本搜索" class="headerlink" title="文本搜索"></a>文本搜索</h3><pre><code>db.stores.insert(
    [
      { _id: 1, name: &quot;Java Hut&quot;, description: &quot;Coffee and cakes&quot; },
      { _id: 2, name: &quot;Burger Buns&quot;, description: &quot;Gourmet hamburgers&quot; },
@@ -416,19 +415,20 @@ db.inventory.deleteOne( { status: &quot;D&quot; } )
 )
 创建索引
 db.stores.createIndex( { name: &quot;text&quot;, description: &quot;text&quot; } )
-</code></pre><p>使用$text Operator</p>
-<pre><code>查询包含java,coffee,shop的
+使用$text Operator
+查询包含java,coffee,shop的
 db.stores.find( { $text: { $search: &quot;java coffee shop&quot; } } )
 查询包含java或者coffee shop的
 db.stores.find( { $text: { $search: &quot;java \&quot;coffee shop\&quot;&quot; } } )
 查询包含java或者shop但是不包含coffee的
 db.stores.find( { $text: { $search: &quot;java shop -coffee&quot; } } )
-</code></pre><p>排序 <a href="https://docs.mongodb.com/manual/reference/operator/projection/meta/#proj._S_meta" target="_blank" rel="external">更多</a></p>
-<pre><code>db.stores.find(
+排序
+db.stores.find(
    { $text: { $search: &quot;java coffee shop&quot; } },
    { score: { $meta: &quot;textScore&quot; } }
 ).sort( { score: { $meta: &quot;textScore&quot; } } )
-</code></pre>
+</code></pre><p><a href="https://docs.mongodb.com/manual/reference/operator/projection/meta/#proj._S_meta" target="_blank" rel="external">更多$meta</a></p>
+
       
     </div>
 
@@ -588,7 +588,7 @@ db.stores.find( { $text: { $search: &quot;java shop -coffee&quot; } } )
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#导航"><span class="nav-number">1.</span> <span class="nav-text">导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据导入导出"><span class="nav-number">2.</span> <span class="nav-text">数据导入导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模糊查询"><span class="nav-number">3.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入数据"><span class="nav-number">4.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询数据"><span class="nav-number">5.</span> <span class="nav-text">查询数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新数据"><span class="nav-number">6.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据"><span class="nav-number">7.</span> <span class="nav-text">删除数据</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#导航"><span class="nav-number">1.</span> <span class="nav-text">导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据导入导出"><span class="nav-number">2.</span> <span class="nav-text">数据导入导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模糊查询"><span class="nav-number">3.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入数据"><span class="nav-number">4.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询数据"><span class="nav-number">5.</span> <span class="nav-text">查询数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新数据"><span class="nav-number">6.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据"><span class="nav-number">7.</span> <span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本搜索"><span class="nav-number">8.</span> <span class="nav-text">文本搜索</span></a></li></ol></div>
             
 
           </div>
