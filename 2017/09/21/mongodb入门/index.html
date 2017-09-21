@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="GIT," />
+  <meta name="keywords" content="mongodb," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
+<meta name="description" content="mongodb常用的简单基本操作。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git 使用简易指南">
-<meta property="og:url" content="http://yoursite.com/2016/11/22/git/index.html">
+<meta property="og:title" content="mongodb入门">
+<meta property="og:url" content="http://yoursite.com/2017/09/21/mongodb入门/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
-<meta property="og:updated_time" content="2016-11-25T06:04:36.000Z">
+<meta property="og:description" content="mongodb常用的简单基本操作。">
+<meta property="og:updated_time" content="2017-09-21T12:41:18.673Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git 使用简易指南">
-<meta name="twitter:description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
+<meta name="twitter:title" content="mongodb入门">
+<meta name="twitter:description" content="mongodb常用的简单基本操作。">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/22/git/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/21/mongodb入门/"/>
 
 
 
 
 
-  <title> Git 使用简易指南 | 一条缝小眼睛的个人博客 </title>
+  <title> mongodb入门 | 一条缝小眼睛的个人博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -238,7 +238,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/22/git/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/21/mongodb入门/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="小明同学">
@@ -262,7 +262,7 @@
             
             
               
-                Git 使用简易指南
+                mongodb入门
               
             
           </h1>
@@ -275,8 +275,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-22T00:00:00+08:00">
-                2016-11-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-21T00:00:00+08:00">
+                2017-09-21
               </time>
             
 
@@ -318,7 +318,7 @@
 
           
               <div class="post-description">
-                  Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。
+                  mongodb常用的简单基本操作。
               </div>
           
 
@@ -333,68 +333,101 @@
       
 
       
-        <h3 id="1、创建新仓库"><a href="#1、创建新仓库" class="headerlink" title="1、创建新仓库:"></a>1、创建新仓库:</h3><pre><code>创建新文件夹-&gt;打开  git init
-</code></pre><h3 id="2、检出仓库"><a href="#2、检出仓库" class="headerlink" title="2、检出仓库"></a>2、检出仓库</h3><pre><code>git clone + 地址/路径
-</code></pre><h3 id="3、添加与提交"><a href="#3、添加与提交" class="headerlink" title="3、添加与提交"></a>3、添加与提交</h3><blockquote>
-<p>添加（缓存区）：</p>
-</blockquote>
-<pre><code>git add &lt;filename&gt;  /  git add *
-</code></pre><blockquote>
-<p>提交（HEAD）：</p>
-</blockquote>
-<pre><code>git commit -m &quot;代码提交信息&quot;
-</code></pre><h3 id="4、推送与改动"><a href="#4、推送与改动" class="headerlink" title="4、推送与改动"></a>4、推送与改动</h3><blockquote>
-<p>推送（分支，默认master）：</p>
-</blockquote>
-<pre><code>git push origin master(master可以替换成想推送的分支)
-</code></pre><blockquote>
-<p>改动：</p>
-</blockquote>
-<pre><code>git remote add origin &lt;server&gt;
-</code></pre><h3 id="5、分支"><a href="#5、分支" class="headerlink" title="5、分支"></a>5、分支</h3><blockquote>
-<p>创建分支：</p>
-</blockquote>
-<pre><code>git checkout -b feature_x (feature_x：分支名字)
-</code></pre><blockquote>
-<p>切换到主分支：</p>
-</blockquote>
-<pre><code>git checkout master
-</code></pre><blockquote>
-<p>删除分支：</p>
-</blockquote>
-<pre><code>git branch -d feature_x
-</code></pre><blockquote>
-<p>将分支推送：</p>
-</blockquote>
-<pre><code>git push origin &lt;branch&gt;
-</code></pre><h3 id="6、更新与合并"><a href="#6、更新与合并" class="headerlink" title="6、更新与合并"></a>6、更新与合并</h3><blockquote>
-<p>将本地仓库更新至最新改动：</p>
-</blockquote>
-<pre><code>git pull
-</code></pre><blockquote>
-<p>合并其他分支到你的当前分支，如master：</p>
-</blockquote>
-<pre><code>git merge &lt;branch&gt;
-</code></pre><blockquote>
-<p>查看差异：</p>
-</blockquote>
-<pre><code>git diss &lt;source_branch&gt; &lt;target_branch&gt;
-</code></pre><h3 id="7、标签"><a href="#7、标签" class="headerlink" title="7、标签"></a>7、标签</h3><blockquote>
-<p>创建一个叫做1.0.0的标签：</p>
-</blockquote>
-<pre><code>git tag 1.0.0 1b2e1d63ff  (1b2e1d63ff是你想要标记的提交ID的前10位自负）
-</code></pre><blockquote>
-<p>获取提交ID：</p>
-</blockquote>
-<pre><code>git log
-</code></pre><h3 id="8、替换本地改动"><a href="#8、替换本地改动" class="headerlink" title="8、替换本地改动"></a>8、替换本地改动</h3><pre><code>git checkout -- &lt;filename&gt;
-</code></pre><h3 id="9、丢弃所有本地改动："><a href="#9、丢弃所有本地改动：" class="headerlink" title="9、丢弃所有本地改动："></a>9、丢弃所有本地改动：</h3><pre><code>git fetch origin
-git reset --hard origin/master
-</code></pre><h3 id="10、显示历史记录时，只显示一行注释信息："><a href="#10、显示历史记录时，只显示一行注释信息：" class="headerlink" title="10、显示历史记录时，只显示一行注释信息："></a>10、显示历史记录时，只显示一行注释信息：</h3><pre><code>git config format.pretty oneline
-</code></pre><h3 id="11、交互的添加文件至缓存区"><a href="#11、交互的添加文件至缓存区" class="headerlink" title="11、交互的添加文件至缓存区"></a>11、交互的添加文件至缓存区</h3><pre><code>git add -i
-</code></pre><h3 id="12、显示提交历史详细"><a href="#12、显示提交历史详细" class="headerlink" title="12、显示提交历史详细"></a>12、显示提交历史详细</h3><pre><code>git log -p 
-</code></pre><h3 id="13、将当前改动提交到缓存区"><a href="#13、将当前改动提交到缓存区" class="headerlink" title="13、将当前改动提交到缓存区"></a>13、将当前改动提交到缓存区</h3><pre><code>git stash
-</code></pre><h3 id="14、从缓存区取出第一个"><a href="#14、从缓存区取出第一个" class="headerlink" title="14、从缓存区取出第一个"></a>14、从缓存区取出第一个</h3><pre><code>git stash pop
+        <h3 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h3><p><a href="https://docs.mongodb.com/manual/crud/" target="_blank" rel="external">mongo官方使用文档</a></p>
+<h3 id="数据导入导出"><a href="#数据导入导出" class="headerlink" title="数据导入导出"></a>数据导入导出</h3><pre><code>mongoexport --host 127.0.0.1 --port 27110 -d dbName -c collName -o file.dat
+mongoimport --host 127.0.0.1 --port 27110 -d dbName -c collName file.dat
+</code></pre><h3 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h3><pre><code>db.getCollection(&apos;alert&apos;).find({&quot;alert.identifier&quot;:/^21030/})
+</code></pre><h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><pre><code>db.inventory.insertOne({ item: &quot;canvas&quot;, qty: 100, tags: [&quot;cotton&quot;], size: { h: 28, w: 35.5, uom: &quot;cm&quot; } })
+
+db.inventory.insertMany([
+   { item: &quot;journal&quot;, qty: 25, tags: [&quot;blank&quot;, &quot;red&quot;], size: { h: 14, w: 21, uom: &quot;cm&quot; } },
+   { item: &quot;mat&quot;, qty: 85, tags: [&quot;gray&quot;], size: { h: 27.9, w: 35.5, uom: &quot;cm&quot; } },
+   { item: &quot;mousepad&quot;, qty: 25, tags: [&quot;gel&quot;, &quot;blue&quot;], size: { h: 19, w: 22.85, uom: &quot;cm&quot; } }
+])
+</code></pre><h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><pre><code>查询条件：{ &lt;field1&gt;: &lt;value1&gt;, ... }
+
+查询一条记录：db.collection.findOne( )
+
+查询全部：db.inventory.find( {} )
+
+按条件查询：
+    db.inventory.find( { status: &quot;D&quot; } )  【SELECT * FROM inventory WHERE status = &quot;D&quot;】
+
+IN查询：
+    db.inventory.find( { status: { $in: [ &quot;A&quot;, &quot;D&quot; ] } } )  【SELECT * FROM inventory WHERE status in (&quot;A&quot;, &quot;D&quot;)】
+
+特殊条件AND：
+    db.inventory.find( { status: &quot;A&quot;, qty: { $lt: 30 } } )     【SELECT * FROM inventory WHERE status = &quot;A&quot; AND qty &lt; 30】
+
+特殊条件OR
+    db.inventory.find( { $or: [ { status: &quot;A&quot; }, { qty: { $lt: 30 } } ] } )  【SELECT * FROM inventory WHERE status = &quot;A&quot; OR qty &lt; 30】
+
+联合条件
+
+db.inventory.find( { status: &quot;A&quot;, $or: [ { qty: { $lt: 30 } }, { item: /^p/ } ] } )  【SELECT * FROM inventory WHERE status = &quot;A&quot; AND ( qty &lt; 30 OR item LIKE &quot;p%&quot;)】
+</code></pre><h3 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h3><pre><code>db.collection.updateOne(&lt;filter&gt;, &lt;update&gt;, &lt;options&gt;)
+db.collection.updateMany(&lt;filter&gt;, &lt;update&gt;, &lt;options&gt;)
+db.collection.replaceOne(&lt;filter&gt;, &lt;replacement&gt;, &lt;options&gt;)
+</code></pre><p>语法</p>
+<pre><code>{
+  &lt;update operator&gt;: { &lt;field1&gt;: &lt;value1&gt;, ... },
+  &lt;update operator&gt;: { &lt;field2&gt;: &lt;value2&gt;, ... },
+  ...
+}
+</code></pre><p>更新一条记录某字段。使用<code>$set</code>来更新指定字段信息。使用<code>$currentDate</code>将最后修改时间变成当前时间。如果最后修改时间字段<code>lastModified</code>不存在将会自动创建该字段。 </p>
+<pre><code>db.inventory.updateOne(
+   { item: &quot;paper&quot; },
+   {
+     $set: { &quot;size.uom&quot;: &quot;cm&quot;, status: &quot;P&quot; },
+     $currentDate: { lastModified: true }
+   }
+)
+</code></pre><p>更新多条记录某字段。</p>
+<pre><code>db.inventory.updateMany(
+   { &quot;qty&quot;: { $lt: 50 } },
+   {
+     $set: { &quot;size.uom&quot;: &quot;in&quot;, status: &quot;P&quot; },
+     $currentDate: { lastModified: true }
+   }
+)
+</code></pre><p>替换一条记录。<code>db.collection.replaceOne()</code></p>
+<pre><code>{ &quot;_id&quot; : ObjectId(&quot;59c3b1145ac95ea59ae660fb&quot;), &quot;item&quot; : &quot;paper&quot;, &quot;qty&quot; : 100, &quot;size&quot; : { &quot;h&quot; : 8.5, &quot;w&quot; : 11, &quot;uom&quot; : &quot;in&quot; }, &quot;status&quot; : &quot;D&quot; }
+替换成
+{ &quot;_id&quot; : ObjectId(&quot;59c3b1145ac95ea59ae660fb&quot;), &quot;item&quot; : &quot;paper&quot;, &quot;instock&quot; : [ { &quot;warehouse&quot; : &quot;A&quot;, &quot;qty&quot; : 60 }, { &quot;warehouse&quot; : &quot;B&quot;, &quot;qty&quot; : 40 } ] }
+
+db.inventory.replaceOne(
+   { item: &quot;paper&quot; },
+   { item: &quot;paper&quot;, instock: [ { warehouse: &quot;A&quot;, qty: 60 }, { warehouse: &quot;B&quot;, qty: 40 } ] }
+)
+</code></pre><h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><pre><code>删除多条：
+db.inventory.deleteMany({ status : &quot;A&quot; })
+
+删除一条：
+db.inventory.deleteOne( { status: &quot;D&quot; } )
+</code></pre><p>###　Text Search</p>
+<pre><code>db.stores.insert(
+   [
+     { _id: 1, name: &quot;Java Hut&quot;, description: &quot;Coffee and cakes&quot; },
+     { _id: 2, name: &quot;Burger Buns&quot;, description: &quot;Gourmet hamburgers&quot; },
+     { _id: 3, name: &quot;Coffee Shop&quot;, description: &quot;Just coffee&quot; },
+     { _id: 4, name: &quot;Clothes Clothes Clothes&quot;, description: &quot;Discount clothing&quot; },
+     { _id: 5, name: &quot;Java Shopping&quot;, description: &quot;Indonesian goods&quot; }
+   ]
+)
+创建索引
+db.stores.createIndex( { name: &quot;text&quot;, description: &quot;text&quot; } )
+</code></pre><p>使用$text Operator</p>
+<pre><code>查询包含java,coffee,shop的
+db.stores.find( { $text: { $search: &quot;java coffee shop&quot; } } )
+查询包含java或者coffee shop的
+db.stores.find( { $text: { $search: &quot;java \&quot;coffee shop\&quot;&quot; } } )
+查询包含java或者shop但是不包含coffee的
+db.stores.find( { $text: { $search: &quot;java shop -coffee&quot; } } )
+</code></pre><p>排序 <a href="https://docs.mongodb.com/manual/reference/operator/projection/meta/#proj._S_meta" target="_blank" rel="external">更多</a></p>
+<pre><code>db.stores.find(
+   { $text: { $search: &quot;java coffee shop&quot; } },
+   { score: { $meta: &quot;textScore&quot; } }
+).sort( { score: { $meta: &quot;textScore&quot; } } )
 </code></pre>
       
     </div>
@@ -418,7 +451,7 @@ git reset --hard origin/master
       
         <div class="post-tags">
           
-            <a href="/tags/GIT/" rel="tag"># GIT</a>
+            <a href="/tags/mongodb/" rel="tag"># mongodb</a>
           
         </div>
       
@@ -427,15 +460,15 @@ git reset --hard origin/master
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/07/03/java2D/" rel="next" title="Java2D 简单的应用">
+                <i class="fa fa-chevron-left"></i> Java2D 简单的应用
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/22/postgres/" rel="prev" title="postgresql常用知识点一览">
-                postgresql常用知识点一览 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -555,7 +588,7 @@ git reset --hard origin/master
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建新仓库"><span class="nav-number">1.</span> <span class="nav-text">1、创建新仓库:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、检出仓库"><span class="nav-number">2.</span> <span class="nav-text">2、检出仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、添加与提交"><span class="nav-number">3.</span> <span class="nav-text">3、添加与提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、推送与改动"><span class="nav-number">4.</span> <span class="nav-text">4、推送与改动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、分支"><span class="nav-number">5.</span> <span class="nav-text">5、分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、更新与合并"><span class="nav-number">6.</span> <span class="nav-text">6、更新与合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、标签"><span class="nav-number">7.</span> <span class="nav-text">7、标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、替换本地改动"><span class="nav-number">8.</span> <span class="nav-text">8、替换本地改动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、丢弃所有本地改动："><span class="nav-number">9.</span> <span class="nav-text">9、丢弃所有本地改动：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、显示历史记录时，只显示一行注释信息："><span class="nav-number">10.</span> <span class="nav-text">10、显示历史记录时，只显示一行注释信息：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11、交互的添加文件至缓存区"><span class="nav-number">11.</span> <span class="nav-text">11、交互的添加文件至缓存区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12、显示提交历史详细"><span class="nav-number">12.</span> <span class="nav-text">12、显示提交历史详细</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13、将当前改动提交到缓存区"><span class="nav-number">13.</span> <span class="nav-text">13、将当前改动提交到缓存区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14、从缓存区取出第一个"><span class="nav-number">14.</span> <span class="nav-text">14、从缓存区取出第一个</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#导航"><span class="nav-number">1.</span> <span class="nav-text">导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据导入导出"><span class="nav-number">2.</span> <span class="nav-text">数据导入导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模糊查询"><span class="nav-number">3.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入数据"><span class="nav-number">4.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询数据"><span class="nav-number">5.</span> <span class="nav-text">查询数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新数据"><span class="nav-number">6.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据"><span class="nav-number">7.</span> <span class="nav-text">删除数据</span></a></li></ol></div>
             
 
           </div>
