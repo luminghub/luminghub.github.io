@@ -75,7 +75,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/10/23/字符串压缩Snappy/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="Snappy 是一个 C++ 的用来压缩和解压缩的开发包。其目标不是最大限度压缩或者兼容其他压缩格式，而是旨在提供高速压缩速度和合理的压缩率。">
-<meta property="og:updated_time" content="2017-10-23T01:52:31.951Z">
+<meta property="og:updated_time" content="2017-10-23T01:57:53.876Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java 字符串压缩之Snappy">
 <meta name="twitter:description" content="Snappy 是一个 C++ 的用来压缩和解压缩的开发包。其目标不是最大限度压缩或者兼容其他压缩格式，而是旨在提供高速压缩速度和合理的压缩率。">
@@ -324,104 +324,12 @@
       
 
       
-        <h3 id="引入maven"><a href="#引入maven" class="headerlink" title="引入maven"></a>引入maven</h3><pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.xerial.snappy&lt;/groupId&gt;
-    &lt;artifactId&gt;snappy-java&lt;/artifactId&gt;
-    &lt;version&gt;1.1.4&lt;/version&gt;
-&lt;/dependency&gt; 
-</code></pre><h3 id="将字符串压缩成byte数组"><a href="#将字符串压缩成byte数组" class="headerlink" title="将字符串压缩成byte数组"></a>将字符串压缩成byte数组</h3><p>使用iso8859-1编码（具体编码可以视具体字符串而定）。</p>
-<pre><code>public static String compress(String info) throws IOException {
-  return Snappy.compress(info, &quot;ISO-8859-1&quot;);
-}
-</code></pre><h3 id="将byte数组解码成字符串"><a href="#将byte数组解码成字符串" class="headerlink" title="将byte数组解码成字符串"></a>将byte数组解码成字符串</h3><p>使用iso8859-1编码（具体编码可以视具体字符串而定）。</p>
-<pre><code>public static String uncompress(byte[] info) throws IOException {
-  return Snappy.uncompressString(info, &quot;ISO-8859-1&quot;);
-}
-</code></pre><h3 id="二进制转字符串"><a href="#二进制转字符串" class="headerlink" title="二进制转字符串"></a>二进制转字符串</h3><pre><code>public static String byteTohex(byte[] b) {
-  String hs = &quot;&quot;;
-  String stmp = &quot;&quot;;
-  for (int n = 0; n &lt; b.length; n++) {
-    stmp = (java.lang.Integer.toHexString(b[n] &amp; 0XFF));
-    if (stmp.length() == 1) {
-      hs = hs + &quot;0&quot; + stmp;
-    } else {
-      hs = hs + stmp;
-    }
-  }
-  return hs;
-}
-</code></pre><h3 id="字符串转二进制"><a href="#字符串转二进制" class="headerlink" title="字符串转二进制"></a>字符串转二进制</h3><pre><code>public static byte[] hexTobyte(String str) {
-  if (str == null) {
-    return null;
-  }
-  str = str.trim();
-  int len = str.length();
-    if (len == 0 || len % 2 == 1) {
-      return null;
-    }
-    byte[] b = new byte[len / 2];
-    try {
-      for (int i = 0; i &lt; str.length(); i += 2) {
-        b[i / 2] = (byte) Integer.decode(&quot;0x&quot; + str.substring(i, i + 2)).intValue();
-    }
-    return b;
-  } catch (Exception e) {
-    return null;
-  }
-}
-</code></pre><h3 id="完整的SnappyUtil-java"><a href="#完整的SnappyUtil-java" class="headerlink" title="完整的SnappyUtil.java"></a>完整的SnappyUtil.java</h3><pre><code>import java.io.IOException;
-import org.xerial.snappy.Snappy;
-
-/**
-  * @author lm
- *
- *         2017-10-20
- */
-public class SnappyUtil {
-
-  public static String compress(String info) throws IOException {
-    return byteTohex(Snappy.compress(info, &quot;ISO-8859-1&quot;));
-  }
-
-  public static String uncompress(String info) throws IOException {
-    return Snappy.uncompressString(hexTobyte(info), &quot;ISO-8859-1&quot;);
-  }
-
-  private static String byteTohex(byte[] b) {
-    String hs = &quot;&quot;;
-    String stmp = &quot;&quot;;
-    for (int n = 0; n &lt; b.length; n++) {
-      stmp = (java.lang.Integer.toHexString(b[n] &amp; 0XFF));
-      if (stmp.length() == 1) {
-        hs = hs + &quot;0&quot; + stmp;
-      } else {
-        hs = hs + stmp;
-      }
-    }
-    return hs;
-  }
-
-  private static byte[] hexTobyte(String str) {
-    if (str == null) {
-      return null;
-    }
-    str = str.trim();
-    int len = str.length();
-    if (len == 0 || len % 2 == 1) {
-      return null;
-    }
-    byte[] b = new byte[len / 2];
-    try {
-      for (int i = 0; i &lt; str.length(); i += 2) {
-        b[i / 2] = (byte) Integer.decode(&quot;0x&quot; + str.substring(i, i + 2)).intValue();
-      }
-      return b;
-    } catch (Exception e) {
-      return null;
-    }
-  }
-}
-</code></pre>
+        <h3 id="引入maven"><a href="#引入maven" class="headerlink" title="引入maven"></a>引入maven</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.xerial.snappy<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>snappy-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">``` </div><div class="line"></div><div class="line">### 将字符串压缩成byte数组</div><div class="line"></div><div class="line">使用iso8859-1编码（具体编码可以视具体字符串而定）。</div><div class="line"></div><div class="line">```java</div><div class="line">public static String compress(String info) throws IOException &#123;</div><div class="line">return Snappy.compress(info, "ISO-8859-1");</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="将byte数组解码成字符串"><a href="#将byte数组解码成字符串" class="headerlink" title="将byte数组解码成字符串"></a>将byte数组解码成字符串</h3><p>使用iso8859-1编码（具体编码可以视具体字符串而定）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">uncompress</span><span class="params">(<span class="keyword">byte</span>[] info)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">  <span class="keyword">return</span> Snappy.uncompressString(info, <span class="string">"ISO-8859-1"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="二进制转字符串"><a href="#二进制转字符串" class="headerlink" title="二进制转字符串"></a>二进制转字符串</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">byteTohex</span><span class="params">(<span class="keyword">byte</span>[] b)</span> </span>&#123;</div><div class="line">  String hs = <span class="string">""</span>;</div><div class="line">  String stmp = <span class="string">""</span>;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; b.length; n++) &#123;</div><div class="line">    stmp = (java.lang.Integer.toHexString(b[n] &amp; <span class="number">0XFF</span>));</div><div class="line">    <span class="keyword">if</span> (stmp.length() == <span class="number">1</span>) &#123;</div><div class="line">      hs = hs + <span class="string">"0"</span> + stmp;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      hs = hs + stmp;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> hs;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="字符串转二进制"><a href="#字符串转二进制" class="headerlink" title="字符串转二进制"></a>字符串转二进制</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] hexTobyte(String str) &#123;</div><div class="line">  <span class="keyword">if</span> (str == <span class="keyword">null</span>) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">  &#125;</div><div class="line">  str = str.trim();</div><div class="line">  <span class="keyword">int</span> len = str.length();</div><div class="line">    <span class="keyword">if</span> (len == <span class="number">0</span> || len % <span class="number">2</span> == <span class="number">1</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[len / <span class="number">2</span>];</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; str.length(); i += <span class="number">2</span>) &#123;</div><div class="line">        b[i / <span class="number">2</span>] = (<span class="keyword">byte</span>) Integer.decode(<span class="string">"0x"</span> + str.substring(i, i + <span class="number">2</span>)).intValue();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> b;</div><div class="line">  &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="完整的SnappyUtil-java"><a href="#完整的SnappyUtil-java" class="headerlink" title="完整的SnappyUtil.java"></a>完整的SnappyUtil.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> org.xerial.snappy.Snappy;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">	 * <span class="doctag">@author</span> lm</div><div class="line">    *</div><div class="line">    *         2017-10-20</div><div class="line">    */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SnappyUtil</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">compress</span><span class="params">(String info)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">    <span class="keyword">return</span> byteTohex(Snappy.compress(info, <span class="string">"ISO-8859-1"</span>));</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">uncompress</span><span class="params">(String info)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">    <span class="keyword">return</span> Snappy.uncompressString(hexTobyte(info), <span class="string">"ISO-8859-1"</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">byteTohex</span><span class="params">(<span class="keyword">byte</span>[] b)</span> </span>&#123;</div><div class="line">    String hs = <span class="string">""</span>;</div><div class="line">    String stmp = <span class="string">""</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; b.length; n++) &#123;</div><div class="line">      stmp = (java.lang.Integer.toHexString(b[n] &amp; <span class="number">0XFF</span>));</div><div class="line">      <span class="keyword">if</span> (stmp.length() == <span class="number">1</span>) &#123;</div><div class="line">        hs = hs + <span class="string">"0"</span> + stmp;</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        hs = hs + stmp;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> hs;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] hexTobyte(String str) &#123;</div><div class="line">    <span class="keyword">if</span> (str == <span class="keyword">null</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    str = str.trim();</div><div class="line">    <span class="keyword">int</span> len = str.length();</div><div class="line">    <span class="keyword">if</span> (len == <span class="number">0</span> || len % <span class="number">2</span> == <span class="number">1</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[len / <span class="number">2</span>];</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; str.length(); i += <span class="number">2</span>) &#123;</div><div class="line">        b[i / <span class="number">2</span>] = (<span class="keyword">byte</span>) Integer.decode(<span class="string">"0x"</span> + str.substring(i, i + <span class="number">2</span>)).intValue();</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> b;</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
       
     </div>
     
@@ -596,7 +504,7 @@ public class SnappyUtil {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入maven"><span class="nav-number">1.</span> <span class="nav-text">引入maven</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将字符串压缩成byte数组"><span class="nav-number">2.</span> <span class="nav-text">将字符串压缩成byte数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将byte数组解码成字符串"><span class="nav-number">3.</span> <span class="nav-text">将byte数组解码成字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二进制转字符串"><span class="nav-number">4.</span> <span class="nav-text">二进制转字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串转二进制"><span class="nav-number">5.</span> <span class="nav-text">字符串转二进制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整的SnappyUtil-java"><span class="nav-number">6.</span> <span class="nav-text">完整的SnappyUtil.java</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入maven"><span class="nav-number">1.</span> <span class="nav-text">引入maven</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将byte数组解码成字符串"><span class="nav-number">2.</span> <span class="nav-text">将byte数组解码成字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二进制转字符串"><span class="nav-number">3.</span> <span class="nav-text">二进制转字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串转二进制"><span class="nav-number">4.</span> <span class="nav-text">字符串转二进制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整的SnappyUtil-java"><span class="nav-number">5.</span> <span class="nav-text">完整的SnappyUtil.java</span></a></li></ol></div>
             
 
           </div>
