@@ -53,7 +53,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Redis," />
+  <meta name="keywords" content="commons-math3," />
 
 
 
@@ -69,16 +69,16 @@
 
 
 
-<meta name="description" content="Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。">
+<meta name="description" content="在离散数据的基础上补插连续函数，使得这条连续曲线通过全部给定的离散数据点。插值是离散函数逼近的重要方法，利用它可通过函数在有限个点处的取值状况，估算出函数在其他点处的近似值。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis 简单使用">
-<meta property="og:url" content="http://yoursite.com/2016/12/09/redis/index.html">
+<meta property="og:title" content="java 线性插值">
+<meta property="og:url" content="http://yoursite.com/2017/10/24/数值插值/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。">
-<meta property="og:updated_time" content="2016-12-08T12:38:18.000Z">
+<meta property="og:description" content="在离散数据的基础上补插连续函数，使得这条连续曲线通过全部给定的离散数据点。插值是离散函数逼近的重要方法，利用它可通过函数在有限个点处的取值状况，估算出函数在其他点处的近似值。">
+<meta property="og:updated_time" content="2017-10-24T12:49:13.002Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis 简单使用">
-<meta name="twitter:description" content="Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。">
+<meta name="twitter:title" content="java 线性插值">
+<meta name="twitter:description" content="在离散数据的基础上补插连续函数，使得这条连续曲线通过全部给定的离散数据点。插值是离散函数逼近的重要方法，利用它可通过函数在有限个点处的取值状况，估算出函数在其他点处的近似值。">
 
 
 
@@ -108,13 +108,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/09/redis/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/24/数值插值/"/>
 
 
 
 
 
-  <title>Redis 简单使用 | 一条缝小眼睛的个人博客</title>
+  <title>java 线性插值 | 一条缝小眼睛的个人博客</title>
   
 
 
@@ -231,7 +231,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/09/redis/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/24/数值插值/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="小明同学">
@@ -248,7 +248,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Redis 简单使用</h1>
+          <h1 class="post-title" itemprop="name headline">java 线性插值</h1>
         
 
         <div class="post-meta">
@@ -260,8 +260,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-09T00:00:00+08:00">
-                2016-12-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-24T00:00:00+08:00">
+                2017-10-24
               </time>
             
 
@@ -307,7 +307,7 @@
 
           
               <div class="post-description">
-                  Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。
+                  在离散数据的基础上补插连续函数，使得这条连续曲线通过全部给定的离散数据点。插值是离散函数逼近的重要方法，利用它可通过函数在有限个点处的取值状况，估算出函数在其他点处的近似值。
               </div>
           
 
@@ -324,26 +324,10 @@
       
 
       
-        <h3 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h3><pre><code>1、将redis-x.x.x.tar.gz安装包拷贝到我们的指定目录下
+        <h3 id="引入maven"><a href="#引入maven" class="headerlink" title="引入maven"></a>引入maven</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.commons<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-math3<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.6.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span>[] interpolations(<span class="keyword">double</span>[] x, <span class="keyword">double</span>[] y, <span class="keyword">double</span>[] z) &#123;</div><div class="line">   <span class="keyword">double</span>[] interV = <span class="keyword">new</span> <span class="keyword">double</span>[z.length];</div><div class="line">   UnivariateInterpolator interpolator = <span class="keyword">new</span> LinearInterpolator();</div><div class="line"><span class="comment">//UnivariateInterpolator interpolator = new SplineInterpolator();平滑曲线</span></div><div class="line">   UnivariateFunction function = interpolator.interpolate(x, y);</div><div class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; z.length; i++) &#123;</div><div class="line">     interV[i] = function.value(z[i]);</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> interV;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">   <span class="comment">//已知下标1,3,5,7,9对应的数值为0.1, 0.5, 2.2, 1.2, 3.1，求下标2, 4, 6, 8对应的数值</span></div><div class="line">   <span class="keyword">double</span>[] x = <span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>&#125;;</div><div class="line">   <span class="keyword">double</span>[] y = <span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">0.1</span>, <span class="number">0.5</span>, <span class="number">2.2</span>, <span class="number">1.2</span>, <span class="number">3.1</span>&#125;;</div><div class="line">   <span class="keyword">double</span>[] z = <span class="keyword">new</span> <span class="keyword">double</span>[] &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>&#125;;</div><div class="line">   <span class="keyword">double</span>[] v = interpolations(x, y, z);</div><div class="line">   System.out.println(Arrays.toString(v));</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p><a href="http://commons.apache.org/proper/commons-math/javadocs/api-3.2/index.html" target="_blank" rel="external">common-math3官方文档</a></p>
 
-2、使用命令tar -zxvf redis-x.x.x.tar.gz将tar包解压缩，得到redis-x.x.x目录
-
-3、进入redis-x.x.x目录，执行make命令进行编译(也可以指定相应的编译安装目录如    
-
-cd redis-x.x.x
-make install  
-或者
-make PREFIX=/usr/local/redis install #安装到指定目录中 
-</code></pre><h3 id="简单配置redis"><a href="#简单配置redis" class="headerlink" title="简单配置redis"></a>简单配置redis</h3><pre><code>配置redis.conf文件，将“daemonize”属性设置为“yes”，表示我们会以后台进程形式启动Redis服务
-
-bind 外网 内网（中间用空格分隔）
-</code></pre><h3 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h3><pre><code>redis-server redis.conf
-</code></pre><h3 id="进入redis"><a href="#进入redis" class="headerlink" title="进入redis"></a>进入redis</h3><pre><code>redis-cli  -h 127.0.0.1
-
-或者
-
-redis-cli -c -h 127.0.0.1 -p 7004（集群的时候需要加 -c）
-</code></pre><h3 id="更多详细信息，请参考redis中文官网：http-redis-cn"><a href="#更多详细信息，请参考redis中文官网：http-redis-cn" class="headerlink" title="更多详细信息，请参考redis中文官网：http://redis.cn/"></a>更多详细信息，请参考redis中文官网：<a href="http://redis.cn/" target="_blank" rel="external">http://redis.cn/</a></h3>
       
     </div>
     
@@ -360,7 +344,7 @@ redis-cli -c -h 127.0.0.1 -p 7004（集群的时候需要加 -c）
       
         <div class="post-tags">
           
-            <a href="/tags/Redis/" rel="tag"># Redis</a>
+            <a href="/tags/commons-math3/" rel="tag"># commons-math3</a>
           
         </div>
       
@@ -373,8 +357,8 @@ redis-cli -c -h 127.0.0.1 -p 7004（集群的时候需要加 -c）
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/01/git分支标签管理/" rel="next" title="Git操作分支和tag">
-                <i class="fa fa-chevron-left"></i> Git操作分支和tag
+              <a href="/2017/10/23/字符串压缩Snappy/" rel="next" title="java 字符串压缩之Snappy">
+                <i class="fa fa-chevron-left"></i> java 字符串压缩之Snappy
               </a>
             
           </div>
@@ -382,10 +366,6 @@ redis-cli -c -h 127.0.0.1 -p 7004（集群的时候需要加 -c）
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/22/gRPC快速上手指南/" rel="prev" title="gRPC JAVA快速入门指南">
-                gRPC JAVA快速入门指南 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -522,7 +502,7 @@ redis-cli -c -h 127.0.0.1 -p 7004（集群的时候需要加 -c）
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装redis"><span class="nav-number">1.</span> <span class="nav-text">安装redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单配置redis"><span class="nav-number">2.</span> <span class="nav-text">简单配置redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动redis"><span class="nav-number">3.</span> <span class="nav-text">启动redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入redis"><span class="nav-number">4.</span> <span class="nav-text">进入redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多详细信息，请参考redis中文官网：http-redis-cn"><span class="nav-number">5.</span> <span class="nav-text">更多详细信息，请参考redis中文官网：http://redis.cn/</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入maven"><span class="nav-number">1.</span> <span class="nav-text">引入maven</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码"><span class="nav-number">2.</span> <span class="nav-text">完整代码</span></a></li></ol></div>
             
 
           </div>

@@ -75,7 +75,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/02/17/Cassandra基本用法/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
-<meta property="og:updated_time" content="2017-02-21T01:44:16.000Z">
+<meta property="og:updated_time" content="2017-10-24T11:41:02.318Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cassandra 入门学习">
 <meta name="twitter:description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
@@ -325,24 +325,21 @@
 
       
         <h3 id="CQL"><a href="#CQL" class="headerlink" title="CQL"></a>CQL</h3><p>查询表名</p>
-<pre><code>select table_name from system_schema.tables where keyspace_name=&apos;mdata&apos;
-</code></pre><p>查询表数据</p>
-<pre><code>select * from   mdata.ec_surface_common_time_2017021608 limit 1
-</code></pre><p>删除表结构</p>
-<pre><code>drop table mdata.ec_surface_common_time_2017021608
-</code></pre><p>创建keyspace</p>
-<pre><code>CREATE keyspace IF NOT EXISTS ecglobal
-WITH REPLICATION = {&apos;class&apos;: &apos;org.apache.cassandra.locator.SimpleStrategy&apos;, &apos;replication_factor&apos;: &apos;2&apos;}
-AND DURABLE_WRITES = true
-</code></pre><p><a href="http://docs.datastax.com/en/cql/3.1/cql/cql_reference/create_keyspace_r.html" target="_blank" rel="external">http://docs.datastax.com/en/cql/3.1/cql/cql_reference/create_keyspace_r.html</a></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> table_name <span class="keyword">from</span> system_schema.tables <span class="keyword">where</span> keyspace_name=<span class="string">'mdata'</span></div></pre></td></tr></table></figure>
+<p>查询表数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span>   mdata.ec_surface_common_time_2017021608 <span class="keyword">limit</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>删除表结构</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">drop</span> <span class="keyword">table</span> mdata.ec_surface_common_time_2017021608</div></pre></td></tr></table></figure>
+<p>创建keyspace</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> keyspace <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> ecglobal</div><div class="line"><span class="keyword">WITH</span> <span class="keyword">REPLICATION</span> = &#123;<span class="string">'class'</span>: <span class="string">'org.apache.cassandra.locator.SimpleStrategy'</span>, <span class="string">'replication_factor'</span>: <span class="string">'2'</span>&#125;</div><div class="line"><span class="keyword">AND</span> DURABLE_WRITES = <span class="literal">true</span></div></pre></td></tr></table></figure>
+<p><a href="http://docs.datastax.com/en/cql/3.1/cql/cql_reference/create_keyspace_r.html" target="_blank" rel="external">http://docs.datastax.com/en/cql/3.1/cql/cql_reference/create_keyspace_r.html</a></p>
 <h3 id="noodtool"><a href="#noodtool" class="headerlink" title="noodtool"></a>noodtool</h3><p>清空被删除表关系的数据</p>
-<pre><code>./nodetool clearsnapshot 
-./nodetool -h 127.0.0.1 clearsnapshot 
-</code></pre><p>集群状态<br>    ./nodetool status<br>    ./nodetool -h 10.28.58.50 status</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./nodetool clearsnapshot </div><div class="line">./nodetool -h 127.0.0.1 clearsnapshot</div></pre></td></tr></table></figure>
+<p>集群状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./nodetool status</div><div class="line">./nodetool -h 10.28.58.50 status</div></pre></td></tr></table></figure>
 <p>集群版本信息</p>
-<pre><code>./nodetool describecluster
-</code></pre><p>更多</p>
-<pre><code>assassinate
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./nodetool describecluster</div></pre></td></tr></table></figure>
+<h3 id="更多命令"><a href="#更多命令" class="headerlink" title="更多命令"></a>更多命令</h3><pre><code>assassinate
 </code></pre><p>Forcefully remove a dead node without re-replicating any data. Use as a last resort if you cannot removenode</p>
 <pre><code>bootstrap
 </code></pre><p>Monitor/manage node’s bootstrap process</p>
@@ -652,7 +649,7 @@ AND DURABLE_WRITES = true
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -674,7 +671,7 @@ AND DURABLE_WRITES = true
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -709,7 +706,7 @@ AND DURABLE_WRITES = true
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CQL"><span class="nav-number">1.</span> <span class="nav-text">CQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#noodtool"><span class="nav-number">2.</span> <span class="nav-text">noodtool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><span class="nav-number">3.</span> <span class="nav-text">更多详细信息，请参考cassandra官网：http://cassandra.apache.org/</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CQL"><span class="nav-number">1.</span> <span class="nav-text">CQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#noodtool"><span class="nav-number">2.</span> <span class="nav-text">noodtool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多命令"><span class="nav-number">3.</span> <span class="nav-text">更多命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><span class="nav-number">4.</span> <span class="nav-text">更多详细信息，请参考cassandra官网：http://cassandra.apache.org/</span></a></li></ol></div>
             
 
           </div>

@@ -75,7 +75,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/12/27/Cassandra集群搭建/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
-<meta property="og:updated_time" content="2016-12-27T09:33:26.000Z">
+<meta property="og:updated_time" content="2017-10-24T11:55:02.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cassandra 集群的简单搭建">
 <meta name="twitter:description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
@@ -324,34 +324,44 @@
       
 
       
-        <h3 id="安装cassndra"><a href="#安装cassndra" class="headerlink" title="安装cassndra"></a>安装cassndra</h3><pre><code>1、将apache-cassandra-3.9.tar.gz安装包拷贝到我们的指定目录下
-
-2、使用命令tar -zxvf apache-cassandra-3.9.tar.gz将tar包解压缩，得到apache-cassandra-3.9目录
-</code></pre><h3 id="简单配置cassandra"><a href="#简单配置cassandra" class="headerlink" title="简单配置cassandra"></a>简单配置cassandra</h3><pre><code>进入apache-cassandra-3.9/conf目录，找到cassandra.yaml
-
-修改：data_file_directories 数据存放路径
-修改：seed_provider下的parameters的seeds，如下所示：
-
-    seed_provider:
-    # Addresses of hosts that are deemed contact points.
-    # Cassandra nodes use this list of hosts to find each other and learn
-    # the topology of the ring.  You must change this if you are running
-    # multiple nodes!
-    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
-      parameters:
-          # seeds is actually a comma-delimited list of addresses.
-          # Ex: &quot;&lt;ip1&gt;,&lt;ip2&gt;,&lt;ip3&gt;&quot;
-          - seeds: &quot;127.0.0.1,127.0.0.2&quot;
-修改：listen_address 本机监听IP
-修改：rpc_address 本机IP（同listen_address即可）
-</code></pre><h3 id="启动cassandra"><a href="#启动cassandra" class="headerlink" title="启动cassandra"></a>启动cassandra</h3><pre><code>进入bin目录，执行    ./cassandra
-</code></pre><h3 id="进入cansandra"><a href="#进入cansandra" class="headerlink" title="进入cansandra"></a>进入cansandra</h3><pre><code>配置CQLSH_HOST
-    修改 /etc/profile 添加：export CQLSH_HOST=127.0.0.1
-    source /etc/profile
-进入bin目录，执行    ./cqlsh  
-</code></pre><h3 id="查看集群状态"><a href="#查看集群状态" class="headerlink" title="查看集群状态"></a>查看集群状态</h3><pre><code>进入bin目录，执行    ./nodetool status
-</code></pre><h3 id="强制移除节点"><a href="#强制移除节点" class="headerlink" title="强制移除节点"></a>强制移除节点</h3><pre><code>./nodetool removenode force
-</code></pre><h3 id="更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><a href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org" class="headerlink" title="更多详细信息，请参考cassandra官网：http://cassandra.apache.org/"></a>更多详细信息，请参考cassandra官网：<a href="http://cassandra.apache.org/" target="_blank" rel="external">http://cassandra.apache.org/</a></h3>
+        <h3 id="安装cassndra"><a href="#安装cassndra" class="headerlink" title="安装cassndra"></a>安装cassndra</h3><ul>
+<li><p>将apache-cassandra-3.9.tar.gz安装包拷贝到我们的指定目录下</p>
+</li>
+<li><p>使用命令tar -zxvf apache-cassandra-3.9.tar.gz将tar包解压缩，得到apache-cassandra-3.9目录</p>
+</li>
+</ul>
+<h3 id="简单配置cassandra"><a href="#简单配置cassandra" class="headerlink" title="简单配置cassandra"></a>简单配置cassandra</h3><p>进入apache-cassandra-3.9/conf目录，找到cassandra.yaml</p>
+<ul>
+<li><p>修改：data_file_directories 数据存放路径</p>
+</li>
+<li><p>修改：listen_address 本机监听IP</p>
+</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">seed_provider</span>:</div><div class="line"># <span class="selector-tag">Addresses</span> <span class="selector-tag">of</span> <span class="selector-tag">hosts</span> <span class="selector-tag">that</span> <span class="selector-tag">are</span> <span class="selector-tag">deemed</span> <span class="selector-tag">contact</span> <span class="selector-tag">points</span>.</div><div class="line"># <span class="selector-tag">Cassandra</span> <span class="selector-tag">nodes</span> <span class="selector-tag">use</span> <span class="selector-tag">this</span> <span class="selector-tag">list</span> <span class="selector-tag">of</span> <span class="selector-tag">hosts</span> <span class="selector-tag">to</span> <span class="selector-tag">find</span> <span class="selector-tag">each</span> <span class="selector-tag">other</span> <span class="selector-tag">and</span> <span class="selector-tag">learn</span></div><div class="line"># <span class="selector-tag">the</span> <span class="selector-tag">topology</span> <span class="selector-tag">of</span> <span class="selector-tag">the</span> <span class="selector-tag">ring</span>.  <span class="selector-tag">You</span> <span class="selector-tag">must</span> <span class="selector-tag">change</span> <span class="selector-tag">this</span> <span class="selector-tag">if</span> <span class="selector-tag">you</span> <span class="selector-tag">are</span> <span class="selector-tag">running</span></div><div class="line"># <span class="selector-tag">multiple</span> <span class="selector-tag">nodes</span>!</div><div class="line"><span class="selector-tag">-</span> <span class="selector-tag">class_name</span>: <span class="selector-tag">org</span><span class="selector-class">.apache</span><span class="selector-class">.cassandra</span><span class="selector-class">.locator</span><span class="selector-class">.SimpleSeedProvider</span></div><div class="line">  <span class="selector-tag">parameters</span>:</div><div class="line">    # <span class="selector-tag">seeds</span> <span class="selector-tag">is</span> <span class="selector-tag">actually</span> <span class="selector-tag">a</span> <span class="selector-tag">comma-delimited</span> <span class="selector-tag">list</span> <span class="selector-tag">of</span> <span class="selector-tag">addresses</span>.</div><div class="line">    # <span class="selector-tag">Ex</span>: "&lt;<span class="selector-tag">ip1</span>&gt;,&lt;<span class="selector-tag">ip2</span>&gt;,&lt;<span class="selector-tag">ip3</span>&gt;"</div><div class="line">    <span class="selector-tag">-</span> <span class="selector-tag">seeds</span>: "127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span>,127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.2</span>"</div></pre></td></tr></table></figure>
+<ul>
+<li><p>修改：rpc_address 本机IP（同listen_address即可）</p>
+</li>
+<li><p>修改：seed_provider下的parameters的seeds，如下所示：</p>
+</li>
+</ul>
+<h3 id="启动cassandra"><a href="#启动cassandra" class="headerlink" title="启动cassandra"></a>启动cassandra</h3><ul>
+<li>进入bin目录，执行    <code>./cassandra</code></li>
+</ul>
+<h3 id="命令行登录cansandra"><a href="#命令行登录cansandra" class="headerlink" title="命令行登录cansandra"></a>命令行登录cansandra</h3><ul>
+<li><p>配置CQLSH_HOST。修改 <code>/etc/profile</code>，添加：<code>export CQLSH_HOST=127.0.0.1</code></p>
+</li>
+<li><p>执行<code>source /etc/profile</code></p>
+</li>
+<li><p>进入bin目录，执行    <code>./cqlsh</code>  </p>
+</li>
+</ul>
+<h3 id="查看集群状态"><a href="#查看集群状态" class="headerlink" title="查看集群状态"></a>查看集群状态</h3><ul>
+<li>进入bin目录，执行    <code>./nodetool status</code></li>
+</ul>
+<h3 id="强制移除节点"><a href="#强制移除节点" class="headerlink" title="强制移除节点"></a>强制移除节点</h3><ul>
+<li>执行 <code>./nodetool removenode force</code></li>
+</ul>
+<h3 id="更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><a href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org" class="headerlink" title="更多详细信息，请参考cassandra官网：http://cassandra.apache.org/"></a>更多详细信息，请参考cassandra官网：<a href="http://cassandra.apache.org/" target="_blank" rel="external">http://cassandra.apache.org/</a></h3>
       
     </div>
     
@@ -381,8 +391,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/27/阿里云服务器Ubuntu挂载数据盘/" rel="next" title="阿里云服务器Ubuntu挂载数据盘">
-                <i class="fa fa-chevron-left"></i> 阿里云服务器Ubuntu挂载数据盘
+              <a href="/2016/12/22/gRPC快速上手指南/" rel="next" title="gRPC JAVA快速入门指南">
+                <i class="fa fa-chevron-left"></i> gRPC JAVA快速入门指南
               </a>
             
           </div>
@@ -391,8 +401,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/28/redis连接池java初始化/" rel="prev" title="Redis 集群连接池的java初始化">
-                Redis 集群连接池的java初始化 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/27/阿里云服务器Ubuntu挂载数据盘/" rel="prev" title="阿里云服务器Ubuntu挂载数据盘">
+                阿里云服务器Ubuntu挂载数据盘 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -473,7 +483,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -495,7 +505,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -530,7 +540,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装cassndra"><span class="nav-number">1.</span> <span class="nav-text">安装cassndra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单配置cassandra"><span class="nav-number">2.</span> <span class="nav-text">简单配置cassandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动cassandra"><span class="nav-number">3.</span> <span class="nav-text">启动cassandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入cansandra"><span class="nav-number">4.</span> <span class="nav-text">进入cansandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看集群状态"><span class="nav-number">5.</span> <span class="nav-text">查看集群状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#强制移除节点"><span class="nav-number">6.</span> <span class="nav-text">强制移除节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><span class="nav-number">7.</span> <span class="nav-text">更多详细信息，请参考cassandra官网：http://cassandra.apache.org/</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装cassndra"><span class="nav-number">1.</span> <span class="nav-text">安装cassndra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单配置cassandra"><span class="nav-number">2.</span> <span class="nav-text">简单配置cassandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动cassandra"><span class="nav-number">3.</span> <span class="nav-text">启动cassandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令行登录cansandra"><span class="nav-number">4.</span> <span class="nav-text">命令行登录cansandra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看集群状态"><span class="nav-number">5.</span> <span class="nav-text">查看集群状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#强制移除节点"><span class="nav-number">6.</span> <span class="nav-text">强制移除节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><span class="nav-number">7.</span> <span class="nav-text">更多详细信息，请参考cassandra官网：http://cassandra.apache.org/</span></a></li></ol></div>
             
 
           </div>

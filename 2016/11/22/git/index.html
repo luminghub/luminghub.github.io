@@ -75,7 +75,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/11/22/git/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
-<meta property="og:updated_time" content="2016-11-25T06:04:36.000Z">
+<meta property="og:updated_time" content="2017-10-24T12:00:44.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git 使用简易指南">
 <meta name="twitter:description" content="Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
@@ -324,69 +324,67 @@
       
 
       
-        <h3 id="1、创建新仓库"><a href="#1、创建新仓库" class="headerlink" title="1、创建新仓库:"></a>1、创建新仓库:</h3><pre><code>创建新文件夹-&gt;打开  git init
-</code></pre><h3 id="2、检出仓库"><a href="#2、检出仓库" class="headerlink" title="2、检出仓库"></a>2、检出仓库</h3><pre><code>git clone + 地址/路径
-</code></pre><h3 id="3、添加与提交"><a href="#3、添加与提交" class="headerlink" title="3、添加与提交"></a>3、添加与提交</h3><blockquote>
+        <h3 id="1、创建新仓库"><a href="#1、创建新仓库" class="headerlink" title="1、创建新仓库:"></a>1、创建新仓库:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkdir gitdemo </div><div class="line">cd gitdemo</div><div class="line">git init</div></pre></td></tr></table></figure>
+<h3 id="2、检出仓库"><a href="#2、检出仓库" class="headerlink" title="2、检出仓库"></a>2、检出仓库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone + 地址/路径</div></pre></td></tr></table></figure>
+<h3 id="3、添加与提交"><a href="#3、添加与提交" class="headerlink" title="3、添加与提交"></a>3、添加与提交</h3><blockquote>
 <p>添加（缓存区）：</p>
 </blockquote>
-<pre><code>git add &lt;filename&gt;  /  git add *
-</code></pre><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git add &lt;filename&gt;  /  git add *</div></pre></td></tr></table></figure>
+<blockquote>
 <p>提交（HEAD）：</p>
 </blockquote>
-<pre><code>git commit -m &quot;代码提交信息&quot;
-</code></pre><h3 id="4、推送与改动"><a href="#4、推送与改动" class="headerlink" title="4、推送与改动"></a>4、推送与改动</h3><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git commit -m &quot;代码提交信息&quot;</div></pre></td></tr></table></figure>
+<h3 id="4、推送与改动"><a href="#4、推送与改动" class="headerlink" title="4、推送与改动"></a>4、推送与改动</h3><blockquote>
 <p>推送（分支，默认master）：</p>
 </blockquote>
-<pre><code>git push origin master(master可以替换成想推送的分支)
-</code></pre><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin master(master可以替换成想推送的分支)</div></pre></td></tr></table></figure>
+<blockquote>
 <p>改动：</p>
 </blockquote>
-<pre><code>git remote add origin &lt;server&gt;
-</code></pre><h3 id="5、分支"><a href="#5、分支" class="headerlink" title="5、分支"></a>5、分支</h3><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote add origin &lt;server&gt;</div></pre></td></tr></table></figure>
+<h3 id="5、分支"><a href="#5、分支" class="headerlink" title="5、分支"></a>5、分支</h3><blockquote>
 <p>创建分支：</p>
 </blockquote>
-<pre><code>git checkout -b feature_x (feature_x：分支名字)
-</code></pre><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b feature_x (feature_x：分支名字)</div></pre></td></tr></table></figure>
+<blockquote>
 <p>切换到主分支：</p>
 </blockquote>
-<pre><code>git checkout master
-</code></pre><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout master</div></pre></td></tr></table></figure>
+<blockquote>
 <p>删除分支：</p>
 </blockquote>
-<pre><code>git branch -d feature_x
-</code></pre><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch -d feature_x</div></pre></td></tr></table></figure>
+<blockquote>
 <p>将分支推送：</p>
 </blockquote>
-<pre><code>git push origin &lt;branch&gt;
-</code></pre><h3 id="6、更新与合并"><a href="#6、更新与合并" class="headerlink" title="6、更新与合并"></a>6、更新与合并</h3><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin &lt;branch&gt;</div></pre></td></tr></table></figure>
+<h3 id="6、更新与合并"><a href="#6、更新与合并" class="headerlink" title="6、更新与合并"></a>6、更新与合并</h3><blockquote>
 <p>将本地仓库更新至最新改动：</p>
 </blockquote>
-<pre><code>git pull
-</code></pre><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git pull</div></pre></td></tr></table></figure>
+<blockquote>
 <p>合并其他分支到你的当前分支，如master：</p>
 </blockquote>
-<pre><code>git merge &lt;branch&gt;
-</code></pre><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git merge &lt;branch&gt;</div></pre></td></tr></table></figure>
+<blockquote>
 <p>查看差异：</p>
 </blockquote>
-<pre><code>git diss &lt;source_branch&gt; &lt;target_branch&gt;
-</code></pre><h3 id="7、标签"><a href="#7、标签" class="headerlink" title="7、标签"></a>7、标签</h3><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git diss &lt;source_branch&gt; &lt;target_branch&gt;</div></pre></td></tr></table></figure>
+<h3 id="7、标签"><a href="#7、标签" class="headerlink" title="7、标签"></a>7、标签</h3><blockquote>
 <p>创建一个叫做1.0.0的标签：</p>
 </blockquote>
-<pre><code>git tag 1.0.0 1b2e1d63ff  (1b2e1d63ff是你想要标记的提交ID的前10位自负）
-</code></pre><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git tag 1.0.0 1b2e1d63ff  (1b2e1d63ff是你想要标记的提交ID的前10位自负）</div></pre></td></tr></table></figure>
+<blockquote>
 <p>获取提交ID：</p>
 </blockquote>
-<pre><code>git log
-</code></pre><h3 id="8、替换本地改动"><a href="#8、替换本地改动" class="headerlink" title="8、替换本地改动"></a>8、替换本地改动</h3><pre><code>git checkout -- &lt;filename&gt;
-</code></pre><h3 id="9、丢弃所有本地改动："><a href="#9、丢弃所有本地改动：" class="headerlink" title="9、丢弃所有本地改动："></a>9、丢弃所有本地改动：</h3><pre><code>git fetch origin
-git reset --hard origin/master
-</code></pre><h3 id="10、显示历史记录时，只显示一行注释信息："><a href="#10、显示历史记录时，只显示一行注释信息：" class="headerlink" title="10、显示历史记录时，只显示一行注释信息："></a>10、显示历史记录时，只显示一行注释信息：</h3><pre><code>git config format.pretty oneline
-</code></pre><h3 id="11、交互的添加文件至缓存区"><a href="#11、交互的添加文件至缓存区" class="headerlink" title="11、交互的添加文件至缓存区"></a>11、交互的添加文件至缓存区</h3><pre><code>git add -i
-</code></pre><h3 id="12、显示提交历史详细"><a href="#12、显示提交历史详细" class="headerlink" title="12、显示提交历史详细"></a>12、显示提交历史详细</h3><pre><code>git log -p 
-</code></pre><h3 id="13、将当前改动提交到缓存区"><a href="#13、将当前改动提交到缓存区" class="headerlink" title="13、将当前改动提交到缓存区"></a>13、将当前改动提交到缓存区</h3><pre><code>git stash
-</code></pre><h3 id="14、从缓存区取出第一个"><a href="#14、从缓存区取出第一个" class="headerlink" title="14、从缓存区取出第一个"></a>14、从缓存区取出第一个</h3><pre><code>git stash pop
-</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git log</div></pre></td></tr></table></figure>
+<h3 id="8、替换本地改动"><a href="#8、替换本地改动" class="headerlink" title="8、替换本地改动"></a>8、替换本地改动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -- &lt;filename&gt;</div></pre></td></tr></table></figure>
+<h3 id="9、丢弃所有本地改动："><a href="#9、丢弃所有本地改动：" class="headerlink" title="9、丢弃所有本地改动："></a>9、丢弃所有本地改动：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git fetch origin</div><div class="line">git reset --hard origin/master</div></pre></td></tr></table></figure>
+<h3 id="10、显示历史记录时，只显示一行注释信息："><a href="#10、显示历史记录时，只显示一行注释信息：" class="headerlink" title="10、显示历史记录时，只显示一行注释信息："></a>10、显示历史记录时，只显示一行注释信息：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config format.pretty oneline</div></pre></td></tr></table></figure>
+<h3 id="11、交互的添加文件至缓存区"><a href="#11、交互的添加文件至缓存区" class="headerlink" title="11、交互的添加文件至缓存区"></a>11、交互的添加文件至缓存区</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git add -i</div></pre></td></tr></table></figure>
+<h3 id="12、显示提交历史详细"><a href="#12、显示提交历史详细" class="headerlink" title="12、显示提交历史详细"></a>12、显示提交历史详细</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git log -p</div></pre></td></tr></table></figure>
+<h3 id="13、将当前改动提交到缓存区"><a href="#13、将当前改动提交到缓存区" class="headerlink" title="13、将当前改动提交到缓存区"></a>13、将当前改动提交到缓存区</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git stash</div></pre></td></tr></table></figure>
+<h3 id="14、从缓存区取出第一个"><a href="#14、从缓存区取出第一个" class="headerlink" title="14、从缓存区取出第一个"></a>14、从缓存区取出第一个</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git stash pop</div></pre></td></tr></table></figure>
       
     </div>
     
@@ -416,14 +414,18 @@ git reset --hard origin/master
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/11/22/postgres/" rel="next" title="postgresql常用知识点一览">
+                <i class="fa fa-chevron-left"></i> postgresql常用知识点一览
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/22/postgres/" rel="prev" title="postgresql常用知识点一览">
-                postgresql常用知识点一览 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/11/23/linux/" rel="prev" title="linux常用命令">
+                linux常用命令 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -504,7 +506,7 @@ git reset --hard origin/master
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -526,7 +528,7 @@ git reset --hard origin/master
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
