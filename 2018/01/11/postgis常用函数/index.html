@@ -53,7 +53,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linux," />
+  <meta name="keywords" content="postgresql," />
 
 
 
@@ -69,16 +69,16 @@
 
 
 
-<meta name="description" content="一些常用的linux使用技巧。">
+<meta name="description" content="PostGIS是对象关系型数据库系统PostgreSQL的一个扩展，PostGIS提供如下空间信息服务功能:空间对象、空间索引、空间操作函数和空间操作符。同时，PostGIS遵循OpenGIS的规范。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux使用小贴士">
-<meta property="og:url" content="http://yoursite.com/2017/01/13/linux使用小贴士/index.html">
+<meta property="og:title" content="postgis常用函数">
+<meta property="og:url" content="http://yoursite.com/2018/01/11/postgis常用函数/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="一些常用的linux使用技巧。">
-<meta property="og:updated_time" content="2017-07-07T05:34:36.000Z">
+<meta property="og:description" content="PostGIS是对象关系型数据库系统PostgreSQL的一个扩展，PostGIS提供如下空间信息服务功能:空间对象、空间索引、空间操作函数和空间操作符。同时，PostGIS遵循OpenGIS的规范。">
+<meta property="og:updated_time" content="2018-01-11T12:28:01.496Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux使用小贴士">
-<meta name="twitter:description" content="一些常用的linux使用技巧。">
+<meta name="twitter:title" content="postgis常用函数">
+<meta name="twitter:description" content="PostGIS是对象关系型数据库系统PostgreSQL的一个扩展，PostGIS提供如下空间信息服务功能:空间对象、空间索引、空间操作函数和空间操作符。同时，PostGIS遵循OpenGIS的规范。">
 
 
 
@@ -108,13 +108,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/01/13/linux使用小贴士/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/11/postgis常用函数/"/>
 
 
 
 
 
-  <title>linux使用小贴士 | 一条缝小眼睛的个人博客</title>
+  <title>postgis常用函数 | 一条缝小眼睛的个人博客</title>
   
 
 
@@ -231,7 +231,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/13/linux使用小贴士/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/11/postgis常用函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="小明同学">
@@ -248,7 +248,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">linux使用小贴士</h1>
+          <h1 class="post-title" itemprop="name headline">postgis常用函数</h1>
         
 
         <div class="post-meta">
@@ -260,8 +260,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-13T00:00:00+08:00">
-                2017-01-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-11T00:00:00+08:00">
+                2018-01-11
               </time>
             
 
@@ -307,7 +307,7 @@
 
           
               <div class="post-description">
-                  一些常用的linux使用技巧。
+                  PostGIS是对象关系型数据库系统PostgreSQL的一个扩展，PostGIS提供如下空间信息服务功能:空间对象、空间索引、空间操作函数和空间操作符。同时，PostGIS遵循OpenGIS的规范。
               </div>
           
 
@@ -324,24 +324,27 @@
       
 
       
-        <h2 id="ubuntu配置jdk环境变量"><a href="#ubuntu配置jdk环境变量" class="headerlink" title="ubuntu配置jdk环境变量"></a>ubuntu配置jdk环境变量</h2><h3 id="编辑bashrc文件"><a href="#编辑bashrc文件" class="headerlink" title="编辑bashrc文件"></a>编辑bashrc文件</h3><pre><code>vim .bashrc 或者 vim /etc/bash.bashrc
-</code></pre><h3 id="新增JAVA-HOME和PATH两个变量"><a href="#新增JAVA-HOME和PATH两个变量" class="headerlink" title="新增JAVA_HOME和PATH两个变量"></a>新增JAVA_HOME和PATH两个变量</h3><p>JAVA_HOME为jdk安装路径，例如jdk安装在：/usr/java/jdk1.8.0_102，则添加的变量为</p>
-<pre><code>export JAVA_HOME=/usr/java/jdk1.8.0_102
-export PATH=$PATH:$JAVA_HOME/bin
-</code></pre><h3 id="使bashrc生效"><a href="#使bashrc生效" class="headerlink" title="使bashrc生效"></a>使bashrc生效</h3><pre><code>source .bashrc
-</code></pre><h3 id="检查环境变量是否配置正确"><a href="#检查环境变量是否配置正确" class="headerlink" title="检查环境变量是否配置正确"></a>检查环境变量是否配置正确</h3><pre><code>java -version
-</code></pre><h2 id="ubuntu-安装JDK-使用ppa-源方式安装"><a href="#ubuntu-安装JDK-使用ppa-源方式安装" class="headerlink" title="ubuntu 安装JDK 使用ppa/源方式安装"></a>ubuntu 安装JDK 使用ppa/源方式安装</h2><h3 id="添加ppa"><a href="#添加ppa" class="headerlink" title="添加ppa"></a>添加ppa</h3><pre><code>sudo add-apt-repository ppa:webupd8team/java
+        <h3 id="1、几何对象构造函数"><a href="#1、几何对象构造函数" class="headerlink" title="1、几何对象构造函数"></a>1、几何对象构造函数</h3><pre><code>geometry ST_GeomFromText(text WKT);
 
-sudo apt-get update
-</code></pre><h3 id="安装oracle-java-installer"><a href="#安装oracle-java-installer" class="headerlink" title="安装oracle-java-installer"></a>安装oracle-java-installer</h3><pre><code>sudo apt-get install oracle-java8-installer
-</code></pre><h3 id="设置系统默认jdk"><a href="#设置系统默认jdk" class="headerlink" title="设置系统默认jdk"></a>设置系统默认jdk</h3><pre><code>sudo update-java-alternatives -s java-8-oracle
-</code></pre><h3 id="如果安装了多种jdk切换-切换到jdk8"><a href="#如果安装了多种jdk切换-切换到jdk8" class="headerlink" title="如果安装了多种jdk切换-切换到jdk8"></a>如果安装了多种jdk切换-切换到jdk8</h3><pre><code>sudo update-java-alternatives -s java-8-oracle
-</code></pre><h3 id="测试安装是否成功"><a href="#测试安装是否成功" class="headerlink" title="测试安装是否成功"></a>测试安装是否成功</h3><pre><code>java -version
-javac -version
-</code></pre><h2 id="从windows转到（scp）linux上后，bash文件编码错误解决方案"><a href="#从windows转到（scp）linux上后，bash文件编码错误解决方案" class="headerlink" title="从windows转到（scp）linux上后，bash文件编码错误解决方案"></a>从windows转到（scp）linux上后，bash文件编码错误解决方案</h2><h3 id="1、安装dos2unix"><a href="#1、安装dos2unix" class="headerlink" title="1、安装dos2unix"></a>1、安装dos2unix</h3><pre><code>sudo apt-get install dos2unix
-</code></pre><h3 id="2、对bash文件重新编码"><a href="#2、对bash文件重新编码" class="headerlink" title="2、对bash文件重新编码"></a>2、对bash文件重新编码</h3><p>例如，对start.sh进行重新编码</p>
-<pre><code>dos2unix start.sh
-</code></pre>
+geometry ST_GeomFromText(text WKT, integer srid);
+</code></pre><p>例如，构建一个4326投影的点[106.064544 42.28787]对象，</p>
+<pre><code>ST_GeomFromText(&apos;POINT(106.064544 42.28787)&apos;,4326)
+</code></pre><p>相似函数</p>
+<pre><code>ST_GeomFromEWKT, ST_GeomFromWKB, ST_SRID
+</code></pre><p><a href="http://postgis.net/docs/ST_GeomFromText.html" target="_blank" rel="external">更多信息</a></p>
+<h3 id="2、空间距离Distance"><a href="#2、空间距离Distance" class="headerlink" title="2、空间距离Distance"></a>2、空间距离Distance</h3><pre><code>float ST_DistanceSphere(geometry geomlonlatA, geometry geomlonlatB);
+</code></pre><p>例如，查询指定位置点(lonlat[106.064544 42.28787])在100km内的对象：</p>
+<pre><code>select st_x(lonlat)as lon,st_y(lonlat)as lat from geotest where ST_DistanceSphere(lonlat,ST_GeomFromText(&apos;POINT(106.064544 42.28787)&apos;,4326))&lt;= 100000
+</code></pre><p>相似函数</p>
+<pre><code>ST_Distance, ST_DistanceSpheroid
+</code></pre><p><a href="http://postgis.net/docs/ST_DistanceSphere.html" target="_blank" rel="external">更多信息</a></p>
+<h3 id="3、空间范围区域Bbox"><a href="#3、空间范围区域Bbox" class="headerlink" title="3、空间范围区域Bbox"></a>3、空间范围区域Bbox</h3><pre><code>geometry ST_MakeEnvelope(double precision xmin, double precision ymin, double precision xmax, double precision ymax, integer srid=unknown);
+</code></pre><p>例如，查询范围经纬度范围lonlat(lon[116.354 126.1454]，lat[33.154 43.545])范围里的所有空间对象:</p>
+<pre><code>select st_x(lonlat)as lon,st_y(lonlat)as lat from geotest where lonlat &amp;&amp; ST_MakeEnvelope(116.354,33.154,126.1454,43.545,4326)
+</code></pre><p>相似函数</p>
+<pre><code>ST_MakePoint, ST_MakeLine, ST_MakePolygon
+</code></pre><p><a href="http://postgis.net/docs/ST_MakeEnvelope.html" target="_blank" rel="external">更多信息</a></p>
+<h3 id="官方函数文档"><a href="#官方函数文档" class="headerlink" title="官方函数文档"></a>官方函数文档</h3><h3 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a><a href="http://postgis.net/docs/reference.html#reference_sfcgal" target="_blank" rel="external">官方文档</a></h3>
       
     </div>
     
@@ -358,7 +361,7 @@ javac -version
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
+            <a href="/tags/postgresql/" rel="tag"># postgresql</a>
           
         </div>
       
@@ -371,8 +374,8 @@ javac -version
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/04/protobuf语法指南/" rel="next" title="protobuf 语法指南">
-                <i class="fa fa-chevron-left"></i> protobuf 语法指南
+              <a href="/2017/10/27/Http请求及文件下载/" rel="next" title="HttpClient请求及下载文件">
+                <i class="fa fa-chevron-left"></i> HttpClient请求及下载文件
               </a>
             
           </div>
@@ -380,10 +383,6 @@ javac -version
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/19/mongodb快速安装/" rel="prev" title="ubuntu上安装mongodb">
-                ubuntu上安装mongodb <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -520,7 +519,7 @@ javac -version
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ubuntu配置jdk环境变量"><span class="nav-number">1.</span> <span class="nav-text">ubuntu配置jdk环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑bashrc文件"><span class="nav-number">1.1.</span> <span class="nav-text">编辑bashrc文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增JAVA-HOME和PATH两个变量"><span class="nav-number">1.2.</span> <span class="nav-text">新增JAVA_HOME和PATH两个变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使bashrc生效"><span class="nav-number">1.3.</span> <span class="nav-text">使bashrc生效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查环境变量是否配置正确"><span class="nav-number">1.4.</span> <span class="nav-text">检查环境变量是否配置正确</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ubuntu-安装JDK-使用ppa-源方式安装"><span class="nav-number">2.</span> <span class="nav-text">ubuntu 安装JDK 使用ppa/源方式安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加ppa"><span class="nav-number">2.1.</span> <span class="nav-text">添加ppa</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装oracle-java-installer"><span class="nav-number">2.2.</span> <span class="nav-text">安装oracle-java-installer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置系统默认jdk"><span class="nav-number">2.3.</span> <span class="nav-text">设置系统默认jdk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如果安装了多种jdk切换-切换到jdk8"><span class="nav-number">2.4.</span> <span class="nav-text">如果安装了多种jdk切换-切换到jdk8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试安装是否成功"><span class="nav-number">2.5.</span> <span class="nav-text">测试安装是否成功</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从windows转到（scp）linux上后，bash文件编码错误解决方案"><span class="nav-number">3.</span> <span class="nav-text">从windows转到（scp）linux上后，bash文件编码错误解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、安装dos2unix"><span class="nav-number">3.1.</span> <span class="nav-text">1、安装dos2unix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、对bash文件重新编码"><span class="nav-number">3.2.</span> <span class="nav-text">2、对bash文件重新编码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、几何对象构造函数"><span class="nav-number">1.</span> <span class="nav-text">1、几何对象构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、空间距离Distance"><span class="nav-number">2.</span> <span class="nav-text">2、空间距离Distance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、空间范围区域Bbox"><span class="nav-number">3.</span> <span class="nav-text">3、空间范围区域Bbox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#官方函数文档"><span class="nav-number">4.</span> <span class="nav-text">官方函数文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#官方文档"><span class="nav-number">5.</span> <span class="nav-text">官方文档</span></a></li></ol></div>
             
 
           </div>
