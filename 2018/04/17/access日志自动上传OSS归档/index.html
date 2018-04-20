@@ -53,7 +53,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Nginx," />
+  <meta name="keywords" content="ossutil," />
 
 
 
@@ -69,20 +69,16 @@
 
 
 
-<meta name="description" content="配置Nginx的https访问。">
+<meta name="description" content="OSSutil命令行管理工具。提供方便、简洁、丰富的Object管理命令。简单来讲就是通过简单的命令行，即可实现数据往OSS上传输的功能，当然也包括其他的功能。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Nginx配置Https">
-<meta property="og:url" content="http://yoursite.com/2017/04/27/Nginx配置https/index.html">
+<meta property="og:title" content="access日志通过OSSutil自动上传OSS归档">
+<meta property="og:url" content="http://yoursite.com/2018/04/17/access日志自动上传OSS归档/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="配置Nginx的https访问。">
-<meta property="og:image" content="http://i.imgur.com/hXp5XSB.png">
-<meta property="og:image" content="http://i.imgur.com/wHdz5fC.png">
-<meta property="og:image" content="http://i.imgur.com/vyqBzD7.png">
-<meta property="og:updated_time" content="2017-05-25T08:28:04.000Z">
+<meta property="og:description" content="OSSutil命令行管理工具。提供方便、简洁、丰富的Object管理命令。简单来讲就是通过简单的命令行，即可实现数据往OSS上传输的功能，当然也包括其他的功能。">
+<meta property="og:updated_time" content="2018-04-20T03:26:03.369Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nginx配置Https">
-<meta name="twitter:description" content="配置Nginx的https访问。">
-<meta name="twitter:image" content="http://i.imgur.com/hXp5XSB.png">
+<meta name="twitter:title" content="access日志通过OSSutil自动上传OSS归档">
+<meta name="twitter:description" content="OSSutil命令行管理工具。提供方便、简洁、丰富的Object管理命令。简单来讲就是通过简单的命令行，即可实现数据往OSS上传输的功能，当然也包括其他的功能。">
 
 
 
@@ -112,13 +108,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/27/Nginx配置https/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/17/access日志自动上传OSS归档/"/>
 
 
 
 
 
-  <title>Nginx配置Https | 一条缝小眼睛的个人博客</title>
+  <title>access日志通过OSSutil自动上传OSS归档 | 一条缝小眼睛的个人博客</title>
   
 
 
@@ -235,7 +231,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/27/Nginx配置https/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/access日志自动上传OSS归档/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="小明同学">
@@ -252,7 +248,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Nginx配置Https</h1>
+          <h1 class="post-title" itemprop="name headline">access日志通过OSSutil自动上传OSS归档</h1>
         
 
         <div class="post-meta">
@@ -264,8 +260,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-27T00:00:00+08:00">
-                2017-04-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-17T00:00:00+08:00">
+                2018-04-17
               </time>
             
 
@@ -311,7 +307,7 @@
 
           
               <div class="post-description">
-                  配置Nginx的https访问。
+                  OSSutil命令行管理工具。提供方便、简洁、丰富的Object管理命令。简单来讲就是通过简单的命令行，即可实现数据往OSS上传输的功能，当然也包括其他的功能。
               </div>
           
 
@@ -328,133 +324,23 @@
       
 
       
-        <h2 id="1、生成证书"><a href="#1、生成证书" class="headerlink" title="1、生成证书"></a>1、生成证书</h2><p>用java jdk自带的keytool生成keystore密钥文件，<a href="http://www.micmiu.com/lang/java/keytool-start-guide/" target="_blank" rel="external">更多信息</a></p>
-<pre><code>keytool -genkey -alias casserver -keyalg RSA -keysize 1024 -keypass lumingclient -validity 365 -keystore d:\sso\casserver.keystore -storepass lumingclient
-</code></pre><p><img src="http://i.imgur.com/hXp5XSB.png" alt=""></p>
-<blockquote>
-<p>截图中需要输入的姓名和上面hosts文件中配置的一致（也可以是主机名） ;</p>
-<p>keypass 和 storepass 两个密码要一致，否则下面tomcat 配置https 访问失败。</p>
-</blockquote>
-<h2 id="2、导出私钥（需要安装openssl）"><a href="#2、导出私钥（需要安装openssl）" class="headerlink" title="2、导出私钥（需要安装openssl）"></a>2、导出私钥（需要安装openssl）</h2><p>包括pem证书和key密钥。</p>
-<h3 id="1、用keytool将keystore文件转换为PKCS12-文件"><a href="#1、用keytool将keystore文件转换为PKCS12-文件" class="headerlink" title="1、用keytool将keystore文件转换为PKCS12 文件"></a>1、用keytool将keystore文件转换为PKCS12 文件</h3><pre><code>keytool -importkeystore -srckeystore d:/sso/casserver.keystore -destkeystore d:/sso/newkeystore.p12 -deststoretype PKCS12
-</code></pre><p><img src="http://i.imgur.com/wHdz5fC.png" alt=""></p>
-<p>如果需要查看新的密钥中的列表内容，可以用</p>
-<pre><code>keytool -deststoretype PKCS12 -keystore d:/sso/newkeystore.p12 -list
-</code></pre><p>进行查看。</p>
-<p><img src="http://i.imgur.com/vyqBzD7.png" alt=""></p>
-<h3 id="2、用openssl生成pem公钥文件"><a href="#2、用openssl生成pem公钥文件" class="headerlink" title="2、用openssl生成pem公钥文件"></a>2、用openssl生成pem公钥文件</h3><pre><code>openssl pkcs12 -nokeys -in d:/sso/newkeystore.p12 -out certfile.pem
-</code></pre><h3 id="3、用openssl生成key私钥文件"><a href="#3、用openssl生成key私钥文件" class="headerlink" title="3、用openssl生成key私钥文件"></a>3、用openssl生成key私钥文件</h3><pre><code>openssl pkcs12 -nocerts -nodes -in d:/sso/newkeystore.p12 -out keyfile.key
-</code></pre><h3 id="3、配置nginx密钥"><a href="#3、配置nginx密钥" class="headerlink" title="3、配置nginx密钥"></a>3、配置nginx密钥</h3><p>找到nginx主配置文件，然后依次按如下步奏操作：</p>
-<ol>
-<li><p>找到https位置</p>
-</li>
-<li><p>放开https注释– “#”为注释</p>
-</li>
-<li><p>默认https端口为443</p>
-</li>
-<li><p>为nginx配置密钥和私钥（即上述步骤生成的pem和key文件）<br> <code>ssl_certificate       D:/sso/casserver.pem;</code><br> <code>ssl_certificate_key   D:/sso/casserver.key;</code></p>
-</li>
-</ol>
-<h3 id="4、配置访问规则"><a href="#4、配置访问规则" class="headerlink" title="4、配置访问规则"></a>4、配置访问规则</h3><p>配置nginx的访问规则即可。<br>https配置相关内容如下：</p>
-<pre><code>server {
-    listen       443 ssl;
-    server_name  127.0.0.1;
+        <h3 id="下载OSSUtil工具"><a href="#下载OSSUtil工具" class="headerlink" title="下载OSSUtil工具"></a>下载OSSUtil工具</h3><p><a href="https://help.aliyun.com/document_detail/50452.html?spm=a2c4e.11153959.blogcont550214.15.5ad2fdd8fapZaP" target="_blank" rel="external">OSSUTIL官方下载</a></p>
+<p>根据操作系统选择相应的binary或者压缩包下载后，运行相应的binary（如果binary为不可执行文件，请给binary增加可执行权限：chmod 755 ossutil），即：</p>
+<p>linux系统下：</p>
+<pre><code>./ossutil
+</code></pre><h3 id="配置ossutil"><a href="#配置ossutil" class="headerlink" title="配置ossutil"></a>配置ossutil</h3><p>这里使用交互式配置ossutil</p>
+<pre><code>$./ossutil config -L ch    该命令创建将一个配置文件，在其中存储配置信息。
 
-    ssl_certificate       D:/sso/casserver.pem;
-    ssl_certificate_key   D:/sso/casserver.key;
+请输入配置文件路径（默认为：/home/admin/.ossutilconfig，回车将使用默认路径。如果用户设置为其它路径，在使用命令时需要将--config-file选项设置为该路径）：
+</code></pre><p>输入EndPoint、AK、SK等信息后完成配置。</p>
+<h3 id="测试简单的上传功能"><a href="#测试简单的上传功能" class="headerlink" title="测试简单的上传功能"></a>测试简单的上传功能</h3><p>假设需要将 /home/ubuntu/testfile.dat 上传到OSS的 test BUCKET的 /test/testfile.dat，那么对应的上传命令为：</p>
+<pre><code>./ossutil cp /home/ubuntu/testfile.dat oss://test/log/test/testfile.dat
+</code></pre><p>假如配置文件不在默认路径下，需要添加配置文件的参数，假设配置文件位于：/home/ubuntu/ossutil/ossconfig.dat</p>
+<pre><code>./ossutil cp /home/ubuntu/testfile.dat oss://test/log/test/testfile.dat --config-file /home/ubuntu/ossutil/ossconfig.dat
+</code></pre><h3 id="编写上传脚本"><a href="#编写上传脚本" class="headerlink" title="编写上传脚本"></a>编写上传脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line">DATESTR=`date +%Y-%m-%d --date=<span class="string">"-1 day"</span>`</div><div class="line">MONTHSTR=`date +%Y%m --date=<span class="string">"-1 day"</span>`</div><div class="line">OSSUTILPATH=/home/ubuntu/ossutil/ossutil</div><div class="line">OSSCONFIGPATH=/home/ubuntu/ossutil/.ossutilconfig</div><div class="line">DELETEFILE=<span class="literal">true</span></div><div class="line">OSSPATH=oss://acclog/gateway/app1/<span class="variable">$&#123;MONTHSTR&#125;</span>/</div><div class="line">FILEPATH=/home/ubuntu/apps/apache-tomcat-7.0.76/logs/localhost_access_log.<span class="variable">$&#123;DATESTR&#125;</span>.txt</div><div class="line">UPLOADCMD=<span class="variable">$&#123;OSSUTILPATH&#125;</span><span class="string">' cp '</span><span class="variable">$&#123;FILEPATH&#125;</span><span class="string">' '</span><span class="variable">$&#123;OSSPATH&#125;</span><span class="string">' --config-file '</span><span class="variable">$OSSCONFIGPATH</span></div><div class="line"><span class="keyword">if</span> [[ ! <span class="_">-f</span> <span class="string">"<span class="variable">$FILEPATH</span>"</span> ]]; <span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"文件不存在，任务结束"</span><span class="variable">$FILEPATH</span></div><div class="line"><span class="keyword">else</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">'文件存在，开始执行文件上传任务'</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">'执行命令 '</span><span class="variable">$UPLOADCMD</span></div><div class="line">    <span class="variable">$UPLOADCMD</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">'文件上传完成'</span></div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$DELETEFILE</span> ]];<span class="keyword">then</span></div><div class="line">      <span class="built_in">echo</span> <span class="string">'删除文件'</span><span class="variable">$FILEPATH</span></div><div class="line">      rm <span class="variable">$FILEPATH</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">      <span class="built_in">echo</span> <span class="string">'不需要删除原始文件'</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">deletefile</span></span>()&#123;</div><div class="line"> DELETEFILE=<span class="variable">$1</span></div><div class="line"> <span class="keyword">if</span> [[  <span class="_">-f</span> <span class="string">"<span class="variable">$DELETEFILE</span>"</span> ]]; <span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">'删除文件'</span><span class="variable">$DELETEFILE</span></div><div class="line">    rm <span class="variable">$DELETEFILE</span></div><div class="line"> <span class="keyword">fi</span></div><div class="line">&#125;</div><div class="line">deletefile /home/ubuntu/apps/apache-tomcat-7.0.76/logs/localhost.<span class="variable">$&#123;DATESTR&#125;</span>.log</div><div class="line">deletefile /home/ubuntu/apps/apache-tomcat-7.0.76/logs/host-manager.<span class="variable">$&#123;DATESTR&#125;</span>.log</div><div class="line">deletefile /home/ubuntu/apps/apache-tomcat-7.0.76/logs/catalina.<span class="variable">$&#123;DATESTR&#125;</span>.log</div><div class="line"><span class="built_in">exit</span></div></pre></td></tr></table></figure>
+<h3 id="设置crontab"><a href="#设置crontab" class="headerlink" title="设置crontab"></a>设置crontab</h3><pre><code>crontab -e
 
-    #ssl_session_cache    shared:SSL:1m;
-    #ssl_session_timeout  5m;
-
-    #ssl_ciphers  HIGH:!aNULL:!MD5;
-    #ssl_prefer_server_ciphers  on;
-
-
-     location / {
-         charset UTF-8;
-         proxy_set_header Host $host;
-         proxy_set_header X-Real-IP $remote_addr;
-         proxy_pass https://127.0.0.1:8443/$uri$is_args$args;
-      }
-}
-</code></pre><h3 id="5、配置日志"><a href="#5、配置日志" class="headerlink" title="5、配置日志"></a>5、配置日志</h3><pre><code>if ($time_iso8601 ~ &quot;^(\d{4})-(\d{2})-(\d{2})&quot;) {
-    set $year $1;
-    set $month $2;
-    set $day $3;
-    }
-   access_log /var/log/nginx/$year-$month-$day-access.log;
-</code></pre><h3 id="6、负载均衡"><a href="#6、负载均衡" class="headerlink" title="6、负载均衡"></a>6、负载均衡</h3><h4 id="简单的http负载均衡"><a href="#简单的http负载均衡" class="headerlink" title="简单的http负载均衡"></a>简单的http负载均衡</h4><pre><code>upstream  myslb {
-      server    127.0.0.1:8080;
-      server    127.0.0.1:8081;
-  }
-
-  server {
-      listen       8000;
-      server_name  127.0.0.1;
-
-      location / {
-          add_header &apos;Access-Control-Allow-Origin&apos; *;
-          charset UTF-8;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_pass http://myslb/$uri$is_args$args;
-      }
-
-  }
-</code></pre><h3 id="https的负载均衡"><a href="#https的负载均衡" class="headerlink" title="https的负载均衡"></a>https的负载均衡</h3><pre><code>upstream  myhttpsslb {
-       server    127.0.0.1:8443;
-       server    127.0.0.1:8444;
- }
-
- server {
-      listen 8883 ssl;
-      server_name 127.0.0.1;
-      ssl_certificate /home/ubuntu/keystore/prod_certfile.pem;
-      ssl_certificate_key /home/ubuntu/keystore/prod_keyfile.key;
-      ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
-      root html;
-      index index.html index.htm;
-
-      location /{
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_pass https://myhttpsslb$uri$is_args$args;
-      }
-
- }
-</code></pre><h3 id="完整配置"><a href="#完整配置" class="headerlink" title="完整配置"></a>完整配置</h3><pre><code>upstream  myhttpsslb {
-      server    127.0.0.1:8443;
-      server    127.0.0.1:8444;
-}
-
-server {
-     listen 8883 ssl;
-     server_name 127.0.0.1;
-     ssl_certificate /home/ubuntu/keystore/prod_certfile.pem;
-     ssl_certificate_key /home/ubuntu/keystore/prod_keyfile.key;
-     ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
-     root html;
-     index index.html index.htm;
-
-     if ($time_iso8601 ~ &quot;^(\d{4})-(\d{2})-(\d{2})&quot;) {
-       set $year $1;
-       set $month $2;
-       set $day $3;
-    }
-    access_log /var/log/nginx/$year-$month-$day-access.log;
-
-    location /{
-           proxy_set_header Host $host;
-           proxy_set_header X-Real-IP $remote_addr;
-           proxy_pass https://myhttpsslb$uri$is_args$args;
-     }
-
-}
-</code></pre><h3 id="7、访问黑名单"><a href="#7、访问黑名单" class="headerlink" title="7、访问黑名单"></a>7、访问黑名单</h3><p>在conf.d目录下，创建 blockips.conf文件，并加入黑名单IP，如下所示</p>
-<p>查看<code>cat blockips.conf</code></p>
-<pre><code>deny 210.14.155.215;
-deny 61.4.185.194;
-deny 54.223.167.94;
+0 8 * * * bash /home/ubuntu/ossutil/uploadoss.bash &gt;&gt; /home/ubuntu/ossutil/upload.log
 </code></pre>
       
     </div>
@@ -472,7 +358,7 @@ deny 54.223.167.94;
       
         <div class="post-tags">
           
-            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+            <a href="/tags/ossutil/" rel="tag"># ossutil</a>
           
         </div>
       
@@ -485,8 +371,8 @@ deny 54.223.167.94;
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/17/Spring相关/" rel="next" title="springBoot常用配置">
-                <i class="fa fa-chevron-left"></i> springBoot常用配置
+              <a href="/2018/01/11/postgis常用函数/" rel="next" title="postgis常用函数">
+                <i class="fa fa-chevron-left"></i> postgis常用函数
               </a>
             
           </div>
@@ -494,10 +380,6 @@ deny 54.223.167.94;
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/27/Tomcat配置https/" rel="prev" title="Tomcat配置Https">
-                Tomcat配置Https <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -634,7 +516,7 @@ deny 54.223.167.94;
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、生成证书"><span class="nav-number">1.</span> <span class="nav-text">1、生成证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、导出私钥（需要安装openssl）"><span class="nav-number">2.</span> <span class="nav-text">2、导出私钥（需要安装openssl）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、用keytool将keystore文件转换为PKCS12-文件"><span class="nav-number">2.1.</span> <span class="nav-text">1、用keytool将keystore文件转换为PKCS12 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、用openssl生成pem公钥文件"><span class="nav-number">2.2.</span> <span class="nav-text">2、用openssl生成pem公钥文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、用openssl生成key私钥文件"><span class="nav-number">2.3.</span> <span class="nav-text">3、用openssl生成key私钥文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、配置nginx密钥"><span class="nav-number">2.4.</span> <span class="nav-text">3、配置nginx密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、配置访问规则"><span class="nav-number">2.5.</span> <span class="nav-text">4、配置访问规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、配置日志"><span class="nav-number">2.6.</span> <span class="nav-text">5、配置日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、负载均衡"><span class="nav-number">2.7.</span> <span class="nav-text">6、负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单的http负载均衡"><span class="nav-number">2.7.1.</span> <span class="nav-text">简单的http负载均衡</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#https的负载均衡"><span class="nav-number">2.8.</span> <span class="nav-text">https的负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整配置"><span class="nav-number">2.9.</span> <span class="nav-text">完整配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、访问黑名单"><span class="nav-number">2.10.</span> <span class="nav-text">7、访问黑名单</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载OSSUtil工具"><span class="nav-number">1.</span> <span class="nav-text">下载OSSUtil工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置ossutil"><span class="nav-number">2.</span> <span class="nav-text">配置ossutil</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试简单的上传功能"><span class="nav-number">3.</span> <span class="nav-text">测试简单的上传功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写上传脚本"><span class="nav-number">4.</span> <span class="nav-text">编写上传脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置crontab"><span class="nav-number">5.</span> <span class="nav-text">设置crontab</span></a></li></ol></div>
             
 
           </div>
