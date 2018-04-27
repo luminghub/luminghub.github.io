@@ -75,7 +75,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/01/11/postgis常用函数/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="PostGIS是对象关系型数据库系统PostgreSQL的一个扩展，PostGIS提供如下空间信息服务功能:空间对象、空间索引、空间操作函数和空间操作符。同时，PostGIS遵循OpenGIS的规范。">
-<meta property="og:updated_time" content="2018-01-11T12:28:01.496Z">
+<meta property="og:updated_time" content="2018-04-27T03:50:58.831Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="postgis常用函数">
 <meta name="twitter:description" content="PostGIS是对象关系型数据库系统PostgreSQL的一个扩展，PostGIS提供如下空间信息服务功能:空间对象、空间索引、空间操作函数和空间操作符。同时，PostGIS遵循OpenGIS的规范。">
@@ -344,7 +344,22 @@ geometry ST_GeomFromText(text WKT, integer srid);
 </code></pre><p>相似函数</p>
 <pre><code>ST_MakePoint, ST_MakeLine, ST_MakePolygon
 </code></pre><p><a href="http://postgis.net/docs/ST_MakeEnvelope.html" target="_blank" rel="external">更多信息</a></p>
-<h3 id="官方函数文档"><a href="#官方函数文档" class="headerlink" title="官方函数文档"></a>官方函数文档</h3><h3 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a><a href="http://postgis.net/docs/reference.html#reference_sfcgal" target="_blank" rel="external">官方文档</a></h3>
+<h3 id="4、-ST-Contains"><a href="#4、-ST-Contains" class="headerlink" title="4、 ST_Contains"></a>4、 ST_Contains</h3><p>LINESTRING 构建一个多边形</p>
+<pre><code>LINESTRING ( 121.312350 30.971457 , 121.156783 31.092221 , 121.353250 31.278195 , 121.509125 31.157431 , 121.312350 30.971457 )  是把连续的点围成一个多边形
+</code></pre><p>st_point 构建一个点</p>
+<pre><code>st_point(a,b) 表示为一个点
+</code></pre><p>查看某一个点是否在某个多边形内 返回t表示在范围内</p>
+<pre><code>SELECT  ST_Contains( ST_MakePolygon(ST_GeomFromText(&apos;LINESTRING ( 121.312350 30.971457 , 121.156783 31.092221 , 121.353250 31.278195 , 121.509125 31.157431 , 121.312350 30.971457 ) &apos;)) ,st_point(121.332378,31.07106) )
+</code></pre><p>查看某一个点是否在某个多边形内 返回f表示不在范围内</p>
+<pre><code>SELECT  ST_Contains( ST_MakePolygon(ST_GeomFromText(&apos;LINESTRING ( 121.312350 30.971457 , 121.156783 31.092221 , 121.353250 31.278195 , 121.509125 31.157431 , 121.312350 30.971457 ) &apos;)) ,st_point(121.632378,31.07106) )
+</code></pre><h3 id="5、显示标准JSON"><a href="#5、显示标准JSON" class="headerlink" title="5、显示标准JSON"></a>5、显示标准JSON</h3><pre><code>ST_asgeojson（geometry,投影类型）
+</code></pre><p>例如，</p>
+<pre><code>ST_asgeojson(ST_GeomFromText(&apos;POINT(106.064544 42.28787)&apos;,4326),4326)
+</code></pre><p>显示空间点的经纬度</p>
+<pre><code>ST_X(geo)  ST_Y(geo)
+</code></pre><h3 id="6、坐标系转换"><a href="#6、坐标系转换" class="headerlink" title="6、坐标系转换"></a>6、坐标系转换</h3><p>第一个参数是原来的几何对像. 第二个参数为要把他转换到这个投影所代表的做标系下</p>
+<pre><code>ST_Transform(geometry g1, integer srid)
+</code></pre><h3 id="官方函数文档"><a href="#官方函数文档" class="headerlink" title="官方函数文档"></a>官方函数文档</h3><h3 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a><a href="http://postgis.net/docs/reference.html#reference_sfcgal" target="_blank" rel="external">官方文档</a></h3>
       
     </div>
     
@@ -374,8 +389,8 @@ geometry ST_GeomFromText(text WKT, integer srid);
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/27/Http请求及文件下载/" rel="next" title="HttpClient请求及下载文件">
-                <i class="fa fa-chevron-left"></i> HttpClient请求及下载文件
+              <a href="/2017/10/27/jackson序列化与反序列化/" rel="next" title="jackson序列化与反序列化">
+                <i class="fa fa-chevron-left"></i> jackson序列化与反序列化
               </a>
             
           </div>
@@ -466,7 +481,7 @@ geometry ST_GeomFromText(text WKT, integer srid);
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -523,7 +538,7 @@ geometry ST_GeomFromText(text WKT, integer srid);
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、几何对象构造函数"><span class="nav-number">1.</span> <span class="nav-text">1、几何对象构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、空间距离Distance"><span class="nav-number">2.</span> <span class="nav-text">2、空间距离Distance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、空间范围区域Bbox"><span class="nav-number">3.</span> <span class="nav-text">3、空间范围区域Bbox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#官方函数文档"><span class="nav-number">4.</span> <span class="nav-text">官方函数文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#官方文档"><span class="nav-number">5.</span> <span class="nav-text">官方文档</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、几何对象构造函数"><span class="nav-number">1.</span> <span class="nav-text">1、几何对象构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、空间距离Distance"><span class="nav-number">2.</span> <span class="nav-text">2、空间距离Distance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、空间范围区域Bbox"><span class="nav-number">3.</span> <span class="nav-text">3、空间范围区域Bbox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、-ST-Contains"><span class="nav-number">4.</span> <span class="nav-text">4、 ST_Contains</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、显示标准JSON"><span class="nav-number">5.</span> <span class="nav-text">5、显示标准JSON</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、坐标系转换"><span class="nav-number">6.</span> <span class="nav-text">6、坐标系转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#官方函数文档"><span class="nav-number">7.</span> <span class="nav-text">官方函数文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#官方文档"><span class="nav-number">8.</span> <span class="nav-text">官方文档</span></a></li></ol></div>
             
 
           </div>

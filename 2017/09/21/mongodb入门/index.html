@@ -75,7 +75,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/21/mongodb入门/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="mongodb常用的简单基本操作。">
-<meta property="og:updated_time" content="2017-09-21T13:01:11.651Z">
+<meta property="og:updated_time" content="2018-04-27T03:38:50.301Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mongodb入门">
 <meta name="twitter:description" content="mongodb常用的简单基本操作。">
@@ -325,7 +325,8 @@
 
       
         <h3 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h3><p><a href="https://docs.mongodb.com/manual/crud/" target="_blank" rel="external">mongo官方使用文档</a></p>
-<h3 id="数据导入导出"><a href="#数据导入导出" class="headerlink" title="数据导入导出"></a>数据导入导出</h3><pre><code>mongoexport --host 127.0.0.1 --port 27110 -d dbName -c collName -o file.dat
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><pre><code>mongo --host &lt;ip&gt; --port &lt;端口&gt;
+</code></pre><h3 id="数据导入导出"><a href="#数据导入导出" class="headerlink" title="数据导入导出"></a>数据导入导出</h3><pre><code>mongoexport --host 127.0.0.1 --port 27110 -d dbName -c collName -o file.dat
 mongoimport --host 127.0.0.1 --port 27110 -d dbName -c collName file.dat
 </code></pre><h3 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h3><pre><code>db.getCollection(&apos;alert&apos;).find({&quot;alert.identifier&quot;:/^21030/})
 </code></pre><h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><pre><code>db.inventory.insertOne({ item: &quot;canvas&quot;, qty: 100, tags: [&quot;cotton&quot;], size: { h: 28, w: 35.5, uom: &quot;cm&quot; } })
@@ -541,7 +542,7 @@ db.stores.find(
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -598,7 +599,7 @@ db.stores.find(
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#导航"><span class="nav-number">1.</span> <span class="nav-text">导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据导入导出"><span class="nav-number">2.</span> <span class="nav-text">数据导入导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模糊查询"><span class="nav-number">3.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入数据"><span class="nav-number">4.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询数据"><span class="nav-number">5.</span> <span class="nav-text">查询数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新数据"><span class="nav-number">6.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据"><span class="nav-number">7.</span> <span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本搜索"><span class="nav-number">8.</span> <span class="nav-text">文本搜索</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#导航"><span class="nav-number">1.</span> <span class="nav-text">导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登录"><span class="nav-number">2.</span> <span class="nav-text">登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据导入导出"><span class="nav-number">3.</span> <span class="nav-text">数据导入导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模糊查询"><span class="nav-number">4.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入数据"><span class="nav-number">5.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询数据"><span class="nav-number">6.</span> <span class="nav-text">查询数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新数据"><span class="nav-number">7.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据"><span class="nav-number">8.</span> <span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本搜索"><span class="nav-number">9.</span> <span class="nav-text">文本搜索</span></a></li></ol></div>
             
 
           </div>
