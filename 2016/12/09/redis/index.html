@@ -75,7 +75,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/12/09/redis/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。">
-<meta property="og:updated_time" content="2018-04-04T06:57:58.623Z">
+<meta property="og:updated_time" content="2018-04-26T12:16:15.608Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis 简单使用">
 <meta name="twitter:description" content="Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。">
@@ -345,6 +345,9 @@ bind 外网 内网（中间用空格分隔）
 redis-cli -c -h 127.0.0.1 -p 7004（集群的时候需要加 -c）
 </code></pre><h3 id="查看连接数"><a href="#查看连接数" class="headerlink" title="查看连接数"></a>查看连接数</h3><pre><code>info clients
 </code></pre><h3 id="查看客户端连接信息"><a href="#查看客户端连接信息" class="headerlink" title="查看客户端连接信息"></a>查看客户端连接信息</h3><pre><code>CLIENT LIST
+</code></pre><h3 id="查看最大连接数"><a href="#查看最大连接数" class="headerlink" title="查看最大连接数"></a>查看最大连接数</h3><pre><code>config get maxclients
+</code></pre><h3 id="查看key的数量"><a href="#查看key的数量" class="headerlink" title="查看key的数量"></a>查看key的数量</h3><pre><code>DBSIZE
+</code></pre><h3 id="清空数据"><a href="#清空数据" class="headerlink" title="清空数据"></a>清空数据</h3><pre><code>flushall 
 </code></pre><h3 id="更多详细信息，请参考redis中文官网：http-redis-cn"><a href="#更多详细信息，请参考redis中文官网：http-redis-cn" class="headerlink" title="更多详细信息，请参考redis中文官网：http://redis.cn/"></a>更多详细信息，请参考redis中文官网：<a href="http://redis.cn/" target="_blank" rel="external">http://redis.cn/</a></h3>
       
     </div>
@@ -524,7 +527,7 @@ redis-cli -c -h 127.0.0.1 -p 7004（集群的时候需要加 -c）
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装redis"><span class="nav-number">1.</span> <span class="nav-text">安装redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单配置redis"><span class="nav-number">2.</span> <span class="nav-text">简单配置redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动redis"><span class="nav-number">3.</span> <span class="nav-text">启动redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入redis"><span class="nav-number">4.</span> <span class="nav-text">进入redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看连接数"><span class="nav-number">5.</span> <span class="nav-text">查看连接数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看客户端连接信息"><span class="nav-number">6.</span> <span class="nav-text">查看客户端连接信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多详细信息，请参考redis中文官网：http-redis-cn"><span class="nav-number">7.</span> <span class="nav-text">更多详细信息，请参考redis中文官网：http://redis.cn/</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装redis"><span class="nav-number">1.</span> <span class="nav-text">安装redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单配置redis"><span class="nav-number">2.</span> <span class="nav-text">简单配置redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动redis"><span class="nav-number">3.</span> <span class="nav-text">启动redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入redis"><span class="nav-number">4.</span> <span class="nav-text">进入redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看连接数"><span class="nav-number">5.</span> <span class="nav-text">查看连接数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看客户端连接信息"><span class="nav-number">6.</span> <span class="nav-text">查看客户端连接信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看最大连接数"><span class="nav-number">7.</span> <span class="nav-text">查看最大连接数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看key的数量"><span class="nav-number">8.</span> <span class="nav-text">查看key的数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清空数据"><span class="nav-number">9.</span> <span class="nav-text">清空数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多详细信息，请参考redis中文官网：http-redis-cn"><span class="nav-number">10.</span> <span class="nav-text">更多详细信息，请参考redis中文官网：http://redis.cn/</span></a></li></ol></div>
             
 
           </div>
