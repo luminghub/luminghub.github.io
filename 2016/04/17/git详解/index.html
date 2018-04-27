@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="GIT," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Git Community">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 详解">
+<meta property="og:url" content="http://yoursite.com/2016/04/17/git详解/index.html">
+<meta property="og:site_name" content="一条缝小眼睛的个人博客">
+<meta property="og:description" content="Git Community">
+<meta property="og:image" content="http://i.imgur.com/TVdYOhb.png">
+<meta property="og:updated_time" content="2018-04-27T04:04:15.649Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git 详解">
+<meta name="twitter:description" content="Git Community">
+<meta name="twitter:image" content="http://i.imgur.com/TVdYOhb.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/04/17/git详解/"/>
+
+
+
+
+
+  <title>Git 详解 | 一条缝小眼睛的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一条缝小眼睛的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">这个人的眼睛很小很小，笑起来的时候就会变成一条缝</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/04/17/git详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小明同学">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一条缝小眼睛的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Git 详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-17T00:00:00+08:00">
+                2016-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Study/" itemprop="url" rel="index">
+                    <span itemprop="name">Study</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Git Community
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Git-Community"><a href="#Git-Community" class="headerlink" title="Git Community"></a>Git Community</h1><h1 id="第一章-初步认识GIT"><a href="#第一章-初步认识GIT" class="headerlink" title="第一章 初步认识GIT"></a>第一章 初步认识GIT</h1><h2 id="一、简单介绍"><a href="#一、简单介绍" class="headerlink" title="一、简单介绍"></a>一、简单介绍</h2><p>Git, 它是一个快速的分布式版本控制系统。</p>
+<h2 id="二、GIT对象模型"><a href="#二、GIT对象模型" class="headerlink" title="二、GIT对象模型"></a>二、GIT对象模型</h2><h3 id="SHA"><a href="#SHA" class="headerlink" title="SHA"></a>SHA</h3><p>所有用来表示项目历史信息的文件,是通过一个40个字符的（40-digit）“对象名”来索引的，对象名看起来像这样:</p>
+<pre><code>6ff87c4664981e4397625791c8ea3bbb5f2279a3
+</code></pre><p>每一个“对象名”都是对“对象”内容做SHA1哈希计算得来的，（SHA1是一种密码学的哈希算法）。这样就意味着两个不同内容的对象不可能有相同的“对象名”。</p>
+<p>这样做会有几个好处：</p>
+<ul>
+<li>Git只要比较对象名，就可以很快的判断两个对象是否相同。</li>
+<li>因为在每个仓库（repository）的“对象名”的计算方法都完全一样，如果同样的内容存在两个不同的仓库中，就会存在相同的“对象名”下。</li>
+<li>Git还可以通过检查对象内容的SHA1的哈希值和“对象名”是否相同，来判断对象内容是否正确。</li>
+</ul>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>每个对象(object) 包括三个部分：类型，大小和内容。大小就是指内容的大小，内容取决于对象的类型，有四种类型的对象：”blob”、”tree”、 “commit” 和”tag”。几乎所有的Git功能都是使用这四个简单的对象类型来完成的。它就像是在你本机的文件系统之上构建一个小的文件系统。</p>
+<ul>
+<li>“blob”用来存储文件数据，通常是一个文件。</li>
+<li>“tree”有点像一个目录，它管理一些“tree”或是 “blob”（就像文件和子目录）</li>
+<li>一个“commit”只指向一个”tree”，它用来标记项目某一个特定时间点的状态。它包括一些关于时间点的元数据，如时间戳、最近一次提交的作者、指向上次提交（commits）的指针等等。</li>
+<li>一个“tag”是来标记某一个提交(commit) 的方法。</li>
+</ul>
+<h3 id="Blob对象"><a href="#Blob对象" class="headerlink" title="Blob对象"></a>Blob对象</h3><p>一个blob通常用来存储文件的内容。你可以使用 <strong>git show</strong> 命令来查看一个blob对象里的内容。假设我们现在有一个Blob对象的SHA1哈希值，我们可以通过下面的的命令来查看内容：</p>
+<pre><code>git show dc125b76b196768bdf0075d86f96262d1605edf0
+</code></pre><p>或者</p>
+<pre><code>git cat-file -p dc125b76b196768bdf0075d86f96262d1605edf0
+</code></pre><p>一个”blob对象”就是一块二进制数据，它没有指向任何东西或有任何其它属性，甚至连文件名都没有。</p>
+<p>因为blob对象内容全部都是数据，如两个文件在一个目录树（或是一个版本仓库）中有同样的数据内容，那么它们将会共享同一个blob对象。Blob对象和其所对应的文件所在路径、文件名是否改被更改都完全没有关系。</p>
+<h3 id="Tree对象"><a href="#Tree对象" class="headerlink" title="Tree对象"></a>Tree对象</h3><p>一个tree对象有一串(bunch)指向blob对象或是其它tree对象的指针，它一般用来表示内容之间的目录层次关系。<strong>git show</strong>命令还可以用来查看tree对象，</p>
+<pre><code>git show ebdd9fe73dd2d62b960caf7ceccd90bedc824bdd
+</code></pre><p>但是git ls-tree能让你看到更多的细节。</p>
+<pre><code>git ls-tree dc125b76b196768bdf0075d86f96262d1605edf0
+</code></pre><p>一个tree对象包括一串(list)条目，每一个条目包括：mode、对象类型、SHA1值 和名字(这串条目是按名字排序的)。它用来表示一个目录树的内容。</p>
+<p>一个tree对象可以指向(reference): 一个包含文件内容的blob对象, 也可以是其它包含某个子目录内容的其它tree对象. Tree对象、blob对象和其它所有的对象一样，都用其内容的SHA1哈希值来命名的；只有当两个tree对象的内容完全相同（包括其所指向所有子对象）时，它的名字才会一样，反之亦然。这样就能让Git仅仅通过比较两个相关的tree对象的名字是否相同，来快速的判断其内容是否不同。</p>
+<h3 id="Commit对象"><a href="#Commit对象" class="headerlink" title="Commit对象"></a>Commit对象</h3><p>“commit对象”指向一个”tree对象”, 并且带有相关的描述信息。</p>
+<p>可以用 –pretty=raw 参数来配合 git show 或 git log 去查看某个提交(commit):</p>
+<pre><code>git show -s --pretty=raw 71d82ea29e3545501b9c4f55e65877807aa079a7
+</code></pre><p>你可以看到, 一个提交(commit)由以下的部分组成:</p>
+<ul>
+<li>一个 tree　对象: tree对象的SHA1签名, 代表着目录在某一时间点的内容。</li>
+<li>父对象 (parent(s)): 提交(commit)的SHA1签名代表着当前提交前一步的项目历史. 上面的那个例子就只有一个父对象; 合并的提交(merge commits)可能会有不只一个父对象. 如果一个提交没有父对象, 那么我们就叫它“根提交”(root commit), 它就代表着项目最初的一个版本(revision). 每个项目必须有至少有一个“根提交”(root commit). 一个项目可能有多个”根提交“，虽然这并不常见(这不是好的作法)。</li>
+<li>作者（author） : 做了此次修改的人的名字,　还有修改日期。</li>
+<li>提交者（committer): 实际创建提交(commit)的人的名字, 同时也带有提交日期. TA可能会和作者不是同一个人; 例如作者写一个补丁(patch)并把它用邮件发给提交者, 由他来创建提交(commit)。</li>
+<li>注释 用来描述此次提交。</li>
+</ul>
+<p>注意: 一个提交(commit)本身并没有包括任何信息来说明其做了哪些修改; 所有的修改(changes)都是通过与父提交(parents)的内容比较而得出的. 值得一提的是, 尽管git可以检测到文件内容不变而路径改变的情况, 但是它不会去显式(explicitly)的记录文件的更名操作。</p>
+<p>一般用 git commit 来创建一个提交(commit), 这个提交(commit)的父对象一般是当前分支(current HEAD),　同时把存储在当前索引(index)的内容全部提交。</p>
+<h3 id="对象模型"><a href="#对象模型" class="headerlink" title="对象模型"></a>对象模型</h3><p>现在我们已经了解了3种主要对象类型(blob, tree 和 commit), 好现在就让我们大概了解一下它们怎么组合到一起的.</p>
+<p>如果我们一个小项目, 有如下的目录结构:</p>
+<pre><code>|-- README
+`-- lib
+    |-- inc
+    |   `-- tricks.rb
+    `-- mylib.rb
+</code></pre><p>如果我们把它提交(commit)到一个Git仓库中, 在Git中它们也许看起来就如下图:</p>
+<p><img src="http://i.imgur.com/TVdYOhb.png" alt=""></p>
+<p>你可以看到: 每个目录都创建了 tree对象 (包括根目录), 每个文件都创建了一个对应的 blob对象 . 最后有一个 commit对象 来指向根tree对象(root of trees), 这样我们就可以追踪项目每一项提交内容。</p>
+<h3 id="标签对象"><a href="#标签对象" class="headerlink" title="标签对象"></a>标签对象</h3><p>一个标签对象包括一个对象名(就是SHA1签名), 对象类型, 标签名, 标签创建人的名字(“tagger”), 还有一条可能包含有签名(signature)的消息。可以用 git cat-file 命令来查看这些信息:</p>
+<pre><code>git cat-file tag v1.5.0
+</code></pre><h3 id="git目录"><a href="#git目录" class="headerlink" title="git目录"></a>git目录</h3><pre><code>HEAD         # 这个git项目当前处在哪个分支里
+config       # 项目的配置信息，git config命令会改动它
+description  # 项目的描述信息
+hooks/       # 系统默认钩子脚本目录
+index        # 索引文件
+logs/        # 各个refs的历史信息
+objects/     # Git本地仓库的所有对象 (commits, trees, blobs, tags)
+refs/        # 标识你项目里的每个分支指向了哪个提交(commit)
+</code></pre><h3 id="git索引"><a href="#git索引" class="headerlink" title="git索引"></a>git索引</h3><p>Git索引是一个在你的工作目录和项目仓库间的暂存区(staging area). 有了它, 你可以把许多内容的修改一起提交(commit). 如果你创建了一个提交(commit), 那么提交的是当前索引(index)里的内容, 而不是工作目录中的内容。</p>
+<pre><code>git status
+</code></pre><h2 id="三、安装Git"><a href="#三、安装Git" class="headerlink" title="三、安装Git"></a>三、安装Git</h2><p>什么？这个还要教？</p>
+<h2 id="四、Git-配置"><a href="#四、Git-配置" class="headerlink" title="四、Git 配置"></a>四、Git 配置</h2><p>使用Git的第一件事就是设置你的名字和email,这些就是你在提交commit时的签名。</p>
+<pre><code>git config --global user.name &quot;luming&quot;
+git config --global user.email &quot;luming@mlogcn.com&quot;
+</code></pre><p>执行了上面的命令后,会在你的主目录(home directory)建立一个叫 ~/.gitconfig 的文件. 内容一般像下面这样:</p>
+<pre><code>[user]
+        name = luming
+        email = luming@mlogcn.com
+</code></pre><p>这样的设置是全局设置,会影响此用户建立的每个项目.</p>
+<p>如果你想使项目里的某个值与前面的全局设置有区别(例如把私人邮箱地址改为工作邮箱);你可以在项目中使用git config 命令不带 –global 选项来设置. 这会在你项目目录下的 .git/config 文件增加一节[user]内容。</p>
+<h1 id="第二章-GIT基本用法"><a href="#第二章-GIT基本用法" class="headerlink" title="第二章 GIT基本用法"></a>第二章 GIT基本用法</h1><h2 id="一、获得一个Git仓库"><a href="#一、获得一个Git仓库" class="headerlink" title="一、获得一个Git仓库"></a>一、获得一个Git仓库</h2><p>有两种方法可以得到git仓库：一种是从已有的Git仓库中　clone (克隆，复制)；还有一种是新建一个仓库，把未进行版本控制的文件进行版本控制。</p>
+<h3 id="Clone一个仓库"><a href="#Clone一个仓库" class="headerlink" title="Clone一个仓库"></a>Clone一个仓库</h3><p>为了得一个项目的拷贝(copy),我们需要知道这个项目仓库的地址(Git URL). Git能在许多协议下使用，所以Git URL可能以ssh://, http(s)://, git://,或是只是以一个用户名（git 会认为这是一个ssh 地址）为前辍. 有些仓库可以通过不只一种协议来访问，例如，Git本身的源代码你既可以用 git:// 协议来访问：</p>
+<pre><code>git clone git://git.kernel.org/pub/scm/git/git.git
+</code></pre><p>也可以通过http 协议来访问:</p>
+<pre><code>git clone http://www.kernel.org/pub/scm/git/git.git
+</code></pre><h3 id="初始化一个新的仓库"><a href="#初始化一个新的仓库" class="headerlink" title="初始化一个新的仓库"></a>初始化一个新的仓库</h3><p>进入项目文件夹，然后执行 <strong>git init</strong></p>
+<pre><code>cd myproject
+git init
+</code></pre><p>然后你会发现myproject目录下会有一个名叫”.git” 的目录被创建，这意味着一个仓库被初始化了。</p>
+<h2 id="二、正常的工作流程"><a href="#二、正常的工作流程" class="headerlink" title="二、正常的工作流程"></a>二、正常的工作流程</h2><p>修改文件，将它们更新的内容添加到索引中。</p>
+<pre><code>git add file1 file2 file3
+</code></pre><p>现在为commit做好了准备，你可以使用 git diff 命令再加上 –cached 参数 ,看看哪些文件将被提交(commit)。</p>
+<pre><code>git diff --cached
+</code></pre><p>P.s.如果没有–cached参数，git diff 会显示当前你所有已做的但没有加入到索引里的修改。</p>
+<p>也可以用git status命令来获得当前项目的一个状况</p>
+<pre><code>git status
+</code></pre><p>如果你要做进一步的修改, 那就继续做, 做完后就把新修改的文件加入到索引中。最后把他们提交：</p>
+<pre><code>git commit -m &quot;commit massage&quot;
+</code></pre><p>除了用git add 命令，我还可以用</p>
+<pre><code>git commit -a
+</code></pre><p>这会自动把所有内容被修改的文件(不包括新创建的文件)都添加到索引中，并且同时把它们提交。</p>
+<h2 id="三、分支与合并"><a href="#三、分支与合并" class="headerlink" title="三、分支与合并"></a>三、分支与合并</h2><h3 id="初步尝试"><a href="#初步尝试" class="headerlink" title="初步尝试"></a>初步尝试</h3><p>一个Git仓库可以维护很多开发分支。现在我们来创建一个新的叫”experimental”的分支：</p>
+<pre><code>git branch experimental
+</code></pre><p>如果你运行下面这条命令：</p>
+<pre><code>git branch
+</code></pre><p>你会得到当前仓库中存在的所有分支列表。“master”分支是Git系统默认创建的主分支。星号(“*”)标识了你当工作在哪个分支下。</p>
+<p>输入：</p>
+<pre><code>git checkout experimental
+</code></pre><p>切换到”experimental”分支，先编辑里面的一个文件，再提交(commit)改动，最后切换回 “master”分支。</p>
+<pre><code>git commit -a
+git checkout master
+</code></pre><p>你现在可以看一下你原来在“experimental”分支下所作的修改还在不在；因为你现在切换回了“master”分支，所以原来那些修改就不存在了。</p>
+<p>你现在可以在“master”分支下再作一些不同的修改:</p>
+<pre><code>git commit -a
+</code></pre><p>这时，两个分支就有了各自不同的修改(diverged)；我们可以通过下面的命令来合并“experimental”和“master”两个分支:</p>
+<pre><code>git merge experimental
+</code></pre><p>如果这个两个分支间的修改没有冲突(conflict), 那么合并就完成了。如有有冲突，输入下面的命令就可以查看当前有哪些文件产生了冲突:</p>
+<pre><code>git diff
+</code></pre><p>当你编辑了有冲突的文件，解决了冲突后就可以提交了：</p>
+<pre><code>git commit -a
+</code></pre><p>提交(commit)了合并的内容后就可查看一下:</p>
+<pre><code>gitk
+</code></pre><p>执行了gitk后会有一个很漂亮的图形的显示项目的历史。</p>
+<p>这时你就可以删除掉你的 “experimental” 分支了(如果愿意)：</p>
+<pre><code>git branch -d experimental
+</code></pre><p>git branch -d只能删除那些已经被当前分支的合并的分支. 如果你要强制删除某个分支的话就用git branch –D；下面假设你要强制删除一个叫”crazy-idea”的分支：</p>
+<pre><code>git branch -D crazy-idea
+</code></pre><h3 id="如何合并"><a href="#如何合并" class="headerlink" title="如何合并"></a>如何合并</h3><p>可以用下面的命令来合并两个分离的分支：git merge:</p>
+<pre><code>git merge branchname
+</code></pre><p>这个命令把分支”branchname”合并到了当前分支里面。如有冲突(冲突–同一个文件在远程分支和本地分支里按不同的方式被修改了）；那么命令的执行输出就像下面一样</p>
+<pre><code>git merge next
+ 100% (4/4) done
+Auto-merged file.txt
+CONFLICT (content): Merge conflict in file.txt
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre><p>在有问题的文件上会有冲突标记，在你手动解决完冲突后就可以把此文件添 加到索引(index)中去，用git commit命令来提交，就像平时修改了一个文件 一样。</p>
+<p>如果你用gitk来查看commit的结果，你会看到它有两个父分支：一个指向当前 的分支，另外一个指向刚才合并进来的分支。</p>
+<h3 id="解决合并中的冲突"><a href="#解决合并中的冲突" class="headerlink" title="解决合并中的冲突"></a>解决合并中的冲突</h3><p>如果执行自动合并没有成功的话，git会在索引和工作树里设置一个特殊的状态， 提示你如何解决合并中出现的冲突。</p>
+<p>有冲突(conflicts)的文件会保存在索引中，除非你解决了问题了并且更新了索引，否则执行 git commit都会失败:</p>
+<p>如果执行 git status 会显示这些文件没有合并(unmerged),这些有冲突的文件里面会添加像下面的冲突标识符:</p>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:file.txt
+Hello world
+=======
+Goodbye
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 77976da35a11db4580b80ae27e8d65caf5208086:file.txt
+</code></pre><p>你所需要的做是就是编辑解决冲突，（接着把冲突标识符删掉），再执行下面的命令:</p>
+<pre><code>git add file.txt
+git commit
+</code></pre><h3 id="撒销一个合并"><a href="#撒销一个合并" class="headerlink" title="撒销一个合并"></a>撒销一个合并</h3><p>如果你觉得你合并后的状态是一团乱麻，想把当前的修改都放弃，你可以用下面的命令回到合并之前的状态：</p>
+<pre><code>git reset --hard HEAD
+</code></pre><p>或者你已经把合并后的代码提交，但还是想把它们撒销：</p>
+<pre><code>git reset --hard ORIG_HEAD
+</code></pre><p>但是刚才这条命令在某些情况会很危险，如果你把一个已经被另一个分支合并的分支给删了，那么 以后在合并相关的分支时会出错。</p>
+<h2 id="四、查看Git日志"><a href="#四、查看Git日志" class="headerlink" title="四、查看Git日志"></a>四、查看Git日志</h2><p>git log命令可以显示所有的提交(commit)。 </p>
+<pre><code>git log
+</code></pre><p>你也可以让git log显示补丁(patchs):</p>
+<pre><code>git log -p
+</code></pre><p>如果用–stat选项使用’git log’,它会显示在每个提交(commit)中哪些文件被修改了, 这些文件分别添加或删除了多少行内容。</p>
+<pre><code>git log --stat
+</code></pre><p>你可以按你的要求来格式化日志输出。‘–pretty’参数可以使用若干表现格式，如‘oneline’:</p>
+<pre><code>git log --pretty=oneline
+</code></pre><p>你也可用‘medium’,‘short’,’full’,’fuller’,’email’ 或‘raw’. 如果这些格式不完全符合你的相求， 你也可以用‘–pretty=format’参数(参见：git log)来创建你自己的”格式“，如</p>
+<pre><code>git log --pretty=format:&apos;%h was %an, %ar, message: %s&apos;
+</code></pre><p>你可以用’–graph’选项来可视化你的提交图(commit graph),就像下面这样：</p>
+<pre><code>git log --pretty=format:&apos;%h : %s&apos; --graph
+</code></pre><p>如果你要指定一个特定的顺序，可以为git log命令添加顺序参数(ordering option).</p>
+<p>按默认情况，提交(commits)会按逆时间(reverse chronological)顺序显示。可以指定‘–topo-order’参数，这就会让提交(commits)按拓朴顺序来显示(就是子提交在它们的父提交前显示). 如果你用git log命令按拓朴顺序来显示git仓库的提交日志，你会看到“开发线”(development lines)都会集合在一起。</p>
+<pre><code>git log --pretty=format:&apos;%h : %s&apos; --topo-order --graph
+</code></pre><p>也可以用’–date-order’参数，这样显示提交日志的顺序主要按提交日期来排序. 这个参数和’–topo-order’有一点像，没有父分支会在它们的子分支前显示，但是其它的东东还是按交时间来排序显示。你会看到”开发线”(development lines)没有集合一起，它们会像并行开发(parallel development)一样跳来跳去的：</p>
+<pre><code>git log --pretty=format:&apos;%h : %s&apos; --date-order --graph
+</code></pre><h2 id="五、比较提交-Git-Diff"><a href="#五、比较提交-Git-Diff" class="headerlink" title="五、比较提交 - Git Diff"></a>五、比较提交 - Git Diff</h2><p>你可以用 git diff 来比较项目中任意两个版本的差异。</p>
+<pre><code>git diff master..test
+</code></pre><p>上面这条命令只显示两个分支间的差异，如果你想找出‘master’,‘test’的共有 父分支和’test’分支之间的差异，你用3个‘.’来取代前面的两个’.’ 。</p>
+<pre><code>git diff master...test
+</code></pre><p>git diff 是一个难以置信的有用的工具，可以找出你项目上任意两点间 的改动，或是用来查看别人提交进来的新分支。</p>
+<p>你通常用git diff来找你当前工作目录和上次提交与本地索引间的差异。</p>
+<pre><code>git diff
+</code></pre><p>上面的命令会显示在当前的工作目录里的，没有 staged(添加到索引中)，且在下次提交时 不会被提交的修改。</p>
+<p>如果你要看在下次提交时要提交的内容(staged,添加到索引中),你可以运行：</p>
+<pre><code>git diff --cached
+</code></pre><p>上面的命令会显示你当前的索引和上次提交间的差异；这些内容在不带”-a”参数运行 “git commit”命令时就会被提交。</p>
+<pre><code>git diff HEAD
+</code></pre><p>上面这条命令会显示你工作目录与上次提交时之间的所有差别，这条命令所显示的 内容都会在执行”git commit -a”命令时被提交。</p>
+<p>如果你要查看当前的工作目录与另外一个分支的差别，你可以用下面的命令执行:</p>
+<pre><code>git diff test
+</code></pre><p>这会显示你当前工作目录与另外一个叫’test’分支的差别。你也以加上路径限定符，来只 比较某一个文件或目录。</p>
+<pre><code>git diff HEAD -- ./lib 
+</code></pre><p>面这条命令会显示你当前工作目录下的lib目录与上次提交之间的差别(或者更准确的 说是在当前分支)。</p>
+<p>如果不是查看每个文件的详细差别，而是统计一下有哪些文件被改动，有多少行被改 动，就可以使用‘–stat’ 参数。</p>
+<pre><code>git diff --stat
+</code></pre><h2 id="六、分布式的工作流程"><a href="#六、分布式的工作流程" class="headerlink" title="六、分布式的工作流程"></a>六、分布式的工作流程</h2><p>git pull命令执行两个操作: 它从远程分支(remote branch)抓取修改 的内容，然后把它合并进当前的分支。</p>
+<pre><code>git pull
+</code></pre><p>可以用”git fetch”” 来执行”git pull”前半部分的工作， 但是这条命令并不会把抓下来的修改合并到当前分支里。</p>
+<pre><code>git fetch
+</code></pre><p>将修改推到一个公共仓库</p>
+<pre><code>git push
+</code></pre><p>当推送代码失败时要怎么办？如果推送(push)结果不是”快速向前”(fast forward),那么它 可能会报像下面一样的错误：</p>
+<pre><code>error: remote &apos;refs/heads/master&apos; is not an ancestor of
+local  &apos;refs/heads/master&apos;.
+Maybe you are not up-to-date and need to pull first?
+error: failed to push to &apos;ssh://yourserver.com/~you/proj.git&apos;
+</code></pre><p>这种情况通常由以下的原因产生：</p>
+<ul>
+<li><p>用 <code>git-reset --hard</code> 删除了一个已经发布了的一个提交</p>
+</li>
+<li><p>用 <code>git-commit --amend</code> 去替换一个已经发布的提交</p>
+</li>
+<li><p>用 <code>git-rebase</code> 去rebase一个已经发布的提交</p>
+</li>
+</ul>
+<p>你可以强制git-push在上传修改时先更新，只要在分支名前面加一个加号</p>
+<pre><code>git push +master
+</code></pre><p>通常不论公共仓库的分支是否被修改，他都被修改为指向原来指向的提交(commit) 跟随的下一个提交(commit)。如果在这种情况下强制地推送，你就破坏了之前的约定。</p>
+<p>尽管如此，这也是一种通常的用法来简单地发布一系列正在修正的补丁，并且只要你 通知了其他的开发者你打算怎样操作这个分支，这也是一种可以接受的折中办法。</p>
+<h2 id="七、Git标签"><a href="#七、Git标签" class="headerlink" title="七、Git标签"></a>七、Git标签</h2><p>我们可以用 git tag不带任何参数创建一个标签(tag)指定某个提交(commit):</p>
+<pre><code>git tag stable-1 1b2e1d63ff
+</code></pre><p>这样，我们可以用stable-1 作为提交(commit) “1b2e1d63ff” 的代称(refer)。</p>
+<p>前面这样创建的是一个“轻量级标签”，这种分支通常是从来不移动的。</p>
+<p>如果你想为一个标签(tag)添加注释，或是为它添加一个签名(sign it cryptographically), 那么我们就需要创建一个 ”标签对象”。</p>
+<p>如果有 “-a”, “-s” 或是 “-u “ 中间的一个命令参数被指定，那么就会创建 一个标签对象，并且需要一个标签消息(tag message). 如果没有”-m “ 或是 “-F “ 这些参数，那么就会启动一个编辑器来让用户输入标签消息(tag message)。</p>
+<p>当这样的一条命令执行后，一个新的对象被添加到Git对象库中，并且标签引用就指向了 一个标签对象，而不是指向一个提交(commit). 这样做的好处就是：你可以为一个标签 打处签名(sign), 方便你以后来查验这是不是一个正确的提交(commit).</p>
+<p>下面是一个创建标签对象的例子:</p>
+<p>创建轻量标签</p>
+<pre><code>git tag v0.1.2-light
+</code></pre><p>或者</p>
+<pre><code>git tag -a stable-1 1b2e1d63ff
+</code></pre><p>创建附注标签 （推荐）</p>
+<pre><code>git tag -a v0.1.2 -m “0.1.2版本”
+</code></pre><h1 id="第三章-中级进阶"><a href="#第三章-中级进阶" class="headerlink" title="第三章 中级进阶"></a>第三章 中级进阶</h1><h2 id="一、忽略某些文件"><a href="#一、忽略某些文件" class="headerlink" title="一、忽略某些文件"></a>一、忽略某些文件</h2><p>项目中经常会生成一些Git系统不需要追踪(track)的文件。典型的是在编译生成过程中 产生的文件或是编程器生成的临时备份文件。当然，你不追踪(track)这些文件，可以 平时不用”git add”去把它们加到索引中。 但是这样会很快变成一件烦人的事，你发现 项目中到处有未追踪(untracked)的文件; 这样也使”git add .” 和”git commit -a” 变得实际上没有用处，同时”git status”命令的输出也会有它们。<br>你可以在你的顶层工作目录中添加一个叫”.gitignore”的文件，来告诉Git系统要忽略 掉哪些文件，下面是文件内容的示例:</p>
+<pre><code># 以&apos;#&apos; 开始的行，被视为注释.
+*.a       # 忽略所有 .a 结尾的文件
+!lib.a    # 但 lib.a 除外
+/TODO     # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO
+build/    # 忽略 build/ 目录下的所有文件
+doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+# 忽略掉所有文件名是 foo.txt 的文件.
+foo.txt
+</code></pre><h2 id="不想写了，原文参考http-gitbook-liuhui998-com-index-html"><a href="#不想写了，原文参考http-gitbook-liuhui998-com-index-html" class="headerlink" title="不想写了，原文参考http://gitbook.liuhui998.com/index.html"></a>不想写了，原文参考<a href="http://gitbook.liuhui998.com/index.html" target="_blank" rel="external">http://gitbook.liuhui998.com/index.html</a></h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GIT/" rel="tag"># GIT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/22/postgres/" rel="prev" title="postgresql常用知识点一览">
+                postgresql常用知识点一览 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="小明同学" />
+          
+            <p class="site-author-name" itemprop="name">小明同学</p>
+            <p class="site-description motion-element" itemprop="description">java</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-Community"><span class="nav-number">1.</span> <span class="nav-text">Git Community</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-初步认识GIT"><span class="nav-number">2.</span> <span class="nav-text">第一章 初步认识GIT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、简单介绍"><span class="nav-number">2.1.</span> <span class="nav-text">一、简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、GIT对象模型"><span class="nav-number">2.2.</span> <span class="nav-text">二、GIT对象模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA"><span class="nav-number">2.2.1.</span> <span class="nav-text">SHA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象"><span class="nav-number">2.2.2.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Blob对象"><span class="nav-number">2.2.3.</span> <span class="nav-text">Blob对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tree对象"><span class="nav-number">2.2.4.</span> <span class="nav-text">Tree对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Commit对象"><span class="nav-number">2.2.5.</span> <span class="nav-text">Commit对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象模型"><span class="nav-number">2.2.6.</span> <span class="nav-text">对象模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标签对象"><span class="nav-number">2.2.7.</span> <span class="nav-text">标签对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git目录"><span class="nav-number">2.2.8.</span> <span class="nav-text">git目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git索引"><span class="nav-number">2.2.9.</span> <span class="nav-text">git索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、安装Git"><span class="nav-number">2.3.</span> <span class="nav-text">三、安装Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Git-配置"><span class="nav-number">2.4.</span> <span class="nav-text">四、Git 配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-GIT基本用法"><span class="nav-number">3.</span> <span class="nav-text">第二章 GIT基本用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、获得一个Git仓库"><span class="nav-number">3.1.</span> <span class="nav-text">一、获得一个Git仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Clone一个仓库"><span class="nav-number">3.1.1.</span> <span class="nav-text">Clone一个仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化一个新的仓库"><span class="nav-number">3.1.2.</span> <span class="nav-text">初始化一个新的仓库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、正常的工作流程"><span class="nav-number">3.2.</span> <span class="nav-text">二、正常的工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、分支与合并"><span class="nav-number">3.3.</span> <span class="nav-text">三、分支与合并</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初步尝试"><span class="nav-number">3.3.1.</span> <span class="nav-text">初步尝试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何合并"><span class="nav-number">3.3.2.</span> <span class="nav-text">如何合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决合并中的冲突"><span class="nav-number">3.3.3.</span> <span class="nav-text">解决合并中的冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#撒销一个合并"><span class="nav-number">3.3.4.</span> <span class="nav-text">撒销一个合并</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、查看Git日志"><span class="nav-number">3.4.</span> <span class="nav-text">四、查看Git日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、比较提交-Git-Diff"><span class="nav-number">3.5.</span> <span class="nav-text">五、比较提交 - Git Diff</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、分布式的工作流程"><span class="nav-number">3.6.</span> <span class="nav-text">六、分布式的工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、Git标签"><span class="nav-number">3.7.</span> <span class="nav-text">七、Git标签</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-中级进阶"><span class="nav-number">4.</span> <span class="nav-text">第三章 中级进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、忽略某些文件"><span class="nav-number">4.1.</span> <span class="nav-text">一、忽略某些文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不想写了，原文参考http-gitbook-liuhui998-com-index-html"><span class="nav-number">4.2.</span> <span class="nav-text">不想写了，原文参考http://gitbook.liuhui998.com/index.html</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小明同学</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
