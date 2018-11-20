@@ -75,7 +75,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/11/08/postgres主从复制/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="postgreSQL + postGis 的主从复制搭建。">
-<meta property="og:updated_time" content="2018-11-20T10:11:41.571Z">
+<meta property="og:updated_time" content="2018-11-20T10:22:51.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="postgresql主从复制">
 <meta name="twitter:description" content="postgreSQL + postGis 的主从复制搭建。">
@@ -329,114 +329,94 @@
 <p>数据库版本：postgreSQL 10 + postGIS 2.4</p>
 <p>主服务器IP：192.168.0.1</p>
 <p>从服务器IP：192.168.0.2</p>
-<h4 id="更新APT"><a href="#更新APT" class="headerlink" title="更新APT"></a>更新APT</h4><p>执行：<br>    sh -c ‘echo “deb <a href="http://apt.postgresql.org/pub/repos/apt" target="_blank" rel="external">http://apt.postgresql.org/pub/repos/apt</a> xenial-pgdg main” &gt;&gt; /etc/apt/sources.list’</p>
-<p>执行：<br>    wget –quiet -O - <a href="http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc" target="_blank" rel="external">http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc</a> | sudo apt-key add -</p>
-<p>执行：<br>    apt update</p>
-<h4 id="安装数据库主程序"><a href="#安装数据库主程序" class="headerlink" title="安装数据库主程序"></a>安装数据库主程序</h4><p>执行：<br>    apt install postgresql-10</p>
-<p>执行：<br>    apt install postgresql-10-postgis-2.4</p>
-<p>执行：<br>    apt install postgresql-10-postgis-scripts</p>
-<p>执行：<br>    apt install postgis</p>
-<p>执行：<br>    apt install postgresql-10-pgrouting</p>
-<h4 id="设置数据库"><a href="#设置数据库" class="headerlink" title="设置数据库"></a>设置数据库</h4><p><a href="https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS24UbuntuPGSQL10Apt" title="官方传送门" target="_blank" rel="external">https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS24UbuntuPGSQL10Apt</a></p>
-<p>切换用户：</p>
-<pre><code>su    postgres
-</code></pre><p>登陆控制台</p>
-<pre><code>psql
-</code></pre><p>执行：</p>
-<pre><code>CREATE EXTENSION adminpack;
-</code></pre><p>执行：</p>
-<pre><code>CREATE DATABASE gisdb;
-</code></pre><p>执行：</p>
-<pre><code>\connect gisdb;
-</code></pre><p>执行：</p>
-<pre><code>CREATE SCHEMA postgis;
-</code></pre><p>执行：</p>
-<pre><code>ALTER DATABASE gisdb SET search_path=public, postgis, contrib;
-</code></pre><p>执行：</p>
-<pre><code>\connect gisdb;
-</code></pre><p>配置空间拓展，执行：</p>
-<pre><code>CREATE EXTENSION postgis SCHEMA postgis;
-SELECT postgis_full_version();
-</code></pre><p>配置成功会显示postgis_full_version相关信息。</p>
-<p>配置3D拓展，执行：</p>
-<pre><code>CREATE EXTENSION postgis_sfcgal SCHEMA postgis;
-SELECT postgis_full_version();
-</code></pre><p>配置成功会显示新的postgis_full_version相关信息。</p>
+<h4 id="更新APT"><a href="#更新APT" class="headerlink" title="更新APT"></a>更新APT</h4><p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh -c <span class="string">'echo "deb http://apt.postgresql.org/pub/repos/apt xenial-pgdg main" &gt;&gt; /etc/apt/sources.list'</span></div></pre></td></tr></table></figure>
 <p>执行：</p>
-<pre><code>CREATE  EXTENSION pgrouting SCHEMA postgis;
-SELECT * FROM pgr_version();
-</code></pre><p>配置成功会显示版本信息。</p>
-<h4 id="修改pg-hba-conf配置文件，将："><a href="#修改pg-hba-conf配置文件，将：" class="headerlink" title="修改pg_hba.conf配置文件，将："></a>修改pg_hba.conf配置文件，将：</h4><pre><code>local         all           all        peer
-</code></pre><p>修改为</p>
-<pre><code>local         all           all        trust
-</code></pre><p>文件目录：/etc/postgresql/10/main/pg_hba.conf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -</div></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt update</div></pre></td></tr></table></figure>
+<h4 id="安装数据库主程序"><a href="#安装数据库主程序" class="headerlink" title="安装数据库主程序"></a>安装数据库主程序</h4><p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt install postgresql-10</div></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt install postgresql-10-postgis-2.4</div></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt install postgresql-10-postgis-scripts</div></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt install postgis</div></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt install postgresql-10-pgrouting</div></pre></td></tr></table></figure>
+<h4 id="设置数据库"><a href="#设置数据库" class="headerlink" title="设置数据库"></a>设置数据库</h4><p>官方传送门</p>
+<p><a href="https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS24UbuntuPGSQL10Apt" title="官方传送门" target="_blank" rel="external">https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS24UbuntuPGSQL10Apt</a></p>
+<p>切换用户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">su	postgres</div></pre></td></tr></table></figure>
+<p>登陆控制台</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">psql</div></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> EXTENSION adminpack;</div></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> gisdb;</div></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\connect gisdb;</div></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">SCHEMA</span> postgis;</div></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> gisdb <span class="keyword">SET</span> search_path=<span class="keyword">public</span>, postgis, contrib;</div></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\connect gisdb;</div></pre></td></tr></table></figure>
+<p>配置空间拓展，执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> EXTENSION postgis <span class="keyword">SCHEMA</span> postgis;</div><div class="line"><span class="keyword">SELECT</span> postgis_full_version();</div></pre></td></tr></table></figure>
+<p>配置成功会显示postgis_full_version相关信息。</p>
+<p>配置3D拓展，执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> EXTENSION postgis_sfcgal <span class="keyword">SCHEMA</span> postgis;</div><div class="line"><span class="keyword">SELECT</span> postgis_full_version();</div></pre></td></tr></table></figure>
+<p>配置成功会显示新的postgis_full_version相关信息。</p>
+<p>执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span>  EXTENSION pgrouting <span class="keyword">SCHEMA</span> postgis;</div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> pgr_version();</div></pre></td></tr></table></figure>
+<p>配置成功会显示版本信息。</p>
+<h4 id="修改pg-hba-conf配置文件，将："><a href="#修改pg-hba-conf配置文件，将：" class="headerlink" title="修改pg_hba.conf配置文件，将："></a>修改pg_hba.conf配置文件，将：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">local         all           all        peer</div></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">local         all           all        trust</div></pre></td></tr></table></figure>
+<p>文件目录：/etc/postgresql/10/main/pg_hba.conf</p>
 <p>重启服务器</p>
 <p>执行：</p>
-<pre><code>service postgresql restart
-</code></pre><h4 id="配置主服务器"><a href="#配置主服务器" class="headerlink" title="配置主服务器"></a>配置主服务器</h4><h5 id="创建同步用户"><a href="#创建同步用户" class="headerlink" title="创建同步用户"></a>创建同步用户</h5><pre><code>su postgres
-</code></pre><p>创建用户：用于同步数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service postgresql restart</div></pre></td></tr></table></figure>
+<h4 id="配置主服务器"><a href="#配置主服务器" class="headerlink" title="配置主服务器"></a>配置主服务器</h4><h5 id="创建同步用户"><a href="#创建同步用户" class="headerlink" title="创建同步用户"></a>创建同步用户</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">su postgres</div></pre></td></tr></table></figure>
+<p>创建用户：用于同步数据</p>
 <p>执行：</p>
-<pre><code>create role replimloge login replication encrypted password &apos;replication&apos;
-</code></pre><p>命令说明：replimloge，用户名；login、replication，权限类型</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">role</span> replimloge login <span class="keyword">replication</span> encrypted <span class="keyword">password</span> <span class="string">'replication'</span></div></pre></td></tr></table></figure>
+<p>命令说明：replimloge，用户名；login、replication，权限类型</p>
 <h5 id="配置pg-hba-conf"><a href="#配置pg-hba-conf" class="headerlink" title="配置pg_hba.conf"></a>配置pg_hba.conf</h5><p>修改pg_hba.conf，添加如下</p>
-<pre><code>host    all          all           192.168.0.2/32   trust   #从服务器连接到本机
-
-host    replication  replimloge    192.168.0.2/32    md5    #replimloge用户在从服务器上复制本机数据，角色必须是 replication
-</code></pre><h5 id="配置postgresql-conf"><a href="#配置postgresql-conf" class="headerlink" title="配置postgresql.conf"></a>配置postgresql.conf</h5><p>文件位置：/etc/postgresql/10/main/postgresql.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">host    all          all           192.168.0.2/32   trust   #从服务器连接到本机</div><div class="line"> </div><div class="line">host    replication  replimloge    192.168.0.2/32    md5    #replimloge用户在从服务器上复制本机数据，角色必须是 replication</div></pre></td></tr></table></figure>
+<h5 id="配置postgresql-conf"><a href="#配置postgresql-conf" class="headerlink" title="配置postgresql.conf"></a>配置postgresql.conf</h5><p>文件位置：/etc/postgresql/10/main/postgresql.conf</p>
 <p>执行：</p>
-<pre><code>vim /etc/postgresql/10/main/postgresql.conf
-</code></pre><p>修改如下信息：</p>
-<pre><code>listen_addresses = &apos;*&apos;                                     #监听所有ip
-
-#archive_mode = on                                          #开启归档模式
-
-archive_command = ‘cp %p /var/lib/postgresql/10/main/%f’   #归档命令
-
-wal_level = replica                                        #热备模式
-
-max_wal_senders = 10                                       #最多有10个流复制连接
-
-wal_keep_segments = 100                                    #最多有多少个同步日志文件
-
-wal_sender_timeout = 60s                                   #流复制超时时间
-</code></pre><p>说明：archive_mode = on 会打开归档模式，生成大量wal日志文件。wal_keep_segments 根据具体需求设定，如果设置的过小，大量数据写入时可能会导致同步文件被覆盖，而导致同步异常。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/postgresql/10/main/postgresql.conf</div></pre></td></tr></table></figure>
+<p>修改如下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">listen_addresses = &apos;*&apos;                                     #监听所有ip</div><div class="line">	 </div><div class="line">#archive_mode = on                                          #开启归档模式</div><div class="line">	 </div><div class="line">archive_command = ‘cp %p /var/lib/postgresql/10/main/%f’   #归档命令</div><div class="line">	 </div><div class="line">wal_level = replica                                        #热备模式</div><div class="line">	 </div><div class="line">max_wal_senders = 10                                       #最多有10个流复制连接</div><div class="line">	</div><div class="line">wal_keep_segments = 100                                    #最多有多少个同步日志文件</div><div class="line">	</div><div class="line">wal_sender_timeout = 60s                                   #流复制超时时间</div></pre></td></tr></table></figure>
+<p>说明：archive_mode = on 会打开归档模式，生成大量wal日志文件。wal_keep_segments 根据具体需求设定，如果设置的过小，大量数据写入时可能会导致同步文件被覆盖，而导致同步异常。</p>
 <h5 id="重启数据库"><a href="#重启数据库" class="headerlink" title="重启数据库"></a>重启数据库</h5><p>执行：</p>
-<pre><code>service postgresql restart
-</code></pre><h4 id="配置从服务器"><a href="#配置从服务器" class="headerlink" title="配置从服务器"></a>配置从服务器</h4><h5 id="测试与主服务器的连接"><a href="#测试与主服务器的连接" class="headerlink" title="测试与主服务器的连接"></a>测试与主服务器的连接</h5><p>执行：</p>
-<pre><code>psql -h 192.168.0.1  -U  postgres
-</code></pre><h5 id="清空数据目录"><a href="#清空数据目录" class="headerlink" title="清空数据目录"></a>清空数据目录</h5><p>执行：</p>
-<pre><code>rm -rf /var/lib/postgresql/10/main/*
-</code></pre><h5 id="同步备份主服务器数据"><a href="#同步备份主服务器数据" class="headerlink" title="同步备份主服务器数据"></a>同步备份主服务器数据</h5><p>执行：</p>
-<pre><code>pg_basebackup -F p --progress -D 10/main/ -h 192.168.0.1 -p 5432 -U replimloge --password
-</code></pre><h5 id="创建recovery-conf"><a href="#创建recovery-conf" class="headerlink" title="创建recovery.conf"></a>创建recovery.conf</h5><p>recovery.conf文件，用于从库恢复从主库获取的数据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service postgresql restart</div></pre></td></tr></table></figure>
+<h4 id="配置从服务器"><a href="#配置从服务器" class="headerlink" title="配置从服务器"></a>配置从服务器</h4><h5 id="测试与主服务器的连接"><a href="#测试与主服务器的连接" class="headerlink" title="测试与主服务器的连接"></a>测试与主服务器的连接</h5><p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">psql -h 192.168.0.1 -U postgres</div></pre></td></tr></table></figure>
+<h5 id="清空数据目录"><a href="#清空数据目录" class="headerlink" title="清空数据目录"></a>清空数据目录</h5><p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm -rf /var/lib/postgresql/10/main/*</div></pre></td></tr></table></figure>
+<h5 id="同步备份主服务器数据"><a href="#同步备份主服务器数据" class="headerlink" title="同步备份主服务器数据"></a>同步备份主服务器数据</h5><p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pg_basebackup -F p --progress -D 10/main/ -h 192.168.0.1 -p 5432 -U replimloge --password</div></pre></td></tr></table></figure>
+<h5 id="创建recovery-conf"><a href="#创建recovery-conf" class="headerlink" title="创建recovery.conf"></a>创建recovery.conf</h5><p>recovery.conf文件，用于从库恢复从主库获取的数据。</p>
 <p>执行：</p>
-<pre><code>vi recovery.conf
-</code></pre><p>写入如下信息：</p>
-<pre><code>standby_mode = on   #表示该节点是从库
-
-primary_conninfo = &apos;host=192.168.0.1  port=5432  user=replimloge  password=mlogcn&apos;  #从机信息和连接用户
-</code></pre><p>保存退出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi recovery.conf</div></pre></td></tr></table></figure>
+<p>写入如下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">standby_mode = on   #表示该节点是从库</div><div class="line"> </div><div class="line">primary_conninfo = &apos;host=192.168.0.1 port=5432 user=replimloge password=mlogcn&apos;  #从机信息和连接用户</div></pre></td></tr></table></figure>
+<p>保存退出</p>
 <p>移动到数据目录：10/main/.</p>
 <p>执行：</p>
-<pre><code>mv recovery.conf 10/main/.
-</code></pre><h5 id="配置postgresql-conf-1"><a href="#配置postgresql-conf-1" class="headerlink" title="配置postgresql.conf"></a>配置postgresql.conf</h5><p>执行：</p>
-<pre><code>vim /etc/postgresql/10/main/postgresql.conf
-</code></pre><p>修改如下信息：</p>
-<pre><code>listen_addresses = &apos;*&apos; 
-
-wal_level = replica                 #热备模式
-
-hot_standby = on                    #说明这台机器不仅用于数据归档，还可以用于数据查询
-
-max_standby_streaming_delay = 30s   #流备份的最大延迟时间
-
-wal_receiver_status_interval = 10s  #向主机汇报本机状态的间隔时间
-
-hot_standby_feedback = on           #出现错误复制，向主机反馈
-</code></pre><p>保存退出，重启数据库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv recovery.conf 10/main/.</div></pre></td></tr></table></figure>
+<h5 id="配置postgresql-conf-1"><a href="#配置postgresql-conf-1" class="headerlink" title="配置postgresql.conf"></a>配置postgresql.conf</h5><p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/postgresql/10/main/postgresql.conf</div></pre></td></tr></table></figure>
+<p>修改如下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">listen_addresses = &apos;*&apos; </div><div class="line"></div><div class="line">wal_level = replica                 #热备模式</div><div class="line"> </div><div class="line">hot_standby = on                    #说明这台机器不仅用于数据归档，还可以用于数据查询</div><div class="line"> </div><div class="line">max_standby_streaming_delay = 30s   #流备份的最大延迟时间</div><div class="line"> </div><div class="line">wal_receiver_status_interval = 10s  #向主机汇报本机状态的间隔时间</div><div class="line"> </div><div class="line">hot_standby_feedback = on           #出现错误复制，向主机反馈</div></pre></td></tr></table></figure>
+<p>保存退出，重启数据库</p>
 <p>执行：</p>
-<pre><code>service postgresql restart
-</code></pre><h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>在主服务器中创建一个表，并写入数据，看从服务器是否正确同步。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service postgresql restart</div></pre></td></tr></table></figure>
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>在主服务器中创建一个表，并写入数据，看从服务器是否正确同步。</p>
 <p>综上，上述就是主从同步配置的全过程。</p>
 
       
