@@ -75,7 +75,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/11/08/postgres主从复制/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="postgreSQL + postGis 的主从复制搭建。">
-<meta property="og:updated_time" content="2018-11-20T10:22:51.795Z">
+<meta property="og:updated_time" content="2018-11-20T10:25:53.828Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="postgresql主从复制">
 <meta name="twitter:description" content="postgreSQL + postGis 的主从复制搭建。">
@@ -348,7 +348,7 @@
 <h4 id="设置数据库"><a href="#设置数据库" class="headerlink" title="设置数据库"></a>设置数据库</h4><p>官方传送门</p>
 <p><a href="https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS24UbuntuPGSQL10Apt" title="官方传送门" target="_blank" rel="external">https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS24UbuntuPGSQL10Apt</a></p>
 <p>切换用户：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">su	postgres</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">su postgres</div></pre></td></tr></table></figure>
 <p>登陆控制台</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">psql</div></pre></td></tr></table></figure>
 <p>执行：</p>
@@ -370,7 +370,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> EXTENSION postgis_sfcgal <span class="keyword">SCHEMA</span> postgis;</div><div class="line"><span class="keyword">SELECT</span> postgis_full_version();</div></pre></td></tr></table></figure>
 <p>配置成功会显示新的postgis_full_version相关信息。</p>
 <p>执行：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span>  EXTENSION pgrouting <span class="keyword">SCHEMA</span> postgis;</div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> pgr_version();</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> EXTENSION pgrouting <span class="keyword">SCHEMA</span> postgis;</div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> pgr_version();</div></pre></td></tr></table></figure>
 <p>配置成功会显示版本信息。</p>
 <h4 id="修改pg-hba-conf配置文件，将："><a href="#修改pg-hba-conf配置文件，将：" class="headerlink" title="修改pg_hba.conf配置文件，将："></a>修改pg_hba.conf配置文件，将：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">local         all           all        peer</div></pre></td></tr></table></figure>
 <p>修改为</p>
