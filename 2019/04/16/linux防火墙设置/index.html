@@ -75,7 +75,7 @@
 <meta property="og:url" content="http://yoursite.com/2019/04/16/linux防火墙设置/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="linux防火墙设置。">
-<meta property="og:updated_time" content="2019-04-17T01:42:38.165Z">
+<meta property="og:updated_time" content="2019-05-29T10:11:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux防火墙设置">
 <meta name="twitter:description" content="linux防火墙设置。">
@@ -327,7 +327,7 @@
         <h2 id="Centos防火墙设置"><a href="#Centos防火墙设置" class="headerlink" title="Centos防火墙设置"></a>Centos防火墙设置</h2><p>Centos7默认防火墙使用的是firewall。</p>
 <h3 id="查看防火墙状态："><a href="#查看防火墙状态：" class="headerlink" title="查看防火墙状态："></a>查看防火墙状态：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service firewalld status</div></pre></td></tr></table></figure>
 <h3 id="开启防火墙"><a href="#开启防火墙" class="headerlink" title="开启防火墙"></a>开启防火墙</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service firewalld start</div></pre></td></tr></table></figure>
-<h3 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service firewalld start</div></pre></td></tr></table></figure>
+<h3 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service firewalld stop</div></pre></td></tr></table></figure>
 <h3 id="关闭开机启动"><a href="#关闭开机启动" class="headerlink" title="关闭开机启动"></a>关闭开机启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl disable firewalld.service</div></pre></td></tr></table></figure>
 <h3 id="打开开机启动"><a href="#打开开机启动" class="headerlink" title="打开开机启动"></a>打开开机启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl enable firewalld.service</div></pre></td></tr></table></figure>
 <h3 id="查看防火墙开机启动状态"><a href="#查看防火墙开机启动状态" class="headerlink" title="查看防火墙开机启动状态"></a>查看防火墙开机启动状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl is-enabled firewalld.service</div></pre></td></tr></table></figure>
