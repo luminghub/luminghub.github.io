@@ -75,7 +75,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/17/Spring相关/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="常用的一些小知识。">
-<meta property="og:updated_time" content="2017-05-25T08:26:10.000Z">
+<meta property="og:updated_time" content="2019-06-10T08:53:28.094Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springBoot常用配置">
 <meta name="twitter:description" content="常用的一些小知识。">
@@ -324,21 +324,8 @@
       
 
       
-        <h2 id="Jackson序列化配置"><a href="#Jackson序列化配置" class="headerlink" title="Jackson序列化配置"></a>Jackson序列化配置</h2><h3 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h3><pre><code>@Bean
-public MappingJackson2HttpMessageConverter customJackson2HttpMessageConverter() {
-    MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.setSerializationInclusion(Include.NON_NULL); 
-    jsonConverter.setObjectMapper(mapper);
-    return jsonConverter;
-}
-</code></pre><h3 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h3><pre><code>@Bean
-public Jackson2ObjectMapperBuilder objectMapperBuilder() {
-   Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-   builder.serializationInclusion(JsonInclude.Include.NON_NULL);
-   return builder;
-}
-</code></pre>
+        <h2 id="Jackson序列化配置"><a href="#Jackson序列化配置" class="headerlink" title="Jackson序列化配置"></a>Jackson序列化配置</h2><h3 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> MappingJackson2HttpMessageConverter <span class="title">customJackson2HttpMessageConverter</span><span class="params">()</span> </span>&#123;</div><div class="line">	MappingJackson2HttpMessageConverter jsonConverter = <span class="keyword">new</span> MappingJackson2HttpMessageConverter();</div><div class="line">	ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();</div><div class="line">	mapper.setSerializationInclusion(Include.NON_NULL); </div><div class="line">	jsonConverter.setObjectMapper(mapper);</div><div class="line">	<span class="keyword">return</span> jsonConverter;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> Jackson2ObjectMapperBuilder <span class="title">objectMapperBuilder</span><span class="params">()</span> </span>&#123;</div><div class="line">   Jackson2ObjectMapperBuilder builder = <span class="keyword">new</span> Jackson2ObjectMapperBuilder();</div><div class="line">   builder.serializationInclusion(JsonInclude.Include.NON_NULL);</div><div class="line">   <span class="keyword">return</span> builder;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
       
     </div>
     
@@ -378,8 +365,8 @@ public Jackson2ObjectMapperBuilder objectMapperBuilder() {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/27/Nginx配置https/" rel="prev" title="Nginx配置Https">
-                Nginx配置Https <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/27/Tomcat配置https/" rel="prev" title="Tomcat配置Https">
+                Tomcat配置Https <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -460,7 +447,7 @@ public Jackson2ObjectMapperBuilder objectMapperBuilder() {
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
