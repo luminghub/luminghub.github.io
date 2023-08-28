@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>理解Git的工作流程 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="理解Git的工作流程，在使用git的时候需要养成的良好习惯。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解Git的工作流程">
+<meta property="og:url" content="http://example.com/2016/11/25/%E7%90%86%E8%A7%A3Git%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="理解Git的工作流程，在使用git的时候需要养成的良好习惯。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://i.imgur.com/T4SsrW0.png">
+<meta property="article:published_time" content="2016-11-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-28T02:26:03.005Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="GIT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://i.imgur.com/T4SsrW0.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-理解Git的工作流程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/11/25/%E7%90%86%E8%A7%A3Git%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2016-11-24T16:00:00.000Z" itemprop="datePublished">2016-11-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/technical-article/">technical article</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      理解Git的工作流程
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>如果你不理解Git的设计动机，那你就会处处碰壁。知道足够多的命令和参数后，你就会强行让Git按你想的来工作，而不是按Git自己的方式来。这就像把螺丝刀当锤子用，也能把活干完，但肯定干的差极了，花费很长时间，还会弄坏螺丝刀。</p>
+<p>想想常见的Git工作流程是怎么失效的吧。</p>
+<p>多数时候这样做的效果会如你所愿，因为从你创建分支到合并回去之间，Master一般都会有些变动。然后，有一天当你想把一个功能（feature）分支合并进Master的时候，而Master并没有像以往那样有变动，问题来了：这时Git不会进行合并commit，而是将Master指向功能分支上的最新commit。</p>
+<p><img src="http://i.imgur.com/T4SsrW0.png"></p>
+<p>不幸的是，你的功能分支有用来备份代码的commit（作者称之为checkpoint commit），这些经常进行的commit对应的代码可能处于不稳定状态！而这些commit现在没法和Master上那些稳定的commit区分开来了。当你想回滚的时候，很容易发生灾难性后果。</p>
+<p>于是你就记住了：“当合并功能分支的时候，加上 -no-ff 选项强制进行一次全新的commit。”嗯，这么做好像解决问题了，那么继续。</p>
+<p>然后一天你在线上环境中发现了一个严重bug，这时你需要追溯下这个bug是什么时候引入的。你运行了bisect命令，但却总是追溯到一些不稳定的commit。因此你不得不放弃，改用人肉检查。</p>
+<p>最后你将bug范围缩小到一个文件。你运行blame命令查看这个文件在过去48小时里的变动。然后blame告诉你这个文件已经好几周没有被修改过了 —— 你知道根本不可能没有变动。哦，原来是因为blame计算变动是从第一次commit算起，而不是merge的时候。你在几周前的一次commit中改动了这个文件，但这个变动今天才被merge回来。</p>
+<p>用no-ff来救急，bisect又临时失效，blame的运作机制又那么模糊，所有这些现象都说明一件事儿，那就是你正在把螺丝刀当锤子用。</p>
+<h2 id="反思版本控制"><a href="#反思版本控制" class="headerlink" title="反思版本控制"></a>反思版本控制</h2><p>版本控制的存在是因为两个原因。</p>
+<p>首先，版本控制是用来辅助写代码的。因为你要和同事同步代码，并经常备份自己的代码。当然了，把文件压缩后发邮件也行，不过工程大了大概就不好办了。</p>
+<p>其次，就是辅助配置管理工作。其中就包括并行开发的管理，比如一边给线上版本修复bug，一边开发下一个版本。配置管理也可以帮助弄清楚变动发生的具体时间，在追溯bug中是一个很好的工具。</p>
+<p>一般说来，这两个原因是冲突的。</p>
+<p>在开发一个功能的时候，你应该经常做备份性的commit。然而，这些commit经常会让软件没法编译。</p>
+<p>理想情况是，你的版本更新历史中的每一次变化都是明确且稳定的，不会有备份性commit带来的噪声，也不会有超过一万行代码变动的超大commit。一个清晰的版本历史让回滚和选择性merge都变得相当容易，而且也方便以后的检查和分析。然而，要维护这样一个干净的历史版本库，也许意味着总是要等到代码完善之后才能提交变动。</p>
+<p>那么，经常性的commit和干净的历史，你选择哪一个？</p>
+<p>如果你是在刚起步的创业公司中，干净的历史没有太大帮助。你可以放心地把所有东西都往Master中提交，感觉不错的时候随时发布。</p>
+<p>如果团队规模变大或是用户规模扩大了，你就需要些工具和技巧来做约束，包括自动化测试，代码检查，以及干净的版本历史。</p>
+<p>功能分支貌似是一个不错的折中选择，能够解决基本的并行开发问题。当你写代码的时候，可以不用怎么在意集成的问题，但它总有烦到你的时候。</p>
+<p>当你的项目规模足够大的时候，简单的 branch&#x2F;commit&#x2F;merge 工作流程就出问题了。缝缝补补已经不行了。这时你需要一个干净的版本历史库。</p>
+<p>Git之所以是革命性的，就是因为它能同时给你这两方面的好处。你可以在原型开发过程中经常备份变动，而搞定后只需要交付一个干净的版本历史。</p>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><p>考虑两种分支：公共的和私有的。</p>
+<p>公共分支是项目的权威性历史库。在公共分支中，每一个commit都应该确保简洁、原子性，并且有完善的提交信息。此分支应该尽可能线性，且不能更改。公共分支包括Master和发行版的分支。</p>
+<p>私有分支是供你自己使用的，就像解决问题时的草稿纸。</p>
+<p>安全起见，把私有分支只保存在本地。如果你确实需要push到服务器的话（比如要同步你在家和办公室的电脑），最好告诉同事这是私有的，不要基于这个分支展开工作。</p>
+<p>绝不要直接用merge命令把私有分支合并到公共分支中。要先用reset、rebase、squash merges、commit amending等工具把你的分支清理一下。</p>
+<p>把你自己看做一个作者，每一次的commit视为书中的一章。作者不会出版最初的草稿，就像Michael Crichton说的，“伟大的书都不是写出来——而是改出来的”（“Great books aren’t written – they’re rewritten.”）。</p>
+<p>如果你没接触过Git，那么修改历史对你来说好像是种禁忌。你习惯于认为提交过的所有东西都应该像刻在石头上一样不能抹去。但如果按这种逻辑，我们在文本处理软件器中也不应该使用“撤销”功能了。</p>
+<p>实用主义者们直到变化变为噪音的时候才关注变化。对于配置管理来说，我们关注宏观的变化。日常commit（checkpoint commits）只是备份于云端的用于“撤销”的缓冲。</p>
+<p>如果你保持公共历史版本库的简洁，那么所谓的fast-forward merge就不仅安全而且可取了，它能保证版本变更历史的线性和易于追溯。</p>
+<p>关于 -no-ff 仅剩的争论就只剩“文档证明”了。人们可能会先merge再commit，以此代表最新的线上部署版本。不过，这是反模式的。用tag吧。</p>
+<h2 id="规则和例子"><a href="#规则和例子" class="headerlink" title="规则和例子"></a>规则和例子</h2><p>根据改变的多少、持续工作时间的长短，以及分支分叉了多远，我使用三种基本的方法。</p>
+<h3 id="1）短期工作"><a href="#1）短期工作" class="headerlink" title="1）短期工作"></a>1）短期工作</h3><p>绝大多数时间，我做清理时只用squash merge命令。</p>
+<p>假设我创建了一个功能分支，并且在接下来一个小时里进行了一系列的checkpoint commit。</p>
+<pre><code>git checkout -b private_feature_branch
+
+touch file1.txt
+
+git add file1.txt
+
+git commit -am &quot;WIP&quot; 
+</code></pre>
+<p>完成开发后，我不是直接执行git merge命令，而是这样：</p>
+<pre><code>git checkout master
+
+git merge --squash private_feature_branch
+
+git commit -v 
+</code></pre>
+<p>然后我会花一分钟时间写个详细的commit日志。</p>
+<h3 id="2）较大的工作"><a href="#2）较大的工作" class="headerlink" title="2）较大的工作"></a>2）较大的工作</h3><p>有时候一个功能可以延续好几天，伴有大量的小的commit。</p>
+<p>我认为这些改变应该被分解为一些更小粒度的变更，所以squash作为工具来说就有点儿太糙了。（根据经验我一般会问，“这样能让阅读代码更容易吗？”）</p>
+<p>如果我的checkpoint commits之后有合理的更新，我可以使用rebase的交互模式。</p>
+<p>交互模式很强大。你可以用它来编辑、分解、重新排序、合并以前的commit。</p>
+<p>在我的功能分支上：</p>
+<pre><code>git rebase --interactive master 
+</code></pre>
+<p>然后会打开一个编辑器，里边是commit列表。每一行上依次是：要执行的操作、commit的SHA1值、当前commit的注释。并且提供了包含所有可用命令列表的图例。</p>
+<p>默认情况下，每个commit的操作都是“pick”，即不会修改commit。</p>
+<pre><code>pick ccd6e62 Work on back button
+
+pick 1c83feb Bug fixes
+
+pick f9d0c33 Start work on toolbar 
+</code></pre>
+<p>我把第二行修改为“squash”，这样第二个commit就会合并到第一个上去。</p>
+<pre><code>pick ccd6e62 Work on back button
+
+squash 1c83feb Bug fixes
+
+pick f9d0c33 Start work on toolbar 
+</code></pre>
+<p>保存并退出，会弹出一个新的编辑器窗口，让我为本次合并commit做注释。就这样。</p>
+<h2 id="舍弃分支"><a href="#舍弃分支" class="headerlink" title="舍弃分支"></a>舍弃分支</h2><p>也许我的功能分支已经存在了很久很久，我不得不将好几个分支合并进这个功能分支中，以便当我写代码时这个分支是足够新的的。版本历史让人费解。最简单的办法是创建一个新的分支。</p>
+<pre><code>git checkout master
+
+git checkout -b cleaned_up_branch
+
+git merge --squash private_feature_branch
+
+git reset 
+</code></pre>
+<p>现在，我就有了一个包含我所有修改且不含之前分支历史的工作目录。这样我就可以手动添加和commit我的变更了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果你在与Git的默认设置背道而驰，先问问为什么。
+　　</p>
+<p>将公共分支历史看做不可变的、原子性的、容易追溯的。将私有分支历史看做一次性的、可编辑的。</p>
+<blockquote>
+<p>推荐的工作流程是：</p>
+</blockquote>
+<p> 1、 基于公共分支创建一个私有分支。</p>
+<p> 2、 经常向这个私有分支commit代码。</p>
+<p> 3、 一旦你的代码完善了，就清理掉私有分支的历史。</p>
+<p> 4、 将干净的私有分支merge到公共分支中。</p>
+<hr>
+<p>（auto：Benjamin Sandofsky)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/11/25/%E7%90%86%E8%A7%A3Git%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-id="cllui4qz7003xq0jacjs0dty1" data-title="理解Git的工作流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/01/git%E5%88%86%E6%94%AF%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Git操作分支和tag
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/23/linux/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">linux常用命令</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

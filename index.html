@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-docker部署java程序基本命令" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time class="dt-published" datetime="2023-08-27T16:00:00.000Z" itemprop="datePublished">2023-08-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1、在本地安装docker，这里已windows-11-系统为例"><a href="#1、在本地安装docker，这里已windows-11-系统为例" class="headerlink" title="1、在本地安装docker，这里已windows 11 系统为例"></a>1、在本地安装docker，这里已windows 11 系统为例</h3><ol>
+<li><p>下载docker安装包，直接安装即可。</p>
+<p> <a target="_blank" rel="noopener" href="https://www.docker.com/">https://www.docker.com</a></p>
+</li>
+<li><p>安装完毕后，输入命令查看docker安装信息</p>
+<p> docker version</p>
+</li>
+<li><p>启动docker，如果出现wsl的报错信息，在命令行输入</p>
+<p> wsl –update</p>
+</li>
+</ol>
+<h3 id="2、使用maven构建java项目，在项目根目录下编写对应的文件Dockerfile和docker-build-sh"><a href="#2、使用maven构建java项目，在项目根目录下编写对应的文件Dockerfile和docker-build-sh" class="headerlink" title="2、使用maven构建java项目，在项目根目录下编写对应的文件Dockerfile和docker_build.sh"></a>2、使用maven构建java项目，在项目根目录下编写对应的文件Dockerfile和docker_build.sh</h3><p>Dockerfile文件内容如下</p>
+<pre><code>#Dockerfile
+FROM registry.mlogcn.com/base/adoptopenjdk:8-jre-hotspot AS builder
+WORKDIR application
+ARG JAR_FILE=target/*.jar
+COPY $&#123;JAR_FILE&#125; application.jar
+RUN java -Djarmode=layertools -jar application.jar extract
+
+
+FROM registry.mlogcn.com/base/adoptopenjdk:8-jre-hotspot
+
+ARG user=www
+ARG group=www
+ARG uid=2021
+ARG gid=2021
+
+RUN set -eux; \
+        groupadd --gid=$&#123;gid&#125; $&#123;group&#125;; \
+        useradd --uid=$&#123;uid&#125; --gid=$&#123;gid&#125; --shell=/bin/bash --create-home $&#123;user&#125;; \
+        mkdir -p application; \
+        chown -R $&#123;uid&#125;.$&#123;gid&#125; application
+
+WORKDIR application
+COPY --from=builder --chown=$&#123;uid&#125;:$&#123;gid&#125; application/dependencies/ ./
+COPY --from=builder --chown=$&#123;uid&#125;:$&#123;gid&#125; application/spring-boot-loader/ ./
+COPY --from=builder --chown=$&#123;uid&#125;:$&#123;gid&#125; application/snapshot-dependencies/ ./
+COPY --from=builder --chown=$&#123;uid&#125;:$&#123;gid&#125; application/application/ ./
+
+ENV JVM_OPTS=&quot;-Duser.timezone=Asia/Shanghai -Djava.security.egd=file:/dev/./urandom&quot; \
+    JAVA_OPTS=&quot;&quot;
+
+EXPOSE $&#123;ServerPort&#125;
+USER $&#123;user&#125;
+
+ENTRYPOINT [&quot;sh&quot;, &quot;-c&quot;, &quot;exec java $JVM_OPTS $JAVA_OPTS org.springframework.boot.loader.JarLauncher&quot;]
+
+HEALTHCHECK --start-period=60s --interval=15s --timeout=5s --retries=3 \
+  CMD curl -m 5 -s -f -XGET &quot;http://$&#123;host&#125;:$&#123;ServerPort&#125;/$&#123;checkUrl&#125;&quot; | \
+        jq -e -n &#39;inputs | if has(&quot;status&quot;) then .status==&quot;UP&quot; else false end&#39; &gt; /dev/null || exit 1
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>修改端口号，改成服务部署的端口号 <code>EXPOSE $&#123;ServerPort&#125;</code></li>
+<li>修改健康监测地址： <code>http://$&#123;host&#125;:$&#123;ServerPort&#125;/$&#123;checkUrl&#125;</code> 如果使用spring的actuator，可以直接用 <code>/actuator/health</code></li>
+</ol>
+<p>docker_build.sh内容如下：</p>
+<pre><code>#docker_build.sh
+#!/usr/bin/env bash
+#------------------------------------------
+# image build and push script.
+# 最终的镜像格式为gavial-ng-web:1.3
+#------------------------------------------
+echo $1
+export version=$1
+if [ ! -n &quot;$1&quot; ];then
+  echo &#39;未输入版本，将使用最新版本号 latest&#39;
+  export version=&quot;latest&quot;
+  echo $&#123;version&#125;
+fi
+
+docker login -u $&#123;用户&#125; -p $&#123;密码&#125; $&#123;仓库地址&#125;
+
+image_name=&quot;$&#123;docker仓库地址&#125;/$&#123;部署的java镜像名字&#125;:$&#123;version&#125;&quot;
+
+echo &quot;start build $image_name&quot;
+docker build -f Dockerfile -t $image_name .
+echo &quot;image build success ...&quot;
+echo &quot;start push image ...&quot;
+docker push $image_name
+echo &quot;image push success admin:$&#123;version&#125; ...&quot;
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>需要填写完善docker仓库信息 <code>docker login -u $&#123;用户&#125; -p $&#123;密码&#125; $&#123;仓库地址&#125;</code></li>
+<li>需要填写完善部署的java镜像信息 <code>image_name=&quot;$&#123;docker仓库地址&#125;/$&#123;部署的java镜像名字&#125;:$&#123;version&#125;&quot;</code></li>
+</ol>
+<h3 id="3、修改pom文件的打包方式"><a href="#3、修改pom文件的打包方式" class="headerlink" title="3、修改pom文件的打包方式"></a>3、修改pom文件的打包方式</h3><pre><code>&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.3.3.RELEASE&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;mainClass&gt;$&#123;mainClassPath&#125;&lt;/mainClass&gt;
+                &lt;layers&gt;
+                    &lt;enabled&gt;true&lt;/enabled&gt;
+                &lt;/layers&gt;
+            &lt;/configuration&gt;
+            &lt;executions&gt;
+                &lt;execution&gt;
+                    &lt;goals&gt;
+                        &lt;goal&gt;repackage&lt;/goal&gt;
+                    &lt;/goals&gt;
+                &lt;/execution&gt;
+            &lt;/executions&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>完善启动类路径。 <code>&lt;mainClass&gt;$&#123;mainClassPath&#125;&lt;/mainClass&gt;</code></li>
+</ol>
+<h3 id="4、编译并上传到镜像仓库"><a href="#4、编译并上传到镜像仓库" class="headerlink" title="4、编译并上传到镜像仓库"></a>4、编译并上传到镜像仓库</h3><pre><code>使用默认版本号覆盖上传（当前版本）
+bash docker_build.sh
+
+指定版本号上传
+bash docker_build.sh $&#123;version&#125;
+</code></pre>
+<h3 id="5、使用docker创建网络（这里docker的容器配置暂时不展开描述）"><a href="#5、使用docker创建网络（这里docker的容器配置暂时不展开描述）" class="headerlink" title="5、使用docker创建网络（这里docker的容器配置暂时不展开描述）"></a>5、使用docker创建网络（这里docker的容器配置暂时不展开描述）</h3><p>创建自定义网络</p>
+<pre><code>docker network create $&#123;networkName&#125;
+</code></pre>
+<h3 id="6、编写docker和部署的java程序配置文件：docker-compose-yml"><a href="#6、编写docker和部署的java程序配置文件：docker-compose-yml" class="headerlink" title="6、编写docker和部署的java程序配置文件：docker-compose.yml"></a>6、编写docker和部署的java程序配置文件：docker-compose.yml</h3><p>docker-compose.yml内容如下所示：</p>
+<pre><code>version: &quot;3.9&quot;
+
+services:
+  $&#123;应用名字&#125;:
+    image: $&#123;仓库host&#125;/$&#123;应用路径&#125;:$&#123;版本&#125;
+    container_name: $&#123;应用名字&#125;
+    restart: always
+    networks:
+      - $&#123;networkName&#125;
+    ports:
+      - &quot;$&#123;外部端口&#125;:$&#123;内部端口&#125;&quot;
+    env_file:
+      - &quot;./common.env&quot;
+    volumes:
+      - &quot;/etc/localtime:/etc/localtime:ro&quot;
+      - &quot;./config/$&#123;应用名字&#125;:/application/config:ro&quot;
+      - &quot;./logs/$&#123;应用名字&#125;:/application/logs&quot;
+    healthcheck:
+      test: curl -m 5 -s -f -XGET &quot;http://localhost:$&#123;内部端口&#125;/$&#123;checkUrl&#125;&quot; 
+    | jq -e -n &#39;inputs | if has(&quot;status&quot;) then .status==&quot;UP&quot; else false end&#39; &gt; /dev/null || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    
+networks:
+  spoweress:
+    external: true
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>配置部署的应用名字：<code>$&#123;应用名字&#125;</code>，例如：<code>test-docker-app</code></li>
+<li>配置应用的镜像地址：<code> image: $&#123;仓库host&#125;/$&#123;应用路径&#125;:$&#123;版本&#125;</code>，例如：<code>image: 127.0.0.1/test/test-docker-app:0.02</code></li>
+<li>配置网络：<code> - $&#123;networkName&#125;</code></li>
+<li>配置端口：<code> - &quot;$&#123;外部端口&#125;:$&#123;内部端口&#125;&quot;</code>，例如：<code>8080:8080</code></li>
+<li>公用配置文件：<code>./common.env</code></li>
+<li>专用配置文件：<code>- &quot;./config/$&#123;应用名字&#125;:/application/config:ro&quot;</code></li>
+<li>运行日志路径：<code>- &quot;./logs/$&#123;应用名字&#125;:/application/logs&quot;</code></li>
+<li>健康检查：<code>-XGET &quot;http://localhost:$&#123;内部端口&#125;/$&#123;checkUrl&#125;&quot; </code></li>
+<li>如有多组应用，可以在<code>services</code>下编写多个；</li>
+</ol>
+<h3 id="7、服务器端，在部署目录下编写docker的配置文件：common-env"><a href="#7、服务器端，在部署目录下编写docker的配置文件：common-env" class="headerlink" title="7、服务器端，在部署目录下编写docker的配置文件：common.env"></a>7、服务器端，在部署目录下编写docker的配置文件：common.env</h3><pre><code>server.port=$&#123;ServerPort&#125;
+spring.application.name=$&#123;AppliCationName&#125;
+....
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>这个文件中存放的是java程序中的配置信息，可以在application.properties中通过变量引用获取。</li>
+<li>通常用来放通用的配置项；</li>
+</ol>
+<h3 id="8、提交部署"><a href="#8、提交部署" class="headerlink" title="8、提交部署"></a>8、提交部署</h3><p>不变更版本号的部署：刷新docker镜像：</p>
+<pre><code>docker pull $&#123;镜像地址&#125;:latest  
+</code></pre>
+<p>变更版本号的部署：修改<code>docker-compose.yml</code>中的版本号：</p>
+<pre><code>image: $&#123;仓库host&#125;/$&#123;应用路径&#125;:$&#123;版本&#125;
+</code></pre>
+<h3 id="9、运行实例："><a href="#9、运行实例：" class="headerlink" title="9、运行实例："></a>9、运行实例：</h3><pre><code>docker-compose up -d 
+</code></pre>
+<h3 id="10、查看实例运行状态："><a href="#10、查看实例运行状态：" class="headerlink" title="10、查看实例运行状态："></a>10、查看实例运行状态：</h3><pre><code>docker ps
+</code></pre>
+<h3 id="11、查看实例日志"><a href="#11、查看实例日志" class="headerlink" title="11、查看实例日志"></a>11、查看实例日志</h3><pre><code>docker logs -f $&#123;CONTAINER ID&#125;
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>CONTAINER ID可以通过实例运行状态命令获取。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" data-id="cllui4qyt000vq0ja3clpblkf" data-title="docker部署java程序基本命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Springboot返回json和xml视图" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/" class="article-date">
+  <time class="dt-published" datetime="2019-11-20T16:00:00.000Z" itemprop="datePublished">2019-11-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="建设目标"><a href="#建设目标" class="headerlink" title="建设目标"></a>建设目标</h3><ol>
+<li>请求接口通过请求参数中设置的output参数&#x3D;xml&#x2F;json来返回对应的视图，默认使用json；</li>
+<li>发生异常时，@ExceptionHandler能自动返回对应视图的异常信息</li>
+</ol>
+<h3 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h3><p>由于spring默认xml的视图优先级高于json视图（视图顺序），需要将json视图的优先级调高。</p>
+<p>controller方法中不指定返回视图类型，创建一个视图拦截器，根据output参数来调整视图MediaType顺序。</p>
+<p>方法如下：</p>
+<p>返回xml视图(默认，不需要设置)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;MediaType&gt; mediaType = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;MediaType&gt;();</span><br><span class="line"></span><br><span class="line">mediaType.add(MediaType.APPLICATION_XML);</span><br><span class="line"></span><br><span class="line">request.setAttribute(HandlerMapping.PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE, mediaType)</span><br></pre></td></tr></table></figure>
+
+<p>返回json视图：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;MediaType&gt; mediaType = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;MediaType&gt;();</span><br><span class="line"></span><br><span class="line">mediaType.add(MediaType.APPLICATION_JSON);</span><br><span class="line"></span><br><span class="line">request.setAttribute(HandlerMapping.PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE, mediaType)</span><br></pre></td></tr></table></figure>
+
+<p>由于在 @ExceptionHandler 中，httprequest中的视图顺序会被重置（具体原因未核实），所以需要在@ExceptionHandler中重新设置视图顺序。</p>
+<p>如果需要在controller中指定返回类型视图，方法如下（与本文无关）：</p>
+<p>返回json视图： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/api/test/json&quot;, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)</span></span><br></pre></td></tr></table></figure>
+
+<p>返回xml视图：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/api/test/json&quot;, produces = MediaType.APPLICATION_XML_VALUE, method = RequestMethod.GET)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="项目搭建"><a href="#项目搭建" class="headerlink" title="项目搭建"></a>项目搭建</h3><p>搭建一个简单的maven项目，引入spring boot的依赖，部分pom.xml配置如下所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- spring boot 核心依赖 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- xml和json视图序列化 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.jaxrs<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-jaxrs-xml-provider<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="编写实体类"><a href="#编写实体类" class="headerlink" title="编写实体类"></a>编写实体类</h3><h4 id="编写UserBean"><a href="#编写UserBean" class="headerlink" title="编写UserBean"></a>编写UserBean</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserBean</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> String user;</span><br><span class="line">  <span class="keyword">private</span> String name;</span><br><span class="line">  <span class="keyword">private</span> String token;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getUser</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUser</span><span class="params">(String user)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.user = user;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> name;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.name = name;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getToken</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> token;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setToken</span><span class="params">(String token)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.token = token;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写ErrorBean"><a href="#编写ErrorBean" class="headerlink" title="编写ErrorBean"></a>编写ErrorBean</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ErrorBean</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> String errorCode;</span><br><span class="line">  <span class="keyword">private</span> String errorInfo;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getErrorCode</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> errorCode;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setErrorCode</span><span class="params">(String errorCode)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.errorCode = errorCode;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getErrorInfo</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> errorInfo;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setErrorInfo</span><span class="params">(String errorInfo)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.errorInfo = errorInfo;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写自定义异常类BaseException"><a href="#编写自定义异常类BaseException" class="headerlink" title="编写自定义异常类BaseException"></a>编写自定义异常类BaseException</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BaseException</span> <span class="keyword">extends</span> <span class="title class_">Exception</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">1L</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">DEFAULT_CODE</span> <span class="operator">=</span> <span class="string">&quot;SR01&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">PARAM_ERROR_CODE</span> <span class="operator">=</span> <span class="string">&quot;PV01&quot;</span>;</span><br><span class="line">  <span class="keyword">private</span> String errCode; </span><br><span class="line">  <span class="keyword">private</span> String errMsg; </span><br><span class="line">  <span class="keyword">private</span> <span class="type">int</span> httpCode;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getHttpCode</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> httpCode;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setHttpCode</span><span class="params">(<span class="type">int</span> httpCode)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.httpCode = httpCode;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">BaseException</span><span class="params">(<span class="type">int</span> httpCode, String errCode, String errMsg)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.httpCode = httpCode;</span><br><span class="line">    <span class="built_in">this</span>.errCode = errCode;</span><br><span class="line">    <span class="built_in">this</span>.errMsg = errMsg;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getErrCode</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> errCode;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getErrMsg</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> errMsg;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写异常处理类ErrorHandler"><a href="#编写异常处理类ErrorHandler" class="headerlink" title="编写异常处理类ErrorHandler"></a>编写异常处理类ErrorHandler</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ErrorHandler</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">OUTPUT_XML</span> <span class="operator">=</span> <span class="string">&quot;xml&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">OUTPUT_JSON</span> <span class="operator">=</span> <span class="string">&quot;josn&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> Set&lt;MediaType&gt; xmlMediaType = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;MediaType&gt;();</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> Set&lt;MediaType&gt; jsonMediaType = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;MediaType&gt;();</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(ErrorHandler.class);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    xmlMediaType.add(MediaType.APPLICATION_XML) ;</span><br><span class="line">    jsonMediaType.add(MediaType.APPLICATION_JSON);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ExceptionHandler</span></span><br><span class="line">  <span class="meta">@ResponseBody</span></span><br><span class="line">  <span class="keyword">public</span> ErrorBean <span class="title function_">exceptionHandle</span><span class="params">(Exception ex, HttpServletRequest request,</span></span><br><span class="line"><span class="params">      HttpServletResponse response)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ErrorHandler.OUTPUT_XML.equals(request.getParameter(<span class="string">&quot;output&quot;</span>))) &#123;</span><br><span class="line">      request.setAttribute(HandlerMapping.PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE,</span><br><span class="line">          ErrorHandler.jsonMediaType);</span><br><span class="line">      logger.info(<span class="string">&quot;Exception 设置json视图 ...&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      logger.info(<span class="string">&quot;Exception 设置xml视图 ...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">ErrorBean</span> <span class="variable">error</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ErrorBean</span>();</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&quot;MissingServletRequestParameterException&quot;</span>.equals(ex.getClass().getSimpleName())) &#123;</span><br><span class="line">      ex = <span class="keyword">new</span> <span class="title class_">BaseException</span>(<span class="number">401</span>, BaseException.PARAM_ERROR_CODE, <span class="string">&quot;缺少必要的请求参数&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;MethodArgumentTypeMismatchException&quot;</span>.equals(ex.getClass().getSimpleName())) &#123;</span><br><span class="line">      ex = <span class="keyword">new</span> <span class="title class_">BaseException</span>(<span class="number">401</span>, BaseException.PARAM_ERROR_CODE, <span class="string">&quot;请求参数类型错误&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (BaseException.class.isAssignableFrom(ex.getClass())) &#123;</span><br><span class="line">      <span class="type">BaseException</span> <span class="variable">se</span> <span class="operator">=</span> (BaseException) ex;</span><br><span class="line">      response.setStatus(se.getHttpCode());</span><br><span class="line">      error.setErrorCode(se.getErrCode());</span><br><span class="line">      error.setErrorInfo(se.getErrMsg());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      response.setStatus(<span class="number">500</span>);</span><br><span class="line">      error.setErrorCode(BaseException.DEFAULT_CODE);</span><br><span class="line">      error.setErrorInfo(<span class="string">&quot;服务繁忙&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> error;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写controller类TestController"><a href="#编写controller类TestController" class="headerlink" title="编写controller类TestController"></a>编写controller类TestController</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> <span class="keyword">extends</span> <span class="title class_">ErrorHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@RequestMapping(value = &quot;/test/api&quot;, method = RequestMethod.GET)</span></span><br><span class="line">  <span class="keyword">public</span> Object <span class="title function_">testJsonView</span><span class="params">(<span class="meta">@RequestParam(value = &quot;token&quot;)</span> String token)</span> <span class="keyword">throws</span> BaseException &#123;</span><br><span class="line">    <span class="type">UserBean</span> <span class="variable">userBean</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UserBean</span>();</span><br><span class="line">    userBean.setName(<span class="string">&quot;千山鸟飞绝&quot;</span>);</span><br><span class="line">    userBean.setUser(<span class="string">&quot;万径人踪灭&quot;</span>);</span><br><span class="line">    userBean.setToken(token);</span><br><span class="line">    <span class="keyword">if</span> (System.currentTimeMillis() % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BaseException</span>(<span class="number">403</span>, <span class="string">&quot;哎呀，出错了&quot;</span>, <span class="string">&quot;时间不对&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> userBean;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写权限认证业务类"><a href="#编写权限认证业务类" class="headerlink" title="编写权限认证业务类"></a>编写权限认证业务类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AuthService</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">auth</span><span class="params">(String token)</span> <span class="keyword">throws</span> BaseException &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="string">&quot;123456789&quot;</span>.equals(token)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BaseException</span>(<span class="number">401</span>, BaseException.PARAM_ERROR_CODE, <span class="string">&quot;token验证不通过&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写拦截器"><a href="#编写拦截器" class="headerlink" title="编写拦截器"></a>编写拦截器</h3><h4 id="视图拦截器ModuleViewInterceptor"><a href="#视图拦截器ModuleViewInterceptor" class="headerlink" title="视图拦截器ModuleViewInterceptor"></a>视图拦截器ModuleViewInterceptor</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ModuleViewInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(ModuleViewInterceptor.class);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span></span><br><span class="line">      <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    logger.info(<span class="string">&quot;执行 ModuleViewInterceptor ...&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (!ErrorHandler.OUTPUT_XML.equals(request.getParameter(<span class="string">&quot;output&quot;</span>))) &#123;</span><br><span class="line">      request.setAttribute(HandlerMapping.PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE,</span><br><span class="line">          ErrorHandler.jsonMediaType);</span><br><span class="line">      logger.info(<span class="string">&quot;设置json视图 ...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="权限拦截器AuthInterceptor"><a href="#权限拦截器AuthInterceptor" class="headerlink" title="权限拦截器AuthInterceptor"></a>权限拦截器AuthInterceptor</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AuthInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> AuthService authService;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(AuthInterceptor.class);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span></span><br><span class="line">      <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    logger.info(<span class="string">&quot;执行 AuthInterceptor ...&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (authService == <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="keyword">synchronized</span> (AuthInterceptor.class.getName()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (authService == <span class="literal">null</span>) &#123;</span><br><span class="line">          logger.info(<span class="string">&quot;authService is null!!!&quot;</span>);</span><br><span class="line">          <span class="type">BeanFactory</span> <span class="variable">factory</span> <span class="operator">=</span> WebApplicationContextUtils</span><br><span class="line">              .getRequiredWebApplicationContext(request.getServletContext());</span><br><span class="line">          authService = (AuthService) factory.getBean(<span class="string">&quot;authService&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    authService.auth(request.getParameter(<span class="string">&quot;token&quot;</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置类ComponentConfig"><a href="#配置类ComponentConfig" class="headerlink" title="配置类ComponentConfig"></a>配置类ComponentConfig</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ComponentConfig</span> <span class="keyword">extends</span> <span class="title class_">WebMvcConfigurationSupport</span> &#123;</span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> Environment env;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> &#123;</span><br><span class="line">    registry.addInterceptor(<span class="keyword">new</span> <span class="title class_">AuthInterceptor</span>()).addPathPatterns(<span class="string">&quot;/test/api&quot;</span>);</span><br><span class="line">    registry.addInterceptor(<span class="keyword">new</span> <span class="title class_">ModuleViewInterceptor</span>()).addPathPatterns(<span class="string">&quot;/test/api&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> CorsConfiguration <span class="title function_">buildConfig</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">CorsConfiguration</span> <span class="variable">corsConfiguration</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CorsConfiguration</span>();</span><br><span class="line">    corsConfiguration.addAllowedOrigin(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">    corsConfiguration.addAllowedHeader(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">    corsConfiguration.addAllowedMethod(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">    corsConfiguration.setAllowCredentials(<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">return</span> corsConfiguration;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="keyword">public</span> CorsFilter <span class="title function_">corsFilter</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">UrlBasedCorsConfigurationSource</span> <span class="variable">source</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UrlBasedCorsConfigurationSource</span>();</span><br><span class="line">    source.registerCorsConfiguration(<span class="string">&quot;/**&quot;</span>, buildConfig());</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">CorsFilter</span>(source);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动主类WebTestApp"><a href="#启动主类WebTestApp" class="headerlink" title="启动主类WebTestApp"></a>启动主类WebTestApp</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebTestApp</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    SpringApplication.run(WebTestApp.class, args);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试验证"><a href="#测试验证" class="headerlink" title="测试验证"></a>测试验证</h3><p>打开浏览器，输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8080/api/test</span><br><span class="line"></span><br><span class="line">http://localhost:8080/api/test?token=123456</span><br><span class="line"></span><br><span class="line">http://localhost:8080/api/test?token=123456789</span><br><span class="line"></span><br><span class="line">http://localhost:8080/api/test?output=xml</span><br><span class="line"></span><br><span class="line">http://localhost:8080/api/test?output=xml&amp;token=123456</span><br><span class="line"></span><br><span class="line">http://localhost:8080/api/test?output=xml&amp;token=123456789</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/" data-id="cllui4qyr000jq0ja4f9tc9vq" data-title="Springboot返回json和xml视图" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/" rel="tag">spring</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-git清理commits历史记录" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/" class="article-date">
+  <time class="dt-published" datetime="2018-04-26T16:00:00.000Z" itemprop="datePublished">2018-04-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="1、使用git-log列出日志"><a href="#1、使用git-log列出日志" class="headerlink" title="1、使用git log列出日志"></a>1、使用git log列出日志</h4><pre><code>git log
+</code></pre>
+<h4 id="2、选择需要合并到的commit-SHA1码，如下："><a href="#2、选择需要合并到的commit-SHA1码，如下：" class="headerlink" title="2、选择需要合并到的commit SHA1码，如下："></a>2、选择需要合并到的commit SHA1码，如下：</h4><pre><code>commit d6d0394e9d27fcbedcfabfad57270f821829e877
+Author: luming &lt;luming@mlogcn.com&gt;
+Date:   Mon Nov 28 16:47:19 2016 +0800
+
+    the 4 commit
+
+commit 3245cd1ddd5dce1d28f55d478f7d3a0f83453556
+Author: luming &lt;luming@mlogcn.com&gt;
+Date:   Mon Nov 28 16:47:03 2016 +0800
+
+    the 3 commit
+
+commit f0898b699dd35cbed48a27886667714abe49faab
+Author: luming &lt;luming@mlogcn.com&gt;
+Date:   Mon Nov 28 16:46:46 2016 +0800
+
+    the 2 commit
+
+commit 1354bde57f420690d9bc6cc3b9f1818679176456
+Author: luming &lt;luming@mlogcn.com&gt;
+Date:   Mon Nov 28 16:46:08 2016 +0800
+
+    first commit
+</code></pre>
+<p>在这里我们需要将前三次提交合并成一次提交</p>
+<pre><code>git rebase -i 1354bde57f420690d9bc6cc3b9f1818679176456
+</code></pre>
+<h4 id="3、修改弹出文本："><a href="#3、修改弹出文本：" class="headerlink" title="3、修改弹出文本："></a>3、修改弹出文本：</h4><pre><code>pick f0898b6 the 2 commit
+squash 3245cd1 the 3 commit
+squash d6d0394 the 4 commit
+</code></pre>
+<h4 id="4、保存退出。"><a href="#4、保存退出。" class="headerlink" title="4、保存退出。"></a>4、保存退出。</h4><h4 id="5、在新弹出的窗口中将会看到合并前的提交信息："><a href="#5、在新弹出的窗口中将会看到合并前的提交信息：" class="headerlink" title="5、在新弹出的窗口中将会看到合并前的提交信息："></a>5、在新弹出的窗口中将会看到合并前的提交信息：</h4><pre><code># This is a combination of 3 commits.
+# The first commit&#39;s message is:
+the 2 commit
+
+# This is the 2nd commit message:
+
+the 3 commit
+
+# This is the 3rd commit message:
+
+the 4 commit
+</code></pre>
+<p>将信息合并：</p>
+<pre><code>修改成：this is a new commit
+</code></pre>
+<h4 id="6、保存退出。然后使用git-log查看日志信息："><a href="#6、保存退出。然后使用git-log查看日志信息：" class="headerlink" title="6、保存退出。然后使用git log查看日志信息："></a>6、保存退出。然后使用git log查看日志信息：</h4><pre><code>git log
+
+commit 085cd1cb7334e0e6ea7b8e6e3a4d052c2f9ffe74
+Author: luming &lt;luming@mlogcn.com&gt;
+Date:   Mon Nov 28 16:46:46 2016 +0800
+
+    this is a new commit
+
+commit 1354bde57f420690d9bc6cc3b9f1818679176456
+Author: luming &lt;luming@mlogcn.com&gt;
+Date:   Mon Nov 28 16:46:08 2016 +0800
+
+    first commit
+</code></pre>
+<p>至此，我们已经合并完成。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/" data-id="cllui4qyv0017q0jahbi45tuf" data-title="Git 清理commits历史记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-access日志自动上传OSS归档" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/" class="article-date">
+  <time class="dt-published" datetime="2018-04-16T16:00:00.000Z" itemprop="datePublished">2018-04-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="下载OSSUtil工具"><a href="#下载OSSUtil工具" class="headerlink" title="下载OSSUtil工具"></a>下载OSSUtil工具</h3><p><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/50452.html?spm=a2c4e.11153959.blogcont550214.15.5ad2fdd8fapZaP">OSSUTIL官方下载</a></p>
+<p>根据操作系统选择相应的binary或者压缩包下载后，运行相应的binary（如果binary为不可执行文件，请给binary增加可执行权限：chmod 755 ossutil），即：</p>
+<p>linux系统下：</p>
+<pre><code>./ossutil
+</code></pre>
+<h3 id="配置ossutil"><a href="#配置ossutil" class="headerlink" title="配置ossutil"></a>配置ossutil</h3><p>这里使用交互式配置ossutil</p>
+<pre><code>$./ossutil config -L ch	该命令创建将一个配置文件，在其中存储配置信息。
+
+请输入配置文件路径（默认为：/home/admin/.ossutilconfig，回车将使用默认路径。如果用户设置为其它路径，在使用命令时需要将--config-file选项设置为该路径）：
+</code></pre>
+<p>输入EndPoint、AK、SK等信息后完成配置。</p>
+<h3 id="测试简单的上传功能"><a href="#测试简单的上传功能" class="headerlink" title="测试简单的上传功能"></a>测试简单的上传功能</h3><p>假设需要将 &#x2F;home&#x2F;ubuntu&#x2F;testfile.dat 上传到OSS的 test BUCKET的 &#x2F;test&#x2F;testfile.dat，那么对应的上传命令为：</p>
+<pre><code>./ossutil cp /home/ubuntu/testfile.dat oss://test/log/test/testfile.dat
+</code></pre>
+<p>假如配置文件不在默认路径下，需要添加配置文件的参数，假设配置文件位于：&#x2F;home&#x2F;ubuntu&#x2F;ossutil&#x2F;ossconfig.dat</p>
+<pre><code>./ossutil cp /home/ubuntu/testfile.dat oss://test/log/test/testfile.dat --config-file /home/ubuntu/ossutil/ossconfig.dat
+</code></pre>
+<h3 id="编写上传脚本"><a href="#编写上传脚本" class="headerlink" title="编写上传脚本"></a>编写上传脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DATESTR=`<span class="built_in">date</span> +%Y-%m-%d --<span class="built_in">date</span>=<span class="string">&quot;-1 day&quot;</span>`</span><br><span class="line">MONTHSTR=`<span class="built_in">date</span> +%Y%m --<span class="built_in">date</span>=<span class="string">&quot;-1 day&quot;</span>`</span><br><span class="line">OSSUTILPATH=/home/ubuntu/ossutil/ossutil</span><br><span class="line">OSSCONFIGPATH=/home/ubuntu/ossutil/.ossutilconfig</span><br><span class="line">DELETEFILE=<span class="literal">true</span></span><br><span class="line">OSSPATH=oss://acclog/gateway/app1/<span class="variable">$&#123;MONTHSTR&#125;</span>/</span><br><span class="line">FILEPATH=/home/ubuntu/apps/apache-tomcat-7.0.76/logs/localhost_access_log.<span class="variable">$&#123;DATESTR&#125;</span>.txt</span><br><span class="line">UPLOADCMD=<span class="variable">$&#123;OSSUTILPATH&#125;</span><span class="string">&#x27; cp &#x27;</span><span class="variable">$&#123;FILEPATH&#125;</span><span class="string">&#x27; &#x27;</span><span class="variable">$&#123;OSSPATH&#125;</span><span class="string">&#x27; --config-file &#x27;</span><span class="variable">$OSSCONFIGPATH</span></span><br><span class="line"><span class="keyword">if</span> [[ ! -f <span class="string">&quot;<span class="variable">$FILEPATH</span>&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;文件不存在，任务结束&quot;</span><span class="variable">$FILEPATH</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&#x27;文件存在，开始执行文件上传任务&#x27;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&#x27;执行命令 &#x27;</span><span class="variable">$UPLOADCMD</span></span><br><span class="line">    <span class="variable">$UPLOADCMD</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&#x27;文件上传完成&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> [[ <span class="variable">$DELETEFILE</span> ]];<span class="keyword">then</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&#x27;删除文件&#x27;</span><span class="variable">$FILEPATH</span></span><br><span class="line">      <span class="built_in">rm</span> <span class="variable">$FILEPATH</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&#x27;不需要删除原始文件&#x27;</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">deletefile</span></span>()&#123;</span><br><span class="line"> DELETEFILE=<span class="variable">$1</span></span><br><span class="line"> <span class="keyword">if</span> [[  -f <span class="string">&quot;<span class="variable">$DELETEFILE</span>&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&#x27;删除文件&#x27;</span><span class="variable">$DELETEFILE</span></span><br><span class="line">    <span class="built_in">rm</span> <span class="variable">$DELETEFILE</span></span><br><span class="line"> <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line">deletefile /home/ubuntu/apps/apache-tomcat-7.0.76/logs/localhost.<span class="variable">$&#123;DATESTR&#125;</span>.<span class="built_in">log</span></span><br><span class="line">deletefile /home/ubuntu/apps/apache-tomcat-7.0.76/logs/host-manager.<span class="variable">$&#123;DATESTR&#125;</span>.<span class="built_in">log</span></span><br><span class="line">deletefile /home/ubuntu/apps/apache-tomcat-7.0.76/logs/catalina.<span class="variable">$&#123;DATESTR&#125;</span>.<span class="built_in">log</span></span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="设置crontab"><a href="#设置crontab" class="headerlink" title="设置crontab"></a>设置crontab</h3><pre><code>crontab -e
+
+0 8 * * * bash /home/ubuntu/ossutil/uploadoss.bash &gt;&gt; /home/ubuntu/ossutil/upload.log
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/" data-id="cllui4qyu000yq0ja0ksi2kh0" data-title="access日志通过OSSutil自动上传OSS归档" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-postgis常用函数" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" class="article-date">
+  <time class="dt-published" datetime="2018-01-10T16:00:00.000Z" itemprop="datePublished">2018-01-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1、几何对象构造函数"><a href="#1、几何对象构造函数" class="headerlink" title="1、几何对象构造函数"></a>1、几何对象构造函数</h3><pre><code>geometry ST_GeomFromText(text WKT);
+
+geometry ST_GeomFromText(text WKT, integer srid);
+</code></pre>
+<p>例如，构建一个4326投影的点[106.064544 42.28787]对象，</p>
+<pre><code>ST_GeomFromText(&#39;POINT(106.064544 42.28787)&#39;,4326)
+</code></pre>
+<p>相似函数</p>
+<pre><code>ST_GeomFromEWKT, ST_GeomFromWKB, ST_SRID
+</code></pre>
+<p><a target="_blank" rel="noopener" href="http://postgis.net/docs/ST_GeomFromText.html">更多信息</a></p>
+<h3 id="2、空间距离Distance"><a href="#2、空间距离Distance" class="headerlink" title="2、空间距离Distance"></a>2、空间距离Distance</h3><pre><code>float ST_DistanceSphere(geometry geomlonlatA, geometry geomlonlatB);
+</code></pre>
+<p>例如，查询指定位置点(lonlat[106.064544 42.28787])在100km内的对象：</p>
+<pre><code>select st_x(lonlat)as lon,st_y(lonlat)as lat from geotest where ST_DistanceSphere(lonlat,ST_GeomFromText(&#39;POINT(106.064544 42.28787)&#39;,4326))&lt;= 100000
+</code></pre>
+<p>相似函数</p>
+<pre><code>ST_Distance, ST_DistanceSpheroid
+</code></pre>
+<p><a target="_blank" rel="noopener" href="http://postgis.net/docs/ST_DistanceSphere.html">更多信息</a></p>
+<h3 id="3、空间范围区域Bbox"><a href="#3、空间范围区域Bbox" class="headerlink" title="3、空间范围区域Bbox"></a>3、空间范围区域Bbox</h3><pre><code>geometry ST_MakeEnvelope(double precision xmin, double precision ymin, double precision xmax, double precision ymax, integer srid=unknown);
+</code></pre>
+<p>例如，查询范围经纬度范围lonlat(lon[116.354 126.1454]，lat[33.154 43.545])范围里的所有空间对象:</p>
+<pre><code>select st_x(lonlat)as lon,st_y(lonlat)as lat from geotest where lonlat &amp;&amp; ST_MakeEnvelope(116.354,33.154,126.1454,43.545,4326)
+</code></pre>
+<p>相似函数</p>
+<pre><code>ST_MakePoint, ST_MakeLine, ST_MakePolygon
+</code></pre>
+<p><a target="_blank" rel="noopener" href="http://postgis.net/docs/ST_MakeEnvelope.html">更多信息</a></p>
+<h3 id="4、-ST-Contains"><a href="#4、-ST-Contains" class="headerlink" title="4、 ST_Contains"></a>4、 ST_Contains</h3><p>LINESTRING 构建一个多边形</p>
+<pre><code>LINESTRING ( 121.312350 30.971457 , 121.156783 31.092221 , 121.353250 31.278195 , 121.509125 31.157431 , 121.312350 30.971457 )  是把连续的点围成一个多边形
+</code></pre>
+<p>st_point 构建一个点</p>
+<pre><code>st_point(a,b) 表示为一个点
+</code></pre>
+<p>查看某一个点是否在某个多边形内 返回t表示在范围内</p>
+<pre><code>SELECT  ST_Contains( ST_MakePolygon(ST_GeomFromText(&#39;LINESTRING ( 121.312350 30.971457 , 121.156783 31.092221 , 121.353250 31.278195 , 121.509125 31.157431 , 121.312350 30.971457 ) &#39;)) ,st_point(121.332378,31.07106) )
+</code></pre>
+<p>查看某一个点是否在某个多边形内 返回f表示不在范围内</p>
+<pre><code>SELECT  ST_Contains( ST_MakePolygon(ST_GeomFromText(&#39;LINESTRING ( 121.312350 30.971457 , 121.156783 31.092221 , 121.353250 31.278195 , 121.509125 31.157431 , 121.312350 30.971457 ) &#39;)) ,st_point(121.632378,31.07106) )
+</code></pre>
+<h3 id="5、显示标准JSON"><a href="#5、显示标准JSON" class="headerlink" title="5、显示标准JSON"></a>5、显示标准JSON</h3><pre><code>ST_asgeojson（geometry,投影类型）
+</code></pre>
+<p>例如，</p>
+<pre><code>ST_asgeojson(ST_GeomFromText(&#39;POINT(106.064544 42.28787)&#39;,4326),4326)
+</code></pre>
+<p>显示空间点的经纬度</p>
+<pre><code>ST_X(geo)  ST_Y(geo)
+</code></pre>
+<h3 id="6、坐标系转换"><a href="#6、坐标系转换" class="headerlink" title="6、坐标系转换"></a>6、坐标系转换</h3><p>第一个参数是原来的几何对像. 第二个参数为要把他转换到这个投影所代表的做标系下</p>
+<pre><code>ST_Transform(geometry g1, integer srid)
+</code></pre>
+<h3 id="官方函数文档"><a href="#官方函数文档" class="headerlink" title="官方函数文档"></a>官方函数文档</h3><h3 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a><a target="_blank" rel="noopener" href="http://postgis.net/docs/reference.html#reference_sfcgal">官方文档</a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" data-id="cllui4qz5003hq0ja3kri3pre" data-title="postgis常用函数" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Http请求及文件下载" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/10/27/Http%E8%AF%B7%E6%B1%82%E5%8F%8A%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" class="article-date">
+  <time class="dt-published" datetime="2017-10-26T16:00:00.000Z" itemprop="datePublished">2017-10-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/10/27/Http%E8%AF%B7%E6%B1%82%E5%8F%8A%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/">HttpClient请求及下载文件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>httpclient<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.httpcomponents<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.4.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>httpcore<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.httpcomponents<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.4.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="HttpClient发送Get请求"><a href="#HttpClient发送Get请求" class="headerlink" title="HttpClient发送Get请求"></a>HttpClient发送Get请求</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> lm</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SimpleHttpGeter</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doGet</span><span class="params">(String url)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.createDefault();</span><br><span class="line">    <span class="type">HttpGet</span> <span class="variable">httpGet</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpGet</span>(url);</span><br><span class="line">    <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpGet);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (response != <span class="literal">null</span> &amp;&amp; response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) &#123;</span><br><span class="line">        <span class="keyword">return</span> EntityUtils.toString(response.getEntity());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      response.close();</span><br><span class="line">      httpclient.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doGet</span><span class="params">(String url, String[] paramNames, String[] paramValues)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(url);</span><br><span class="line">    sb.append(<span class="string">&quot;?&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; paramNames.length; i++) &#123;</span><br><span class="line">      sb.append(paramNames[i] + <span class="string">&quot;=&quot;</span> + paramValues[i] + <span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    sb.deleteCharAt(sb.length() - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> doGet(sb.toString());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="HttpClient发送Post请求"><a href="#HttpClient发送Post请求" class="headerlink" title="HttpClient发送Post请求"></a>HttpClient发送Post请求</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.Charset;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.NameValuePair;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.entity.UrlEncodedFormEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpPost;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.entity.StringEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.message.BasicNameValuePair;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> lm</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SimpleHttpPoster</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doPost</span><span class="params">(String url)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.createDefault();</span><br><span class="line">    <span class="type">HttpPost</span> <span class="variable">httpPost</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpPost</span>(url);</span><br><span class="line">    <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpPost);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (response != <span class="literal">null</span> &amp;&amp; response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) &#123;</span><br><span class="line">        <span class="keyword">return</span> EntityUtils.toString(response.getEntity());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      response.close();</span><br><span class="line">      httpclient.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doPost</span><span class="params">(String url, String[] paramNames, String[] paramValues)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.createDefault();</span><br><span class="line">    <span class="type">HttpPost</span> <span class="variable">httpPost</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpPost</span>(url);</span><br><span class="line">    List&lt;NameValuePair&gt; nvps = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;NameValuePair&gt;();</span><br><span class="line">    <span class="comment">// 迭代参数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; paramNames.length; i++) &#123;</span><br><span class="line">      nvps.add(<span class="keyword">new</span> <span class="title class_">BasicNameValuePair</span>(paramNames[i], paramValues[i]));</span><br><span class="line">    &#125;</span><br><span class="line">    httpPost.setEntity(<span class="keyword">new</span> <span class="title class_">UrlEncodedFormEntity</span>(nvps, <span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line">    <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpPost);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (response != <span class="literal">null</span> &amp;&amp; response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) &#123;</span><br><span class="line">        <span class="keyword">return</span> EntityUtils.toString(response.getEntity());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      response.close();</span><br><span class="line">      httpclient.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doBody</span><span class="params">(String url, String parmas)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.createDefault();</span><br><span class="line">    <span class="type">HttpPost</span> <span class="variable">post</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpPost</span>(url);</span><br><span class="line">    post.addHeader(<span class="string">&quot;Content-type&quot;</span>, <span class="string">&quot;application/json; charset=utf-8&quot;</span>);</span><br><span class="line">    post.setHeader(<span class="string">&quot;Accept&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br><span class="line">    post.setEntity(<span class="keyword">new</span> <span class="title class_">StringEntity</span>(parmas, Charset.forName(<span class="string">&quot;utf-8&quot;</span>)));</span><br><span class="line">    <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(post);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (response != <span class="literal">null</span> &amp;&amp; response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) &#123;</span><br><span class="line">        <span class="keyword">return</span> EntityUtils.toString(response.getEntity());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      response.close();</span><br><span class="line">      httpclient.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="HttpClient下载文件"><a href="#HttpClient下载文件" class="headerlink" title="HttpClient下载文件"></a>HttpClient下载文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.StatusLine;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> lm</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HttpDownload</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">WRITE_SIZE</span> <span class="operator">=</span> <span class="number">4096</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">download</span><span class="params">(String url, String filePath)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">CloseableHttpClient</span> <span class="variable">httpClient</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">CloseableHttpResponse</span> <span class="variable">httpResponse</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">FileOutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      httpClient = HttpClients.createDefault();</span><br><span class="line">      <span class="type">HttpGet</span> <span class="variable">httpGet</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpGet</span>(url);</span><br><span class="line">      httpResponse = httpClient.execute(httpGet);</span><br><span class="line">      <span class="type">StatusLine</span> <span class="variable">statusLine</span> <span class="operator">=</span> httpResponse.getStatusLine();</span><br><span class="line">      <span class="keyword">if</span> (statusLine.getStatusCode() == <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(filePath);</span><br><span class="line">        outputStream = <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(file);</span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> httpResponse.getEntity().getContent();</span><br><span class="line">        <span class="type">byte</span> buff[] = <span class="keyword">new</span> <span class="title class_">byte</span>[WRITE_SIZE];</span><br><span class="line">        <span class="type">int</span> <span class="variable">counts</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> ((counts = inputStream.read(buff)) != -<span class="number">1</span>) &#123;</span><br><span class="line">          outputStream.write(buff, <span class="number">0</span>, counts);</span><br><span class="line">        &#125;</span><br><span class="line">        outputStream.flush();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (outputStream != <span class="literal">null</span>) &#123;</span><br><span class="line">        outputStream.close();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (httpClient != <span class="literal">null</span>) &#123;</span><br><span class="line">        httpClient.close();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (httpResponse != <span class="literal">null</span>) &#123;</span><br><span class="line">        httpResponse.close();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="不使用HttpClient下载文件"><a href="#不使用HttpClient下载文件" class="headerlink" title="不使用HttpClient下载文件"></a>不使用HttpClient下载文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.BufferedInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.BufferedOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HttpDownload</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">downloadFile</span><span class="params">(String url, String filePath, String method)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">FileOutputStream</span> <span class="variable">fileOut</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">HttpURLConnection</span> <span class="variable">conn</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// 建立链接</span></span><br><span class="line">      <span class="type">URL</span> <span class="variable">httpUrl</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URL</span>(url);</span><br><span class="line">      conn = (HttpURLConnection) httpUrl.openConnection();</span><br><span class="line">      <span class="comment">// 以Post方式提交表单，默认get方式</span></span><br><span class="line">      conn.setRequestMethod(method);</span><br><span class="line">      conn.setDoInput(<span class="literal">true</span>);</span><br><span class="line">      conn.setDoOutput(<span class="literal">true</span>);</span><br><span class="line">      <span class="comment">// post方式不能使用缓存</span></span><br><span class="line">      conn.setUseCaches(<span class="literal">false</span>);</span><br><span class="line">      <span class="comment">// 连接指定的资源</span></span><br><span class="line">      conn.connect();</span><br><span class="line">      <span class="comment">// 获取网络输入流</span></span><br><span class="line">      inputStream = conn.getInputStream();</span><br><span class="line">      <span class="type">BufferedInputStream</span> <span class="variable">bis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedInputStream</span>(inputStream);</span><br><span class="line">      <span class="comment">// 写入到文件（注意文件保存路径的后面一定要加上文件的名称）</span></span><br><span class="line">      fileOut = <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(filePath);</span><br><span class="line">      <span class="type">BufferedOutputStream</span> <span class="variable">bos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedOutputStream</span>(fileOut);</span><br><span class="line">      <span class="type">byte</span>[] buf = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">4096</span>];</span><br><span class="line">      <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> bis.read(buf);</span><br><span class="line">      <span class="comment">// 保存文件</span></span><br><span class="line">      <span class="keyword">while</span> (length != -<span class="number">1</span>) &#123;</span><br><span class="line">        bos.write(buf, <span class="number">0</span>, length);</span><br><span class="line">        length = bis.read(buf);</span><br><span class="line">      &#125;</span><br><span class="line">      bos.close();</span><br><span class="line">      bis.close();</span><br><span class="line">      conn.disconnect();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/10/27/Http%E8%AF%B7%E6%B1%82%E5%8F%8A%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" data-id="cllui4qyl0002q0ja7wz4aovh" data-title="HttpClient请求及下载文件" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-jackson序列化与反序列化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/10/27/jackson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="article-date">
+  <time class="dt-published" datetime="2017-10-26T16:00:00.000Z" itemprop="datePublished">2017-10-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/10/27/jackson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">jackson序列化与反序列化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-annotations<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="常用注解"><a href="#常用注解" class="headerlink" title="常用注解"></a>常用注解</h3><ol>
+<li>@JsonIgnore 作用在字段或方法上，用来完全忽略被注解的字段和方法对应的属性.</li>
+<li>@JsonProperty 作用在字段或方法上，用来对属性的序列化&#x2F;反序列化，可以用来避免遗漏属性，同时提供对属性名称重命名.</li>
+<li>@JsonPropertyOrder 作用在类上，用来指明当序列化时需要对属性做排序.</li>
+<li>@JsonFormat 作用在属性上，作用是把Date类型直接转化为想要的格式，如@JsonFormat(pattern &#x3D; “yyyy-MM-dd HH-mm-ss”)。</li>
+</ol>
+<h3 id="NULL或者为空不参加序列化"><a href="#NULL或者为空不参加序列化" class="headerlink" title="NULL或者为空不参加序列化"></a>NULL或者为空不参加序列化</h3><p>可以通过两种方式实现</p>
+<p>1.使用<code>@JsonInclude</code>注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JsonInclude(Include.NON_NULL)</span> </span><br></pre></td></tr></table></figure>
+
+<p>将该标记放在属性上，如果该属性为NULL则不参与序列化；如果放在类上边,那对这个类的全部属性起作用。</p>
+<pre><code>Include.Include.ALWAYS 默认 
+Include.NON_DEFAULT 属性为默认值不序列化 
+Include.NON_EMPTY 属性为 空（“”） 或者为 NULL 都不序列化 
+Include.NON_NULL 属性为NULL 不序列化
+</code></pre>
+<p>2.设置<code>ObjectMapper</code>序列化参数</p>
+<p>代码示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ObjectMapper</span> <span class="variable">mapper</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();</span><br><span class="line">mapper.setSerializationInclusion(Include.NON_NULL);  </span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义序列化与反序列化"><a href="#自定义序列化与反序列化" class="headerlink" title="自定义序列化与反序列化"></a>自定义序列化与反序列化</h3><p>先定义实体类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> id;  </span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">	...  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Item</span> &#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> id;  </span><br><span class="line">    <span class="keyword">public</span> String itemName;  </span><br><span class="line">    <span class="keyword">public</span> User owner; </span><br><span class="line">    ... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用jackson进行序列化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Item</span> <span class="variable">item</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Item</span>(<span class="number">1</span>, <span class="string">&quot;itemName&quot;</span>, <span class="keyword">new</span> <span class="title class_">User</span>(<span class="number">2</span>, <span class="string">&quot;userName&quot;</span>)); </span><br><span class="line"><span class="type">String</span> <span class="variable">serialized</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().writeValueAsString(item); </span><br></pre></td></tr></table></figure>
+
+<p>正常序列化的json为： </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;itemName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;theItem&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;owner&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;theUser&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果想要改变序列化的json结构，则需要进行自定义。继承JsonSerializer类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ItemSerializer</span> <span class="keyword">extends</span> <span class="title class_">JsonSerializer</span>&lt;Item&gt; &#123;  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">serialize</span><span class="params">(Item value, JsonGenerator jgen, SerializerProvider provider)</span>   </span><br><span class="line">      <span class="keyword">throws</span> IOException, JsonProcessingException &#123;  </span><br><span class="line">        jgen.writeStartObject();  </span><br><span class="line">        jgen.writeNumberField(<span class="string">&quot;id&quot;</span>, value.id);  </span><br><span class="line">        jgen.writeStringField(<span class="string">&quot;itemName&quot;</span>, value.itemName);  </span><br><span class="line">        jgen.writeNumberField(<span class="string">&quot;owner&quot;</span>, value.owner.id);  </span><br><span class="line">        jgen.writeEndObject();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用jackson进行序列化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Item</span> <span class="variable">item</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Item</span>(<span class="number">1</span>, <span class="string">&quot;itemName&quot;</span>, <span class="keyword">new</span> <span class="title class_">User</span>(<span class="number">2</span>, <span class="string">&quot;userName&quot;</span>)); </span><br><span class="line"><span class="type">ObjectMapper</span> <span class="variable">mapper</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();  </span><br><span class="line">   </span><br><span class="line"><span class="type">SimpleModule</span> <span class="variable">module</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleModule</span>();  </span><br><span class="line"><span class="keyword">module</span>.addSerializer(Item.class, <span class="keyword">new</span> <span class="title class_">ItemSerializer</span>());  </span><br><span class="line">mapper.registerModule(<span class="keyword">module</span>);  </span><br><span class="line"></span><br><span class="line"><span class="type">String</span> <span class="variable">serialized</span> <span class="operator">=</span> mapper.writeValueAsString(item);</span><br></pre></td></tr></table></figure>
+
+<p>也可以通过在实体类上使用<code>@JsonSerialize</code>注解实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JsonSerialize(using = ItemSerializer.class)</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Item</span> &#123;  </span><br><span class="line">    ...  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>使用jackson进行序列化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Item</span> <span class="variable">item</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Item</span>(<span class="number">1</span>, <span class="string">&quot;itemName&quot;</span>, <span class="keyword">new</span> <span class="title class_">User</span>(<span class="number">2</span>, <span class="string">&quot;userName&quot;</span>)); </span><br><span class="line"><span class="type">String</span> <span class="variable">serialized</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().writeValueAsString(item); </span><br></pre></td></tr></table></figure>
+
+<p>使用jackson进行反序列化:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Item</span> <span class="variable">item</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>().readValue(json, Item.class); </span><br></pre></td></tr></table></figure>
+
+<p>如果是自定义过的json串需要自定义。继承JsonDeserializer类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ItemDeserializer</span> <span class="keyword">extends</span> <span class="title class_">JsonDeserializer</span>&lt;Item&gt; &#123;  </span><br><span class="line">   </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="keyword">public</span> Item <span class="title function_">deserialize</span><span class="params">(JsonParser jp, DeserializationContext ctxt)</span>   </span><br><span class="line">      <span class="keyword">throws</span> IOException, JsonProcessingException &#123;  </span><br><span class="line">        <span class="type">JsonNode</span> <span class="variable">node</span> <span class="operator">=</span> jp.getCodec().readTree(jp);  </span><br><span class="line">        <span class="type">int</span> <span class="variable">id</span> <span class="operator">=</span> (Integer) ((IntNode) node.get(<span class="string">&quot;id&quot;</span>)).numberValue();  </span><br><span class="line">        <span class="type">String</span> <span class="variable">itemName</span> <span class="operator">=</span> node.get(<span class="string">&quot;itemName&quot;</span>).asText();  </span><br><span class="line">        <span class="type">int</span> <span class="variable">userId</span> <span class="operator">=</span> (Integer) ((IntNode) node.get(<span class="string">&quot;id&quot;</span>)).numberValue();  </span><br><span class="line">   </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Item</span>(id, itemName, <span class="keyword">new</span> <span class="title class_">User</span>(userId, <span class="literal">null</span>));  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>使用jackson反序列化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ObjectMapper</span> <span class="variable">mapper</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();  </span><br><span class="line"><span class="type">SimpleModule</span> <span class="variable">module</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleModule</span>();  </span><br><span class="line"><span class="keyword">module</span>.addDeserializer(Item.class, <span class="keyword">new</span> <span class="title class_">ItemDeserializer</span>());  </span><br><span class="line">mapper.registerModule(<span class="keyword">module</span>);  </span><br><span class="line">   </span><br><span class="line"><span class="type">Item</span> <span class="variable">readValue</span> <span class="operator">=</span> mapper.readValue(json, Item.class);  </span><br></pre></td></tr></table></figure>
+
+<p>同理，也可以使用<code>@JsonDeserialize</code>注解实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JsonDeserialize(using = ItemDeserializer.class)</span> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Item</span> &#123; </span><br><span class="line">    ... </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="序列化与反序列化工具类"><a href="#序列化与反序列化工具类" class="headerlink" title="序列化与反序列化工具类"></a>序列化与反序列化工具类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.DeserializationFeature;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JsonUtil</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">ObjectMapper</span> <span class="variable">objMapper</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();</span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    objMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, <span class="literal">false</span>);</span><br><span class="line">    objMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, <span class="literal">false</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">toJson</span><span class="params">(Object obj)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="keyword">return</span> objMapper.writeValueAsString(obj);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T <span class="title function_">fromJson</span><span class="params">(Class&lt;T&gt; clazz, String json)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="keyword">return</span> objMapper.readValue(json, clazz);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; List&lt;T&gt; <span class="title function_">fromJsonList</span><span class="params">(Class&lt;T&gt; clazz, String json)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="keyword">return</span> objMapper.readValue(json,</span><br><span class="line">        objMapper.getTypeFactory().constructCollectionType(List.class, clazz));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/10/27/jackson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" data-id="cllui4qz0002fq0ja7p8j63zo" data-title="jackson序列化与反序列化" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-JAVA_OPTS" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/10/25/JAVA_OPTS/" class="article-date">
+  <time class="dt-published" datetime="2017-10-24T16:00:00.000Z" itemprop="datePublished">2017-10-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/10/25/JAVA_OPTS/">JAVA_OPTS参数设置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="设置jvm运行内存及GC回收"><a href="#设置jvm运行内存及GC回收" class="headerlink" title="设置jvm运行内存及GC回收"></a>设置jvm运行内存及GC回收</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#JAVA_OPTS=&quot;-server -Duser.timezone=GMT+08 -Xms4g -Xmx7g -XX:+UseGCOverheadLimit -XX:G1HeapRegionSize=32M -XX:+UseG1GC -XX:+ExplicitGCInvokesConcurrent&quot;</span></span><br><span class="line">JAVA_OPTS=<span class="string">&quot;-server -verbose:gc -Xms4000m -Xmx9000m -Xss256k  -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=HeapDumpOnOutOfMemoryError.log -XX:+UnlockExperimentalVMOptions &quot;</span></span><br><span class="line"><span class="built_in">nohup</span> java <span class="variable">$JAVA_OPTS</span> <span class="variable">$AGENT_OPTS</span> -<span class="built_in">cp</span> <span class="variable">$classpath</span> com.mlog.gavial.importer.nowcastms.NowcastMsImportApp  &gt;&gt;out.log &amp;</span><br><span class="line">pid=$!</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$pid</span>&gt;import.pid</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-server:一定要作为第一个参数，在多个CPU时性能佳<br>-Duser.timezone&#x3D;GMT+08 时区设置<br>-XX:+ExplicitGCInvokesConcurrent 降低每次Full gc的时间<br>–XX:+UseG1GC 使用G1垃圾回收器<br>-Xms4g 初始Heap大小，使用的最小内存,cpu性能高时此值应设的大一些<br>-Xmx7g java heap最大值，使用的最大内存<br>-XX:+UseGCOverheadLimit 限制GC的运行时间<br>-XX:G1HeapRegionSize 设置的G1区域的大小。值是2的幂，范围是1 MB 到32 MB。目标是根据最小的 Java 堆大小划分出约 2048 个区域。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/10/25/JAVA_OPTS/" data-id="cllui4qyo0006q0jafnuu0lha" data-title="JAVA_OPTS参数设置" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-数值插值" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/10/24/%E6%95%B0%E5%80%BC%E6%8F%92%E5%80%BC/" class="article-date">
+  <time class="dt-published" datetime="2017-10-23T16:00:00.000Z" itemprop="datePublished">2017-10-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/10/24/%E6%95%B0%E5%80%BC%E6%8F%92%E5%80%BC/">java 线性插值</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="引入maven"><a href="#引入maven" class="headerlink" title="引入maven"></a>引入maven</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.commons<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-math3<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.6.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">double</span>[] interpolations(<span class="type">double</span>[] x, <span class="type">double</span>[] y, <span class="type">double</span>[] z) &#123;</span><br><span class="line">   <span class="type">double</span>[] interV = <span class="keyword">new</span> <span class="title class_">double</span>[z.length];</span><br><span class="line">   <span class="type">UnivariateInterpolator</span> <span class="variable">interpolator</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">LinearInterpolator</span>();</span><br><span class="line"><span class="comment">//UnivariateInterpolator interpolator = new SplineInterpolator();平滑曲线</span></span><br><span class="line">   <span class="type">UnivariateFunction</span> <span class="variable">function</span> <span class="operator">=</span> interpolator.interpolate(x, y);</span><br><span class="line">   <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; z.length; i++) &#123;</span><br><span class="line">     interV[i] = function.value(z[i]);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> interV;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">   <span class="comment">//已知下标1,3,5,7,9对应的数值为0.1, 0.5, 2.2, 1.2, 3.1，求下标2, 4, 6, 8对应的数值</span></span><br><span class="line">   <span class="type">double</span>[] x = <span class="keyword">new</span> <span class="title class_">double</span>[] &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>&#125;;</span><br><span class="line">   <span class="type">double</span>[] y = <span class="keyword">new</span> <span class="title class_">double</span>[] &#123;<span class="number">0.1</span>, <span class="number">0.5</span>, <span class="number">2.2</span>, <span class="number">1.2</span>, <span class="number">3.1</span>&#125;;</span><br><span class="line">   <span class="type">double</span>[] z = <span class="keyword">new</span> <span class="title class_">double</span>[] &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>&#125;;</span><br><span class="line">   <span class="type">double</span>[] v = interpolations(x, y, z);</span><br><span class="line">   System.out.println(Arrays.toString(v));</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://commons.apache.org/proper/commons-math/javadocs/api-3.2/index.html">common-math3官方文档</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/10/24/%E6%95%B0%E5%80%BC%E6%8F%92%E5%80%BC/" data-id="cllui4qz80044q0jabgw09j7k" data-title="java 线性插值" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-字符串压缩Snappy" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/10/23/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9Snappy/" class="article-date">
+  <time class="dt-published" datetime="2017-10-22T16:00:00.000Z" itemprop="datePublished">2017-10-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/10/23/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9Snappy/">java 字符串压缩之Snappy</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="引入maven"><a href="#引入maven" class="headerlink" title="引入maven"></a>引入maven</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.xerial.snappy<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>snappy-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="将字符串压缩成byte数组"><a href="#将字符串压缩成byte数组" class="headerlink" title="将字符串压缩成byte数组"></a>将字符串压缩成byte数组</h3><p>使用iso8859-1编码（具体编码可以视具体字符串而定）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">compress</span><span class="params">(String info)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">  <span class="keyword">return</span> Snappy.compress(info, <span class="string">&quot;ISO-8859-1&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="将byte数组解码成字符串"><a href="#将byte数组解码成字符串" class="headerlink" title="将byte数组解码成字符串"></a>将byte数组解码成字符串</h3><p>使用iso8859-1编码（具体编码可以视具体字符串而定）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">uncompress</span><span class="params">(<span class="type">byte</span>[] info)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">  <span class="keyword">return</span> Snappy.uncompressString(info, <span class="string">&quot;ISO-8859-1&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="二进制转字符串"><a href="#二进制转字符串" class="headerlink" title="二进制转字符串"></a>二进制转字符串</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">byteTohex</span><span class="params">(<span class="type">byte</span>[] b)</span> &#123;</span><br><span class="line">  <span class="type">String</span> <span class="variable">hs</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="type">String</span> <span class="variable">stmp</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> <span class="number">0</span>; n &lt; b.length; n++) &#123;</span><br><span class="line">    stmp = (java.lang.Integer.toHexString(b[n] &amp; <span class="number">0XFF</span>));</span><br><span class="line">    <span class="keyword">if</span> (stmp.length() == <span class="number">1</span>) &#123;</span><br><span class="line">      hs = hs + <span class="string">&quot;0&quot;</span> + stmp;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      hs = hs + stmp;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> hs;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串转二进制"><a href="#字符串转二进制" class="headerlink" title="字符串转二进制"></a>字符串转二进制</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">byte</span>[] hexTobyte(String str) &#123;</span><br><span class="line">  <span class="keyword">if</span> (str == <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  str = str.trim();</span><br><span class="line">  <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> str.length();</span><br><span class="line">    <span class="keyword">if</span> (len == <span class="number">0</span> || len % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">byte</span>[] b = <span class="keyword">new</span> <span class="title class_">byte</span>[len / <span class="number">2</span>];</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; str.length(); i += <span class="number">2</span>) &#123;</span><br><span class="line">        b[i / <span class="number">2</span>] = (<span class="type">byte</span>) Integer.decode(<span class="string">&quot;0x&quot;</span> + str.substring(i, i + <span class="number">2</span>)).intValue();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="完整的SnappyUtil-java"><a href="#完整的SnappyUtil-java" class="headerlink" title="完整的SnappyUtil.java"></a>完整的SnappyUtil.java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> org.xerial.snappy.Snappy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SnappyUtil</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">compress</span><span class="params">(String info)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="keyword">return</span> byteTohex(Snappy.compress(info, <span class="string">&quot;ISO-8859-1&quot;</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">uncompress</span><span class="params">(String info)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="keyword">return</span> Snappy.uncompressString(hexTobyte(info), <span class="string">&quot;ISO-8859-1&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> String <span class="title function_">byteTohex</span><span class="params">(<span class="type">byte</span>[] b)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">hs</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">stmp</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> <span class="number">0</span>; n &lt; b.length; n++) &#123;</span><br><span class="line">      stmp = (java.lang.Integer.toHexString(b[n] &amp; <span class="number">0XFF</span>));</span><br><span class="line">      <span class="keyword">if</span> (stmp.length() == <span class="number">1</span>) &#123;</span><br><span class="line">        hs = hs + <span class="string">&quot;0&quot;</span> + stmp;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        hs = hs + stmp;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hs;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">byte</span>[] hexTobyte(String str) &#123;</span><br><span class="line">    <span class="keyword">if</span> (str == <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    str = str.trim();</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> str.length();</span><br><span class="line">    <span class="keyword">if</span> (len == <span class="number">0</span> || len % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">byte</span>[] b = <span class="keyword">new</span> <span class="title class_">byte</span>[len / <span class="number">2</span>];</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; str.length(); i += <span class="number">2</span>) &#123;</span><br><span class="line">        b[i / <span class="number">2</span>] = (<span class="type">byte</span>) Integer.decode(<span class="string">&quot;0x&quot;</span> + str.substring(i, i + <span class="number">2</span>)).intValue();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> b;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/10/23/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9Snappy/" data-id="cllui4qz6003nq0ja3kq2a943" data-title="java 字符串压缩之Snappy" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>HttpClient请求及下载文件 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="HttpClient 是Apache Jakarta Common 下的子项目，可以用来提供高效的、最新的、功能丰富的支持 HTTP 协议的客户端编程工具包，并且它支持 HTTP 协议最新的版本和建议。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HttpClient请求及下载文件">
+<meta property="og:url" content="http://example.com/2017/10/27/Http%E8%AF%B7%E6%B1%82%E5%8F%8A%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="HttpClient 是Apache Jakarta Common 下的子项目，可以用来提供高效的、最新的、功能丰富的支持 HTTP 协议的客户端编程工具包，并且它支持 HTTP 协议最新的版本和建议。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-10-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-28T02:26:17.961Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="JAVA">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Http请求及文件下载" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/10/27/Http%E8%AF%B7%E6%B1%82%E5%8F%8A%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" class="article-date">
+  <time class="dt-published" datetime="2017-10-26T16:00:00.000Z" itemprop="datePublished">2017-10-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      HttpClient请求及下载文件
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>httpclient<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.httpcomponents<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.4.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>httpcore<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.httpcomponents<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.4.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="HttpClient发送Get请求"><a href="#HttpClient发送Get请求" class="headerlink" title="HttpClient发送Get请求"></a>HttpClient发送Get请求</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> lm</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SimpleHttpGeter</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doGet</span><span class="params">(String url)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.createDefault();</span><br><span class="line">    <span class="type">HttpGet</span> <span class="variable">httpGet</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpGet</span>(url);</span><br><span class="line">    <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpGet);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (response != <span class="literal">null</span> &amp;&amp; response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) &#123;</span><br><span class="line">        <span class="keyword">return</span> EntityUtils.toString(response.getEntity());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      response.close();</span><br><span class="line">      httpclient.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doGet</span><span class="params">(String url, String[] paramNames, String[] paramValues)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(url);</span><br><span class="line">    sb.append(<span class="string">&quot;?&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; paramNames.length; i++) &#123;</span><br><span class="line">      sb.append(paramNames[i] + <span class="string">&quot;=&quot;</span> + paramValues[i] + <span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    sb.deleteCharAt(sb.length() - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> doGet(sb.toString());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="HttpClient发送Post请求"><a href="#HttpClient发送Post请求" class="headerlink" title="HttpClient发送Post请求"></a>HttpClient发送Post请求</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.Charset;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.NameValuePair;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.entity.UrlEncodedFormEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpPost;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.entity.StringEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.message.BasicNameValuePair;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> lm</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SimpleHttpPoster</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doPost</span><span class="params">(String url)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.createDefault();</span><br><span class="line">    <span class="type">HttpPost</span> <span class="variable">httpPost</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpPost</span>(url);</span><br><span class="line">    <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpPost);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (response != <span class="literal">null</span> &amp;&amp; response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) &#123;</span><br><span class="line">        <span class="keyword">return</span> EntityUtils.toString(response.getEntity());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      response.close();</span><br><span class="line">      httpclient.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doPost</span><span class="params">(String url, String[] paramNames, String[] paramValues)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.createDefault();</span><br><span class="line">    <span class="type">HttpPost</span> <span class="variable">httpPost</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpPost</span>(url);</span><br><span class="line">    List&lt;NameValuePair&gt; nvps = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;NameValuePair&gt;();</span><br><span class="line">    <span class="comment">// 迭代参数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; paramNames.length; i++) &#123;</span><br><span class="line">      nvps.add(<span class="keyword">new</span> <span class="title class_">BasicNameValuePair</span>(paramNames[i], paramValues[i]));</span><br><span class="line">    &#125;</span><br><span class="line">    httpPost.setEntity(<span class="keyword">new</span> <span class="title class_">UrlEncodedFormEntity</span>(nvps, <span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line">    <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpPost);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (response != <span class="literal">null</span> &amp;&amp; response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) &#123;</span><br><span class="line">        <span class="keyword">return</span> EntityUtils.toString(response.getEntity());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      response.close();</span><br><span class="line">      httpclient.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">doBody</span><span class="params">(String url, String parmas)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.createDefault();</span><br><span class="line">    <span class="type">HttpPost</span> <span class="variable">post</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpPost</span>(url);</span><br><span class="line">    post.addHeader(<span class="string">&quot;Content-type&quot;</span>, <span class="string">&quot;application/json; charset=utf-8&quot;</span>);</span><br><span class="line">    post.setHeader(<span class="string">&quot;Accept&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br><span class="line">    post.setEntity(<span class="keyword">new</span> <span class="title class_">StringEntity</span>(parmas, Charset.forName(<span class="string">&quot;utf-8&quot;</span>)));</span><br><span class="line">    <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(post);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (response != <span class="literal">null</span> &amp;&amp; response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) &#123;</span><br><span class="line">        <span class="keyword">return</span> EntityUtils.toString(response.getEntity());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      response.close();</span><br><span class="line">      httpclient.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="HttpClient下载文件"><a href="#HttpClient下载文件" class="headerlink" title="HttpClient下载文件"></a>HttpClient下载文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.StatusLine;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> lm</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HttpDownload</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">WRITE_SIZE</span> <span class="operator">=</span> <span class="number">4096</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">download</span><span class="params">(String url, String filePath)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">CloseableHttpClient</span> <span class="variable">httpClient</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">CloseableHttpResponse</span> <span class="variable">httpResponse</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">FileOutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      httpClient = HttpClients.createDefault();</span><br><span class="line">      <span class="type">HttpGet</span> <span class="variable">httpGet</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpGet</span>(url);</span><br><span class="line">      httpResponse = httpClient.execute(httpGet);</span><br><span class="line">      <span class="type">StatusLine</span> <span class="variable">statusLine</span> <span class="operator">=</span> httpResponse.getStatusLine();</span><br><span class="line">      <span class="keyword">if</span> (statusLine.getStatusCode() == <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(filePath);</span><br><span class="line">        outputStream = <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(file);</span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> httpResponse.getEntity().getContent();</span><br><span class="line">        <span class="type">byte</span> buff[] = <span class="keyword">new</span> <span class="title class_">byte</span>[WRITE_SIZE];</span><br><span class="line">        <span class="type">int</span> <span class="variable">counts</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> ((counts = inputStream.read(buff)) != -<span class="number">1</span>) &#123;</span><br><span class="line">          outputStream.write(buff, <span class="number">0</span>, counts);</span><br><span class="line">        &#125;</span><br><span class="line">        outputStream.flush();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (outputStream != <span class="literal">null</span>) &#123;</span><br><span class="line">        outputStream.close();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (httpClient != <span class="literal">null</span>) &#123;</span><br><span class="line">        httpClient.close();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (httpResponse != <span class="literal">null</span>) &#123;</span><br><span class="line">        httpResponse.close();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="不使用HttpClient下载文件"><a href="#不使用HttpClient下载文件" class="headerlink" title="不使用HttpClient下载文件"></a>不使用HttpClient下载文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.BufferedInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.BufferedOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HttpDownload</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">downloadFile</span><span class="params">(String url, String filePath, String method)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">FileOutputStream</span> <span class="variable">fileOut</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">HttpURLConnection</span> <span class="variable">conn</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// 建立链接</span></span><br><span class="line">      <span class="type">URL</span> <span class="variable">httpUrl</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URL</span>(url);</span><br><span class="line">      conn = (HttpURLConnection) httpUrl.openConnection();</span><br><span class="line">      <span class="comment">// 以Post方式提交表单，默认get方式</span></span><br><span class="line">      conn.setRequestMethod(method);</span><br><span class="line">      conn.setDoInput(<span class="literal">true</span>);</span><br><span class="line">      conn.setDoOutput(<span class="literal">true</span>);</span><br><span class="line">      <span class="comment">// post方式不能使用缓存</span></span><br><span class="line">      conn.setUseCaches(<span class="literal">false</span>);</span><br><span class="line">      <span class="comment">// 连接指定的资源</span></span><br><span class="line">      conn.connect();</span><br><span class="line">      <span class="comment">// 获取网络输入流</span></span><br><span class="line">      inputStream = conn.getInputStream();</span><br><span class="line">      <span class="type">BufferedInputStream</span> <span class="variable">bis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedInputStream</span>(inputStream);</span><br><span class="line">      <span class="comment">// 写入到文件（注意文件保存路径的后面一定要加上文件的名称）</span></span><br><span class="line">      fileOut = <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(filePath);</span><br><span class="line">      <span class="type">BufferedOutputStream</span> <span class="variable">bos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedOutputStream</span>(fileOut);</span><br><span class="line">      <span class="type">byte</span>[] buf = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">4096</span>];</span><br><span class="line">      <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> bis.read(buf);</span><br><span class="line">      <span class="comment">// 保存文件</span></span><br><span class="line">      <span class="keyword">while</span> (length != -<span class="number">1</span>) &#123;</span><br><span class="line">        bos.write(buf, <span class="number">0</span>, length);</span><br><span class="line">        length = bis.read(buf);</span><br><span class="line">      &#125;</span><br><span class="line">      bos.close();</span><br><span class="line">      bis.close();</span><br><span class="line">      conn.disconnect();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/10/27/Http%E8%AF%B7%E6%B1%82%E5%8F%8A%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" data-id="cllui4qyl0002q0ja7wz4aovh" data-title="HttpClient请求及下载文件" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          postgis常用函数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/10/27/jackson%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">jackson序列化与反序列化</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>cassandra 入门学习 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cassandra 入门学习">
+<meta property="og:url" content="http://example.com/2017/02/17/Cassandra%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Apache Cassandra 是一套开源分布式 Key-Value 存储系统。它最初由 Facebook 开发，用于储存特别大的数据。 Cassandra 不是一个数据库，它是一个混合型的非关系的数据库，类似于 Google 的 BigTable。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-02-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-28T02:26:21.017Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="cassandra">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Cassandra基本用法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/02/17/Cassandra%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2017-02-16T16:00:00.000Z" itemprop="datePublished">2017-02-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      cassandra 入门学习
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="CQL"><a href="#CQL" class="headerlink" title="CQL"></a>CQL</h3><p>查询表名</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> table_name <span class="keyword">from</span> system_schema.tables <span class="keyword">where</span> keyspace_name<span class="operator">=</span><span class="string">&#x27;mdata&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>查询表数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>   mdata.ec_surface_common_time_2017021608 limit <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>删除表结构</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> mdata.ec_surface_common_time_2017021608</span><br></pre></td></tr></table></figure>
+
+<p>创建keyspace</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> keyspace IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> ecglobal</span><br><span class="line"><span class="keyword">WITH</span> REPLICATION <span class="operator">=</span> &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.locator.SimpleStrategy&#x27;</span>, <span class="string">&#x27;replication_factor&#x27;</span>: <span class="string">&#x27;2&#x27;</span>&#125;</span><br><span class="line"><span class="keyword">AND</span> DURABLE_WRITES <span class="operator">=</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://docs.datastax.com/en/cql/3.1/cql/cql_reference/create_keyspace_r.html">http://docs.datastax.com/en/cql/3.1/cql/cql_reference&#x2F;create_keyspace_r.html</a></p>
+<h3 id="noodtool"><a href="#noodtool" class="headerlink" title="noodtool"></a>noodtool</h3><p>清空被删除表关系的数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./nodetool clearsnapshot </span><br><span class="line">./nodetool -h 127.0.0.1 clearsnapshot </span><br></pre></td></tr></table></figure>
+
+<p>集群状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./nodetool status</span><br><span class="line">./nodetool -h 10.28.58.50 status</span><br></pre></td></tr></table></figure>
+
+<p>集群版本信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nodetool describecluster</span><br></pre></td></tr></table></figure>
+
+<h3 id="更多命令"><a href="#更多命令" class="headerlink" title="更多命令"></a>更多命令</h3><pre><code>assassinate
+</code></pre>
+<p>Forcefully remove a dead node without re-replicating any data. Use as a last resort if you cannot removenode</p>
+<pre><code>bootstrap
+</code></pre>
+<p>Monitor&#x2F;manage node’s bootstrap process</p>
+<pre><code>cleanup
+</code></pre>
+<p>Triggers the immediate cleanup of keys no longer belonging to a node. By default, clean all keyspaces</p>
+<pre><code>clearsnapshot
+</code></pre>
+<p>Remove the snapshot with the given name from the given keyspaces. If no snapshotName is specified we will remove all snapshots</p>
+<pre><code>compact
+</code></pre>
+<p>Force a (major) compaction on one or more tables or user-defined compaction on given SSTables</p>
+<pre><code>compactionhistory
+</code></pre>
+<p>Print history of compaction</p>
+<pre><code>compactionstats
+</code></pre>
+<p>Print statistics on compactions</p>
+<pre><code>decommission
+</code></pre>
+<p>Decommission the node I am connecting to</p>
+<pre><code>describecluster
+</code></pre>
+<p>Print the name, snitch, partitioner and schema version of a cluster</p>
+<pre><code>describering
+</code></pre>
+<p>Shows the token ranges info of a given keyspace</p>
+<pre><code>disableautocompaction
+</code></pre>
+<p>Disable autocompaction for the given keyspace and table</p>
+<pre><code>disablebackup
+</code></pre>
+<p>Disable incremental backup</p>
+<pre><code>disablebinary
+</code></pre>
+<p>Disable native transport (binary protocol)</p>
+<pre><code>disablegossip
+</code></pre>
+<p>Disable gossip (effectively marking the node down)</p>
+<pre><code>disablehandoff
+</code></pre>
+<p>Disable storing hinted handoffs</p>
+<pre><code>disablehintsfordc
+</code></pre>
+<p>Disable hints for a data center</p>
+<pre><code>disablethrift
+</code></pre>
+<p>Disable thrift server</p>
+<pre><code>drain
+</code></pre>
+<p>Drain the node (stop accepting writes and flush all tables)</p>
+<pre><code>enableautocompaction
+</code></pre>
+<p>Enable autocompaction for the given keyspace and table</p>
+<pre><code>enablebackup
+</code></pre>
+<p>Enable incremental backup</p>
+<pre><code>enablebinary
+</code></pre>
+<p>Reenable native transport (binary protocol)</p>
+<pre><code>enablegossip
+</code></pre>
+<p>Reenable gossip</p>
+<pre><code>enablehandoff
+</code></pre>
+<p>Reenable future hints storing on the current node</p>
+<pre><code>enablehintsfordc
+</code></pre>
+<p>Enable hints for a data center that was previsouly disabled</p>
+<pre><code>enablethrift
+</code></pre>
+<p>Reenable thrift server</p>
+<pre><code>failuredetector
+</code></pre>
+<p>Shows the failure detector information for the cluster</p>
+<pre><code>flush
+</code></pre>
+<p>Flush one or more tables</p>
+<pre><code>garbagecollect
+</code></pre>
+<p>Remove deleted data from one or more tables</p>
+<pre><code>gcstats
+</code></pre>
+<p>Print GC Statistics</p>
+<pre><code>getcompactionthreshold
+</code></pre>
+<p>Print min and max compaction thresholds for a given table</p>
+<pre><code>getcompactionthroughput
+</code></pre>
+<p>Print the MB&#x2F;s throughput cap for compaction in the system</p>
+<pre><code>getconcurrentcompactors
+</code></pre>
+<p>Get the number of concurrent compactors in the system.</p>
+<pre><code>getendpoints
+</code></pre>
+<p>Print the end points that owns the key</p>
+<pre><code>getinterdcstreamthroughput
+</code></pre>
+<p>Print the Mb&#x2F;s throughput cap for inter-datacenter streaming in the system</p>
+<pre><code>getlogginglevels
+</code></pre>
+<p>Get the runtime logging levels</p>
+<pre><code>getsstables
+</code></pre>
+<p>Print the sstable filenames that own the key</p>
+<pre><code>getstreamthroughput
+</code></pre>
+<p>Print the Mb&#x2F;s throughput cap for streaming in the system</p>
+<pre><code>gettimeout
+</code></pre>
+<p>Print the timeout of the given type in ms</p>
+<pre><code>gettraceprobability
+</code></pre>
+<p>Print the current trace probability value</p>
+<pre><code>gossipinfo
+</code></pre>
+<p>Shows the gossip information for the cluster</p>
+<pre><code>help
+</code></pre>
+<p>Display help information</p>
+<pre><code>info
+</code></pre>
+<p>Print node information (uptime, load, …)</p>
+<pre><code>invalidatecountercache
+</code></pre>
+<p>Invalidate the counter cache</p>
+<pre><code>invalidatekeycache
+</code></pre>
+<p>Invalidate the key cache</p>
+<pre><code>invalidaterowcache
+</code></pre>
+<p>Invalidate the row cache</p>
+<pre><code>join
+</code></pre>
+<p>Join the ring</p>
+<pre><code>listsnapshots
+</code></pre>
+<p>Lists all the snapshots along with the size on disk and true size.</p>
+<pre><code>move
+</code></pre>
+<p>Move node on the token ring to a new token</p>
+<pre><code>netstats
+</code></pre>
+<p>Print network information on provided host (connecting node by default)</p>
+<pre><code>pausehandoff
+</code></pre>
+<p>Pause hints delivery process</p>
+<pre><code>proxyhistograms
+</code></pre>
+<p>Print statistic histograms for network operations</p>
+<pre><code>rangekeysample
+</code></pre>
+<p>Shows the sampled keys held across all keyspaces</p>
+<pre><code>rebuild
+</code></pre>
+<p>Rebuild data by streaming from other nodes (similarly to bootstrap)</p>
+<pre><code>rebuild_index
+</code></pre>
+<p>A full rebuild of native secondary indexes for a given table</p>
+<pre><code>refresh
+</code></pre>
+<p>Load newly placed SSTables to the system without restart</p>
+<pre><code>refreshsizeestimates
+</code></pre>
+<p>Refresh system.size_estimates</p>
+<pre><code>reloadtriggers
+</code></pre>
+<p>Reload trigger classes</p>
+<pre><code>relocatesstables
+</code></pre>
+<p>Relocates sstables to the correct disk</p>
+<pre><code>removenode
+</code></pre>
+<p>Show status of current node removal, force completion of pending removal or remove provided ID</p>
+<pre><code>repair
+</code></pre>
+<p>Repair one or more tables</p>
+<pre><code>replaybatchlog
+</code></pre>
+<p>Kick off batchlog replay and wait for finish</p>
+<pre><code>resetlocalschema
+</code></pre>
+<p>Reset node’s local schema and resync</p>
+<pre><code>resumehandoff
+</code></pre>
+<p>Resume hints delivery process</p>
+<pre><code>ring
+</code></pre>
+<p>Print information about the token ring</p>
+<pre><code>scrub
+</code></pre>
+<p>Scrub (rebuild sstables for) one or more tables</p>
+<pre><code>setcachecapacity
+</code></pre>
+<p>Set global key, row, and counter cache capacities (in MB units)</p>
+<pre><code>setcachekeystosave
+</code></pre>
+<p>Set number of keys saved by each cache for faster post-restart warmup. 0 to disable</p>
+<pre><code>setcompactionthreshold
+</code></pre>
+<p>Set min and max compaction thresholds for a given table</p>
+<pre><code>setcompactionthroughput
+</code></pre>
+<p>Set the MB&#x2F;s throughput cap for compaction in the system, or 0 to disable throttling</p>
+<pre><code>setconcurrentcompactors
+</code></pre>
+<p>Set number of concurrent compactors in the system.</p>
+<pre><code>sethintedhandoffthrottlekb
+</code></pre>
+<p>Set hinted handoff throttle in kb per second, per delivery thread.</p>
+<pre><code>setinterdcstreamthroughput
+</code></pre>
+<p>Set the Mb&#x2F;s throughput cap for inter-datacenter streaming in the system, or 0 to disable throttling</p>
+<pre><code>setlogginglevel
+</code></pre>
+<p>Set the log level threshold for a given class. If both class and level are empty&#x2F;null, it will reset to the initial configuration</p>
+<pre><code>setstreamthroughput
+</code></pre>
+<p>Set the Mb&#x2F;s throughput cap for streaming in the system, or 0 to disable throttling</p>
+<pre><code>settimeout
+</code></pre>
+<p>Set the specified timeout in ms, or 0 to disable timeout</p>
+<pre><code>settraceprobability
+</code></pre>
+<p>Sets the probability for tracing any given request to value. 0 disables, 1 enables for all requests, 0 is the default</p>
+<pre><code>snapshot
+</code></pre>
+<p>Take a snapshot of specified keyspaces or a snapshot of the specified table</p>
+<pre><code>status
+</code></pre>
+<p>Print cluster information (state, load, IDs, …)</p>
+<pre><code>statusbackup
+</code></pre>
+<p>Status of incremental backup</p>
+<pre><code>statusbinary
+</code></pre>
+<p>Status of native transport (binary protocol)</p>
+<pre><code>statusgossip
+</code></pre>
+<p>Status of gossip</p>
+<pre><code>statushandoff
+</code></pre>
+<p>Status of storing future hints on the current node</p>
+<pre><code>statusthrift
+</code></pre>
+<p>Status of thrift server</p>
+<pre><code>stop
+</code></pre>
+<p>Stop compaction</p>
+<pre><code>stopdaemon
+</code></pre>
+<p>Stop cassandra daemon</p>
+<pre><code>tablehistograms
+</code></pre>
+<p>Print statistic histograms for a given table</p>
+<pre><code>tablestats
+</code></pre>
+<p>Print statistics on tables</p>
+<pre><code>toppartitions
+</code></pre>
+<p>Sample and print the most active partitions for a given column family</p>
+<pre><code>tpstats
+</code></pre>
+<p>Print usage statistics of thread pools</p>
+<pre><code>truncatehints
+</code></pre>
+<p>Truncate all hints on the local node, or truncate hints for the endpoint(s) specified.</p>
+<pre><code>upgradesstables
+</code></pre>
+<p>Rewrite sstables (for the requested tables) that are not on the current version (thus upgrading them to said current version)</p>
+<pre><code>verify
+</code></pre>
+<p>Verify (check data checksum for) one or more tables</p>
+<pre><code>version
+</code></pre>
+<p>Print cassandra version</p>
+<pre><code>viewbuildstatus
+</code></pre>
+<p>Show progress of a materialized view build</p>
+<h3 id="更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><a href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org" class="headerlink" title="更多详细信息，请参考cassandra官网：http://cassandra.apache.org/"></a>更多详细信息，请参考cassandra官网：<a target="_blank" rel="noopener" href="http://cassandra.apache.org/">http://cassandra.apache.org/</a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/02/17/Cassandra%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" data-id="cllui4qyj0001q0ja4tg03vrp" data-title="cassandra 入门学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/14/mongodb%E5%88%9B%E5%BB%BA%E7%A9%BA%E9%97%B4%E7%B4%A2%E5%BC%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mongodb创建空间索引
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/19/mongodb%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ubuntu上安装mongodb</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

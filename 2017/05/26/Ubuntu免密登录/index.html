@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>SSH免密登录 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="作为一个开发者，经常要面对管理一大堆服务器的情况，对unix类服务器，我们一般用ssh连接来管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH免密登录">
+<meta property="og:url" content="http://example.com/2017/05/26/Ubuntu%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="作为一个开发者，经常要面对管理一大堆服务器的情况，对unix类服务器，我们一般用ssh连接来管理。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-05-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-28T02:26:04.501Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Ubuntu免密登录" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/05/26/Ubuntu%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" class="article-date">
+  <time class="dt-published" datetime="2017-05-25T16:00:00.000Z" itemprop="datePublished">2017-05-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      SSH免密登录
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>使用证书来管理连接至少有如下两个好处</p>
+<ul>
+<li><p>安全，目前生成证书的方式不管是RSA还是DSA无论从位数上还是加密方式上都比自己生成的密码安全许多。</p>
+</li>
+<li><p>方便，有了证书以后你就不用再记忆密码了，系统会自动使用证书跟服务器接驳，这一过程不需要人工干预</p>
+</li>
+</ul>
+<p>使用证书连接ssh也非常简单，首先你得生成一个证书，在shell中输入如下命令</p>
+<pre><code>ssh-keygen -t rsa -C joyqi -f my-key-file
+</code></pre>
+<ul>
+<li><p>-t 定义的是加密方式，一般有rsa和dsa两种</p>
+</li>
+<li><p>-C 定义的是注释，一般也可以不写</p>
+</li>
+<li><p>-f 定义了输出的证书文件名，不需要写后缀，因为生成的证书包含了公钥和私钥两个文件，它会自动帮你加文件名</p>
+</li>
+</ul>
+<p>我们执行后可以看到如下结果</p>
+<pre><code>$ ssh-keygen -t rsa -C joyqi -f my-key-file
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in my-key-file.
+Your public key has been saved in my-key-file.pub.
+The key fingerprint is:
+57:75:20:37:e2:53:29:ef:86:09:8e:1b:47:2b:6f:88 joyqi
+The key&#39;s randomart image is:
++--[ RSA 2048]----+
+|            o *o.|
+|           ..*.o |
+|            +o   |
+|          o. ..  |
+|        S+.o +   |
+|        +.+ o o  |
+|       . B   .   |
+|      E o o      |
+|         .       |
++-----------------+
+$ ls
+my-key-file     my-key-file.pub
+</code></pre>
+<p>可以在上面的命令执行完成，我们已经得到两个文件my-key-file和my-key-file.pub。前者就是你的私钥，是由你自己个人保存的，后者是公钥，你需要把它上传到任何你想用这个私钥来登录的服务器上。</p>
+<p>ok，现在你需要把公钥文件上传到服务器上，一般我建议用scp命令</p>
+<pre><code>scp my-key-file.pub loginname@yourdomain.com:~/.
+</code></pre>
+<blockquote>
+<p>在后面我们都用loginname来特指你自己的登录名，用yourdomain.com来特指你的服务器地址，请自行脑补</p>
+</blockquote>
+<p>将文件拷贝到.ssh目录下（确认已经安装ssh），目录下是否存在一个名为“authorized_keys”的文件，<br>若不存在，创建一个空文件，</p>
+<pre><code>touch authorized_keys 
+</code></pre>
+<p>然后将公钥信息写入该文件</p>
+<pre><code>cat my-key-file.pub &gt;&gt; authorized_keys
+</code></pre>
+<p>为了安全起见，将authorized_keys文件权限修改为600。</p>
+<pre><code>chmod 600  authorized_keys
+</code></pre>
+<p>现在我们还要告诉本机，连接yourdomain.com的时候使用my-key-file这个私钥来登录</p>
+<p>退出ssh连接，回到本地。将刚才生成的my-key-file文件拷贝到~&#x2F;.ssh目录下</p>
+<pre><code>cp my-key-file ~/.ssh/
+</code></pre>
+<p>然后编辑~&#x2F;.ssh&#x2F;config文件，如果没有，就创建一个，在其中写入如下配置内容</p>
+<pre><code>Host yourdomain.com
+ IdentityFile ~/.ssh/my-key-file
+</code></pre>
+<blockquote>
+<p>可以替换成目标机器IP</p>
+</blockquote>
+<p>很简单吧，一看就懂，根据你的需要自行修改。最后还有一步，别忘了将本地缓存的公钥文件删掉，因为那是你以前没有上传公钥时，缓存的服务器默认公钥，现在你用了自己生成的公钥就得把这个老的记录删掉</p>
+<p>打开~&#x2F;.ssh&#x2F;known_hosts文件，找到包含yourdomain.com的那一行，将它删掉，然后保存退出</p>
+<p>现在，你就可以正常登录服务器了，输入ssh <a href="mailto:&#x6c;&#x6f;&#x67;&#x69;&#110;&#110;&#x61;&#x6d;&#101;&#x40;&#x79;&#x6f;&#x75;&#x72;&#x64;&#111;&#109;&#x61;&#105;&#110;&#46;&#99;&#111;&#109;">&#x6c;&#x6f;&#x67;&#x69;&#110;&#110;&#x61;&#x6d;&#101;&#x40;&#x79;&#x6f;&#x75;&#x72;&#x64;&#111;&#109;&#x61;&#105;&#110;&#46;&#99;&#111;&#109;</a>，第一次登录会出现</p>
+<pre><code>The authenticity of host &#39;yourdomain.com (xxx.xxx.xxx.xxx)&#39; can&#39;t be established.
+RSA key fingerprint is xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx.
+Are you sure you want to continue connecting (yes/no)?
+</code></pre>
+<p>这是因为你刚才把公钥删掉了，系统在连接本地没有缓存公钥的服务器时会询问下你，输入yes即可，然后你没输入密码就登入了服务器。怎么样，是不是很方便。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/05/26/Ubuntu%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="cllui4qyw0019q0ja82z2ar2w" data-title="SSH免密登录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/26/Shell%E5%A4%84%E7%90%86Json/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Shell处理Json
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/25/Tomcat%E9%85%8D%E7%BD%AE%E7%BC%96%E7%A0%81%E9%9B%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Tomcat配置编码集</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-goreplay" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/04/11/goreplay/" class="article-date">
+  <time class="dt-published" datetime="2017-04-10T16:00:00.000Z" itemprop="datePublished">2017-04-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/04/11/goreplay/">goreplay构建测试环境</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="goreplay简介-官方网站-github地址"><a href="#goreplay简介-官方网站-github地址" class="headerlink" title="goreplay简介 官方网站 github地址"></a>goreplay简介 <a target="_blank" rel="noopener" href="https://goreplay.org/">官方网站</a> <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay">github地址</a></h2><p>GoReplay is the simplest and safest way to test your app using real traffic before you put it into production.</p>
+<p>As your application grows, the effort required to test it also grows exponentially. GoReplay offers you the simple idea of reusing your existing traffic for testing, which makes it incredibly powerful. Our state of art technique allows to analyze and record your application traffic without affecting it. This eliminates the risks that come with putting a third party component in the critical path.</p>
+<p>GoReplay increases your confidence in code deployments, configuration changes and infrastructure changes. Did we mention that no coding is required?</p>
+<p>Here is basic workflow: The listener server catches http traffic and sends it to the replay server or saves to file. The replay server forwards traffic to a given address.</p>
+<p><img src="http://i.imgur.com/BwjK3aa.png"></p>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>Download latest binary from <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/releases">https://github.com/buger/gor/releases</a> or <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/wiki/Compilation">compile by yourself</a>.</p>
+<blockquote>
+<p>这里用方法1进行操作。下面是详细步骤</p>
+</blockquote>
+<h3 id="1、下载goreplay最新发布版本"><a href="#1、下载goreplay最新发布版本" class="headerlink" title="1、下载goreplay最新发布版本"></a>1、下载goreplay最新发布版本</h3><p><a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/releases">https://github.com/buger/gor/releases</a></p>
+<p>目前的最新版本是v0.16.0。这里我们下载最新的linux环境版本 gor_0.16.0_x64.tar.gz。</p>
+<h3 id="2、将下载好的文件解压"><a href="#2、将下载好的文件解压" class="headerlink" title="2、将下载好的文件解压"></a>2、将下载好的文件解压</h3><pre><code>tar -zxf gor_0.16.0_x64.tar.gz
+</code></pre>
+<h2 id="Getting-started"><a href="#Getting-started" class="headerlink" title="Getting started"></a>Getting started</h2><p>The most basic setup will be </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-stdout
+</code></pre>
+<p> which acts like tcpdump. If you already have test environment you can start replaying: </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-http http://staging.env.
+</code></pre>
+<p>See the our <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/wiki">documentation</a> and <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/wiki/Getting-Started">Getting started</a> page for more info.</p>
+<h3 id="1、测试环境准备"><a href="#1、测试环境准备" class="headerlink" title="1、测试环境准备"></a>1、测试环境准备</h3><p>假设正式环境App部署端口为 8080，测试环境部署端口为 8090（同一台机器），均正常运行。</p>
+<h3 id="2、测试goreplay是否可以正常运行。"><a href="#2、测试goreplay是否可以正常运行。" class="headerlink" title="2、测试goreplay是否可以正常运行。"></a>2、测试goreplay是否可以正常运行。</h3><p>启动gor，监听正式环境http请求，并列印到日志中</p>
+<pre><code>sudo ./gor --input-raw :8080 --output-stdout
+</code></pre>
+<p>在浏览器中点击正式环境链接，在goreplay的控制台输出为：</p>
+<p><img src="http://i.imgur.com/MFORaux.png"></p>
+<h3 id="正式运行，有以下两种模式可供选择"><a href="#正式运行，有以下两种模式可供选择" class="headerlink" title="正式运行，有以下两种模式可供选择"></a>正式运行，有以下两种模式可供选择</h3><h4 id="1、Replaying"><a href="#1、Replaying" class="headerlink" title="1、Replaying"></a>1、Replaying</h4><p>Now it’s time to replay your original traffic to another environment. Let’s start the same file web server but on a different port: gor file-server :8001.</p>
+<p>Instead of –output-stdout we will use –output-http and provide URL of second server: </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-http=&quot;http://localhost:8001&quot;
+</code></pre>
+<h4 id="2、Saving-requests-to-file-and-replaying-them-later"><a href="#2、Saving-requests-to-file-and-replaying-them-later" class="headerlink" title="2、Saving requests to file and replaying them later"></a>2、Saving requests to file and replaying them later</h4><p>Sometimes it’s not possible to replay requests in real time; Gor allows you to save requests to the file and replay them later.</p>
+<p>First use –output-file to save them: </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-file=requests.gor
+</code></pre>
+<p>This will create new file and continuously write all captured requests to it.</p>
+<p>Let’s re-run Gor, but now to replay requests from file: </p>
+<pre><code>./gor --input-file requests.gor --output-http=&quot;http://localhost:8001&quot;
+</code></pre>
+<p>You should see all the recorded requests coming to the second server, and they will be replayed in the same order and with exactly same timing as they were recorded.</p>
+<blockquote>
+<p>这里用Replaying进行操作。下面是详细步骤</p>
+</blockquote>
+<h3 id="1、运行goreplay"><a href="#1、运行goreplay" class="headerlink" title="1、运行goreplay"></a>1、运行goreplay</h3><pre><code>sudo ./gor --input-raw :8080 --output-http=&quot;http://localhost:8090&quot;
+</code></pre>
+<p><img src="http://i.imgur.com/UYayPOl.png"></p>
+<h3 id="2、查看app1、app2的运行日志"><a href="#2、查看app1、app2的运行日志" class="headerlink" title="2、查看app1、app2的运行日志"></a>2、查看app1、app2的运行日志</h3><p>可以看到app1和app2都被访问了，但是app1的正常访问不受任何影响。</p>
+<p><img src="http://i.imgur.com/SMZJx7w.png"></p>
+<h3 id="3、后台自动运行goreplay"><a href="#3、后台自动运行goreplay" class="headerlink" title="3、后台自动运行goreplay"></a>3、后台自动运行goreplay</h3><pre><code>sudo nohup ./gor --input-raw :8080 --output-http=&quot;http://localhost:8090&quot; &amp;
+
+tail -500f nohup.out
+</code></pre>
+<h3 id="4、不使用root用户运行-Running-as-non-root-user"><a href="#4、不使用root用户运行-Running-as-non-root-user" class="headerlink" title="4、不使用root用户运行 Running as non root user"></a>4、不使用root用户运行 Running as non root user</h3><p>You can enable Gor for non-root users in a secure method by using the following commands</p>
+<pre><code># Following commands assume that you put `gor` binary to /usr/local/bin
+add gor
+addgroup &lt;username&gt; gor
+chgrp gor /usr/local/bin/gor
+chmod 0750 /usr/local/bin/gor
+setcap &quot;cap_net_raw,cap_net_admin+eip&quot; /usr/local/bin/gor
+</code></pre>
+<p>As a brief explanation of the above.</p>
+<ul>
+<li>We create a group called gor.</li>
+<li>We then add the user you want to the new group so they will be able to use gor without sudo</li>
+<li>We then change the user&#x2F;group of gor binary the new group.</li>
+<li>We then make sure the permissions are set on gor binary so that members of the group can execute it but other normal users cannot.</li>
+<li>We then use setcap to give the CAP_NET_RAW and CAP_NET_ADMIN privilege to the executable when it runs. This is so that Gor can open its raw socket which is not normally permitted unless you are root.</li>
+</ul>
+<p>上述大意为</p>
+<ul>
+<li>创建一个组gor</li>
+<li>将对应用户添加到gor组</li>
+<li>授权</li>
+</ul>
+<p>下面是详细步骤</p>
+<h4 id="1、创建gor组"><a href="#1、创建gor组" class="headerlink" title="1、创建gor组"></a>1、创建gor组</h4><pre><code>groupadd gor
+</code></pre>
+<h4 id="2、将需要执行的用户添加到gor组"><a href="#2、将需要执行的用户添加到gor组" class="headerlink" title="2、将需要执行的用户添加到gor组"></a>2、将需要执行的用户添加到gor组</h4><p>将ubuntu用户加入gor组</p>
+<pre><code>addgroup ubuntu gor
+</code></pre>
+<h4 id="3、授权"><a href="#3、授权" class="headerlink" title="3、授权"></a>3、授权</h4><p>编译好的gor二进制文件所在路径为：&#x2F;usr&#x2F;local&#x2F;bin&#x2F;gor</p>
+<pre><code>chgrp gor /usr/local/bin/gor
+
+chmod 0750 /usr/local/bin/gor
+
+setcap &quot;cap_net_raw,cap_net_admin+eip&quot; /usr/local/bin/gor
+</code></pre>
+<h4 id="4、运行"><a href="#4、运行" class="headerlink" title="4、运行"></a>4、运行</h4><p>切换到ubuntu用户</p>
+<pre><code>su ubuntu
+</code></pre>
+<p>切换到gor组</p>
+<pre><code>newgrp gor
+</code></pre>
+<p>进入gor目录</p>
+<pre><code>cd /usr/local/bin
+</code></pre>
+<p>运行gor</p>
+<pre><code>./gor --input-raw :8000 --output-stdout
+</code></pre>
+<h2 id="goreplay高级进阶-更多详情"><a href="#goreplay高级进阶-更多详情" class="headerlink" title="goreplay高级进阶 更多详情"></a>goreplay高级进阶 <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/wiki">更多详情</a></h2><h3 id="1、保存到文件并从文件中转发-Saving-and-Replaying-from-file"><a href="#1、保存到文件并从文件中转发-Saving-and-Replaying-from-file" class="headerlink" title="1、保存到文件并从文件中转发 Saving and Replaying from file"></a>1、保存到文件并从文件中转发 Saving and Replaying from file</h3><p>You can save requests to file, and replay them later. While replaying it will preserve the original time differences between requests. If you apply “percentage based limiting”、”Rate Limiting” timing between requests will be reduced or increased appropriately: this approach opens possibilities like load testing, see below.</p>
+<pre><code># write to file
+gor --input-raw :80 --output-file requests.log
+
+# read from file
+gor --input-file requests.gor --output-http &quot;http://staging.com&quot;
+</code></pre>
+<p>By default Gor writes files in chunks. This configurable using –output-file-append option: the flushed chunk is appended to existence file or not. The default is false. By default, –output-file flushes each chunk to a different path.</p>
+<pre><code>gor ... --output-file %Y%m%d.log
+# append false
+20140608_0.log
+20140608_1.log
+20140609_0.log
+20140609_1.log
+</code></pre>
+<p>This makes parallel file processing easy. But if you want to disable this behavior, you can disable it by adding <code>--output-file-append</code> option:</p>
+<pre><code>gor ... --output-file %Y%m%d.log --output-file-append
+# append true
+20140608.log
+20140609.log
+</code></pre>
+<p>If you run gor multiple times, and it finds existing files, it will continue from last known index.</p>
+<h4 id="Chunk-size"><a href="#Chunk-size" class="headerlink" title="Chunk size"></a>Chunk size</h4><p>You can set chunk limits using <code>--output-file-size-limit</code> and <code>--output-file-queue-limit</code> options. The length of the chunk queue and the size of each chunk, respectively. The default values are 256 and 32mb, respectively. The suffixes “k” (KB), “m” (MB), and “g” (GB) can be used for <code>output-file-size-limit</code>. If you want to have only size constraint, you can set <code>--output-file-queue-limit</code> to 0, and vice versa.</p>
+<pre><code>gor --input-raw :80 --output-file %Y-%m-%d.gz --output-file-size-limit 256m --output-file-queue-limit 0
+</code></pre>
+<h4 id="Using-date-variables-in-file-names"><a href="#Using-date-variables-in-file-names" class="headerlink" title="Using date variables in file names"></a>Using date variables in file names</h4><p>For example, you can tell to create new file each hour: <code>--output-file /mnt/logs/requests-%Y-%m-%d-%H.log</code> It will create new file for each hour: requests-2016-06-01-12.log, requests-2016-06-01-13.log, …</p>
+<p>The time format used as part of the file name. The following characters are replaced with actual values when the file is created:</p>
+<pre><code>%Y: year including the century (at least 4 digits)
+%m: month of the year (01..12)
+%d: Day of the month (01..31)
+%H: Hour of the day, 24-hour clock (00..23)
+%M: Minute of the hour (00..59)
+%S: Second of the minute (00..60)
+</code></pre>
+<p>The default format is %Y%m%d%H, which creates one file per hour.</p>
+<h4 id="GZIP-compression"><a href="#GZIP-compression" class="headerlink" title="GZIP compression"></a>GZIP compression</h4><p>To read or write GZIP compressed files ensure that file extension ends with “.gz”: <code>--output-file log.gz</code></p>
+<h4 id="Replaying-from-multiple-files"><a href="#Replaying-from-multiple-files" class="headerlink" title="Replaying from multiple files"></a>Replaying from multiple files</h4><p><code>--input-file</code> accepts file pattern, for example: <code>--input-file logs-2016-05-*</code>: it will replay all the files, sorting them in lexicographical order.</p>
+<h3 id="2、性能测试-Performance-testing"><a href="#2、性能测试-Performance-testing" class="headerlink" title="2、性能测试 Performance testing"></a>2、性能测试 Performance testing</h3><p>Currently, this functionality supported only by <code>input-file</code> and only when using percentage based limiter. Unlike default limiter for <code>input-file</code> instead of dropping requests it will slowdown or speedup request emitting. Note that limiter is applied to input:</p>
+<pre><code># Replay from file on 2x speed 
+gor --input-file &quot;requests.gor|200%&quot; --output-http &quot;staging.com&quot;
+</code></pre>
+<p>Use <code>--stats --output-http-stats</code> to see latency stats.</p>
+<h4 id="Looping-files-for-replaying-indefinitely"><a href="#Looping-files-for-replaying-indefinitely" class="headerlink" title="Looping files for replaying indefinitely"></a>Looping files for replaying indefinitely</h4><p>You can loop the same set of files, so when the last one replays all the requests, it will not stop, and will start from first one again. Having the only small amount of requests you can do extensive performance testing. Pass <code>--input-file-loop</code>to make it work.</p>
+<h3 id="3、限流-Rate-limiting"><a href="#3、限流-Rate-limiting" class="headerlink" title="3、限流 Rate limiting"></a>3、限流 Rate limiting</h3><p>Rate limiting can be useful if you only want to forward parts of incoming traffic, for example, to not overload your test environment. There are two strategies: dropping random requests or dropping fractions of requests based on Header or URL param value.</p>
+<h4 id="Dropping-random-requests"><a href="#Dropping-random-requests" class="headerlink" title="Dropping random requests"></a>Dropping random requests</h4><p>Every input and output support random rate limiting. There are two limiting algorithms: absolute or percentage based.</p>
+<p><strong>Absolute</strong>: If for current second it reached specified requests limit - disregard the rest, on next second counter reset.</p>
+<p><strong>Percentage</strong>: For input-file it will slowdown or speedup request execution, for the rest it will use the random generator to decide if request pass or not based on the chance you specified.</p>
+<p>You can specify your desired limit using the “|” operator after the server address, see examples below.</p>
+<p>Limiting replay using absolute number</p>
+<pre><code># staging.server will not get more than ten requests per second
+gor --input-tcp :28020 --output-http &quot;http://staging.com|10&quot;
+</code></pre>
+<p>Limiting listener using percentage based limiter</p>
+<pre><code># replay server will not get more than 10% of requests 
+# useful for high-load environments
+gor --input-raw :80 --output-tcp &quot;replay.local:28020|10%&quot;
+</code></pre>
+<h4 id="Consistent-limiting-based-on-Header-or-URL-param-value"><a href="#Consistent-limiting-based-on-Header-or-URL-param-value" class="headerlink" title="Consistent limiting based on Header or URL param value"></a>Consistent limiting based on Header or URL param value</h4><p>If you have unique user id (like API key) stored in header or URL you can consistently forward specified percent of traffic only for the fraction of this users. Basic formula looks like this: <code>FNV32-1A_hashing(value) % 100 &gt;= chance</code>. Examples:</p>
+<pre><code># Limit based on header value
+gor --input-raw :80 --output-tcp &quot;replay.local:28020|10%&quot; --http-header-limiter &quot;X-API-KEY: 10%&quot;
+
+# Limit based on header value
+gor --input-raw :80 --output-tcp &quot;replay.local:28020|10%&quot; --http-param-limiter &quot;api_key: 10%&quot;
+</code></pre>
+<p>When limiting based on header or param only percentage based limiting supported.</p>
+<h3 id="4、请求过滤-Request-filtering"><a href="#4、请求过滤-Request-filtering" class="headerlink" title="4、请求过滤 Request filtering"></a>4、请求过滤 Request filtering</h3><p>Filtering is useful when you need to capture only specific part of traffic, like API requests. It is possible to filter by URL, HTTP header or HTTP method.</p>
+<h4 id="Allow-url-regexp"><a href="#Allow-url-regexp" class="headerlink" title="Allow url regexp"></a>Allow url regexp</h4><pre><code># only forward requests being sent to the /api endpoint
+gor --input-raw :8080 --output-http staging.com --http-allow-url /api
+</code></pre>
+<h4 id="Disallow-url-regexp"><a href="#Disallow-url-regexp" class="headerlink" title="Disallow url regexp"></a>Disallow url regexp</h4><pre><code># only forward requests NOT being sent to the /api... endpoint
+gor --input-raw :8080 --output-http staging.com --http-disallow-url /api
+</code></pre>
+<h4 id="Filter-based-on-regexp-of-header"><a href="#Filter-based-on-regexp-of-header" class="headerlink" title="Filter based on regexp of header"></a>Filter based on regexp of header</h4><pre><code># only forward requests with an api version of 1.0x
+gor --input-raw :8080 --output-http staging.com --http-allow-header api-version:^1\.0\d
+
+# only forward requests NOT containing User-Agent header value &quot;Replayed by Gor&quot;
+gor --input-raw :8080 --output-http staging.com --http-disallow-header &quot;User-Agent: Replayed by Gor&quot;
+</code></pre>
+<h4 id="Filter-based-on-HTTP-method"><a href="#Filter-based-on-HTTP-method" class="headerlink" title="Filter based on HTTP method"></a>Filter based on HTTP method</h4><p>Requests not matching a specified whitelist can be filtered out. For example to strip non-nullipotent requests:</p>
+<pre><code>gor --input-raw :80 --output-http &quot;http://staging.server&quot; \
+    --http-allow-method GET \
+    --http-allow-method OPTIONS
+</code></pre>
+<h3 id="5、请求重写-Request-rewriting"><a href="#5、请求重写-Request-rewriting" class="headerlink" title="5、请求重写 Request rewriting"></a>5、请求重写 Request rewriting</h3><p>Gor supports rewriting of URLs, URL params and headers, see below.</p>
+<p>Rewriting may be useful if you test environment does not have the same data as your production, and you want to perform all actions in the context of <code>test</code> user: for example rewrite all API tokens to some test value. Other possible use cases are toggling features on&#x2F;off using custom headers or rewriting URL’s if they changed in the new environment.</p>
+<p>For more complex logic you can use Middleware.</p>
+<p>Rewrite URL based on a mapping</p>
+<p><code>--http-rewrite-url</code> expects value in “:” format: “:” is a dilimiter. In <code>&lt;replace&gt;</code> section you may use captured regexp group values. This works similar to <code>replace</code> method in Javascript or <code>gsub</code> in Ruby.</p>
+<pre><code># Rewrites all `/v1/user/&lt;user_id&gt;/ping` requests to `/v2/user/&lt;user_id&gt;/ping`
+gor --input-raw :8080 --output-http staging.com --http-rewrite-url /v1/user/([^\\/]+)/ping:/v2/user/$1/ping
+</code></pre>
+<h4 id="Set-URL-param"><a href="#Set-URL-param" class="headerlink" title="Set URL param"></a>Set URL param</h4><p>Set request url param, if param already exists it will be overwritten.</p>
+<pre><code>gor --input-raw :8080 --output-http staging.com --http-set-param api_key=1
+</code></pre>
+<h4 id="Set-Header"><a href="#Set-Header" class="headerlink" title="Set Header"></a>Set Header</h4><p>Set request header, if header already exists it will be overwritten. May be useful if you need to identify requests generated by Gor or enable feature flagged functionality in an application:</p>
+<pre><code>gor --input-raw :80 --output-http &quot;http://staging.server&quot; \
+    --http-header &quot;User-Agent: Replayed by Gor&quot; \
+    --http-header &quot;Enable-Feature-X: true&quot;
+</code></pre>
+<h4 id="Host-header"><a href="#Host-header" class="headerlink" title="Host header"></a>Host header</h4><p>Host header gets special treatment. By default Host get set to the value specified in –output-http. If you manually set –http-header “Host: anonther.com”, Gor will not override Host value.</p>
+<p>If you app accepts traffic from multiple domains, and you want to keep original headers, there is specific <code>--http-original-host</code> with tells Gor do not touch Host header at all.</p>
+<h3 id="6、中间件-Middleware"><a href="#6、中间件-Middleware" class="headerlink" title="6、中间件 Middleware"></a>6、中间件 Middleware</h3><h4 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h4><p>Middleware is a program that accepts request and response payload at STDIN and emits modified requests at STDOUT. You can implement any custom logic like stripping private data, advanced rewriting, support for oAuth and etc. Check examples <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/tree/master/examples/middleware">included into our repo.</a></p>
+<pre><code>                  Original request      +--------------+
++-------------+----------STDIN----------&gt;+              |
+|  Gor input  |                          |  Middleware  |
++-------------+----------STDIN----------&gt;+              |
+                   Original response (1) +------+---+---+
+                                                |   ^
++-------------+    Modified request             v   |
+| Gor output  +&lt;---------STDOUT-----------------+   |
++-----+-------+                                     |
+      |                                             |
+      |            Replayed response                |
+      +------------------STDIN-----------------&gt;----+
+</code></pre>
+<p>(1): Original responses will only be sent to the middleware if the <code>--input-raw-track-response</code> option is specified.</p>
+<p>Middleware can be written in any language, see <code>examples/middleware</code> folder for examples. Middleware program should accept the fact that all communication with Gor is asynchronous, there is no guarantee that original request and response messages will come one after each other. Your app should take care of the state if logic depends on original or replayed response, see <code>examples/middleware/token_modifier.go</code> as example.</p>
+<p>Simple bash echo middleware (returns same request) will look like this:</p>
+<pre><code>while read line; do
+  echo $line
+end
+</code></pre>
+<p>Middleware can be enabled using <code>--middleware</code> option, by specifying path to executable file:</p>
+<pre><code>gor --input-raw :80 --middleware &quot;/opt/middleware_executable&quot; --output-http &quot;http://staging.server&quot;
+</code></pre>
+<h4 id="Communication-protocol"><a href="#Communication-protocol" class="headerlink" title="Communication protocol"></a>Communication protocol</h4><p>All messages should be hex encoded, new line character specifieds the end of the message, eg. new message per line.</p>
+<p>Decoded payload consist of 2 parts: header and HTTP payload, separated by new line character.</p>
+<p>Example request payload:</p>
+<pre><code>1 932079936fa4306fc308d67588178d17d823647c 1439818823587396305
+GET /a HTTP/1.1
+Host: 127.0.0.1
+</code></pre>
+<p>Example response payload (note: you will only receive this if you specify <code>--input-raw-track-response</code>)</p>
+<pre><code>2 8e091765ae902fef8a2b7d9dd960e9d52222bd8c 1439818823587996305 2782013
+HTTP/1.1 200 OK
+Date: Mon, 17 Aug 2015 13:40:23 GMT
+Content-Length: 0
+Content-Type: text/plain; charset=utf-8
+</code></pre>
+<p>Header contains request meta information separated by spaces. First value is payload type, possible values: <code>1</code> - request, <code>2</code> - original response, <code>3</code> - replayed response. Next goes request id: unique among all requests (sha1 of time and Ack), but remain same for original and replayed response, so you can create associations between request and responses. The third argument is the time when request&#x2F;response was initiated&#x2F;received. Forth argument is populated only for responses and means latency.</p>
+<p>HTTP payload is unmodified HTTP requests&#x2F;responses intercepted from network. You can read more about request format <a target="_blank" rel="noopener" href="http://www.jmarshall.com/easy/http/">here</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">here</a> and <a target="_blank" rel="noopener" href="https://www.w3.org/Protocols/rfc2616/rfc2616.html">here</a>. You can operate with payload as you want, add headers, change path, and etc. Basically you just editing a string, just ensure that it is RCF compliant.</p>
+<p>At the end modified (or untouched) request should be emitted back to STDOUT, keeping original header, and hex-encoded. If you want to filter request, just not send it. Emitting responses back is required, even if you did not touch them.</p>
+<h4 id="Advanced-example"><a href="#Advanced-example" class="headerlink" title="Advanced example"></a>Advanced example</h4><p>Imagine that you have auth system that randomly generate access tokens, which used later for accessing secure content. Since there is no pre-defined token value, naive approach without middleware (or if middleware use only request payloads) will fail, because replayed server have own tokens, not synced with origin. To fix this, our middleware should take in account responses of replayed and origin server, store <code>originalToken -&gt; replayedToken</code> aliases and rewrite all requests using this token to use replayed alias. See <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/blob/master/examples/middleware/token_modifier.go">examples&#x2F;middleware&#x2F;token_modifier.go</a> and <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/blob/master/middleware_test.go">middleware_test.go#TestTokenMiddleware</a> as example of described scheme.</p>
+<h3 id="7、分布式部署-Distributed-configuration"><a href="#7、分布式部署-Distributed-configuration" class="headerlink" title="7、分布式部署 Distributed configuration"></a>7、分布式部署 Distributed configuration</h3><p>Sometimes it makes sense to use separate Gor instance for replaying traffic and performing things like load testing, so your production machines do not spend precious resources. It is possible to configure Gor on your web machines forward traffic to Gor aggregator instance running on the separate server.</p>
+<pre><code># Run on servers where you want to catch traffic. You can run it on each `web` machine.
+sudo gor --input-raw :80 --output-tcp replay.local:28020
+
+# Replay server (replay.local).
+gor --input-tcp replay.local:28020 --output-http http://staging.com
+</code></pre>
+<p>If you have multiple replay machines you can split traffic among them using –split-output option: it will equally split all incoming traffic to all outputs using round robin algorithm.</p>
+<pre><code>gor --input-raw :80 --split-output --output-tcp replay1.local:28020 --output-tcp replay2.local:28020
+</code></pre>
+<p>In case if you are planning a large load testing, you may consider use separate master instance which will control Gor slaves which actually replay traffic. For example:</p>
+<pre><code># This command will read multiple log files, replay them on 10x speed and loop them if needed for 30 seconds, and will distributed traffic (tcp session aware) among multiple workers
+gor --input-file logs_from_multiple_machines.*|1000% --input-file-loop --exit-after 30s --recognize-tcp-sessions --split-output --output-tcp worker1.local --output-tcp worker2.local:27017 --output-tcp worker3.local:27017 ...  --output-tcp workerN.local:27017
+
+# worker 
+gor --input-tcp :27017 --ouput-http load_test.target
+</code></pre>
+<h2 id="附录：go环境构建"><a href="#附录：go环境构建" class="headerlink" title="附录：go环境构建"></a>附录：go环境构建</h2><p>goreplay是用go语言编写，如果自己手动编译goreplay的二进制文件，需要go语言环境。下面是go环境构建的步骤。</p>
+<p>如果是使用官方编译好的二进制文件则不需要运行环境，如本案例。</p>
+<h3 id="下载linux版本的go"><a href="#下载linux版本的go" class="headerlink" title="下载linux版本的go"></a>下载linux版本的go</h3><p><a target="_blank" rel="noopener" href="https://golang.org/dl/">https://golang.org/dl/</a></p>
+<p>目前官方最新版本为：go1.8.1，下载文件go1.8.1.linux-amd64.tar.gz</p>
+<h3 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h3><pre><code>tar -C /usr/local -xzf go1.8.1.linux-amd64.tar.gz
+</code></pre>
+<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><pre><code>export PATH=$PATH:/usr/local/go/bin
+</code></pre>
+<p>更多详细信息，请访问go官方网站 <a target="_blank" rel="noopener" href="https://golang.org/">https://golang.org/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/04/11/goreplay/" data-id="cllui4qyw001gq0jaaol3cchg" data-title="goreplay构建测试环境" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mongodb创建空间索引" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/03/14/mongodb%E5%88%9B%E5%BB%BA%E7%A9%BA%E9%97%B4%E7%B4%A2%E5%BC%95/" class="article-date">
+  <time class="dt-published" datetime="2017-03-13T16:00:00.000Z" itemprop="datePublished">2017-03-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/03/14/mongodb%E5%88%9B%E5%BB%BA%E7%A9%BA%E9%97%B4%E7%B4%A2%E5%BC%95/">mongodb创建空间索引</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1、引入mongodb的maven依赖"><a href="#1、引入mongodb的maven依赖" class="headerlink" title="1、引入mongodb的maven依赖"></a>1、引入mongodb的maven依赖</h3><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
+    &lt;artifactId&gt;mongo-java-driver&lt;/artifactId&gt;
+    &lt;version&gt;3.2.2&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="2、编写入库代码（java）"><a href="#2、编写入库代码（java）" class="headerlink" title="2、编写入库代码（java）"></a>2、编写入库代码（java）</h3><pre><code> String database = &quot;database&quot;;
+ String tableName = &quot;tableName&quot;;	
+ String mongoUrl = &quot;mongodb://127.0.0.1:27017&quot;;
+ int connection_count = 1;
+ MongoClient client = new MongoClient(new MongoClientURI(mongoUrl, new MongoClientOptions.Builder().connectionsPerHost(connection_count)));
+ MongoCollection&lt;Document&gt; conn = client.getDatabase(database).getCollection(tableName);
+ List&lt;Document&gt; inserted = new ArrayList&lt;&gt;();
+ double[] lonArray = xxx;
+ double[] latArray = yyy;
+ for (int i = 0; i &lt; lonArray.length; i++) &#123;	
+    inserted.add(new Document(&quot;loc&quot;, new Point(new Position(lonArray[i],latArray[i]))));
+ &#125;
+ conn.insertMany(inserted);
+ client.close();
+</code></pre>
+<h3 id="3、创建空间索引"><a href="#3、创建空间索引" class="headerlink" title="3、创建空间索引"></a>3、创建空间索引</h3><p>进入mongodb控制台，执行：</p>
+<pre><code>db.table.ensureIndex(&#123; loc : &quot;2dsphere&quot;&#125;)
+</code></pre>
+<h3 id="4、测试空间查询"><a href="#4、测试空间查询" class="headerlink" title="4、测试空间查询"></a>4、测试空间查询</h3><pre><code>db.getCollection(&#39;table&#39;).find(&#123;
+    loc: &#123;
+        $near: &#123;
+            $geometry: &#123;
+                type: &quot;Point&quot;,
+                coordinates: [
+                    120,
+                    35
+                ]
+            &#125;,
+            $maxDistance: 10000
+        &#125;
+    &#125;
+&#125;)
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/03/14/mongodb%E5%88%9B%E5%BB%BA%E7%A9%BA%E9%97%B4%E7%B4%A2%E5%BC%95/" data-id="cllui4qz30032q0jagz9ybjhr" data-title="mongodb创建空间索引" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Cassandra基本用法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/02/17/Cassandra%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2017-02-16T16:00:00.000Z" itemprop="datePublished">2017-02-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/02/17/Cassandra%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/">cassandra 入门学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="CQL"><a href="#CQL" class="headerlink" title="CQL"></a>CQL</h3><p>查询表名</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> table_name <span class="keyword">from</span> system_schema.tables <span class="keyword">where</span> keyspace_name<span class="operator">=</span><span class="string">&#x27;mdata&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>查询表数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>   mdata.ec_surface_common_time_2017021608 limit <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>删除表结构</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> mdata.ec_surface_common_time_2017021608</span><br></pre></td></tr></table></figure>
+
+<p>创建keyspace</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> keyspace IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> ecglobal</span><br><span class="line"><span class="keyword">WITH</span> REPLICATION <span class="operator">=</span> &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.locator.SimpleStrategy&#x27;</span>, <span class="string">&#x27;replication_factor&#x27;</span>: <span class="string">&#x27;2&#x27;</span>&#125;</span><br><span class="line"><span class="keyword">AND</span> DURABLE_WRITES <span class="operator">=</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://docs.datastax.com/en/cql/3.1/cql/cql_reference/create_keyspace_r.html">http://docs.datastax.com/en/cql/3.1/cql/cql_reference&#x2F;create_keyspace_r.html</a></p>
+<h3 id="noodtool"><a href="#noodtool" class="headerlink" title="noodtool"></a>noodtool</h3><p>清空被删除表关系的数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./nodetool clearsnapshot </span><br><span class="line">./nodetool -h 127.0.0.1 clearsnapshot </span><br></pre></td></tr></table></figure>
+
+<p>集群状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./nodetool status</span><br><span class="line">./nodetool -h 10.28.58.50 status</span><br></pre></td></tr></table></figure>
+
+<p>集群版本信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nodetool describecluster</span><br></pre></td></tr></table></figure>
+
+<h3 id="更多命令"><a href="#更多命令" class="headerlink" title="更多命令"></a>更多命令</h3><pre><code>assassinate
+</code></pre>
+<p>Forcefully remove a dead node without re-replicating any data. Use as a last resort if you cannot removenode</p>
+<pre><code>bootstrap
+</code></pre>
+<p>Monitor&#x2F;manage node’s bootstrap process</p>
+<pre><code>cleanup
+</code></pre>
+<p>Triggers the immediate cleanup of keys no longer belonging to a node. By default, clean all keyspaces</p>
+<pre><code>clearsnapshot
+</code></pre>
+<p>Remove the snapshot with the given name from the given keyspaces. If no snapshotName is specified we will remove all snapshots</p>
+<pre><code>compact
+</code></pre>
+<p>Force a (major) compaction on one or more tables or user-defined compaction on given SSTables</p>
+<pre><code>compactionhistory
+</code></pre>
+<p>Print history of compaction</p>
+<pre><code>compactionstats
+</code></pre>
+<p>Print statistics on compactions</p>
+<pre><code>decommission
+</code></pre>
+<p>Decommission the node I am connecting to</p>
+<pre><code>describecluster
+</code></pre>
+<p>Print the name, snitch, partitioner and schema version of a cluster</p>
+<pre><code>describering
+</code></pre>
+<p>Shows the token ranges info of a given keyspace</p>
+<pre><code>disableautocompaction
+</code></pre>
+<p>Disable autocompaction for the given keyspace and table</p>
+<pre><code>disablebackup
+</code></pre>
+<p>Disable incremental backup</p>
+<pre><code>disablebinary
+</code></pre>
+<p>Disable native transport (binary protocol)</p>
+<pre><code>disablegossip
+</code></pre>
+<p>Disable gossip (effectively marking the node down)</p>
+<pre><code>disablehandoff
+</code></pre>
+<p>Disable storing hinted handoffs</p>
+<pre><code>disablehintsfordc
+</code></pre>
+<p>Disable hints for a data center</p>
+<pre><code>disablethrift
+</code></pre>
+<p>Disable thrift server</p>
+<pre><code>drain
+</code></pre>
+<p>Drain the node (stop accepting writes and flush all tables)</p>
+<pre><code>enableautocompaction
+</code></pre>
+<p>Enable autocompaction for the given keyspace and table</p>
+<pre><code>enablebackup
+</code></pre>
+<p>Enable incremental backup</p>
+<pre><code>enablebinary
+</code></pre>
+<p>Reenable native transport (binary protocol)</p>
+<pre><code>enablegossip
+</code></pre>
+<p>Reenable gossip</p>
+<pre><code>enablehandoff
+</code></pre>
+<p>Reenable future hints storing on the current node</p>
+<pre><code>enablehintsfordc
+</code></pre>
+<p>Enable hints for a data center that was previsouly disabled</p>
+<pre><code>enablethrift
+</code></pre>
+<p>Reenable thrift server</p>
+<pre><code>failuredetector
+</code></pre>
+<p>Shows the failure detector information for the cluster</p>
+<pre><code>flush
+</code></pre>
+<p>Flush one or more tables</p>
+<pre><code>garbagecollect
+</code></pre>
+<p>Remove deleted data from one or more tables</p>
+<pre><code>gcstats
+</code></pre>
+<p>Print GC Statistics</p>
+<pre><code>getcompactionthreshold
+</code></pre>
+<p>Print min and max compaction thresholds for a given table</p>
+<pre><code>getcompactionthroughput
+</code></pre>
+<p>Print the MB&#x2F;s throughput cap for compaction in the system</p>
+<pre><code>getconcurrentcompactors
+</code></pre>
+<p>Get the number of concurrent compactors in the system.</p>
+<pre><code>getendpoints
+</code></pre>
+<p>Print the end points that owns the key</p>
+<pre><code>getinterdcstreamthroughput
+</code></pre>
+<p>Print the Mb&#x2F;s throughput cap for inter-datacenter streaming in the system</p>
+<pre><code>getlogginglevels
+</code></pre>
+<p>Get the runtime logging levels</p>
+<pre><code>getsstables
+</code></pre>
+<p>Print the sstable filenames that own the key</p>
+<pre><code>getstreamthroughput
+</code></pre>
+<p>Print the Mb&#x2F;s throughput cap for streaming in the system</p>
+<pre><code>gettimeout
+</code></pre>
+<p>Print the timeout of the given type in ms</p>
+<pre><code>gettraceprobability
+</code></pre>
+<p>Print the current trace probability value</p>
+<pre><code>gossipinfo
+</code></pre>
+<p>Shows the gossip information for the cluster</p>
+<pre><code>help
+</code></pre>
+<p>Display help information</p>
+<pre><code>info
+</code></pre>
+<p>Print node information (uptime, load, …)</p>
+<pre><code>invalidatecountercache
+</code></pre>
+<p>Invalidate the counter cache</p>
+<pre><code>invalidatekeycache
+</code></pre>
+<p>Invalidate the key cache</p>
+<pre><code>invalidaterowcache
+</code></pre>
+<p>Invalidate the row cache</p>
+<pre><code>join
+</code></pre>
+<p>Join the ring</p>
+<pre><code>listsnapshots
+</code></pre>
+<p>Lists all the snapshots along with the size on disk and true size.</p>
+<pre><code>move
+</code></pre>
+<p>Move node on the token ring to a new token</p>
+<pre><code>netstats
+</code></pre>
+<p>Print network information on provided host (connecting node by default)</p>
+<pre><code>pausehandoff
+</code></pre>
+<p>Pause hints delivery process</p>
+<pre><code>proxyhistograms
+</code></pre>
+<p>Print statistic histograms for network operations</p>
+<pre><code>rangekeysample
+</code></pre>
+<p>Shows the sampled keys held across all keyspaces</p>
+<pre><code>rebuild
+</code></pre>
+<p>Rebuild data by streaming from other nodes (similarly to bootstrap)</p>
+<pre><code>rebuild_index
+</code></pre>
+<p>A full rebuild of native secondary indexes for a given table</p>
+<pre><code>refresh
+</code></pre>
+<p>Load newly placed SSTables to the system without restart</p>
+<pre><code>refreshsizeestimates
+</code></pre>
+<p>Refresh system.size_estimates</p>
+<pre><code>reloadtriggers
+</code></pre>
+<p>Reload trigger classes</p>
+<pre><code>relocatesstables
+</code></pre>
+<p>Relocates sstables to the correct disk</p>
+<pre><code>removenode
+</code></pre>
+<p>Show status of current node removal, force completion of pending removal or remove provided ID</p>
+<pre><code>repair
+</code></pre>
+<p>Repair one or more tables</p>
+<pre><code>replaybatchlog
+</code></pre>
+<p>Kick off batchlog replay and wait for finish</p>
+<pre><code>resetlocalschema
+</code></pre>
+<p>Reset node’s local schema and resync</p>
+<pre><code>resumehandoff
+</code></pre>
+<p>Resume hints delivery process</p>
+<pre><code>ring
+</code></pre>
+<p>Print information about the token ring</p>
+<pre><code>scrub
+</code></pre>
+<p>Scrub (rebuild sstables for) one or more tables</p>
+<pre><code>setcachecapacity
+</code></pre>
+<p>Set global key, row, and counter cache capacities (in MB units)</p>
+<pre><code>setcachekeystosave
+</code></pre>
+<p>Set number of keys saved by each cache for faster post-restart warmup. 0 to disable</p>
+<pre><code>setcompactionthreshold
+</code></pre>
+<p>Set min and max compaction thresholds for a given table</p>
+<pre><code>setcompactionthroughput
+</code></pre>
+<p>Set the MB&#x2F;s throughput cap for compaction in the system, or 0 to disable throttling</p>
+<pre><code>setconcurrentcompactors
+</code></pre>
+<p>Set number of concurrent compactors in the system.</p>
+<pre><code>sethintedhandoffthrottlekb
+</code></pre>
+<p>Set hinted handoff throttle in kb per second, per delivery thread.</p>
+<pre><code>setinterdcstreamthroughput
+</code></pre>
+<p>Set the Mb&#x2F;s throughput cap for inter-datacenter streaming in the system, or 0 to disable throttling</p>
+<pre><code>setlogginglevel
+</code></pre>
+<p>Set the log level threshold for a given class. If both class and level are empty&#x2F;null, it will reset to the initial configuration</p>
+<pre><code>setstreamthroughput
+</code></pre>
+<p>Set the Mb&#x2F;s throughput cap for streaming in the system, or 0 to disable throttling</p>
+<pre><code>settimeout
+</code></pre>
+<p>Set the specified timeout in ms, or 0 to disable timeout</p>
+<pre><code>settraceprobability
+</code></pre>
+<p>Sets the probability for tracing any given request to value. 0 disables, 1 enables for all requests, 0 is the default</p>
+<pre><code>snapshot
+</code></pre>
+<p>Take a snapshot of specified keyspaces or a snapshot of the specified table</p>
+<pre><code>status
+</code></pre>
+<p>Print cluster information (state, load, IDs, …)</p>
+<pre><code>statusbackup
+</code></pre>
+<p>Status of incremental backup</p>
+<pre><code>statusbinary
+</code></pre>
+<p>Status of native transport (binary protocol)</p>
+<pre><code>statusgossip
+</code></pre>
+<p>Status of gossip</p>
+<pre><code>statushandoff
+</code></pre>
+<p>Status of storing future hints on the current node</p>
+<pre><code>statusthrift
+</code></pre>
+<p>Status of thrift server</p>
+<pre><code>stop
+</code></pre>
+<p>Stop compaction</p>
+<pre><code>stopdaemon
+</code></pre>
+<p>Stop cassandra daemon</p>
+<pre><code>tablehistograms
+</code></pre>
+<p>Print statistic histograms for a given table</p>
+<pre><code>tablestats
+</code></pre>
+<p>Print statistics on tables</p>
+<pre><code>toppartitions
+</code></pre>
+<p>Sample and print the most active partitions for a given column family</p>
+<pre><code>tpstats
+</code></pre>
+<p>Print usage statistics of thread pools</p>
+<pre><code>truncatehints
+</code></pre>
+<p>Truncate all hints on the local node, or truncate hints for the endpoint(s) specified.</p>
+<pre><code>upgradesstables
+</code></pre>
+<p>Rewrite sstables (for the requested tables) that are not on the current version (thus upgrading them to said current version)</p>
+<pre><code>verify
+</code></pre>
+<p>Verify (check data checksum for) one or more tables</p>
+<pre><code>version
+</code></pre>
+<p>Print cassandra version</p>
+<pre><code>viewbuildstatus
+</code></pre>
+<p>Show progress of a materialized view build</p>
+<h3 id="更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><a href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org" class="headerlink" title="更多详细信息，请参考cassandra官网：http://cassandra.apache.org/"></a>更多详细信息，请参考cassandra官网：<a target="_blank" rel="noopener" href="http://cassandra.apache.org/">http://cassandra.apache.org/</a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/02/17/Cassandra%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" data-id="cllui4qyj0001q0ja4tg03vrp" data-title="cassandra 入门学习" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-mongodb快速安装" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/01/19/mongodb%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85/" class="article-date">
+  <time class="dt-published" datetime="2017-01-18T16:00:00.000Z" itemprop="datePublished">2017-01-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/01/19/mongodb%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85/">ubuntu上安装mongodb</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="安装mongodb"><a href="#安装mongodb" class="headerlink" title="安装mongodb"></a>安装mongodb</h2><h3 id="更多信息，请参看-https-docs-mongodb-com-v3-2-tutorial-install-mongodb-on-ubuntu"><a href="#更多信息，请参看-https-docs-mongodb-com-v3-2-tutorial-install-mongodb-on-ubuntu" class="headerlink" title="更多信息，请参看 https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-ubuntu/"></a>更多信息，请参看 <a target="_blank" rel="noopener" href="https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-ubuntu/" title="mongo3.2版本">https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-ubuntu/</a></h3><h3 id="1、Import-the-public-key-used-by-the-package-management-system"><a href="#1、Import-the-public-key-used-by-the-package-management-system" class="headerlink" title="1、Import the public key used by the package management system"></a>1、Import the public key used by the package management system</h3><pre><code>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+</code></pre>
+<h3 id="2、Create-a-list-file-for-MongoDB"><a href="#2、Create-a-list-file-for-MongoDB" class="headerlink" title="2、Create a list file for MongoDB"></a>2、Create a list file for MongoDB</h3><p>Ubuntu 12.04</p>
+<pre><code>echo &quot;deb http://repo.mongodb.org/apt/ubuntu precise/mongodb-org/3.2 multiverse&quot; | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+</code></pre>
+<p>Ubuntu 14.04</p>
+<pre><code>echo &quot;deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse&quot; | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+</code></pre>
+<p>Ubuntu 16.04</p>
+<pre><code>echo &quot;deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse&quot; | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+</code></pre>
+<h3 id="3、Reload-local-package-database"><a href="#3、Reload-local-package-database" class="headerlink" title="3、Reload local package database"></a>3、Reload local package database</h3><pre><code>sudo apt-get update
+</code></pre>
+<h3 id="4、Install-the-MongoDB-packages"><a href="#4、Install-the-MongoDB-packages" class="headerlink" title="4、Install the MongoDB packages"></a>4、Install the MongoDB packages</h3><blockquote>
+<p>Install the latest stable version of MongoDB</p>
+</blockquote>
+<pre><code>sudo apt-get install -y mongodb-org
+</code></pre>
+<blockquote>
+<p>Install a specific release of MongoDB</p>
+</blockquote>
+<pre><code>sudo apt-get install -y mongodb-org=3.2.11 mongodb-org-server=3.2.11 mongodb-org-shell=3.2.11 mongodb-org-mongos=3.2.11 mongodb-org-tools=3.2.11
+</code></pre>
+<p> Pin a specific version of MongoDB</p>
+<pre><code>echo &quot;mongodb-org hold&quot; | sudo dpkg --set-selections
+echo &quot;mongodb-org-server hold&quot; | sudo dpkg --set-selections
+echo &quot;mongodb-org-shell hold&quot; | sudo dpkg --set-selections
+echo &quot;mongodb-org-mongos hold&quot; | sudo dpkg --set-selections
+echo &quot;mongodb-org-tools hold&quot; | sudo dpkg --set-selections
+</code></pre>
+<h3 id="5、-Ubuntu-16-04-only-Create-systemd-service-file"><a href="#5、-Ubuntu-16-04-only-Create-systemd-service-file" class="headerlink" title="5、(Ubuntu 16.04-only) Create systemd service file"></a>5、(Ubuntu 16.04-only) Create systemd service file</h3><p>Create a new file at &#x2F;lib&#x2F;systemd&#x2F;system&#x2F;mongod.service with the following contents:</p>
+<pre><code>[Unit]
+Description=High-performance, schema-free document-oriented database
+After=network.target
+Documentation=https://docs.mongodb.org/manual
+
+[Service]
+User=mongodb
+Group=mongodb
+ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<h2 id="Run-MongoDB-Community-Edition"><a href="#Run-MongoDB-Community-Edition" class="headerlink" title="Run MongoDB Community Edition"></a>Run MongoDB Community Edition</h2><h3 id="1、Start-MongoDB"><a href="#1、Start-MongoDB" class="headerlink" title="1、Start MongoDB"></a>1、Start MongoDB</h3><pre><code>sudo service mongod start
+</code></pre>
+<h3 id="2、Verify-that-MongoDB-has-started-successfully"><a href="#2、Verify-that-MongoDB-has-started-successfully" class="headerlink" title="2、Verify that MongoDB has started successfully"></a>2、Verify that MongoDB has started successfully</h3><p>Verify that the mongod process has started successfully by checking the contents of the log file at &#x2F;var&#x2F;log&#x2F;mongodb&#x2F;mongod.log for a line reading</p>
+<pre><code>[initandlisten] waiting for connections on port &lt;port&gt;
+</code></pre>
+<p>where <port> is the port configured in &#x2F;etc&#x2F;mongod.conf, 27017 by default.</p>
+<h3 id="3、Stop-MongoDB"><a href="#3、Stop-MongoDB" class="headerlink" title="3、Stop MongoDB"></a>3、Stop MongoDB</h3><pre><code>sudo service mongod stop
+</code></pre>
+<h3 id="4、Restart-MongoDB"><a href="#4、Restart-MongoDB" class="headerlink" title="4、Restart MongoDB"></a>4、Restart MongoDB</h3><pre><code>sudo service mongod restart
+</code></pre>
+<h2 id="Uninstall-MongoDB-Community-Edition"><a href="#Uninstall-MongoDB-Community-Edition" class="headerlink" title="Uninstall MongoDB Community Edition"></a>Uninstall MongoDB Community Edition</h2><h3 id="1、Stop-MongoDB"><a href="#1、Stop-MongoDB" class="headerlink" title="1、Stop MongoDB"></a>1、Stop MongoDB</h3><pre><code>sudo service mongod stop
+</code></pre>
+<h3 id="2、Remove-Packages"><a href="#2、Remove-Packages" class="headerlink" title="2、Remove Packages"></a>2、Remove Packages</h3><pre><code>sudo apt-get purge mongodb-org*
+</code></pre>
+<h3 id="3、Remove-Data-Directories"><a href="#3、Remove-Data-Directories" class="headerlink" title="3、Remove Data Directories"></a>3、Remove Data Directories</h3><pre><code>sudo rm -r /var/log/mongodb
+sudo rm -r /var/lib/mongodb
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/01/19/mongodb%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85/" data-id="cllui4qz3002zq0ja7eoh8d98" data-title="ubuntu上安装mongodb" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-linux使用小贴士" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/01/13/linux%E4%BD%BF%E7%94%A8%E5%B0%8F%E8%B4%B4%E5%A3%AB/" class="article-date">
+  <time class="dt-published" datetime="2017-01-12T16:00:00.000Z" itemprop="datePublished">2017-01-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/01/13/linux%E4%BD%BF%E7%94%A8%E5%B0%8F%E8%B4%B4%E5%A3%AB/">linux使用小贴士</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="ubuntu配置jdk环境变量"><a href="#ubuntu配置jdk环境变量" class="headerlink" title="ubuntu配置jdk环境变量"></a>ubuntu配置jdk环境变量</h2><h3 id="编辑bashrc文件"><a href="#编辑bashrc文件" class="headerlink" title="编辑bashrc文件"></a>编辑bashrc文件</h3><pre><code>vim .bashrc 或者 vim /etc/bash.bashrc
+</code></pre>
+<h3 id="新增JAVA-HOME和PATH两个变量"><a href="#新增JAVA-HOME和PATH两个变量" class="headerlink" title="新增JAVA_HOME和PATH两个变量"></a>新增JAVA_HOME和PATH两个变量</h3><p>JAVA_HOME为jdk安装路径，例如jdk安装在：&#x2F;usr&#x2F;java&#x2F;jdk1.8.0_102，则添加的变量为</p>
+<pre><code>export JAVA_HOME=/usr/java/jdk1.8.0_102
+export PATH=$PATH:$JAVA_HOME/bin
+</code></pre>
+<h3 id="使bashrc生效"><a href="#使bashrc生效" class="headerlink" title="使bashrc生效"></a>使bashrc生效</h3><pre><code>source .bashrc
+</code></pre>
+<h3 id="检查环境变量是否配置正确"><a href="#检查环境变量是否配置正确" class="headerlink" title="检查环境变量是否配置正确"></a>检查环境变量是否配置正确</h3><pre><code>java -version
+</code></pre>
+<h2 id="ubuntu-安装JDK-使用ppa-源方式安装"><a href="#ubuntu-安装JDK-使用ppa-源方式安装" class="headerlink" title="ubuntu 安装JDK 使用ppa&#x2F;源方式安装"></a>ubuntu 安装JDK 使用ppa&#x2F;源方式安装</h2><h3 id="添加ppa"><a href="#添加ppa" class="headerlink" title="添加ppa"></a>添加ppa</h3><pre><code>sudo add-apt-repository ppa:webupd8team/java
+
+sudo apt-get update
+</code></pre>
+<h3 id="安装oracle-java-installer"><a href="#安装oracle-java-installer" class="headerlink" title="安装oracle-java-installer"></a>安装oracle-java-installer</h3><pre><code>sudo apt-get install oracle-java8-installer
+</code></pre>
+<h3 id="设置系统默认jdk"><a href="#设置系统默认jdk" class="headerlink" title="设置系统默认jdk"></a>设置系统默认jdk</h3><pre><code>sudo update-java-alternatives -s java-8-oracle
+</code></pre>
+<h3 id="如果安装了多种jdk切换-切换到jdk8"><a href="#如果安装了多种jdk切换-切换到jdk8" class="headerlink" title="如果安装了多种jdk切换-切换到jdk8"></a>如果安装了多种jdk切换-切换到jdk8</h3><pre><code>sudo update-java-alternatives -s java-8-oracle
+</code></pre>
+<h3 id="测试安装是否成功"><a href="#测试安装是否成功" class="headerlink" title="测试安装是否成功"></a>测试安装是否成功</h3><pre><code>java -version
+javac -version
+</code></pre>
+<h2 id="从windows转到（scp）linux上后，bash文件编码错误解决方案"><a href="#从windows转到（scp）linux上后，bash文件编码错误解决方案" class="headerlink" title="从windows转到（scp）linux上后，bash文件编码错误解决方案"></a>从windows转到（scp）linux上后，bash文件编码错误解决方案</h2><h3 id="1、安装dos2unix"><a href="#1、安装dos2unix" class="headerlink" title="1、安装dos2unix"></a>1、安装dos2unix</h3><pre><code>sudo apt-get install dos2unix
+</code></pre>
+<h3 id="2、对bash文件重新编码"><a href="#2、对bash文件重新编码" class="headerlink" title="2、对bash文件重新编码"></a>2、对bash文件重新编码</h3><p>例如，对start.sh进行重新编码</p>
+<pre><code>dos2unix start.sh
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/01/13/linux%E4%BD%BF%E7%94%A8%E5%B0%8F%E8%B4%B4%E5%A3%AB/" data-id="cllui4qz2002qq0ja86my4hwg" data-title="linux使用小贴士" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-protobuf语法指南" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/01/04/protobuf%E8%AF%AD%E6%B3%95%E6%8C%87%E5%8D%97/" class="article-date">
+  <time class="dt-published" datetime="2017-01-03T16:00:00.000Z" itemprop="datePublished">2017-01-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2017/01/04/protobuf%E8%AF%AD%E6%B3%95%E6%8C%87%E5%8D%97/">protobuf 语法指南</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="定义一个PB-message"><a href="#定义一个PB-message" class="headerlink" title="定义一个PB message"></a>定义一个PB message</h3><pre><code> message SearchRequest &#123;
+    required string userName = 1；
+    optional int32 age = 2；
+    optional String sex = 3；
+ &#125;
+</code></pre>
+<p>该message定义生命三个字段</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/01/04/protobuf%E8%AF%AD%E6%B3%95%E6%8C%87%E5%8D%97/" data-id="cllui4qz4003bq0jacn3z5uxz" data-title="protobuf 语法指南" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-redis连接池java初始化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/12/28/redis%E8%BF%9E%E6%8E%A5%E6%B1%A0java%E5%88%9D%E5%A7%8B%E5%8C%96/" class="article-date">
+  <time class="dt-published" datetime="2016-12-27T16:00:00.000Z" itemprop="datePublished">2016-12-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/12/28/redis%E8%BF%9E%E6%8E%A5%E6%B1%A0java%E5%88%9D%E5%A7%8B%E5%8C%96/">Redis 集群连接池的java初始化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="集群配置方式"><a href="#集群配置方式" class="headerlink" title="集群配置方式"></a>集群配置方式</h2><h3 id="java-代码"><a href="#java-代码" class="headerlink" title="java 代码"></a>java 代码</h3><pre><code>@Bean
+public JedisCluster getRedisCluster() &#123;
+    String nodes = environment.getProperty(&quot;redis.cluster.nodes&quot;);
+    int maxTotal = environment.getProperty(&quot;redis.config.maxTotal&quot;, Integer.class);
+    int maxIdle = environment.getProperty(&quot;redis.config.maxIdle&quot;, Integer.class);
+    int maxRedirections = environment.getProperty(&quot;redis.config.maxRedirections&quot;, Integer.class);
+    int timeout = environment.getProperty(&quot;redis.config.timeout&quot;, Integer.class);
+    boolean testOnBorrow = environment.getProperty(&quot;redis.config.testOnBorrow&quot;, Boolean.class);
+    Set&lt;HostAndPort&gt; clusterNodes = new HashSet&lt;HostAndPort&gt;();
+    if (nodes != null &amp;&amp; !nodes.trim().equals(&quot;&quot;)) &#123;
+      String[] nodesArray = nodes.split(&quot;,&quot;);
+      for (String node : nodesArray) &#123;
+        try &#123;
+          String[] host = node.split(&quot;:&quot;);
+          String ip = host[0];
+          int port = Integer.valueOf(host[1]);
+          clusterNodes.add(new HostAndPort(ip, port));
+        &#125; catch (Exception ex) &#123;
+          continue;
+        &#125;
+      &#125;
+    &#125;
+    JedisPoolConfig config = new JedisPoolConfig();
+    config.setMaxTotal(maxTotal);
+    config.setMaxIdle(maxIdle);
+    config.setTestOnBorrow(testOnBorrow);
+    config.setMaxWaitMillis(10000);
+    return new JedisCluster(clusterNodes, timeout, maxRedirections, config);
+  &#125;
+</code></pre>
+<h3 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h3><pre><code>redis.cluster.nodes=127.0.0.1:7000,127.0.0.1:7001,127.0.0.1:7002
+redis.config.maxTotal=1000
+redis.config.maxIdle=500
+redis.config.maxRedirections=1000
+redis.config.timeout=2000
+redis.config.testOnBorrow=true
+</code></pre>
+<h2 id="单机配置方式"><a href="#单机配置方式" class="headerlink" title="单机配置方式"></a>单机配置方式</h2><h3 id="java-代码-1"><a href="#java-代码-1" class="headerlink" title="java 代码"></a>java 代码</h3><pre><code>  @Bean
+  public ShardedJedisPool getShardedJedisPool() &#123;
+    JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+    jedisPoolConfig.setMaxTotal(env.getProperty(&quot;redis.config.maxTotal&quot;, Integer.class));
+    jedisPoolConfig.setMaxIdle(env.getProperty(&quot;redis.config.maxIdle&quot;, Integer.class));
+    jedisPoolConfig.setMaxWaitMillis(env.getProperty(&quot;redis.config.maxWaitMillis&quot;, Long.class));
+    jedisPoolConfig.setTestOnBorrow(env.getProperty(&quot;redis.config.testOnBorrow&quot;, Boolean.class));
+    List&lt;JedisShardInfo&gt; jedisShardInfoList = new ArrayList&lt;JedisShardInfo&gt;();
+    jedisShardInfoList.add(new JedisShardInfo(env.getProperty(&quot;redis.ip&quot;),env.getProperty(&quot;redis.port&quot;, Integer.class)));
+    return new ShardedJedisPool(jedisPoolConfig, jedisShardInfoList);
+  &#125;
+</code></pre>
+<h3 id="配置信息-1"><a href="#配置信息-1" class="headerlink" title="配置信息"></a>配置信息</h3><pre><code>redis.config.maxTotal=1000
+redis.config.maxIdle=500
+redis.config.maxWaitMillis=10000
+redis.config.testOnBorrow=true
+redis.ip=123.57.3.116
+redis.port=6379
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/12/28/redis%E8%BF%9E%E6%8E%A5%E6%B1%A0java%E5%88%9D%E5%A7%8B%E5%8C%96/" data-id="cllui4qz6003rq0ja8lh83dy4" data-title="Redis 集群连接池的java初始化" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Cassandra集群搭建" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/12/27/Cassandra%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/" class="article-date">
+  <time class="dt-published" datetime="2016-12-26T16:00:00.000Z" itemprop="datePublished">2016-12-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/12/27/Cassandra%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/">cassandra 集群的简单搭建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="安装cassndra"><a href="#安装cassndra" class="headerlink" title="安装cassndra"></a>安装cassndra</h3><ul>
+<li><p>将apache-cassandra-3.9.tar.gz安装包拷贝到我们的指定目录下</p>
+</li>
+<li><p>使用命令tar -zxvf apache-cassandra-3.9.tar.gz将tar包解压缩，得到apache-cassandra-3.9目录</p>
+</li>
+</ul>
+<h3 id="简单配置cassandra"><a href="#简单配置cassandra" class="headerlink" title="简单配置cassandra"></a>简单配置cassandra</h3><p>进入apache-cassandra-3.9&#x2F;conf目录，找到cassandra.yaml</p>
+<ul>
+<li><p>修改：data_file_directories 数据存放路径</p>
+</li>
+<li><p>修改：listen_address 本机监听IP</p>
+</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">seed_provider:</span><br><span class="line"># Addresses of hosts that are deemed contact points.</span><br><span class="line"># Cassandra nodes use this list of hosts to find each other and learn</span><br><span class="line"># the topology of the ring.  You must change this if you are running</span><br><span class="line"># multiple nodes!</span><br><span class="line">- class_name: org.apache.cassandra.locator.SimpleSeedProvider</span><br><span class="line">  parameters:</span><br><span class="line">    # seeds is actually a comma-delimited list of addresses.</span><br><span class="line">    # Ex: <span class="string">&quot;&lt;ip1&gt;,&lt;ip2&gt;,&lt;ip3&gt;&quot;</span></span><br><span class="line">    - seeds: <span class="string">&quot;127.0.0.1,127.0.0.2&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>修改：rpc_address 本机IP（同listen_address即可）</p>
+</li>
+<li><p>修改：seed_provider下的parameters的seeds，如下所示：</p>
+</li>
+</ul>
+<h3 id="启动cassandra"><a href="#启动cassandra" class="headerlink" title="启动cassandra"></a>启动cassandra</h3><ul>
+<li>进入bin目录，执行	<code>./cassandra</code></li>
+</ul>
+<h3 id="命令行登录cansandra"><a href="#命令行登录cansandra" class="headerlink" title="命令行登录cansandra"></a>命令行登录cansandra</h3><ul>
+<li><p>配置CQLSH_HOST。修改 <code>/etc/profile</code>，添加：<code>export CQLSH_HOST=127.0.0.1</code></p>
+</li>
+<li><p>执行<code>source /etc/profile</code></p>
+</li>
+<li><p>进入bin目录，执行	<code>./cqlsh</code></p>
+</li>
+</ul>
+<h3 id="查看集群状态"><a href="#查看集群状态" class="headerlink" title="查看集群状态"></a>查看集群状态</h3><ul>
+<li>进入bin目录，执行	<code>./nodetool status</code></li>
+</ul>
+<h3 id="强制移除节点"><a href="#强制移除节点" class="headerlink" title="强制移除节点"></a>强制移除节点</h3><ul>
+<li>执行 <code>./nodetool removenode force</code></li>
+</ul>
+<h3 id="更多详细信息，请参考cassandra官网：http-cassandra-apache-org"><a href="#更多详细信息，请参考cassandra官网：http-cassandra-apache-org" class="headerlink" title="更多详细信息，请参考cassandra官网：http://cassandra.apache.org/"></a>更多详细信息，请参考cassandra官网：<a target="_blank" rel="noopener" href="http://cassandra.apache.org/">http://cassandra.apache.org/</a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/12/27/Cassandra%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/" data-id="cllui4qyn0005q0jadsh2cnzj" data-title="cassandra 集群的简单搭建" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-阿里云服务器Ubuntu挂载数据盘" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/12/27/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8Ubuntu%E6%8C%82%E8%BD%BD%E6%95%B0%E6%8D%AE%E7%9B%98/" class="article-date">
+  <time class="dt-published" datetime="2016-12-26T16:00:00.000Z" itemprop="datePublished">2016-12-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/12/27/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8Ubuntu%E6%8C%82%E8%BD%BD%E6%95%B0%E6%8D%AE%E7%9B%98/">阿里云服务器Ubuntu挂载数据盘</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="操作案例说明"><a href="#操作案例说明" class="headerlink" title="操作案例说明"></a>操作案例说明</h3><p>将新增的盘符挂载到alidata目录下。以下是步骤。</p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>在系统盘的根目录新建alidata目录，或者您自己命名，但是要记得修改教程中的相关关键字（alidata换成您自己的目录）。</p>
+<p>该教程适用系统：Linux（Redhat , CentOS，Debian，Ubuntu）</p>
+<h3 id="查看数据盘"><a href="#查看数据盘" class="headerlink" title="查看数据盘"></a>查看数据盘</h3><p>在没有分区和格式化数据盘之前，使用 “df –h”命令，是无法看到数据盘的，可以使用“fdisk -l”命令查看。</p>
+<p><img src="http://115.28.87.95/articleDirectory/B3CDF515D8A155A9F9D4C13F90A440A7.jpg"></p>
+<p>友情提示：若您执行fdisk -l命令，发现没有 &#x2F;dev&#x2F;xvdb 标明您的云服务无数据盘，那么您无需进行挂载。</p>
+<h3 id="对数据盘进行分区"><a href="#对数据盘进行分区" class="headerlink" title="对数据盘进行分区"></a>对数据盘进行分区</h3><p>执行“fdisk -S 56 &#x2F;dev&#x2F;xvdb”命令，对数据盘进行分区；<br>根据提示，依次输入“n”，“p”“1”，两次回车，“wq”，分区就开始了，很快就会完成。</p>
+<p><img src="http://115.28.87.95/articleDirectory/EA99C6AD244AC4B7FFC1C863B42E24FD.jpg"></p>
+<h3 id="查看新的分区"><a href="#查看新的分区" class="headerlink" title="查看新的分区"></a>查看新的分区</h3><p>使用“fdisk -l”命令可以看到，新的分区xvdb1已经建立完成了。</p>
+<p><img src="http://115.28.87.95/articleDirectory/323DABBE0996FB6E5F96D0FB02F49929.jpg"></p>
+<h3 id="格式化新分区"><a href="#格式化新分区" class="headerlink" title="格式化新分区"></a>格式化新分区</h3><p>使用“mkfs.ext4 &#x2F;dev&#x2F;xvdb1”命令对新分区进行格式化，格式化的时间根据硬盘大小有所不同。(也可自主决定选用 ext3 格式)，建议使用ext4</p>
+<p><img src="http://115.28.87.95/articleDirectory/723421E3623C9A30043A96E864852331.jpg"></p>
+<h3 id="添加分区信息（开机自动挂载-dev-xvdb1-到-alidata）"><a href="#添加分区信息（开机自动挂载-dev-xvdb1-到-alidata）" class="headerlink" title="添加分区信息（开机自动挂载&#x2F;dev&#x2F;xvdb1 到 &#x2F;alidata）"></a>添加分区信息（开机自动挂载&#x2F;dev&#x2F;xvdb1 到 &#x2F;alidata）</h3><p>使用“echo ‘&#x2F;dev&#x2F;xvdb1   &#x2F;alidata ext4    defaults    0  0’ &gt;&gt; &#x2F;etc&#x2F;fstab”（不含引号）命令写入新分区信息。<br>然后使用“cat &#x2F;etc&#x2F;fstab”命令查看，出现以下信息就表示写入成功。</p>
+<blockquote>
+<p>注：ubuntu12.04不支持barrier，所以正确写法是：echo ‘&#x2F;dev&#x2F;xvdb1   &#x2F;alidata ext4    barrier&#x3D;0  0  0’ &gt;&#x2F;etc&#x2F;fstab</p>
+</blockquote>
+<ul>
+<li>如果需要把数据盘单独挂载到某个文件夹，比如单独用来存放网页，可以修改以上命令中的&#x2F;alidata 部分</li>
+</ul>
+<p><img src="http://115.28.87.95/articleDirectory/9AF7B5862AC203472780CA2A4369E752.jpg"></p>
+<h3 id="挂载新分区"><a href="#挂载新分区" class="headerlink" title="挂载新分区"></a>挂载新分区</h3><p>使用“mount -a”命令挂载新分区，然后用“df -h”命令查看，出现以下信息就说明挂载成功，可以开始使用新的分区了。</p>
+<p><img src="http://115.28.87.95/articleDirectory/7B3C75945C68191738B74CDBB1D3CFE2.jpg"></p>
+<p>以上即在阿里云服务器的Ubuntu 12.04 64位下挂载数据盘的操作过程，需要注意的是，首先得在根目录下创建alidata目录，然后再按顺序操作。</p>
+<hr>
+<p>原文参考 <a target="_blank" rel="noopener" href="http://www.codingyun.com/article/24.html">http://www.codingyun.com/article/24.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/12/27/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8Ubuntu%E6%8C%82%E8%BD%BD%E6%95%B0%E6%8D%AE%E7%9B%98/" data-id="cllui4qz9004gq0jag9tu6utn" data-title="阿里云服务器Ubuntu挂载数据盘" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-gRPC快速上手指南" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/12/22/gRPC%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" class="article-date">
+  <time class="dt-published" datetime="2016-12-21T16:00:00.000Z" itemprop="datePublished">2016-12-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/12/22/gRPC%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">gRPC JAVA快速入门指南</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="gRPC-是什么"><a href="#gRPC-是什么" class="headerlink" title="gRPC 是什么"></a>gRPC 是什么</h2><p>gRPC 一开始由 google 开发，是一款语言中立、平台中立、开源的远程过程调用(RPC)系统。</p>
+<p>在 gRPC 里客户端应用可以像调用本地对象一样直接调用另一台不同的机器上服务端应用的方法，使得您能够更容易地创建分布式应用和服务。与许多 RPC 系统类似，gRPC 也是基于以下理念：定义一个服务，指定其能够被远程调用的方法（包含参数和返回类型）。在服务端实现这个接口，并运行一个 gRPC 服务器来处理客户端调用。在客户端拥有一个存根能够像服务端一样的方法。</p>
+<p><img src="http://i.imgur.com/HtDUi2g.png"></p>
+<p>gRPC 客户端和服务端可以在多种环境中运行和交互 - 从 google 内部的服务器到你自己的笔记本，并且可以用任何 gRPC 支持的语言来编写。所以，你可以很容易地用 Java 创建一个 gRPC 服务端，用 Go、Python、Ruby 来创建客户端。</p>
+<h3 id="使用-protocol-buffers"><a href="#使用-protocol-buffers" class="headerlink" title="使用 protocol buffers"></a>使用 protocol buffers</h3><p>gRPC 默认使用 protocol buffers，这是 Google 开源的一套成熟的结构数据序列化机制（当然也可以使用其他数据格式如 JSON）。正如你将在下方例子里所看到的，你用 proto files 创建 gRPC 服务，用 protocol buffers 消息类型来定义方法参数和返回类型。</p>
+<h3 id="你好-gRPC"><a href="#你好-gRPC" class="headerlink" title="你好 gRPC!"></a>你好 gRPC!</h3><p>了解其工作机制最简单的方法是看一个简单的例子。 Hello World 将带领你创建一个简单的客户端——服务端应用，向你展示：</p>
+<ul>
+<li><p>通过一个 protocol buffers 模式，定义一个简单的带有 Hello World 方法的 RPC 服务。</p>
+</li>
+<li><p>用你最喜欢的语言(如果可用的话)来创建一个实现了这个接口的服务端。</p>
+</li>
+<li><p>用你最喜欢的(或者其他你愿意的)语言来访问你的服务端。</p>
+</li>
+</ul>
+<h3 id="安装-gRPC"><a href="#安装-gRPC" class="headerlink" title="安装 gRPC"></a>安装 gRPC</h3><p>针对你选择的语言构建和安装 gRPC 插件和相关工具，可以参照快速开始。 Java gRPC 除了 JDK 外不需要其他工具。</p>
+<h3 id="获得源码（这里只针对java语言）"><a href="#获得源码（这里只针对java语言）" class="headerlink" title="获得源码（这里只针对java语言）"></a>获得源码（这里只针对java语言）</h3><p>Java 例子代码在 GitHub 源码库里。你可以运行如下命令克隆源码到本地：</p>
+<pre><code>git clone https：//github.com/grpc/grpc-java.git
+</code></pre>
+<p>切换当前目录到</p>
+<pre><code>grpc-java/examples
+
+cd grpc-java/examples
+</code></pre>
+<h3 id="定义服务"><a href="#定义服务" class="headerlink" title="定义服务"></a>定义服务</h3><p>创建我们例子的第一步是定义一个服务：一个 RPC 服务通过参数和返回类型来指定可以远程调用的方法。就像你在 概览 里所看到的， gRPC 通过 protocol buffers 来实现。<br>我们使用 protocol buffers 接口定义语言来定义服务方法，用 protocol buffer 来定义参数和返回类型。客户端和服务端均使用服务定义生成的接口代码。<br>这里有我们服务定义的例子，在 helloworld.proto 里用 protocol buffers IDL 定义的。Greeter 服务有一个方法 SayHello ，可以让服务端从远程客户端接收一个包含用户名的 HelloRequest 消息后，在一个 HelloReply 里发送回一个 Greeter。这是你可以在 gRPC 里指定的最简单的 RPC - 你可以在教程里找到针对你选择的语言更多类型的例子。</p>
+<pre><code>syntax = &quot;proto3&quot;;
+
+option java_package = &quot;io.grpc.examples&quot;;
+
+package helloworld;
+
+// The greeter service definition.
+service Greeter &#123;
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) &#123;&#125;
+&#125;
+
+// The request message containing the user&#39;s name.
+message HelloRequest &#123;
+  string name = 1;
+&#125;
+
+// The response message containing the greetings
+message HelloReply &#123;
+  string message = 1;
+&#125;
+</code></pre>
+<h3 id="生成-gRPC-代码"><a href="#生成-gRPC-代码" class="headerlink" title="生成 gRPC 代码"></a>生成 gRPC 代码</h3><p>一旦定义好服务，我们可以使用 protocol buffer 编译器 protoc 来生成创建应用所需的特定客户端和服务端的代码 - 你可以生成任意 gRPC 支持的语言的代码，当然 PHP 和 Objective-C 仅支持创建客户端代码。生成的代码同时包括客户端的存根和服务端要实现的抽象接口，均包含 Greeter 所定义的方法。</p>
+<p>Java 例子的构建系统也是 Java gRPC 本身构建的一部分 —— 为了简单起见，我们推荐使用我们事先生成的例子代码。你可以参考 README 来看一下如何从你自己的 .proto 文件生成代码。<br>  这个例子事先生成的代码在 src&#x2F;generated&#x2F;main下。<br>以下类包含所有我们需要创建这个例子所有的代码：</p>
+<ul>
+<li><p>HelloRequest.java， HelloResponse.java和其他文件包含所有 protocol buffer 用来填充、序列化和提取 HelloRequest 和 HelloReply 消息类型的代码。</p>
+</li>
+<li><p>GreeterGrpc.java， 包含 (还有其他有用的代码)：<br>Greeter 服务端需要实现的接口</p>
+<pre><code>  public static interface Greeter &#123;
+      public void sayHello(Helloworld.HelloRequest request, StreamObserver&amp;lt;Helloworld.HelloReply&gt; responseObserver);
+   &#125;
+</code></pre>
+</li>
+<li><p>客户端用来与 Greeter 服务端进行对话的 存根 类。就像你所看到的，异步存根也实现了 Greeter 接口。</p>
+<pre><code>  public static class GreeterStub extends AbstractStub&amp;lt;GreeterStub&gt;
+      implements Greeter &#123;
+        ...
+  &#125;
+</code></pre>
+</li>
+</ul>
+<h3 id="写一个服务器"><a href="#写一个服务器" class="headerlink" title="写一个服务器"></a>写一个服务器</h3><p>现在让我们写点代码！首先我们将创建一个服务应用来实现服务(你会记起来，我们可以是使用除了Objective-C and PHP 外的其他所有语言来实现)。在本节，我们不打算对如何创建一个服务端进行更深入地探讨 —— 更详细的信息可以在你选择语言对应的教程里找到。</p>
+<h3 id="服务实现"><a href="#服务实现" class="headerlink" title="服务实现"></a>服务实现</h3><p>Java  GreeterImpl.java 准确地实现了 Greeter 服务所需要的行为。<br>  正如你所见，GreeterImpl 类通过实现 sayHello 方法，实现了从 IDL 生成的GreeterGrpc.Greeter 接口 。</p>
+<pre><code>@Override
+public void sayHello(HelloRequest req, StreamObserver&lt;HelloReply&gt; responseObserver) &#123;
+    HelloReply reply = HelloReply.newBuilder().setMessage(&quot;Hello &quot; + req.getName()).build();
+    responseObserver.onNext(reply);
+    responseObserver.onCompleted();
+&#125;
+</code></pre>
+<p>sayHello 有两个参数：</p>
+<ul>
+<li><p>HelloRequest，请求。</p>
+</li>
+<li><p>StreamObserver<HelloReply>： 应答观察者，一个特殊的接口，服务器用应答来调用它。</p>
+</li>
+</ul>
+<p>为了返回给客户端应答并且完成调用：</p>
+<ol>
+<li><p>用我们的激动人心的消息构建并填充一个在我们接口定义的 HelloReply 应答对象。</p>
+</li>
+<li><p>将 HelloReply 返回给客户端，然后表明我们已经完成了对 RPC 的处理。</p>
+</li>
+</ol>
+<h3 id="服务端实现"><a href="#服务端实现" class="headerlink" title="服务端实现"></a>服务端实现</h3><p>需要提供一个 gRPC 服务的另一个主要功能是让这个服务实在在网络上可用。</p>
+<p>Java HelloWorldServer.java 提供了以下代码作为 Java 的例子。</p>
+<pre><code>    /* The port on which the server should run */
+private int port = 50051;
+private Server server;
+private void start() throws Exception &#123;
+server = ServerBuilder.forPort(port)
+    .addService(GreeterGrpc.bindService(new GreeterImpl()))
+    .build()
+    .start();
+logger.info(&quot;Server started, listening on &quot; + port);
+Runtime.getRuntime().addShutdownHook(new Thread() &#123;
+  @Override
+  public void run() &#123;
+    // Use stderr here since the logger may has been reset by its JVM shutdown hook.
+    System.err.println(&quot;*** shutting down gRPC server since JVM is shutting down&quot;);
+    HelloWorldServer.this.stop();
+    System.err.println(&quot;*** server shut down&quot;);
+  &#125;
+&#125;);
+&#125;
+</code></pre>
+<p>在这里我们创建了合理的 gRPC 服务器，将我们实现的 Greeter 服务绑定到一个端口。然后我们启动服务器：服务器现在已准备好从 Greeter 服务客户端接收请求。我们将在具体语言对应的文档里更深入地了解这所有的工作是怎样进行的。</p>
+<h3 id="写一个客户端"><a href="#写一个客户端" class="headerlink" title="写一个客户端"></a>写一个客户端</h3><p>客户端的 gRPC 非常简单。在这一步，我们将用生成的代码写一个简单的客户程序来访问我们在上一节里创建的 Greeter 服务器。<br>同样，我们也不打算对如何实现一个客户端程序深入更多，我们把这些内容放到教程里。</p>
+<h3 id="连接服务"><a href="#连接服务" class="headerlink" title="连接服务"></a>连接服务</h3><p>首先我们看一下我们如何连接 Greeter 服务器。我们需要创建一个 gRPC 频道，指定我们要连接的主机名和服务器端口。然后我们用这个频道创建存根实例。</p>
+<p>Java</p>
+<pre><code>private final ManagedChannel channel;
+private final GreeterGrpc.GreeterBlockingStub blockingStub;
+
+public HelloWorldClient(String host, int port) &#123;
+    channel = ManagedChannelBuilder.forAddress(host, port)
+      .usePlaintext(true)
+      .build();
+    blockingStub = GreeterGrpc.newBlockingStub(channel);
+&#125;
+</code></pre>
+<p> 在这个例子里，我们创建了一个阻塞的存根。这意味着 RPC 调用要等待服务器应答，将会返回一个应答或抛出一个异常。 gRPC Java 还可以有其他种类的存根，可以向服务器发出非阻塞的调用，这种情况下应答是异步返回的。</p>
+<h3 id="调用-RPC"><a href="#调用-RPC" class="headerlink" title="调用 RPC"></a>调用 RPC</h3><p>现在我们可以联系服务并获得一个 greeting ：</p>
+<ol>
+<li><p>我们创建并填充一个 HelloRequest 发送给服务。</p>
+</li>
+<li><p>我们用请求调用存根的 SayHello()，如果 RPC 成功，会得到一个填充的 HelloReply ，从其中我们可以获得 greeting。</p>
+</li>
+</ol>
+<p>Java </p>
+<pre><code>HelloRequest req = HelloRequest.newBuilder().setName(name).build();
+HelloReply reply = blockingStub.sayHello(req);
+</code></pre>
+<h3 id="试一下"><a href="#试一下" class="headerlink" title="试一下!"></a>试一下!</h3><p>你可以尝试用同一个语言在客户端和服务端构建并运行例子。或者你可以尝试 gRPC 最有用的一个功能 - 不同的语言间的互操作性，即在不同的语言运行客户端和服务端。每个服务端和客户端使用从同一过 proto 文件生成的接口代码，则意味着任何 Greeter 客户端可以与任何 Greeter 服务端对话。</p>
+<p>Java</p>
+<p>首先运行服务端：<br>你可以从 examples 目录构建并运行服务端。首先构建客户端和服务端：</p>
+<pre><code> $ ../gradlew -PskipCodegen=true installDist
+</code></pre>
+<p>然后运行服务端，服务端将监听 50051 ：</p>
+<pre><code>$ ./build/install/grpc-examples/bin/hello-world-server
+</code></pre>
+<p>一旦服务器在运行，在其他的终端窗口运行客户端并确认它收到一个消息。</p>
+<p>Java  你可以在 examples 目录下构建并运行客户端。假如你还没有构建客户端，可以使用如下命令：</p>
+<pre><code>  $ ../gradlew -PskipCodegen=true installDist
+</code></pre>
+<p>然后运行客户端：</p>
+<pre><code>$ ./build/install/grpc-examples/bin/hello-world-client
+</code></pre>
+<h3 id="更多详细信息，请参考-http-doc-oschina-net-grpc-t-58008"><a href="#更多详细信息，请参考-http-doc-oschina-net-grpc-t-58008" class="headerlink" title="更多详细信息，请参考 http://doc.oschina.net/grpc?t=58008"></a>更多详细信息，请参考 <a target="_blank" rel="noopener" href="http://doc.oschina.net/grpc?t=58008">http://doc.oschina.net/grpc?t=58008</a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/12/22/gRPC%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" data-id="cllui4qyu0011q0jadr1bhry7" data-title="gRPC JAVA快速入门指南" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

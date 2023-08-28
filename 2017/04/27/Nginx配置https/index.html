@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Nginx配置Https | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="配置Nginx的https访问。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx配置Https">
+<meta property="og:url" content="http://example.com/2017/04/27/Nginx%E9%85%8D%E7%BD%AEhttps/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="配置Nginx的https访问。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://i.imgur.com/hXp5XSB.png">
+<meta property="og:image" content="http://i.imgur.com/wHdz5fC.png">
+<meta property="og:image" content="http://i.imgur.com/vyqBzD7.png">
+<meta property="article:published_time" content="2017-04-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-28T02:26:12.132Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://i.imgur.com/hXp5XSB.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Nginx配置https" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/04/27/Nginx%E9%85%8D%E7%BD%AEhttps/" class="article-date">
+  <time class="dt-published" datetime="2017-04-26T16:00:00.000Z" itemprop="datePublished">2017-04-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Nginx配置Https
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="1、生成证书"><a href="#1、生成证书" class="headerlink" title="1、生成证书"></a>1、生成证书</h2><p>用java jdk自带的keytool生成keystore密钥文件，<a target="_blank" rel="noopener" href="http://www.micmiu.com/lang/java/keytool-start-guide/">更多信息</a></p>
+<pre><code>keytool -genkey -alias casserver -keyalg RSA -keysize 1024 -keypass lumingclient -validity 365 -keystore d:\sso\casserver.keystore -storepass lumingclient
+</code></pre>
+<p><img src="http://i.imgur.com/hXp5XSB.png"></p>
+<blockquote>
+<p>截图中需要输入的姓名和上面hosts文件中配置的一致（也可以是主机名） ;</p>
+</blockquote>
+<blockquote>
+<p>keypass 和 storepass 两个密码要一致，否则下面tomcat 配置https 访问失败。</p>
+</blockquote>
+<h2 id="2、导出私钥（需要安装openssl）"><a href="#2、导出私钥（需要安装openssl）" class="headerlink" title="2、导出私钥（需要安装openssl）"></a>2、导出私钥（需要安装openssl）</h2><p>包括pem证书和key密钥。</p>
+<h3 id="1、用keytool将keystore文件转换为PKCS12-文件"><a href="#1、用keytool将keystore文件转换为PKCS12-文件" class="headerlink" title="1、用keytool将keystore文件转换为PKCS12 文件"></a>1、用keytool将keystore文件转换为PKCS12 文件</h3><pre><code>keytool -importkeystore -srckeystore d:/sso/casserver.keystore -destkeystore d:/sso/newkeystore.p12 -deststoretype PKCS12
+</code></pre>
+<p><img src="http://i.imgur.com/wHdz5fC.png"></p>
+<p>如果需要查看新的密钥中的列表内容，可以用</p>
+<pre><code>keytool -deststoretype PKCS12 -keystore d:/sso/newkeystore.p12 -list
+</code></pre>
+<p>进行查看。</p>
+<p><img src="http://i.imgur.com/vyqBzD7.png"></p>
+<h3 id="2、用openssl生成pem公钥文件"><a href="#2、用openssl生成pem公钥文件" class="headerlink" title="2、用openssl生成pem公钥文件"></a>2、用openssl生成pem公钥文件</h3><pre><code>openssl pkcs12 -nokeys -in d:/sso/newkeystore.p12 -out certfile.pem
+</code></pre>
+<h3 id="3、用openssl生成key私钥文件"><a href="#3、用openssl生成key私钥文件" class="headerlink" title="3、用openssl生成key私钥文件"></a>3、用openssl生成key私钥文件</h3><pre><code>openssl pkcs12 -nocerts -nodes -in d:/sso/newkeystore.p12 -out keyfile.key
+</code></pre>
+<h3 id="3、配置nginx密钥"><a href="#3、配置nginx密钥" class="headerlink" title="3、配置nginx密钥"></a>3、配置nginx密钥</h3><p>找到nginx主配置文件，然后依次按如下步奏操作：</p>
+<ol>
+<li><p>找到https位置</p>
+</li>
+<li><p>放开https注释– “#”为注释</p>
+</li>
+<li><p>默认https端口为443</p>
+</li>
+<li><p>为nginx配置密钥和私钥（即上述步骤生成的pem和key文件）<br> <code>ssl_certificate       D:/sso/casserver.pem;</code><br> <code>ssl_certificate_key   D:/sso/casserver.key;</code></p>
+</li>
+</ol>
+<h3 id="4、配置访问规则"><a href="#4、配置访问规则" class="headerlink" title="4、配置访问规则"></a>4、配置访问规则</h3><p>配置nginx的访问规则即可。<br>https配置相关内容如下：</p>
+<pre><code>server &#123;
+    listen       443 ssl;
+    server_name  127.0.0.1;
+
+    ssl_certificate       D:/sso/casserver.pem;
+    ssl_certificate_key   D:/sso/casserver.key;
+
+    #ssl_session_cache    shared:SSL:1m;
+    #ssl_session_timeout  5m;
+
+    #ssl_ciphers  HIGH:!aNULL:!MD5;
+    #ssl_prefer_server_ciphers  on;
+
+
+     location / &#123;
+         charset UTF-8;
+         proxy_set_header Host $host;
+         proxy_set_header X-Real-IP $remote_addr;
+         proxy_pass https://127.0.0.1:8443/$uri$is_args$args;
+      &#125;
+&#125;
+</code></pre>
+<h3 id="5、配置日志"><a href="#5、配置日志" class="headerlink" title="5、配置日志"></a>5、配置日志</h3><pre><code>if ($time_iso8601 ~ &quot;^(\d&#123;4&#125;)-(\d&#123;2&#125;)-(\d&#123;2&#125;)&quot;) &#123;
+    set $year $1;
+    set $month $2;
+    set $day $3;
+    &#125;
+   access_log /var/log/nginx/$year-$month-$day-access.log;
+</code></pre>
+<h3 id="6、负载均衡"><a href="#6、负载均衡" class="headerlink" title="6、负载均衡"></a>6、负载均衡</h3><h4 id="简单的http负载均衡"><a href="#简单的http负载均衡" class="headerlink" title="简单的http负载均衡"></a>简单的http负载均衡</h4><pre><code>  upstream  myslb &#123;
+        server    127.0.0.1:8080;
+        server    127.0.0.1:8081;
+    &#125;
+
+    server &#123;
+        listen       8000;
+        server_name  127.0.0.1;
+
+        location / &#123;
+            add_header &#39;Access-Control-Allow-Origin&#39; *;
+            charset UTF-8;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_pass http://myslb/$uri$is_args$args;
+        &#125;
+
+    &#125;
+</code></pre>
+<h3 id="https的负载均衡"><a href="#https的负载均衡" class="headerlink" title="https的负载均衡"></a>https的负载均衡</h3><pre><code> upstream  myhttpsslb &#123;
+        server    127.0.0.1:8443;
+        server    127.0.0.1:8444;
+  &#125;
+
+  server &#123;
+       listen 8883 ssl;
+       server_name 127.0.0.1;
+       ssl_certificate /home/ubuntu/keystore/prod_certfile.pem;
+       ssl_certificate_key /home/ubuntu/keystore/prod_keyfile.key;
+       ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+       root html;
+       index index.html index.htm;
+
+       location /&#123;
+             proxy_set_header Host $host;
+             proxy_set_header X-Real-IP $remote_addr;
+             proxy_pass https://myhttpsslb$uri$is_args$args;
+       &#125;
+
+  &#125;
+</code></pre>
+<h3 id="完整配置"><a href="#完整配置" class="headerlink" title="完整配置"></a>完整配置</h3><pre><code>  upstream  myhttpsslb &#123;
+        server    127.0.0.1:8443;
+        server    127.0.0.1:8444;
+  &#125;
+
+  server &#123;
+       listen 8883 ssl;
+       server_name 127.0.0.1;
+       ssl_certificate /home/ubuntu/keystore/prod_certfile.pem;
+       ssl_certificate_key /home/ubuntu/keystore/prod_keyfile.key;
+       ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+       root html;
+       index index.html index.htm;
+       
+       if ($time_iso8601 ~ &quot;^(\d&#123;4&#125;)-(\d&#123;2&#125;)-(\d&#123;2&#125;)&quot;) &#123;
+         set $year $1;
+         set $month $2;
+         set $day $3;
+      &#125;
+      access_log /var/log/nginx/$year-$month-$day-access.log;
+
+      location /&#123;
+             proxy_set_header Host $host;
+             proxy_set_header X-Real-IP $remote_addr;
+             proxy_pass https://myhttpsslb$uri$is_args$args;
+       &#125;
+
+  &#125;
+</code></pre>
+<h3 id="7、访问黑名单"><a href="#7、访问黑名单" class="headerlink" title="7、访问黑名单"></a>7、访问黑名单</h3><p>在conf.d目录下，创建 blockips.conf文件，并加入黑名单IP，如下所示</p>
+<p>查看<code>cat blockips.conf</code></p>
+<pre><code>deny 210.14.155.215;
+deny 61.4.185.194;
+deny 54.223.167.94;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/04/27/Nginx%E9%85%8D%E7%BD%AEhttps/" data-id="cllui4qyq000bq0ja52e099oc" data-title="Nginx配置Https" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/30/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          关系技能修炼篇&lt;一&gt;
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/27/Tomcat%E9%85%8D%E7%BD%AEhttps/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Tomcat配置Https</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

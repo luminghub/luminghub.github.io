@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-redis" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/12/09/redis/" class="article-date">
+  <time class="dt-published" datetime="2016-12-08T16:00:00.000Z" itemprop="datePublished">2016-12-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/12/09/redis/">Redis 简单使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h3><pre><code>1、将redis-x.x.x.tar.gz安装包拷贝到我们的指定目录下
+
+2、使用命令tar -zxvf redis-x.x.x.tar.gz将tar包解压缩，得到redis-x.x.x目录
+
+3、进入redis-x.x.x目录，执行make命令进行编译(也可以指定相应的编译安装目录如	
+
+cd redis-x.x.x
+make install  
+或者
+make PREFIX=/usr/local/redis install #安装到指定目录中 
+</code></pre>
+<h3 id="简单配置redis"><a href="#简单配置redis" class="headerlink" title="简单配置redis"></a>简单配置redis</h3><pre><code>配置redis.conf文件，将“daemonize”属性设置为“yes”，表示我们会以后台进程形式启动Redis服务
+
+bind 外网 内网（中间用空格分隔）
+</code></pre>
+<h3 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h3><pre><code>redis-server redis.conf
+</code></pre>
+<h3 id="进入redis"><a href="#进入redis" class="headerlink" title="进入redis"></a>进入redis</h3><pre><code> redis-cli  -h 127.0.0.1
+
+ 或者
+
+ redis-cli -c -h 127.0.0.1 -p 7004（集群的时候需要加 -c）
+</code></pre>
+<h3 id="查看连接数"><a href="#查看连接数" class="headerlink" title="查看连接数"></a>查看连接数</h3><pre><code>info clients
+</code></pre>
+<h3 id="查看客户端连接信息"><a href="#查看客户端连接信息" class="headerlink" title="查看客户端连接信息"></a>查看客户端连接信息</h3><pre><code>CLIENT LIST
+</code></pre>
+<h3 id="查看最大连接数"><a href="#查看最大连接数" class="headerlink" title="查看最大连接数"></a>查看最大连接数</h3><pre><code>config get maxclients
+</code></pre>
+<h3 id="查看key的数量"><a href="#查看key的数量" class="headerlink" title="查看key的数量"></a>查看key的数量</h3><pre><code>DBSIZE
+</code></pre>
+<h3 id="清空数据"><a href="#清空数据" class="headerlink" title="清空数据"></a>清空数据</h3><pre><code>flushall 
+</code></pre>
+<h3 id="更多详细信息，请参考redis中文官网：http-redis-cn"><a href="#更多详细信息，请参考redis中文官网：http-redis-cn" class="headerlink" title="更多详细信息，请参考redis中文官网：http://redis.cn/"></a>更多详细信息，请参考redis中文官网：<a target="_blank" rel="noopener" href="http://redis.cn/">http://redis.cn/</a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/12/09/redis/" data-id="cllui4qz5003fq0ja57iz3lh5" data-title="Redis 简单使用" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-git分支标签管理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/12/01/git%E5%88%86%E6%94%AF%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2016-11-30T16:00:00.000Z" itemprop="datePublished">2016-12-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/12/01/git%E5%88%86%E6%94%AF%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/">Git操作分支和tag</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1、查看远程分支-（远程分支会用红色表示出来）"><a href="#1、查看远程分支-（远程分支会用红色表示出来）" class="headerlink" title="1、查看远程分支:（远程分支会用红色表示出来）"></a>1、查看远程分支:（远程分支会用红色表示出来）</h3><pre><code>git branch -a
+</code></pre>
+<h3 id="2、删除远程分支和tag"><a href="#2、删除远程分支和tag" class="headerlink" title="2、删除远程分支和tag"></a>2、删除远程分支和tag</h3><h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>在Git v1.7.0 之后，</p>
+<pre><code>git push origin --delete &lt;branchName&gt;
+
+git push origin --delete tag &lt;tagname&gt;
+</code></pre>
+<p>例如，删除远端dev分支</p>
+<pre><code>git push origin --delete dev
+</code></pre>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>推送一个空分支到远程分支，其实就相当于删除远程分支：</p>
+<pre><code>git tag -d &lt;tagname&gt;	
+git push origin :refs/tags/&lt;tagname&gt;
+</code></pre>
+<p>例如，删除远端dev分支</p>
+<pre><code>git tag -d dev
+git push origin :dev
+</code></pre>
+<h2 id="3、删除不存在对应远程分支的本地分支"><a href="#3、删除不存在对应远程分支的本地分支" class="headerlink" title="3、删除不存在对应远程分支的本地分支"></a>3、删除不存在对应远程分支的本地分支</h2><p>假设这样一种情况：</p>
+<ol>
+<li><p>我创建了本地分支b1并pull到远程分支 origin&#x2F;b1；</p>
+</li>
+<li><p>其他人在本地使用fetch或pull创建了本地的b1分支；</p>
+</li>
+<li><p>我删除了 origin&#x2F;b1 远程分支；</p>
+</li>
+<li><p>其他人再次执行fetch或者pull并不会删除这个他们本地的 b1 分支，运行 git branch -a 也不能看出这个branch被删除了，如何处理？</p>
+<pre><code> git remote show origin
+</code></pre>
+</li>
+</ol>
+<p>这时候能够看到b1是stale的，使用 git remote prune origin 可以将其从本地版本库中去除。</p>
+<p>更简单的方法是使用这个命令，它在fetch之后删除掉没有与远程分支对应的本地分支：</p>
+<pre><code>git fetch -p
+</code></pre>
+<h2 id="4、重命名远程分支"><a href="#4、重命名远程分支" class="headerlink" title="4、重命名远程分支"></a>4、重命名远程分支</h2><p>在git中重命名远程分支，其实就是先删除远程分支，然后重命名本地分支，再重新提交一个远程分支。</p>
+<p>例如下面的例子中，我需要把 devel 分支重命名为 develop 分支：</p>
+<pre><code>git branch -av
+</code></pre>
+<p>删除远程分支：</p>
+<pre><code>git push --delete origin devel
+</code></pre>
+<p>重命名本地分支：</p>
+<pre><code>git branch -m devel develop
+</code></pre>
+<p>推送本地分支：</p>
+<pre><code> git push origin develop
+</code></pre>
+<h2 id="5、把本地tag推送到远程"><a href="#5、把本地tag推送到远程" class="headerlink" title="5、把本地tag推送到远程"></a>5、把本地tag推送到远程</h2><pre><code>git push --tags
+</code></pre>
+<p>例如，我想讲v0.0.1tag推送到远端</p>
+<pre><code>git push origin tag v0.0.1
+</code></pre>
+<h2 id="6、获取远程tag"><a href="#6、获取远程tag" class="headerlink" title="6、获取远程tag"></a>6、获取远程tag</h2><pre><code>git fetch origin tag &lt;tagname&gt;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/12/01/git%E5%88%86%E6%94%AF%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/" data-id="cllui4qyw001dq0ja4sldfbyc" data-title="Git操作分支和tag" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-理解Git的工作流程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/11/25/%E7%90%86%E8%A7%A3Git%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2016-11-24T16:00:00.000Z" itemprop="datePublished">2016-11-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/technical-article/">technical article</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/11/25/%E7%90%86%E8%A7%A3Git%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/">理解Git的工作流程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>如果你不理解Git的设计动机，那你就会处处碰壁。知道足够多的命令和参数后，你就会强行让Git按你想的来工作，而不是按Git自己的方式来。这就像把螺丝刀当锤子用，也能把活干完，但肯定干的差极了，花费很长时间，还会弄坏螺丝刀。</p>
+<p>想想常见的Git工作流程是怎么失效的吧。</p>
+<p>多数时候这样做的效果会如你所愿，因为从你创建分支到合并回去之间，Master一般都会有些变动。然后，有一天当你想把一个功能（feature）分支合并进Master的时候，而Master并没有像以往那样有变动，问题来了：这时Git不会进行合并commit，而是将Master指向功能分支上的最新commit。</p>
+<p><img src="http://i.imgur.com/T4SsrW0.png"></p>
+<p>不幸的是，你的功能分支有用来备份代码的commit（作者称之为checkpoint commit），这些经常进行的commit对应的代码可能处于不稳定状态！而这些commit现在没法和Master上那些稳定的commit区分开来了。当你想回滚的时候，很容易发生灾难性后果。</p>
+<p>于是你就记住了：“当合并功能分支的时候，加上 -no-ff 选项强制进行一次全新的commit。”嗯，这么做好像解决问题了，那么继续。</p>
+<p>然后一天你在线上环境中发现了一个严重bug，这时你需要追溯下这个bug是什么时候引入的。你运行了bisect命令，但却总是追溯到一些不稳定的commit。因此你不得不放弃，改用人肉检查。</p>
+<p>最后你将bug范围缩小到一个文件。你运行blame命令查看这个文件在过去48小时里的变动。然后blame告诉你这个文件已经好几周没有被修改过了 —— 你知道根本不可能没有变动。哦，原来是因为blame计算变动是从第一次commit算起，而不是merge的时候。你在几周前的一次commit中改动了这个文件，但这个变动今天才被merge回来。</p>
+<p>用no-ff来救急，bisect又临时失效，blame的运作机制又那么模糊，所有这些现象都说明一件事儿，那就是你正在把螺丝刀当锤子用。</p>
+<h2 id="反思版本控制"><a href="#反思版本控制" class="headerlink" title="反思版本控制"></a>反思版本控制</h2><p>版本控制的存在是因为两个原因。</p>
+<p>首先，版本控制是用来辅助写代码的。因为你要和同事同步代码，并经常备份自己的代码。当然了，把文件压缩后发邮件也行，不过工程大了大概就不好办了。</p>
+<p>其次，就是辅助配置管理工作。其中就包括并行开发的管理，比如一边给线上版本修复bug，一边开发下一个版本。配置管理也可以帮助弄清楚变动发生的具体时间，在追溯bug中是一个很好的工具。</p>
+<p>一般说来，这两个原因是冲突的。</p>
+<p>在开发一个功能的时候，你应该经常做备份性的commit。然而，这些commit经常会让软件没法编译。</p>
+<p>理想情况是，你的版本更新历史中的每一次变化都是明确且稳定的，不会有备份性commit带来的噪声，也不会有超过一万行代码变动的超大commit。一个清晰的版本历史让回滚和选择性merge都变得相当容易，而且也方便以后的检查和分析。然而，要维护这样一个干净的历史版本库，也许意味着总是要等到代码完善之后才能提交变动。</p>
+<p>那么，经常性的commit和干净的历史，你选择哪一个？</p>
+<p>如果你是在刚起步的创业公司中，干净的历史没有太大帮助。你可以放心地把所有东西都往Master中提交，感觉不错的时候随时发布。</p>
+<p>如果团队规模变大或是用户规模扩大了，你就需要些工具和技巧来做约束，包括自动化测试，代码检查，以及干净的版本历史。</p>
+<p>功能分支貌似是一个不错的折中选择，能够解决基本的并行开发问题。当你写代码的时候，可以不用怎么在意集成的问题，但它总有烦到你的时候。</p>
+<p>当你的项目规模足够大的时候，简单的 branch&#x2F;commit&#x2F;merge 工作流程就出问题了。缝缝补补已经不行了。这时你需要一个干净的版本历史库。</p>
+<p>Git之所以是革命性的，就是因为它能同时给你这两方面的好处。你可以在原型开发过程中经常备份变动，而搞定后只需要交付一个干净的版本历史。</p>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><p>考虑两种分支：公共的和私有的。</p>
+<p>公共分支是项目的权威性历史库。在公共分支中，每一个commit都应该确保简洁、原子性，并且有完善的提交信息。此分支应该尽可能线性，且不能更改。公共分支包括Master和发行版的分支。</p>
+<p>私有分支是供你自己使用的，就像解决问题时的草稿纸。</p>
+<p>安全起见，把私有分支只保存在本地。如果你确实需要push到服务器的话（比如要同步你在家和办公室的电脑），最好告诉同事这是私有的，不要基于这个分支展开工作。</p>
+<p>绝不要直接用merge命令把私有分支合并到公共分支中。要先用reset、rebase、squash merges、commit amending等工具把你的分支清理一下。</p>
+<p>把你自己看做一个作者，每一次的commit视为书中的一章。作者不会出版最初的草稿，就像Michael Crichton说的，“伟大的书都不是写出来——而是改出来的”（“Great books aren’t written – they’re rewritten.”）。</p>
+<p>如果你没接触过Git，那么修改历史对你来说好像是种禁忌。你习惯于认为提交过的所有东西都应该像刻在石头上一样不能抹去。但如果按这种逻辑，我们在文本处理软件器中也不应该使用“撤销”功能了。</p>
+<p>实用主义者们直到变化变为噪音的时候才关注变化。对于配置管理来说，我们关注宏观的变化。日常commit（checkpoint commits）只是备份于云端的用于“撤销”的缓冲。</p>
+<p>如果你保持公共历史版本库的简洁，那么所谓的fast-forward merge就不仅安全而且可取了，它能保证版本变更历史的线性和易于追溯。</p>
+<p>关于 -no-ff 仅剩的争论就只剩“文档证明”了。人们可能会先merge再commit，以此代表最新的线上部署版本。不过，这是反模式的。用tag吧。</p>
+<h2 id="规则和例子"><a href="#规则和例子" class="headerlink" title="规则和例子"></a>规则和例子</h2><p>根据改变的多少、持续工作时间的长短，以及分支分叉了多远，我使用三种基本的方法。</p>
+<h3 id="1）短期工作"><a href="#1）短期工作" class="headerlink" title="1）短期工作"></a>1）短期工作</h3><p>绝大多数时间，我做清理时只用squash merge命令。</p>
+<p>假设我创建了一个功能分支，并且在接下来一个小时里进行了一系列的checkpoint commit。</p>
+<pre><code>git checkout -b private_feature_branch
+
+touch file1.txt
+
+git add file1.txt
+
+git commit -am &quot;WIP&quot; 
+</code></pre>
+<p>完成开发后，我不是直接执行git merge命令，而是这样：</p>
+<pre><code>git checkout master
+
+git merge --squash private_feature_branch
+
+git commit -v 
+</code></pre>
+<p>然后我会花一分钟时间写个详细的commit日志。</p>
+<h3 id="2）较大的工作"><a href="#2）较大的工作" class="headerlink" title="2）较大的工作"></a>2）较大的工作</h3><p>有时候一个功能可以延续好几天，伴有大量的小的commit。</p>
+<p>我认为这些改变应该被分解为一些更小粒度的变更，所以squash作为工具来说就有点儿太糙了。（根据经验我一般会问，“这样能让阅读代码更容易吗？”）</p>
+<p>如果我的checkpoint commits之后有合理的更新，我可以使用rebase的交互模式。</p>
+<p>交互模式很强大。你可以用它来编辑、分解、重新排序、合并以前的commit。</p>
+<p>在我的功能分支上：</p>
+<pre><code>git rebase --interactive master 
+</code></pre>
+<p>然后会打开一个编辑器，里边是commit列表。每一行上依次是：要执行的操作、commit的SHA1值、当前commit的注释。并且提供了包含所有可用命令列表的图例。</p>
+<p>默认情况下，每个commit的操作都是“pick”，即不会修改commit。</p>
+<pre><code>pick ccd6e62 Work on back button
+
+pick 1c83feb Bug fixes
+
+pick f9d0c33 Start work on toolbar 
+</code></pre>
+<p>我把第二行修改为“squash”，这样第二个commit就会合并到第一个上去。</p>
+<pre><code>pick ccd6e62 Work on back button
+
+squash 1c83feb Bug fixes
+
+pick f9d0c33 Start work on toolbar 
+</code></pre>
+<p>保存并退出，会弹出一个新的编辑器窗口，让我为本次合并commit做注释。就这样。</p>
+<h2 id="舍弃分支"><a href="#舍弃分支" class="headerlink" title="舍弃分支"></a>舍弃分支</h2><p>也许我的功能分支已经存在了很久很久，我不得不将好几个分支合并进这个功能分支中，以便当我写代码时这个分支是足够新的的。版本历史让人费解。最简单的办法是创建一个新的分支。</p>
+<pre><code>git checkout master
+
+git checkout -b cleaned_up_branch
+
+git merge --squash private_feature_branch
+
+git reset 
+</code></pre>
+<p>现在，我就有了一个包含我所有修改且不含之前分支历史的工作目录。这样我就可以手动添加和commit我的变更了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果你在与Git的默认设置背道而驰，先问问为什么。
+　　</p>
+<p>将公共分支历史看做不可变的、原子性的、容易追溯的。将私有分支历史看做一次性的、可编辑的。</p>
+<blockquote>
+<p>推荐的工作流程是：</p>
+</blockquote>
+<p> 1、 基于公共分支创建一个私有分支。</p>
+<p> 2、 经常向这个私有分支commit代码。</p>
+<p> 3、 一旦你的代码完善了，就清理掉私有分支的历史。</p>
+<p> 4、 将干净的私有分支merge到公共分支中。</p>
+<hr>
+<p>（auto：Benjamin Sandofsky)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/11/25/%E7%90%86%E8%A7%A3Git%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-id="cllui4qz7003xq0jacjs0dty1" data-title="理解Git的工作流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-linux" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/11/23/linux/" class="article-date">
+  <time class="dt-published" datetime="2016-11-22T16:00:00.000Z" itemprop="datePublished">2016-11-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/11/23/linux/">linux常用命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1、查看当前文件夹文件大小"><a href="#1、查看当前文件夹文件大小" class="headerlink" title="1、查看当前文件夹文件大小"></a>1、查看当前文件夹文件大小</h3><pre><code>du -sh
+</code></pre>
+<h3 id="2、查看防火墙状态"><a href="#2、查看防火墙状态" class="headerlink" title="2、查看防火墙状态"></a>2、查看防火墙状态</h3><pre><code>service iptables status
+
+CentOS 7：systemctl status firewalld.service
+</code></pre>
+<h3 id="3、文件删除"><a href="#3、文件删除" class="headerlink" title="3、文件删除"></a>3、文件删除</h3><pre><code>rm -rf 强制删除
+</code></pre>
+<h3 id="4、文件剪切"><a href="#4、文件剪切" class="headerlink" title="4、文件剪切"></a>4、文件剪切</h3><pre><code>mv 文件名 文件名A ：修改文件名
+</code></pre>
+<h3 id="5、查看硬盘使用情况"><a href="#5、查看硬盘使用情况" class="headerlink" title="5、查看硬盘使用情况"></a>5、查看硬盘使用情况</h3><pre><code>df -h
+</code></pre>
+<h3 id="6、查看内存使用情况"><a href="#6、查看内存使用情况" class="headerlink" title="6、查看内存使用情况"></a>6、查看内存使用情况</h3><pre><code>free -h 
+</code></pre>
+<h3 id="7、创建文件夹"><a href="#7、创建文件夹" class="headerlink" title="7、创建文件夹"></a>7、创建文件夹</h3><pre><code>mkdir xx 
+</code></pre>
+<h3 id="8、复制文件"><a href="#8、复制文件" class="headerlink" title="8、复制文件"></a>8、复制文件</h3><pre><code>cp xx.xx xx.xxx_bak 
+</code></pre>
+<h3 id="9、解压文件：将xxx-zip-解压到xxx路径目录下"><a href="#9、解压文件：将xxx-zip-解压到xxx路径目录下" class="headerlink" title="9、解压文件：将xxx.zip 解压到xxx路径目录下"></a>9、解压文件：将xxx.zip 解压到xxx路径目录下</h3><pre><code>unzip xxx.zip -d xxx 
+</code></pre>
+<h3 id="10、查看网络带宽"><a href="#10、查看网络带宽" class="headerlink" title="10、查看网络带宽"></a>10、查看网络带宽</h3><pre><code>iftop 
+</code></pre>
+<h3 id="11、查看网络信息"><a href="#11、查看网络信息" class="headerlink" title="11、查看网络信息"></a>11、查看网络信息</h3><pre><code>ifconfig
+</code></pre>
+<h3 id="12、yum使用"><a href="#12、yum使用" class="headerlink" title="12、yum使用"></a>12、yum使用</h3><pre><code>yum install xx ：安装xx
+yum search xx:查询
+yum list 列表
+yum list |grep xx :查询
+</code></pre>
+<h3 id="13、文件传输：本地文件传输到-linux上"><a href="#13、文件传输：本地文件传输到-linux上" class="headerlink" title="13、文件传输：本地文件传输到 linux上"></a>13、文件传输：本地文件传输到 linux上</h3><pre><code>scp filepath hostname@ip:savepath
+
+scp  -i xx.pem -r  filepath hostname@ip:savepath
+
+scp -r filepath hostname@ip:savepath
+</code></pre>
+<h3 id="14、ssh连接"><a href="#14、ssh连接" class="headerlink" title="14、ssh连接"></a>14、ssh连接</h3><pre><code>ssh -l 主机名字 -p 端口&lt;一般是22&gt; root@ip
+
+ssh -l -p 22 hostname@ip
+
+ssh -i xx.pem hostname@ip
+</code></pre>
+<h3 id="15、文件滚动"><a href="#15、文件滚动" class="headerlink" title="15、文件滚动"></a>15、文件滚动</h3><pre><code>tail -f xx.log
+vi/vim + 文件名字 =&gt;编辑文件  insert /esc  转换模式  :q 不保存退出 :wq! 保存退出
+</code></pre>
+<h3 id="16、vim"><a href="#16、vim" class="headerlink" title="16、vim"></a>16、vim</h3><pre><code>vim xx.txt  =&gt; shit + g 跳转到最后一页
+/info   查询info信息 n/N 切换到 下/上一个
+</code></pre>
+<h3 id="17、查看任务进程"><a href="#17、查看任务进程" class="headerlink" title="17、查看任务进程"></a>17、查看任务进程</h3><pre><code>ps -aux
+ps -ef|grep java =&gt;java 搜索任务关键字
+kill -s 9 PID =&gt;结束进程
+</code></pre>
+<h3 id="18、ubutu-查看外网IP"><a href="#18、ubutu-查看外网IP" class="headerlink" title="18、ubutu 查看外网IP"></a>18、ubutu 查看外网IP</h3><pre><code>echo `nc ns1.dnspod.net 6666`
+</code></pre>
+<h3 id="19、apt安装软件"><a href="#19、apt安装软件" class="headerlink" title="19、apt安装软件"></a>19、apt安装软件</h3><pre><code>sudo apt-get update 更新
+sudo apt-get install  *** 安装
+apt list 软件列表
+</code></pre>
+<h3 id="20、apt卸载"><a href="#20、apt卸载" class="headerlink" title="20、apt卸载"></a>20、apt卸载</h3><pre><code>dpkg --list |grep postgr   查询需要卸载的软件
+dpkg --purge postgresql-client-common 卸载软件
+</code></pre>
+<h3 id="21、统计行数"><a href="#21、统计行数" class="headerlink" title="21、统计行数"></a>21、统计行数</h3><pre><code> wc -l *
+ wc -l filename
+</code></pre>
+<h3 id="22、chmod文件授权"><a href="#22、chmod文件授权" class="headerlink" title="22、chmod文件授权"></a>22、chmod文件授权</h3><pre><code>chmod [-cfhvR] [--help] [--version] user[:group] file...
+
+参数       描述
+user    新的档案拥有者的使用者 ID    
+group    新的档案拥有者的使用者群体(group)    
+-c    若该档案拥有者确实已经更改，才显示其更改动作    
+-f    若该档案拥有者无法被更改也不要显示错误讯息    
+-h    只对于连结(link)进行变更，而非该 link 真正指向的档案    
+-v    显示拥有者变更的详细资料    
+-R    对目前目录下的所有档案与子目录进行相同的拥有者变更(即以递回的方式逐个变更)    
+</code></pre>
+<h3 id="23、解压和压缩文件"><a href="#23、解压和压缩文件" class="headerlink" title="23、解压和压缩文件"></a>23、解压和压缩文件</h3><pre><code>tar -zcf ant.tar.gz ant 
+
+tar zxvf jdk-8uversion-linux-x64.tar.gz
+</code></pre>
+<p>参数说明</p>
+<pre><code>-c –create 指导tar创建归档文件
+-v –verbose（adj，冗长的，啰嗦的）用于列出命令的执行过程
+-f –file用于指定归档文件的文件名
+-z -gzip/-ugzip 压缩或者解压
+</code></pre>
+<h3 id="24、tar打包时排除文件"><a href="#24、tar打包时排除文件" class="headerlink" title="24、tar打包时排除文件"></a>24、tar打包时排除文件</h3><p>在打包&#x2F;opt&#x2F;data时就排除了resource命名的目录和文件</p>
+<pre><code>tar cvfz  backup_1.tar.gz  /opt/data --exclude=resource*
+</code></pre>
+<p>如果想不包含部分的特定文件列表，可以把不包含的文件放到一个文件ext.txt，然后 </p>
+<pre><code>tar cvfz  backup_1.tar.gz -X exclude.txt  /opt/data
+</code></pre>
+<h4 id="25、将rootfs文件夹及其子录的权限和组均改为root"><a href="#25、将rootfs文件夹及其子录的权限和组均改为root" class="headerlink" title="25、将rootfs文件夹及其子录的权限和组均改为root"></a>25、将rootfs文件夹及其子录的权限和组均改为root</h4><pre><code>chown –R root:root rootfs
+</code></pre>
+<h4 id="26、将目录rootfs文件夹及子目录的所有者和组更改为用-户liufan和组liufan-desktop"><a href="#26、将目录rootfs文件夹及子目录的所有者和组更改为用-户liufan和组liufan-desktop" class="headerlink" title="26、将目录rootfs文件夹及子目录的所有者和组更改为用  户liufan和组liufan-desktop"></a>26、将目录rootfs文件夹及子目录的所有者和组更改为用  户liufan和组liufan-desktop</h4><pre><code>chown –R liufan:liufan-desktop rootfs
+</code></pre>
+<h4 id="27、netstat端口查看"><a href="#27、netstat端口查看" class="headerlink" title="27、netstat端口查看"></a>27、netstat端口查看</h4><h5 id="端口占用查看"><a href="#端口占用查看" class="headerlink" title="端口占用查看"></a>端口占用查看</h5><pre><code>netstat -apn | grep 80
+</code></pre>
+<h5 id="端口监听情况查看"><a href="#端口监听情况查看" class="headerlink" title="端口监听情况查看"></a>端口监听情况查看</h5><pre><code>netstat -nat | grep LISTEN
+</code></pre>
+<h4 id="28、CURL使用"><a href="#28、CURL使用" class="headerlink" title="28、CURL使用"></a>28、CURL使用</h4><p>curl 简单传递参数</p>
+<pre><code>curl --data &#39;xxx=xxx&amp;yyy=yyy&#39; http://127.0.0.1/
+</code></pre>
+<p>curl post json</p>
+<pre><code>curl -H &quot;Content-Type: application/json&quot; -X POST  --data &#39;&#123;&quot;data&quot;:&quot;1&quot;&#125;&#39; http://127.0.0.1/
+</code></pre>
+<p>curl get </p>
+<pre><code>curl http://127.0.0.1/xxx?xxx=xxx
+curl http://127.0.0.1/xxx?xxx=xxx\&amp;yyy=yyy\&amp;ccc=ccc	
+</code></pre>
+<p>curl post</p>
+<pre><code>curl -d &quot;args&quot; http://127.0.0.1/xxx
+curl -d &quot;user=Summer&amp;passwd=12345678&quot; http://127.0.0.1/xxx
+</code></pre>
+<p>curl 下载文件</p>
+<pre><code>curl -o gor_0.16.0_mac.tar.gz https://github.com/buger/goreplay/releases/download/v0.16.0/gor_0.16.0_mac.tar.gz  
+</code></pre>
+<h4 id="29、修改用户密码"><a href="#29、修改用户密码" class="headerlink" title="29、修改用户密码"></a>29、修改用户密码</h4><pre><code>passwd 用户名 
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/11/23/linux/" data-id="cllui4qz2002wq0ja3zys3rij" data-title="linux常用命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-git" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/11/22/git/" class="article-date">
+  <time class="dt-published" datetime="2016-11-21T16:00:00.000Z" itemprop="datePublished">2016-11-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/11/22/git/">Git 使用简易指南</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1、创建新仓库"><a href="#1、创建新仓库" class="headerlink" title="1、创建新仓库:"></a>1、创建新仓库:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir gitdemo </span><br><span class="line">cd gitdemo</span><br><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、检出仓库"><a href="#2、检出仓库" class="headerlink" title="2、检出仓库"></a>2、检出仓库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone + 地址/路径</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、添加与提交"><a href="#3、添加与提交" class="headerlink" title="3、添加与提交"></a>3、添加与提交</h3><blockquote>
+<p>添加（缓存区）：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;filename&gt;  /  git add *</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>提交（HEAD）：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;代码提交信息&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、推送与改动"><a href="#4、推送与改动" class="headerlink" title="4、推送与改动"></a>4、推送与改动</h3><blockquote>
+<p>推送（分支，默认master）：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master(master可以替换成想推送的分支)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>改动：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin &lt;server&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、分支"><a href="#5、分支" class="headerlink" title="5、分支"></a>5、分支</h3><blockquote>
+<p>创建分支：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b feature_x (feature_x：分支名字)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>切换到主分支：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>删除分支：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d feature_x</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将分支推送：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin &lt;branch&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6、更新与合并"><a href="#6、更新与合并" class="headerlink" title="6、更新与合并"></a>6、更新与合并</h3><blockquote>
+<p>将本地仓库更新至最新改动：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>合并其他分支到你的当前分支，如master：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge &lt;branch&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>查看差异：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diss &lt;source_branch&gt; &lt;target_branch&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7、标签"><a href="#7、标签" class="headerlink" title="7、标签"></a>7、标签</h3><blockquote>
+<p>创建一个叫做1.0.0的标签：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git tag 1.0.0 1b2e1d63ff  (1b2e1d63ff是你想要标记的提交ID的前10位自负）</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>获取提交ID：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+
+<h3 id="8、替换本地改动"><a href="#8、替换本地改动" class="headerlink" title="8、替换本地改动"></a>8、替换本地改动</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -- &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="9、丢弃所有本地改动："><a href="#9、丢弃所有本地改动：" class="headerlink" title="9、丢弃所有本地改动："></a>9、丢弃所有本地改动：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin</span><br><span class="line">git reset --hard origin/master</span><br></pre></td></tr></table></figure>
+
+<h3 id="10、显示历史记录时，只显示一行注释信息："><a href="#10、显示历史记录时，只显示一行注释信息：" class="headerlink" title="10、显示历史记录时，只显示一行注释信息："></a>10、显示历史记录时，只显示一行注释信息：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config format.pretty oneline</span><br></pre></td></tr></table></figure>
+
+<h3 id="11、交互的添加文件至缓存区"><a href="#11、交互的添加文件至缓存区" class="headerlink" title="11、交互的添加文件至缓存区"></a>11、交互的添加文件至缓存区</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add -i</span><br></pre></td></tr></table></figure>
+
+<h3 id="12、显示提交历史详细"><a href="#12、显示提交历史详细" class="headerlink" title="12、显示提交历史详细"></a>12、显示提交历史详细</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log -p </span><br></pre></td></tr></table></figure>
+
+<h3 id="13、将当前改动提交到缓存区"><a href="#13、将当前改动提交到缓存区" class="headerlink" title="13、将当前改动提交到缓存区"></a>13、将当前改动提交到缓存区</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git stash</span><br></pre></td></tr></table></figure>
+
+<h3 id="14、从缓存区取出第一个"><a href="#14、从缓存区取出第一个" class="headerlink" title="14、从缓存区取出第一个"></a>14、从缓存区取出第一个</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git stash pop</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/11/22/git/" data-id="cllui4qyv0014q0ja6vok4nlm" data-title="Git 使用简易指南" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-postgres" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/11/22/postgres/" class="article-date">
+  <time class="dt-published" datetime="2016-11-21T16:00:00.000Z" itemprop="datePublished">2016-11-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/11/22/postgres/">postgresql常用知识点一览</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><h3 id="1、连接数据库-默认的用户和数据库是postgres"><a href="#1、连接数据库-默认的用户和数据库是postgres" class="headerlink" title="1、连接数据库, 默认的用户和数据库是postgres"></a>1、连接数据库, 默认的用户和数据库是postgres</h3><pre><code>psql -U user -d dbname 
+</code></pre>
+<h3 id="2、切换数据库-相当于mysql的use-dbname"><a href="#2、切换数据库-相当于mysql的use-dbname" class="headerlink" title="2、切换数据库,相当于mysql的use dbname"></a>2、切换数据库,相当于mysql的use dbname</h3><pre><code>\c dbname
+</code></pre>
+<h3 id="3、选择数据库，相当于mysql的show-databases"><a href="#3、选择数据库，相当于mysql的show-databases" class="headerlink" title="3、选择数据库，相当于mysql的show databases"></a>3、选择数据库，相当于mysql的show databases</h3><pre><code>\l list of databases
+</code></pre>
+<h3 id="4、显示数据库"><a href="#4、显示数据库" class="headerlink" title="4、显示数据库"></a>4、显示数据库</h3><pre><code>\d
+</code></pre>
+<h3 id="5、列举表，相当于mysql的show-tables"><a href="#5、列举表，相当于mysql的show-tables" class="headerlink" title="5、列举表，相当于mysql的show tables"></a>5、列举表，相当于mysql的show tables</h3><pre><code>\dt
+</code></pre>
+<h3 id="6、查看表结构，相当于desc-tblname-show-columns-from-tbname"><a href="#6、查看表结构，相当于desc-tblname-show-columns-from-tbname" class="headerlink" title="6、查看表结构，相当于desc tblname,show columns from tbname"></a>6、查看表结构，相当于desc tblname,show columns from tbname</h3><pre><code>\d tblname 
+</code></pre>
+<h3 id="7、查看索引"><a href="#7、查看索引" class="headerlink" title="7、查看索引"></a>7、查看索引</h3><pre><code>\di
+</code></pre>
+<h3 id="8、创建数据库："><a href="#8、创建数据库：" class="headerlink" title="8、创建数据库："></a>8、创建数据库：</h3><pre><code>create database [数据库名]; 
+create database pgws_ex TEMPLATE=postgre; 可以继承扩展，比如说postgis等
+</code></pre>
+<h3 id="9、删除数据库："><a href="#9、删除数据库：" class="headerlink" title="9、删除数据库："></a>9、删除数据库：</h3><pre><code>drop database [数据库名];  
+</code></pre>
+<h3 id="10、重命名一个表："><a href="#10、重命名一个表：" class="headerlink" title="10、重命名一个表："></a>10、重命名一个表：</h3><pre><code>alter table [表名A] rename to [表名B]; 
+</code></pre>
+<h3 id="11、删除一个表："><a href="#11、删除一个表：" class="headerlink" title="11、删除一个表："></a>11、删除一个表：</h3><pre><code>drop table [表名];  
+</code></pre>
+<h3 id="12、在已有的表里添加字段："><a href="#12、在已有的表里添加字段：" class="headerlink" title="12、在已有的表里添加字段："></a>12、在已有的表里添加字段：</h3><pre><code>alter table [表名] add column [字段名] [类型]; 
+</code></pre>
+<h3 id="13、删除表中的字段："><a href="#13、删除表中的字段：" class="headerlink" title="13、删除表中的字段："></a>13、删除表中的字段：</h3><pre><code>alter table [表名] drop column [字段名]; 
+</code></pre>
+<h3 id="14、重命名一个字段："><a href="#14、重命名一个字段：" class="headerlink" title="14、重命名一个字段："></a>14、重命名一个字段：</h3><pre><code>alter table [表名] rename column [字段名A] to [字段名B]; 
+</code></pre>
+<h3 id="15、给一个字段设置缺省值："><a href="#15、给一个字段设置缺省值：" class="headerlink" title="15、给一个字段设置缺省值："></a>15、给一个字段设置缺省值：</h3><pre><code>alter table [表名] alter column [字段名] set default [新的默认值];
+</code></pre>
+<h3 id="16、去除缺省值："><a href="#16、去除缺省值：" class="headerlink" title="16、去除缺省值："></a>16、去除缺省值：</h3><pre><code>alter table [表名] alter column [字段名] drop default; 
+</code></pre>
+<h3 id="17、在表中插入数据："><a href="#17、在表中插入数据：" class="headerlink" title="17、在表中插入数据："></a>17、在表中插入数据：</h3><pre><code>insert into 表名 ([字段名m],[字段名n],......) values ([列m的值],[列n的值],......); 
+</code></pre>
+<h3 id="18、修改表中的某行某列的数据："><a href="#18、修改表中的某行某列的数据：" class="headerlink" title="18、修改表中的某行某列的数据："></a>18、修改表中的某行某列的数据：</h3><pre><code>update [表名] set [目标字段名]=[目标值] where [该行特征]; 
+</code></pre>
+<h3 id="19、删除表中某行数据："><a href="#19、删除表中某行数据：" class="headerlink" title="19、删除表中某行数据："></a>19、删除表中某行数据：</h3><pre><code>delete from [表名] where [该行特征]; 
+delete from [表名];--删空整个表 
+</code></pre>
+<h3 id="20、创建表："><a href="#20、创建表：" class="headerlink" title="20、创建表："></a>20、创建表：</h3><pre><code>create table ([字段名1] [类型1] ;,[字段名2] [类型2],......&lt;,primary key (字段名m,字段名n,...)&gt;;); 
+</code></pre>
+<h3 id="21、显示-PostgreSQL-的使用和发行条款"><a href="#21、显示-PostgreSQL-的使用和发行条款" class="headerlink" title="21、显示 PostgreSQL 的使用和发行条款"></a>21、显示 PostgreSQL 的使用和发行条款</h3><pre><code>\copyright     
+</code></pre>
+<h3 id="22、显示或设定用户端字元编码"><a href="#22、显示或设定用户端字元编码" class="headerlink" title="22、显示或设定用户端字元编码"></a>22、显示或设定用户端字元编码</h3><pre><code>\encoding [字元编码名称]
+</code></pre>
+<h3 id="23、SQL-命令语法上的说明，用-显示全部命令"><a href="#23、SQL-命令语法上的说明，用-显示全部命令" class="headerlink" title="23、SQL 命令语法上的说明，用 * 显示全部命令"></a>23、SQL 命令语法上的说明，用 * 显示全部命令</h3><pre><code>\h [名称] 
+</code></pre>
+<h3 id="24、名称"><a href="#24、名称" class="headerlink" title="24、名称"></a>24、名称</h3><pre><code>\prompt [文本] 
+</code></pre>
+<h3 id="25、提示用户设定内部变数"><a href="#25、提示用户设定内部变数" class="headerlink" title="25、提示用户设定内部变数"></a>25、提示用户设定内部变数</h3><pre><code>\password [USERNAME] securely change the password for a user
+</code></pre>
+<h3 id="26、退出-psql"><a href="#26、退出-psql" class="headerlink" title="26、退出 psql"></a>26、退出 psql</h3><pre><code>\q              
+</code></pre>
+<h3 id="27、数据库备份"><a href="#27、数据库备份" class="headerlink" title="27、数据库备份"></a>27、数据库备份</h3><pre><code>可以使用pg_dump和pg_dumpall来完成。比如备份sales数据库： 
+pg_dump drupal&gt;/opt/Postgresql/backup/1.bak 
+</code></pre>
+<h1 id="授权管理操作"><a href="#授权管理操作" class="headerlink" title="授权管理操作"></a>授权管理操作</h1><h3 id="1、超级管理员登录"><a href="#1、超级管理员登录" class="headerlink" title="1、超级管理员登录"></a>1、超级管理员登录</h3><pre><code>su postgres
+psql
+或者：sudo -u postgres psql
+</code></pre>
+<h3 id="2、创建用户"><a href="#2、创建用户" class="headerlink" title="2、创建用户"></a>2、创建用户</h3><pre><code>createuser -D -A -P username;
+</code></pre>
+<h3 id="3、创建数据库并继承拓展"><a href="#3、创建数据库并继承拓展" class="headerlink" title="3、创建数据库并继承拓展"></a>3、创建数据库并继承拓展</h3><pre><code>create database dbname TEMPLATE postgres owner username;
+</code></pre>
+<h3 id="4、查询星期几"><a href="#4、查询星期几" class="headerlink" title="4、查询星期几"></a>4、查询星期几</h3><pre><code> SELECT extract(DOW FROM now())
+DOW（day of week）
+DAY（day of week）可以获取当天是当月的第几天
+</code></pre>
+<h3 id="5、使用pg-dump导出数据"><a href="#5、使用pg-dump导出数据" class="headerlink" title="5、使用pg_dump导出数据"></a>5、使用pg_dump导出数据</h3><pre><code>pg_dump --host 10.171.36.53 --port 5432 --username gavial -d gavial -t rnwststation &gt;/home/rnwststation.sql
+    -s 只导出表结构
+    -t table1 -t table2 -t table3 多表导出
+</code></pre>
+<h3 id="6、使用psql导入数据"><a href="#6、使用psql导入数据" class="headerlink" title="6、使用psql导入数据"></a>6、使用psql导入数据</h3><pre><code>psql -d gavial -U gavial --password -f /home/rnwststation.sql
+</code></pre>
+<h1 id="PostgreSQL修改数据库表的列属性-ALTER语句"><a href="#PostgreSQL修改数据库表的列属性-ALTER语句" class="headerlink" title="PostgreSQL修改数据库表的列属性(ALTER语句)"></a>PostgreSQL修改数据库表的列属性(ALTER语句)</h1><h3 id="1、向表中增加一个-varchar-列："><a href="#1、向表中增加一个-varchar-列：" class="headerlink" title="1、向表中增加一个 varchar 列："></a>1、向表中增加一个 varchar 列：</h3><pre><code>ALTER TABLE distributors ADD COLUMN address varchar(30);
+</code></pre>
+<h3 id="2、从表中删除一个字段："><a href="#2、从表中删除一个字段：" class="headerlink" title="2、从表中删除一个字段："></a>2、从表中删除一个字段：</h3><pre><code>ALTER TABLE distributors DROP COLUMN address RESTRICT;
+</code></pre>
+<h3 id="3、在一个操作中修改两个现有字段的类型："><a href="#3、在一个操作中修改两个现有字段的类型：" class="headerlink" title="3、在一个操作中修改两个现有字段的类型："></a>3、在一个操作中修改两个现有字段的类型：</h3><pre><code>ALTER TABLE distributors
+ALTER COLUMN address TYPE varchar(80),
+ALTER COLUMN name TYPE varchar(100);
+</code></pre>
+<h3 id="4、对现存字段改名："><a href="#4、对现存字段改名：" class="headerlink" title="4、对现存字段改名："></a>4、对现存字段改名：</h3><pre><code>ALTER TABLE distributors RENAME COLUMN address TO city;
+</code></pre>
+<h3 id="5、更改现存表的名字∶"><a href="#5、更改现存表的名字∶" class="headerlink" title="5、更改现存表的名字∶"></a>5、更改现存表的名字∶</h3><pre><code>ALTER TABLE distributors RENAME TO suppliers;
+</code></pre>
+<h3 id="6、给一个字段增加一个非空约束："><a href="#6、给一个字段增加一个非空约束：" class="headerlink" title="6、给一个字段增加一个非空约束："></a>6、给一个字段增加一个非空约束：</h3><pre><code>ALTER TABLE distributors ALTER COLUMN street SET NOT NULL;
+</code></pre>
+<h3 id="7、从一个字段里删除一个非空约束："><a href="#7、从一个字段里删除一个非空约束：" class="headerlink" title="7、从一个字段里删除一个非空约束："></a>7、从一个字段里删除一个非空约束：</h3><pre><code>ALTER TABLE distributors ALTER COLUMN street DROP NOT NULL;
+</code></pre>
+<h3 id="8、给一个表增加一个检查约束："><a href="#8、给一个表增加一个检查约束：" class="headerlink" title="8、给一个表增加一个检查约束："></a>8、给一个表增加一个检查约束：</h3><pre><code>ALTER TABLE distributors ADD CONSTRAINT zipchk CHECK (char_length(zipcode) = 5);
+</code></pre>
+<h3 id="9、删除一个表和它的所有子表的监查约束："><a href="#9、删除一个表和它的所有子表的监查约束：" class="headerlink" title="9、删除一个表和它的所有子表的监查约束："></a>9、删除一个表和它的所有子表的监查约束：</h3><pre><code>ALTER TABLE distributors DROP CONSTRAINT zipchk;
+</code></pre>
+<h3 id="10、向表中增加一个外键约束："><a href="#10、向表中增加一个外键约束：" class="headerlink" title="10、向表中增加一个外键约束："></a>10、向表中增加一个外键约束：</h3><pre><code>ALTER TABLE distributors ADD CONSTRAINT distfk FOREIGN KEY (address) REFERENCES addresses(address) MATCH FULL;
+</code></pre>
+<h3 id="11、给表增加一个（多字段）唯一约束："><a href="#11、给表增加一个（多字段）唯一约束：" class="headerlink" title="11、给表增加一个（多字段）唯一约束："></a>11、给表增加一个（多字段）唯一约束：</h3><pre><code>ALTER TABLE distributors ADD CONSTRAINT dist_id_zipcode_key UNIQUE (dist_id, zipcode);
+</code></pre>
+<h3 id="12、给一个表增加一个自动命名的主键约束，要注意的是一个表只能有一个主键："><a href="#12、给一个表增加一个自动命名的主键约束，要注意的是一个表只能有一个主键：" class="headerlink" title="12、给一个表增加一个自动命名的主键约束，要注意的是一个表只能有一个主键："></a>12、给一个表增加一个自动命名的主键约束，要注意的是一个表只能有一个主键：</h3><pre><code>ALTER TABLE distributors ADD PRIMARY KEY (dist_id);
+</code></pre>
+<h3 id="13、把表移动到另外一个表空间："><a href="#13、把表移动到另外一个表空间：" class="headerlink" title="13、把表移动到另外一个表空间："></a>13、把表移动到另外一个表空间：</h3><pre><code>ALTER TABLE distributors SET TABLESPACE fasttablespace;
+</code></pre>
+<h3 id="14、把表移动到另外一个模式："><a href="#14、把表移动到另外一个模式：" class="headerlink" title="14、把表移动到另外一个模式："></a>14、把表移动到另外一个模式：</h3><pre><code>ALTER TABLE myschema.distributors SET SCHEMA yourschema;
+</code></pre>
+<h3 id="15、之前表有2个字段，-id和name-id是主键-现在有需求增加一个index-并且需求是主键改为id和index"><a href="#15、之前表有2个字段，-id和name-id是主键-现在有需求增加一个index-并且需求是主键改为id和index" class="headerlink" title="15、之前表有2个字段， id和name, id是主键,　现在有需求增加一个index, 并且需求是主键改为id和index"></a>15、之前表有2个字段， id和name, id是主键,　现在有需求增加一个index, 并且需求是主键改为id和index</h3><pre><code>alter table test add column test_index smallint not null default 0; 
+alter table test drop constraint pk_test; 
+alter table test add constraint pk_test PRIMARY_KEY(id, test_index); 
+</code></pre>
+<h3 id="16、创建一个和原表结构相同的新表，根据INCLUDING保留原表的约束、索引等。"><a href="#16、创建一个和原表结构相同的新表，根据INCLUDING保留原表的约束、索引等。" class="headerlink" title="16、创建一个和原表结构相同的新表，根据INCLUDING保留原表的约束、索引等。"></a>16、创建一个和原表结构相同的新表，根据INCLUDING保留原表的约束、索引等。</h3><pre><code>create table table_name (like parent_table &#123;INCLUDING|EXCLUDING&#125; &#123;DEFAULTS|CONSTRAINTS|INDEXES|STORAGE|COMMENTS|ALL&#125;);
+</code></pre>
+<p>直接使用LIKE不使用INCLUDING，新表只保留原表的表结构和NOT NULL约束，但是使用INCLUDING CONSTRAINTS配置会保留了主键、唯一键、CHECK约束，并不会保留外键约束。</p>
+<pre><code>create table aqi201701 (like aqi201612 INCLUDING ALL)
+</code></pre>
+<h3 id="17、将sql执行结果导出到文件"><a href="#17、将sql执行结果导出到文件" class="headerlink" title="17、将sql执行结果导出到文件"></a>17、将sql执行结果导出到文件</h3><p>在psql中首先执行\o filename，然后执行要导出结果的sql语句即可。</p>
+<pre><code>psql test_db;
+\o /tmp/test.out
+select username from member where age &gt; 18;
+</code></pre>
+<p>然后在&#x2F;tmp&#x2F;test.out文件中已经有了member表中age&gt;18的所有用户的姓名，下载下来导入到excel中处理吧！</p>
+<h3 id="18、指定表的拥有者"><a href="#18、指定表的拥有者" class="headerlink" title="18、指定表的拥有者"></a>18、指定表的拥有者</h3><pre><code>alter table $&#123;TABLE_NAME&#125; owner to $&#123;NEW_USER&#125; $&#123;DB_NAME&#125;
+</code></pre>
+<h3 id="19、查询postgresql当前的连接数"><a href="#19、查询postgresql当前的连接数" class="headerlink" title="19、查询postgresql当前的连接数"></a>19、查询postgresql当前的连接数</h3><pre><code>select pid,client_addr,query,state from pg_stat_activity order by client_addr
+</code></pre>
+<h3 id="20、查看postgresql的最大连接数"><a href="#20、查看postgresql的最大连接数" class="headerlink" title="20、查看postgresql的最大连接数"></a>20、查看postgresql的最大连接数</h3><pre><code>show max_connections
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/11/22/postgres/" data-id="cllui4qz40038q0jabj4e0cln" data-title="postgresql常用知识点一览" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-git详解" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/04/17/git%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time class="dt-published" datetime="2016-04-16T16:00:00.000Z" itemprop="datePublished">2016-04-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2016/04/17/git%E8%AF%A6%E8%A7%A3/">Git 详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Git-Community"><a href="#Git-Community" class="headerlink" title="Git Community"></a>Git Community</h1><h1 id="第一章-初步认识GIT"><a href="#第一章-初步认识GIT" class="headerlink" title="第一章 初步认识GIT"></a>第一章 初步认识GIT</h1><h2 id="一、简单介绍"><a href="#一、简单介绍" class="headerlink" title="一、简单介绍"></a>一、简单介绍</h2><p>Git, 它是一个快速的分布式版本控制系统。</p>
+<h2 id="二、GIT对象模型"><a href="#二、GIT对象模型" class="headerlink" title="二、GIT对象模型"></a>二、GIT对象模型</h2><h3 id="SHA"><a href="#SHA" class="headerlink" title="SHA"></a>SHA</h3><p>所有用来表示项目历史信息的文件,是通过一个40个字符的（40-digit）“对象名”来索引的，对象名看起来像这样:</p>
+<pre><code>6ff87c4664981e4397625791c8ea3bbb5f2279a3
+</code></pre>
+<p>每一个“对象名”都是对“对象”内容做SHA1哈希计算得来的，（SHA1是一种密码学的哈希算法）。这样就意味着两个不同内容的对象不可能有相同的“对象名”。</p>
+<p>这样做会有几个好处：</p>
+<ul>
+<li>Git只要比较对象名，就可以很快的判断两个对象是否相同。</li>
+<li>因为在每个仓库（repository）的“对象名”的计算方法都完全一样，如果同样的内容存在两个不同的仓库中，就会存在相同的“对象名”下。</li>
+<li>Git还可以通过检查对象内容的SHA1的哈希值和“对象名”是否相同，来判断对象内容是否正确。</li>
+</ul>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>每个对象(object) 包括三个部分：类型，大小和内容。大小就是指内容的大小，内容取决于对象的类型，有四种类型的对象：”blob”、”tree”、 “commit” 和”tag”。几乎所有的Git功能都是使用这四个简单的对象类型来完成的。它就像是在你本机的文件系统之上构建一个小的文件系统。</p>
+<ul>
+<li>“blob”用来存储文件数据，通常是一个文件。</li>
+<li>“tree”有点像一个目录，它管理一些“tree”或是 “blob”（就像文件和子目录）</li>
+<li>一个“commit”只指向一个”tree”，它用来标记项目某一个特定时间点的状态。它包括一些关于时间点的元数据，如时间戳、最近一次提交的作者、指向上次提交（commits）的指针等等。</li>
+<li>一个“tag”是来标记某一个提交(commit) 的方法。</li>
+</ul>
+<h3 id="Blob对象"><a href="#Blob对象" class="headerlink" title="Blob对象"></a>Blob对象</h3><p>一个blob通常用来存储文件的内容。你可以使用 <strong>git show</strong> 命令来查看一个blob对象里的内容。假设我们现在有一个Blob对象的SHA1哈希值，我们可以通过下面的的命令来查看内容：</p>
+<pre><code>git show dc125b76b196768bdf0075d86f96262d1605edf0
+</code></pre>
+<p>或者</p>
+<pre><code>git cat-file -p dc125b76b196768bdf0075d86f96262d1605edf0
+</code></pre>
+<p>一个”blob对象”就是一块二进制数据，它没有指向任何东西或有任何其它属性，甚至连文件名都没有。</p>
+<p>因为blob对象内容全部都是数据，如两个文件在一个目录树（或是一个版本仓库）中有同样的数据内容，那么它们将会共享同一个blob对象。Blob对象和其所对应的文件所在路径、文件名是否改被更改都完全没有关系。</p>
+<h3 id="Tree对象"><a href="#Tree对象" class="headerlink" title="Tree对象"></a>Tree对象</h3><p>一个tree对象有一串(bunch)指向blob对象或是其它tree对象的指针，它一般用来表示内容之间的目录层次关系。<strong>git show</strong>命令还可以用来查看tree对象，</p>
+<pre><code>git show ebdd9fe73dd2d62b960caf7ceccd90bedc824bdd
+</code></pre>
+<p>但是git ls-tree能让你看到更多的细节。</p>
+<pre><code>git ls-tree dc125b76b196768bdf0075d86f96262d1605edf0
+</code></pre>
+<p>一个tree对象包括一串(list)条目，每一个条目包括：mode、对象类型、SHA1值 和名字(这串条目是按名字排序的)。它用来表示一个目录树的内容。</p>
+<p>一个tree对象可以指向(reference): 一个包含文件内容的blob对象, 也可以是其它包含某个子目录内容的其它tree对象. Tree对象、blob对象和其它所有的对象一样，都用其内容的SHA1哈希值来命名的；只有当两个tree对象的内容完全相同（包括其所指向所有子对象）时，它的名字才会一样，反之亦然。这样就能让Git仅仅通过比较两个相关的tree对象的名字是否相同，来快速的判断其内容是否不同。</p>
+<h3 id="Commit对象"><a href="#Commit对象" class="headerlink" title="Commit对象"></a>Commit对象</h3><p>“commit对象”指向一个”tree对象”, 并且带有相关的描述信息。</p>
+<p>可以用 –pretty&#x3D;raw 参数来配合 git show 或 git log 去查看某个提交(commit):</p>
+<pre><code>git show -s --pretty=raw 71d82ea29e3545501b9c4f55e65877807aa079a7
+</code></pre>
+<p>你可以看到, 一个提交(commit)由以下的部分组成:</p>
+<ul>
+<li>一个 tree　对象: tree对象的SHA1签名, 代表着目录在某一时间点的内容。</li>
+<li>父对象 (parent(s)): 提交(commit)的SHA1签名代表着当前提交前一步的项目历史. 上面的那个例子就只有一个父对象; 合并的提交(merge commits)可能会有不只一个父对象. 如果一个提交没有父对象, 那么我们就叫它“根提交”(root commit), 它就代表着项目最初的一个版本(revision). 每个项目必须有至少有一个“根提交”(root commit). 一个项目可能有多个”根提交“，虽然这并不常见(这不是好的作法)。</li>
+<li>作者（author） : 做了此次修改的人的名字,　还有修改日期。</li>
+<li>提交者（committer): 实际创建提交(commit)的人的名字, 同时也带有提交日期. TA可能会和作者不是同一个人; 例如作者写一个补丁(patch)并把它用邮件发给提交者, 由他来创建提交(commit)。</li>
+<li>注释 用来描述此次提交。</li>
+</ul>
+<p>注意: 一个提交(commit)本身并没有包括任何信息来说明其做了哪些修改; 所有的修改(changes)都是通过与父提交(parents)的内容比较而得出的. 值得一提的是, 尽管git可以检测到文件内容不变而路径改变的情况, 但是它不会去显式(explicitly)的记录文件的更名操作。</p>
+<p>一般用 git commit 来创建一个提交(commit), 这个提交(commit)的父对象一般是当前分支(current HEAD),　同时把存储在当前索引(index)的内容全部提交。</p>
+<h3 id="对象模型"><a href="#对象模型" class="headerlink" title="对象模型"></a>对象模型</h3><p>现在我们已经了解了3种主要对象类型(blob, tree 和 commit), 好现在就让我们大概了解一下它们怎么组合到一起的.</p>
+<p>如果我们一个小项目, 有如下的目录结构:</p>
+<pre><code>|-- README
+`-- lib
+    |-- inc
+    |   `-- tricks.rb
+    `-- mylib.rb
+</code></pre>
+<p>如果我们把它提交(commit)到一个Git仓库中, 在Git中它们也许看起来就如下图:</p>
+<p><img src="http://i.imgur.com/TVdYOhb.png"></p>
+<p>你可以看到: 每个目录都创建了 tree对象 (包括根目录), 每个文件都创建了一个对应的 blob对象 . 最后有一个 commit对象 来指向根tree对象(root of trees), 这样我们就可以追踪项目每一项提交内容。</p>
+<h3 id="标签对象"><a href="#标签对象" class="headerlink" title="标签对象"></a>标签对象</h3><p>一个标签对象包括一个对象名(就是SHA1签名), 对象类型, 标签名, 标签创建人的名字(“tagger”), 还有一条可能包含有签名(signature)的消息。可以用 git cat-file 命令来查看这些信息:</p>
+<pre><code>git cat-file tag v1.5.0
+</code></pre>
+<h3 id="git目录"><a href="#git目录" class="headerlink" title="git目录"></a>git目录</h3><pre><code>HEAD         # 这个git项目当前处在哪个分支里
+config       # 项目的配置信息，git config命令会改动它
+description  # 项目的描述信息
+hooks/       # 系统默认钩子脚本目录
+index        # 索引文件
+logs/        # 各个refs的历史信息
+objects/     # Git本地仓库的所有对象 (commits, trees, blobs, tags)
+refs/        # 标识你项目里的每个分支指向了哪个提交(commit)
+</code></pre>
+<h3 id="git索引"><a href="#git索引" class="headerlink" title="git索引"></a>git索引</h3><p>Git索引是一个在你的工作目录和项目仓库间的暂存区(staging area). 有了它, 你可以把许多内容的修改一起提交(commit). 如果你创建了一个提交(commit), 那么提交的是当前索引(index)里的内容, 而不是工作目录中的内容。</p>
+<pre><code>git status
+</code></pre>
+<h2 id="三、安装Git"><a href="#三、安装Git" class="headerlink" title="三、安装Git"></a>三、安装Git</h2><p>什么？这个还要教？</p>
+<h2 id="四、Git-配置"><a href="#四、Git-配置" class="headerlink" title="四、Git 配置"></a>四、Git 配置</h2><p>使用Git的第一件事就是设置你的名字和email,这些就是你在提交commit时的签名。</p>
+<pre><code>git config --global user.name &quot;luming&quot;
+git config --global user.email &quot;luming@mlogcn.com&quot;
+</code></pre>
+<p>执行了上面的命令后,会在你的主目录(home directory)建立一个叫 ~&#x2F;.gitconfig 的文件. 内容一般像下面这样:</p>
+<pre><code>[user]
+        name = luming
+        email = luming@mlogcn.com
+</code></pre>
+<p>这样的设置是全局设置,会影响此用户建立的每个项目.</p>
+<p>如果你想使项目里的某个值与前面的全局设置有区别(例如把私人邮箱地址改为工作邮箱);你可以在项目中使用git config 命令不带 –global 选项来设置. 这会在你项目目录下的 .git&#x2F;config 文件增加一节[user]内容。</p>
+<h1 id="第二章-GIT基本用法"><a href="#第二章-GIT基本用法" class="headerlink" title="第二章 GIT基本用法"></a>第二章 GIT基本用法</h1><h2 id="一、获得一个Git仓库"><a href="#一、获得一个Git仓库" class="headerlink" title="一、获得一个Git仓库"></a>一、获得一个Git仓库</h2><p>有两种方法可以得到git仓库：一种是从已有的Git仓库中　clone (克隆，复制)；还有一种是新建一个仓库，把未进行版本控制的文件进行版本控制。</p>
+<h3 id="Clone一个仓库"><a href="#Clone一个仓库" class="headerlink" title="Clone一个仓库"></a>Clone一个仓库</h3><p>为了得一个项目的拷贝(copy),我们需要知道这个项目仓库的地址(Git URL). Git能在许多协议下使用，所以Git URL可能以ssh:&#x2F;&#x2F;, http(s):&#x2F;&#x2F;, git:&#x2F;&#x2F;,或是只是以一个用户名（git 会认为这是一个ssh 地址）为前辍. 有些仓库可以通过不只一种协议来访问，例如，Git本身的源代码你既可以用 git:&#x2F;&#x2F; 协议来访问：</p>
+<pre><code>git clone git://git.kernel.org/pub/scm/git/git.git
+</code></pre>
+<p>也可以通过http 协议来访问:</p>
+<pre><code>git clone http://www.kernel.org/pub/scm/git/git.git
+</code></pre>
+<h3 id="初始化一个新的仓库"><a href="#初始化一个新的仓库" class="headerlink" title="初始化一个新的仓库"></a>初始化一个新的仓库</h3><p>进入项目文件夹，然后执行 <strong>git init</strong></p>
+<pre><code>cd myproject
+git init
+</code></pre>
+<p>然后你会发现myproject目录下会有一个名叫”.git” 的目录被创建，这意味着一个仓库被初始化了。</p>
+<h2 id="二、正常的工作流程"><a href="#二、正常的工作流程" class="headerlink" title="二、正常的工作流程"></a>二、正常的工作流程</h2><p>修改文件，将它们更新的内容添加到索引中。</p>
+<pre><code>git add file1 file2 file3
+</code></pre>
+<p>现在为commit做好了准备，你可以使用 git diff 命令再加上 –cached 参数 ,看看哪些文件将被提交(commit)。</p>
+<pre><code>git diff --cached
+</code></pre>
+<p>P.s.如果没有–cached参数，git diff 会显示当前你所有已做的但没有加入到索引里的修改。</p>
+<p>也可以用git status命令来获得当前项目的一个状况</p>
+<pre><code>git status
+</code></pre>
+<p>如果你要做进一步的修改, 那就继续做, 做完后就把新修改的文件加入到索引中。最后把他们提交：</p>
+<pre><code>git commit -m &quot;commit massage&quot;
+</code></pre>
+<p>除了用git add 命令，我还可以用</p>
+<pre><code>git commit -a
+</code></pre>
+<p>这会自动把所有内容被修改的文件(不包括新创建的文件)都添加到索引中，并且同时把它们提交。</p>
+<h2 id="三、分支与合并"><a href="#三、分支与合并" class="headerlink" title="三、分支与合并"></a>三、分支与合并</h2><h3 id="初步尝试"><a href="#初步尝试" class="headerlink" title="初步尝试"></a>初步尝试</h3><p>一个Git仓库可以维护很多开发分支。现在我们来创建一个新的叫”experimental”的分支：</p>
+<pre><code>git branch experimental
+</code></pre>
+<p>如果你运行下面这条命令：</p>
+<pre><code>git branch
+</code></pre>
+<p>你会得到当前仓库中存在的所有分支列表。“master”分支是Git系统默认创建的主分支。星号(“*”)标识了你当工作在哪个分支下。</p>
+<p>输入：</p>
+<pre><code>git checkout experimental
+</code></pre>
+<p>切换到”experimental”分支，先编辑里面的一个文件，再提交(commit)改动，最后切换回 “master”分支。</p>
+<pre><code>git commit -a
+git checkout master
+</code></pre>
+<p>你现在可以看一下你原来在“experimental”分支下所作的修改还在不在；因为你现在切换回了“master”分支，所以原来那些修改就不存在了。</p>
+<p>你现在可以在“master”分支下再作一些不同的修改:</p>
+<pre><code>git commit -a
+</code></pre>
+<p>这时，两个分支就有了各自不同的修改(diverged)；我们可以通过下面的命令来合并“experimental”和“master”两个分支:</p>
+<pre><code>git merge experimental
+</code></pre>
+<p>如果这个两个分支间的修改没有冲突(conflict), 那么合并就完成了。如有有冲突，输入下面的命令就可以查看当前有哪些文件产生了冲突:</p>
+<pre><code>git diff
+</code></pre>
+<p>当你编辑了有冲突的文件，解决了冲突后就可以提交了：</p>
+<pre><code>git commit -a
+</code></pre>
+<p>提交(commit)了合并的内容后就可查看一下:</p>
+<pre><code>gitk
+</code></pre>
+<p>执行了gitk后会有一个很漂亮的图形的显示项目的历史。</p>
+<p>这时你就可以删除掉你的 “experimental” 分支了(如果愿意)：</p>
+<pre><code>git branch -d experimental
+</code></pre>
+<p>git branch -d只能删除那些已经被当前分支的合并的分支. 如果你要强制删除某个分支的话就用git branch –D；下面假设你要强制删除一个叫”crazy-idea”的分支：</p>
+<pre><code>git branch -D crazy-idea
+</code></pre>
+<h3 id="如何合并"><a href="#如何合并" class="headerlink" title="如何合并"></a>如何合并</h3><p>可以用下面的命令来合并两个分离的分支：git merge:</p>
+<pre><code>git merge branchname
+</code></pre>
+<p>这个命令把分支”branchname”合并到了当前分支里面。如有冲突(冲突–同一个文件在远程分支和本地分支里按不同的方式被修改了）；那么命令的执行输出就像下面一样</p>
+<pre><code>git merge next
+ 100% (4/4) done
+Auto-merged file.txt
+CONFLICT (content): Merge conflict in file.txt
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre>
+<p>在有问题的文件上会有冲突标记，在你手动解决完冲突后就可以把此文件添 加到索引(index)中去，用git commit命令来提交，就像平时修改了一个文件 一样。</p>
+<p>如果你用gitk来查看commit的结果，你会看到它有两个父分支：一个指向当前 的分支，另外一个指向刚才合并进来的分支。</p>
+<h3 id="解决合并中的冲突"><a href="#解决合并中的冲突" class="headerlink" title="解决合并中的冲突"></a>解决合并中的冲突</h3><p>如果执行自动合并没有成功的话，git会在索引和工作树里设置一个特殊的状态， 提示你如何解决合并中出现的冲突。</p>
+<p>有冲突(conflicts)的文件会保存在索引中，除非你解决了问题了并且更新了索引，否则执行 git commit都会失败:</p>
+<p>如果执行 git status 会显示这些文件没有合并(unmerged),这些有冲突的文件里面会添加像下面的冲突标识符:</p>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:file.txt
+Hello world
+=======
+Goodbye
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 77976da35a11db4580b80ae27e8d65caf5208086:file.txt
+</code></pre>
+<p>你所需要的做是就是编辑解决冲突，（接着把冲突标识符删掉），再执行下面的命令:</p>
+<pre><code>git add file.txt
+git commit
+</code></pre>
+<h3 id="撒销一个合并"><a href="#撒销一个合并" class="headerlink" title="撒销一个合并"></a>撒销一个合并</h3><p>如果你觉得你合并后的状态是一团乱麻，想把当前的修改都放弃，你可以用下面的命令回到合并之前的状态：</p>
+<pre><code>git reset --hard HEAD
+</code></pre>
+<p>或者你已经把合并后的代码提交，但还是想把它们撒销：</p>
+<pre><code>git reset --hard ORIG_HEAD
+</code></pre>
+<p>但是刚才这条命令在某些情况会很危险，如果你把一个已经被另一个分支合并的分支给删了，那么 以后在合并相关的分支时会出错。</p>
+<h2 id="四、查看Git日志"><a href="#四、查看Git日志" class="headerlink" title="四、查看Git日志"></a>四、查看Git日志</h2><p>git log命令可以显示所有的提交(commit)。 </p>
+<pre><code>git log
+</code></pre>
+<p>你也可以让git log显示补丁(patchs):</p>
+<pre><code>git log -p
+</code></pre>
+<p>如果用–stat选项使用’git log’,它会显示在每个提交(commit)中哪些文件被修改了, 这些文件分别添加或删除了多少行内容。</p>
+<pre><code>git log --stat
+</code></pre>
+<p>你可以按你的要求来格式化日志输出。‘–pretty’参数可以使用若干表现格式，如‘oneline’:</p>
+<pre><code>git log --pretty=oneline
+</code></pre>
+<p>你也可用‘medium’,‘short’,’full’,’fuller’,’email’ 或‘raw’. 如果这些格式不完全符合你的相求， 你也可以用‘–pretty&#x3D;format’参数(参见：git log)来创建你自己的”格式“，如</p>
+<pre><code>git log --pretty=format:&#39;%h was %an, %ar, message: %s&#39;
+</code></pre>
+<p>你可以用’–graph’选项来可视化你的提交图(commit graph),就像下面这样：</p>
+<pre><code>git log --pretty=format:&#39;%h : %s&#39; --graph
+</code></pre>
+<p>如果你要指定一个特定的顺序，可以为git log命令添加顺序参数(ordering option).</p>
+<p>按默认情况，提交(commits)会按逆时间(reverse chronological)顺序显示。可以指定‘–topo-order’参数，这就会让提交(commits)按拓朴顺序来显示(就是子提交在它们的父提交前显示). 如果你用git log命令按拓朴顺序来显示git仓库的提交日志，你会看到“开发线”(development lines)都会集合在一起。</p>
+<pre><code>git log --pretty=format:&#39;%h : %s&#39; --topo-order --graph
+</code></pre>
+<p>也可以用’–date-order’参数，这样显示提交日志的顺序主要按提交日期来排序. 这个参数和’–topo-order’有一点像，没有父分支会在它们的子分支前显示，但是其它的东东还是按交时间来排序显示。你会看到”开发线”(development lines)没有集合一起，它们会像并行开发(parallel development)一样跳来跳去的：</p>
+<pre><code>git log --pretty=format:&#39;%h : %s&#39; --date-order --graph
+</code></pre>
+<h2 id="五、比较提交-Git-Diff"><a href="#五、比较提交-Git-Diff" class="headerlink" title="五、比较提交 - Git Diff"></a>五、比较提交 - Git Diff</h2><p>你可以用 git diff 来比较项目中任意两个版本的差异。</p>
+<pre><code>git diff master..test
+</code></pre>
+<p>上面这条命令只显示两个分支间的差异，如果你想找出‘master’,‘test’的共有 父分支和’test’分支之间的差异，你用3个‘.’来取代前面的两个’.’ 。</p>
+<pre><code>git diff master...test
+</code></pre>
+<p>git diff 是一个难以置信的有用的工具，可以找出你项目上任意两点间 的改动，或是用来查看别人提交进来的新分支。</p>
+<p>你通常用git diff来找你当前工作目录和上次提交与本地索引间的差异。</p>
+<pre><code>git diff
+</code></pre>
+<p>上面的命令会显示在当前的工作目录里的，没有 staged(添加到索引中)，且在下次提交时 不会被提交的修改。</p>
+<p>如果你要看在下次提交时要提交的内容(staged,添加到索引中),你可以运行：</p>
+<pre><code>git diff --cached
+</code></pre>
+<p>上面的命令会显示你当前的索引和上次提交间的差异；这些内容在不带”-a”参数运行 “git commit”命令时就会被提交。</p>
+<pre><code>git diff HEAD
+</code></pre>
+<p>上面这条命令会显示你工作目录与上次提交时之间的所有差别，这条命令所显示的 内容都会在执行”git commit -a”命令时被提交。</p>
+<p>如果你要查看当前的工作目录与另外一个分支的差别，你可以用下面的命令执行:</p>
+<pre><code>git diff test
+</code></pre>
+<p>这会显示你当前工作目录与另外一个叫’test’分支的差别。你也以加上路径限定符，来只 比较某一个文件或目录。</p>
+<pre><code>git diff HEAD -- ./lib 
+</code></pre>
+<p>面这条命令会显示你当前工作目录下的lib目录与上次提交之间的差别(或者更准确的 说是在当前分支)。</p>
+<p>如果不是查看每个文件的详细差别，而是统计一下有哪些文件被改动，有多少行被改 动，就可以使用‘–stat’ 参数。</p>
+<pre><code>git diff --stat
+</code></pre>
+<h2 id="六、分布式的工作流程"><a href="#六、分布式的工作流程" class="headerlink" title="六、分布式的工作流程"></a>六、分布式的工作流程</h2><p>git pull命令执行两个操作: 它从远程分支(remote branch)抓取修改 的内容，然后把它合并进当前的分支。</p>
+<pre><code>git pull
+</code></pre>
+<p>可以用”git fetch”” 来执行”git pull”前半部分的工作， 但是这条命令并不会把抓下来的修改合并到当前分支里。</p>
+<pre><code>git fetch
+</code></pre>
+<p>将修改推到一个公共仓库</p>
+<pre><code>git push
+</code></pre>
+<p>当推送代码失败时要怎么办？如果推送(push)结果不是”快速向前”(fast forward),那么它 可能会报像下面一样的错误：</p>
+<pre><code>error: remote &#39;refs/heads/master&#39; is not an ancestor of
+local  &#39;refs/heads/master&#39;.
+Maybe you are not up-to-date and need to pull first?
+error: failed to push to &#39;ssh://yourserver.com/~you/proj.git&#39;
+</code></pre>
+<p>这种情况通常由以下的原因产生：</p>
+<ul>
+<li><p>用 <code>git-reset --hard</code> 删除了一个已经发布了的一个提交</p>
+</li>
+<li><p>用 <code>git-commit --amend</code> 去替换一个已经发布的提交</p>
+</li>
+<li><p>用 <code>git-rebase</code> 去rebase一个已经发布的提交</p>
+</li>
+</ul>
+<p>你可以强制git-push在上传修改时先更新，只要在分支名前面加一个加号</p>
+<pre><code>git push +master
+</code></pre>
+<p>通常不论公共仓库的分支是否被修改，他都被修改为指向原来指向的提交(commit) 跟随的下一个提交(commit)。如果在这种情况下强制地推送，你就破坏了之前的约定。</p>
+<p>尽管如此，这也是一种通常的用法来简单地发布一系列正在修正的补丁，并且只要你 通知了其他的开发者你打算怎样操作这个分支，这也是一种可以接受的折中办法。</p>
+<h2 id="七、Git标签"><a href="#七、Git标签" class="headerlink" title="七、Git标签"></a>七、Git标签</h2><p>我们可以用 git tag不带任何参数创建一个标签(tag)指定某个提交(commit):</p>
+<pre><code>git tag stable-1 1b2e1d63ff
+</code></pre>
+<p>这样，我们可以用stable-1 作为提交(commit) “1b2e1d63ff” 的代称(refer)。</p>
+<p>前面这样创建的是一个“轻量级标签”，这种分支通常是从来不移动的。</p>
+<p>如果你想为一个标签(tag)添加注释，或是为它添加一个签名(sign it cryptographically), 那么我们就需要创建一个 ”标签对象”。</p>
+<p>如果有 “-a”, “-s” 或是 “-u “ 中间的一个命令参数被指定，那么就会创建 一个标签对象，并且需要一个标签消息(tag message). 如果没有”-m “ 或是 “-F “ 这些参数，那么就会启动一个编辑器来让用户输入标签消息(tag message)。</p>
+<p>当这样的一条命令执行后，一个新的对象被添加到Git对象库中，并且标签引用就指向了 一个标签对象，而不是指向一个提交(commit). 这样做的好处就是：你可以为一个标签 打处签名(sign), 方便你以后来查验这是不是一个正确的提交(commit).</p>
+<p>下面是一个创建标签对象的例子:</p>
+<p>创建轻量标签</p>
+<pre><code>git tag v0.1.2-light
+</code></pre>
+<p>或者</p>
+<pre><code>git tag -a stable-1 1b2e1d63ff
+</code></pre>
+<p>创建附注标签 （推荐）</p>
+<pre><code>git tag -a v0.1.2 -m “0.1.2版本”
+</code></pre>
+<h1 id="第三章-中级进阶"><a href="#第三章-中级进阶" class="headerlink" title="第三章 中级进阶"></a>第三章 中级进阶</h1><h2 id="一、忽略某些文件"><a href="#一、忽略某些文件" class="headerlink" title="一、忽略某些文件"></a>一、忽略某些文件</h2><p>项目中经常会生成一些Git系统不需要追踪(track)的文件。典型的是在编译生成过程中 产生的文件或是编程器生成的临时备份文件。当然，你不追踪(track)这些文件，可以 平时不用”git add”去把它们加到索引中。 但是这样会很快变成一件烦人的事，你发现 项目中到处有未追踪(untracked)的文件; 这样也使”git add .” 和”git commit -a” 变得实际上没有用处，同时”git status”命令的输出也会有它们。<br>你可以在你的顶层工作目录中添加一个叫”.gitignore”的文件，来告诉Git系统要忽略 掉哪些文件，下面是文件内容的示例:</p>
+<pre><code># 以&#39;#&#39; 开始的行，被视为注释.
+*.a       # 忽略所有 .a 结尾的文件
+!lib.a    # 但 lib.a 除外
+/TODO     # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO
+build/    # 忽略 build/ 目录下的所有文件
+doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+# 忽略掉所有文件名是 foo.txt 的文件.
+foo.txt
+</code></pre>
+<h2 id="不想写了，原文参考http-gitbook-liuhui998-com-index-html"><a href="#不想写了，原文参考http-gitbook-liuhui998-com-index-html" class="headerlink" title="不想写了，原文参考http://gitbook.liuhui998.com/index.html"></a>不想写了，原文参考<a target="_blank" rel="noopener" href="http://gitbook.liuhui998.com/index.html">http://gitbook.liuhui998.com/index.html</a></h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/04/17/git%E8%AF%A6%E8%A7%A3/" data-id="cllui4qz0002gq0jafii0atq8" data-title="Git 详解" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

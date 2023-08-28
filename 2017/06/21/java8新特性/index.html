@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>JDK1.8 十大新特性详解 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="java8是一个新的里程碑，带来了前所未有的诸多特性，lambda表达式，Stream API，新的Date time api，多核并发支持，重大安全问题改进等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK1.8 十大新特性详解">
+<meta property="og:url" content="http://example.com/2017/06/21/java8%E6%96%B0%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="java8是一个新的里程碑，带来了前所未有的诸多特性，lambda表达式，Stream API，新的Date time api，多核并发支持，重大安全问题改进等。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-06-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-28T02:26:16.571Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="JAVA">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-java8新特性" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/06/21/java8%E6%96%B0%E7%89%B9%E6%80%A7/" class="article-date">
+  <time class="dt-published" datetime="2017-06-20T16:00:00.000Z" itemprop="datePublished">2017-06-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      JDK1.8 十大新特性详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>“Java is still not dead—and people are starting to figure that out.”</p>
+<h3 id="接口的默认方法"><a href="#接口的默认方法" class="headerlink" title="接口的默认方法"></a>接口的默认方法</h3><p>java 8允许我们给接口添加一个非抽象的方法实现，只需要使用 default关键字即可，这个特征又叫做扩展方法，示例如下：</p>
+<pre><code>interface Formula &#123;
+    double calculate(int a);
+    default double sqrt(int a) &#123;
+        return Math.sqrt(a);
+    &#125;
+&#125;
+</code></pre>
+<p>Formula接口在拥有calculate方法之外同时还定义了sqrt方法，实现了Formula接口的子类只需要实现一个calculate方法，默认方法sqrt将在子类上可以直接使用。</p>
+<pre><code>Formula formula = new Formula() &#123;
+    @Override
+    public double calculate(int a) &#123;
+        return sqrt(a * 100);
+    &#125;
+&#125;;
+formula.calculate(100);     // 100.0
+formula.sqrt(16);           // 4.0
+</code></pre>
+<p>文中的formula被实现为一个匿名类的实例，该代码非常容易理解，6行代码实现了计算 sqrt(a * 100)。在下一节中，我们将会看到实现单方法接口的更简单的做法。</p>
+<p>译者注： 在Java中只有单继承，如果要让一个类赋予新的特性，通常是使用接口来实现，在C++中支持多继承，允许一个子类同时具有多个父类的接口与功能，在其他语言中，让一个类同时具有其他的可复用代码的方法叫做mixin。新的Java 8 的这个特新在编译器实现的角度上来说更加接近Scala的trait。 在C#中也有名为扩展方法的概念，允许给已存在的类型扩展方法，和Java 8的这个在语义上有差别。</p>
+<h3 id="Lambda-表达式"><a href="#Lambda-表达式" class="headerlink" title="Lambda 表达式"></a>Lambda 表达式</h3><p>首先看看在老版本的Java中是如何排列字符串的：</p>
+<pre><code>List&lt;String&gt; names = Arrays.asList(&quot;peter&quot;, &quot;anna&quot;, &quot;mike&quot;, &quot;xenia&quot;);
+Collections.sort(names, new Comparator&lt;String&gt;() &#123;
+    @Override
+    public int compare(String a, String b) &#123;
+        return b.compareTo(a);
+    &#125;
+&#125;);
+</code></pre>
+<p>只需要给静态方法 Collections.sort 传入一个List对象以及一个比较器来按指定顺序排列。通常做法都是创建一个匿名的比较器对象然后将其传递给sort方法。</p>
+<p>在Java 8 中你就没必要使用这种传统的匿名对象的方式了，Java 8提供了更简洁的语法，lambda表达式：</p>
+<pre><code>Collections.sort(names, (String a, String b) -&gt; &#123;
+    return b.compareTo(a);
+&#125;);
+</code></pre>
+<p>看到了吧，代码变得更段且更具有可读性，但是实际上还可以写得更短：</p>
+<pre><code>Collections.sort(names, (String a, String b) -&gt; b.compareTo(a));
+</code></pre>
+<p>对于函数体只有一行代码的，你可以去掉大括号{}以及return关键字，但是你还可以写得更短点：</p>
+<pre><code>Collections.sort(names, (a, b) -&gt; b.compareTo(a));
+</code></pre>
+<p>Java编译器可以自动推导出参数类型，所以你可以不用再写一次类型。</p>
+<h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>Lambda表达式是如何在java的类型系统中表示的呢？每一个lambda表达式都对应一个类型，通常是接口类型。而“函数式接口”是指仅仅只包含一个抽象方法的接口，每一个该类型的lambda表达式都会被匹配到这个抽象方法。因为 默认方法 不算抽象方法，所以你也可以给你的函数式接口添加默认方法。</p>
+<p>我们可以将lambda表达式当作任意只包含一个抽象方法的接口类型，确保你的接口一定达到这个要求，你只需要给你的接口添加 @FunctionalInterface 注解，编译器如果发现你标注了这个注解的接口有多于一个抽象方法的时候会报错的。</p>
+<pre><code>@FunctionalInterface
+interface Converter&lt;F, T&gt; &#123;
+    T convert(F from);
+&#125;
+Converter&lt;String, Integer&gt; converter = (from) -&gt; Integer.valueOf(from);
+Integer converted = converter.convert(&quot;123&quot;);
+System.out.println(converted);    // 123
+</code></pre>
+<p>需要注意如果@FunctionalInterface如果没有指定，上面的代码也是对的。</p>
+<p>译者注：将lambda表达式映射到一个单方法的接口上，这种做法在Java 8之前就有别的语言实现，比如Rhino JavaScript解释器，如果一个函数参数接收一个单方法的接口而你传递的是一个function，Rhino 解释器会自动做一个单接口的实例到function的适配器，典型的应用场景有 org.w3c.dom.events.EventTarget 的addEventListener 第二个参数 EventListener。</p>
+<h3 id="方法与构造函数引用"><a href="#方法与构造函数引用" class="headerlink" title="方法与构造函数引用"></a>方法与构造函数引用</h3><p>前一节中的代码还可以通过静态方法引用来表示：</p>
+<pre><code>Converter&lt;String, Integer&gt; converter = Integer::valueOf;
+Integer converted = converter.convert(&quot;123&quot;);
+System.out.println(converted);   // 123
+</code></pre>
+<p>Java 8 允许你使用 :: 关键字来传递方法或者构造函数引用，上面的代码展示了如何引用一个静态方法，我们也可以引用一个对象的方法：</p>
+<pre><code>converter = something::startsWith;
+String converted = converter.convert(&quot;Java&quot;);
+System.out.println(converted);    // &quot;J&quot;
+</code></pre>
+<p>接下来看看构造函数是如何使用::关键字来引用的，首先我们定义一个包含多个构造函数的简单类：</p>
+<pre><code>class Person &#123;
+    String firstName;
+    String lastName;
+    Person() &#123;&#125;
+    Person(String firstName, String lastName) &#123;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    &#125;
+&#125;
+</code></pre>
+<p>接下来我们指定一个用来创建Person对象的对象工厂接口：</p>
+<pre><code>interface PersonFactory&lt;P extends Person&gt; &#123;
+    P create(String firstName, String lastName);
+&#125;
+</code></pre>
+<p>这里我们使用构造函数引用来将他们关联起来，而不是实现一个完整的工厂：</p>
+<pre><code>PersonFactory&lt;Person&gt; personFactory = Person::new;
+Person person = personFactory.create(&quot;Peter&quot;, &quot;Parker&quot;);
+</code></pre>
+<p>我们只需要使用 Person::new 来获取Person类构造函数的引用，Java编译器会自动根据PersonFactory.create方法的签名来选择合适的构造函数。</p>
+<h3 id="Lambda-作用域"><a href="#Lambda-作用域" class="headerlink" title="Lambda 作用域"></a>Lambda 作用域</h3><p>在lambda表达式中访问外层作用域和老版本的匿名对象中的方式很相似。你可以直接访问标记了final的外层局部变量，或者实例的字段以及静态变量。</p>
+<h3 id="访问局部变量"><a href="#访问局部变量" class="headerlink" title="访问局部变量"></a>访问局部变量</h3><p>我们可以直接在lambda表达式中访问外层的局部变量：</p>
+<pre><code>final int num = 1;
+Converter&lt;Integer, String&gt; stringConverter =
+        (from) -&gt; String.valueOf(from + num);
+stringConverter.convert(2);     // 3
+</code></pre>
+<p>但是和匿名对象不同的是，这里的变量num可以不用声明为final，该代码同样正确：</p>
+<pre><code>int num = 1;
+Converter&lt;Integer, String&gt; stringConverter =
+        (from) -&gt; String.valueOf(from + num);
+stringConverter.convert(2);     // 3
+</code></pre>
+<p>不过这里的num必须不可被后面的代码修改。在lambda表达式中试图修改num同样是不允许的。（即隐性的具有final的语义）</p>
+<h3 id="访问对象字段与静态变量"><a href="#访问对象字段与静态变量" class="headerlink" title="访问对象字段与静态变量"></a>访问对象字段与静态变量</h3><p>和本地变量不同的是，lambda内部对于实例的字段以及静态变量是即可读又可写。该行为和匿名对象是一致的：</p>
+<pre><code>class Lambda4 &#123;
+    static int outerStaticNum;
+    int outerNum;
+    void testScopes() &#123;
+        Converter&lt;Integer, String&gt; stringConverter1 = (from) -&gt; &#123;
+            outerNum = 23;
+            return String.valueOf(from);
+        &#125;;
+        Converter&lt;Integer, String&gt; stringConverter2 = (from) -&gt; &#123;
+            outerStaticNum = 72;
+            return String.valueOf(from);
+        &#125;;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="访问接口的默认方法"><a href="#访问接口的默认方法" class="headerlink" title="访问接口的默认方法"></a>访问接口的默认方法</h3><p>还记得第一节中的formula例子么，接口Formula定义了一个默认方法sqrt可以直接被formula的实例包括匿名对象访问到，但是在lambda表达式中这个是不行的。<br>Lambda表达式中是无法访问到默认方法的。</p>
+<p>JDK 1.8 API包含了很多内建的函数式接口，在老Java中常用到的比如Comparator或者Runnable接口，这些接口都增加了@FunctionalInterface注解以便能用在lambda上。<br>Java 8 API同样还提供了很多全新的函数式接口来让工作更加方便，有一些接口是来自Google Guava库里的，即便你对这些很熟悉了，还是有必要看看这些是如何扩展到lambda上使用的。</p>
+<h4 id="Predicate接口"><a href="#Predicate接口" class="headerlink" title="Predicate接口"></a>Predicate接口</h4><p>Predicate 接口只有一个参数，返回boolean类型。该接口包含多种默认方法来将Predicate组合成其他复杂的逻辑（比如：与，或，非）：</p>
+<pre><code>Predicate&lt;String&gt; predicate = (s) -&gt; s.length() &gt; 0;
+predicate.test(&quot;foo&quot;);              // true
+predicate.negate().test(&quot;foo&quot;);     // false
+Predicate&lt;Boolean&gt; nonNull = Objects::nonNull;
+Predicate&lt;Boolean&gt; isNull = Objects::isNull;
+Predicate&lt;String&gt; isEmpty = String::isEmpty;
+Predicate&lt;String&gt; isNotEmpty = isEmpty.negate();
+</code></pre>
+<h4 id="Function接口"><a href="#Function接口" class="headerlink" title="Function接口"></a>Function接口</h4><p>Function 接口有一个参数并且返回一个结果，并附带了一些可以和其他函数组合的默认方法（compose, andThen）：</p>
+<pre><code>Function&lt;String, Integer&gt; toInteger = Integer::valueOf;
+Function&lt;String, String&gt; backToString = toInteger.andThen(String::valueOf);
+backToString.apply(&quot;123&quot;);     // &quot;123&quot;
+</code></pre>
+<h4 id="Supplier接口"><a href="#Supplier接口" class="headerlink" title="Supplier接口"></a>Supplier接口</h4><p>Supplier 接口返回一个任意范型的值，和Function接口不同的是该接口没有任何参数</p>
+<pre><code>Supplier&lt;Person&gt; personSupplier = Person::new;
+personSupplier.get();   // new Person
+</code></pre>
+<h4 id="Consumer接口"><a href="#Consumer接口" class="headerlink" title="Consumer接口"></a>Consumer接口</h4><p>Consumer 接口表示执行在单个参数上的操作。</p>
+<pre><code>Consumer&lt;Person&gt; greeter = (p) -&gt; System.out.println(&quot;Hello, &quot; + p.firstName);
+greeter.accept(new Person(&quot;Luke&quot;, &quot;Skywalker&quot;));
+</code></pre>
+<h4 id="Comparator接口"><a href="#Comparator接口" class="headerlink" title="Comparator接口"></a>Comparator接口</h4><p>Comparator 是老Java中的经典接口， Java 8在此之上添加了多种默认方法：</p>
+<pre><code>Comparator&lt;Person&gt; comparator = (p1, p2) -&gt; p1.firstName.compareTo(p2.firstName);
+Person p1 = new Person(&quot;John&quot;, &quot;Doe&quot;);
+Person p2 = new Person(&quot;Alice&quot;, &quot;Wonderland&quot;);
+comparator.compare(p1, p2);             // &gt; 0
+comparator.reversed().compare(p1, p2);  // &lt; 0
+</code></pre>
+<h4 id="Optional接口"><a href="#Optional接口" class="headerlink" title="Optional接口"></a>Optional接口</h4><p>Optional 不是函数是接口，这是个用来防止NullPointerException异常的辅助类型，这是下一届中将要用到的重要概念，现在先简单的看看这个接口能干什么：<br>Optional 被定义为一个简单的容器，其值可能是null或者不是null。在Java 8之前一般某个函数应该返回非空对象但是偶尔却可能返回了null，而在Java 8中，不推荐你返回null而是返回Optional。</p>
+<pre><code>Optional&lt;String&gt; optional = Optional.of(&quot;bam&quot;);
+optional.isPresent();           // true
+optional.get();                 // &quot;bam&quot;
+optional.orElse(&quot;fallback&quot;);    // &quot;bam&quot;
+optional.ifPresent((s) -&gt; System.out.println(s.charAt(0)));     // &quot;b&quot;
+</code></pre>
+<h4 id="Stream接口"><a href="#Stream接口" class="headerlink" title="Stream接口"></a>Stream接口</h4><p>java.util.Stream 表示能应用在一组元素上一次执行的操作序列。Stream 操作分为中间操作或者最终操作两种，最终操作返回一特定类型的计算结果，而中间操作返回Stream本身，这样你就可以将多个操作依次串起来。Stream 的创建需要指定一个数据源，比如 java.util.Collection的子类，List或者Set， Map不支持。Stream的操作可以串行执行或者并行执行。<br>首先看看Stream是怎么用，首先创建实例代码的用到的数据List：</p>
+<pre><code>List&lt;String&gt; stringCollection = new ArrayList&lt;&gt;();
+stringCollection.add(&quot;ddd2&quot;);
+stringCollection.add(&quot;aaa2&quot;);
+stringCollection.add(&quot;bbb1&quot;);
+stringCollection.add(&quot;aaa1&quot;);
+stringCollection.add(&quot;bbb3&quot;);
+stringCollection.add(&quot;ccc&quot;);
+stringCollection.add(&quot;bbb2&quot;);
+stringCollection.add(&quot;ddd1&quot;);
+</code></pre>
+<p>Java 8扩展了集合类，可以通过 Collection.stream() 或者 Collection.parallelStream() 来创建一个Stream。下面几节将详细解释常用的Stream操作：</p>
+<h5 id="Filter-过滤"><a href="#Filter-过滤" class="headerlink" title="Filter 过滤"></a>Filter 过滤</h5><p>过滤通过一个predicate接口来过滤并只保留符合条件的元素，该操作属于中间操作，所以我们可以在过滤后的结果来应用其他Stream操作（比如forEach）。forEach需要一个函数来对过滤后的元素依次执行。forEach是一个最终操作，所以我们不能在forEach之后来执行其他Stream操作。</p>
+<pre><code>stringCollection
+    .stream()
+    .filter((s) -&gt; s.startsWith(&quot;a&quot;))
+    .forEach(System.out::println);
+// &quot;aaa2&quot;, &quot;aaa1&quot;
+</code></pre>
+<h5 id="Sort-排序"><a href="#Sort-排序" class="headerlink" title="Sort 排序"></a>Sort 排序</h5><p>排序是一个中间操作，返回的是排序好后的Stream。如果你不指定一个自定义的Comparator则会使用默认排序。</p>
+<pre><code>stringCollection
+    .stream()
+    .sorted()
+    .filter((s) -&gt; s.startsWith(&quot;a&quot;))
+    .forEach(System.out::println);
+// &quot;aaa1&quot;, &quot;aaa2&quot;
+</code></pre>
+<p>需要注意的是，排序只创建了一个排列好后的Stream，而不会影响原有的数据源，排序之后原数据stringCollection是不会被修改的：</p>
+<p>System.out.println(stringCollection);<br>&#x2F;&#x2F; ddd2, aaa2, bbb1, aaa1, bbb3, ccc, bbb2, ddd1</p>
+<h5 id="Map-映射"><a href="#Map-映射" class="headerlink" title="Map 映射"></a>Map 映射</h5><p>中间操作map会将元素根据指定的Function接口来依次将元素转成另外的对象，下面的示例展示了将字符串转换为大写字符串。你也可以通过map来讲对象转换成其他类型，map返回的Stream类型是根据你map传递进去的函数的返回值决定的。</p>
+<pre><code>stringCollection
+    .stream()
+    .map(String::toUpperCase)
+    .sorted((a, b) -&gt; b.compareTo(a))
+    .forEach(System.out::println);
+// &quot;DDD2&quot;, &quot;DDD1&quot;, &quot;CCC&quot;, &quot;BBB3&quot;, &quot;BBB2&quot;, &quot;AAA2&quot;, &quot;AAA1&quot;
+</code></pre>
+<h5 id="Match-匹配"><a href="#Match-匹配" class="headerlink" title="Match 匹配"></a>Match 匹配</h5><p>Stream提供了多种匹配操作，允许检测指定的Predicate是否匹配整个Stream。所有的匹配操作都是最终操作，并返回一个boolean类型的值。</p>
+<pre><code>boolean anyStartsWithA = 
+    stringCollection
+        .stream()
+        .anyMatch((s) -&gt; s.startsWith(&quot;a&quot;));
+System.out.println(anyStartsWithA);      // true
+boolean allStartsWithA = 
+    stringCollection
+        .stream()
+        .allMatch((s) -&gt; s.startsWith(&quot;a&quot;));
+System.out.println(allStartsWithA);      // false
+boolean noneStartsWithZ = 
+    stringCollection
+        .stream()
+        .noneMatch((s) -&gt; s.startsWith(&quot;z&quot;));
+System.out.println(noneStartsWithZ);      // true
+</code></pre>
+<h5 id="Count-计数"><a href="#Count-计数" class="headerlink" title="Count 计数"></a>Count 计数</h5><p>计数是一个最终操作，返回Stream中元素的个数，返回值类型是long。</p>
+<pre><code>long startsWithB = 
+    stringCollection
+        .stream()
+        .filter((s) -&gt; s.startsWith(&quot;b&quot;))
+        .count();
+System.out.println(startsWithB);    // 3
+</code></pre>
+<h5 id="Reduce-规约"><a href="#Reduce-规约" class="headerlink" title="Reduce 规约"></a>Reduce 规约</h5><p>这是一个最终操作，允许通过指定的函数来讲stream中的多个元素规约为一个元素，规越后的结果是通过Optional接口表示的：</p>
+<pre><code>Optional&lt;String&gt; reduced =
+    stringCollection
+        .stream()
+        .sorted()
+        .reduce((s1, s2) -&gt; s1 + &quot;#&quot; + s2);
+reduced.ifPresent(System.out::println);
+// &quot;aaa1#aaa2#bbb1#bbb2#bbb3#ccc#ddd1#ddd2&quot;
+</code></pre>
+<h4 id="并行Streams"><a href="#并行Streams" class="headerlink" title="并行Streams"></a>并行Streams</h4><p>前面提到过Stream有串行和并行两种，串行Stream上的操作是在一个线程中依次完成，而并行Stream则是在多个线程上同时执行。</p>
+<p>下面的例子展示了是如何通过并行Stream来提升性能：</p>
+<p>首先我们创建一个没有重复元素的大表：</p>
+<pre><code>int max = 1000000;
+List&lt;String&gt; values = new ArrayList&lt;&gt;(max);
+for (int i = 0; i &lt; max; i++) &#123;
+    UUID uuid = UUID.randomUUID();
+    values.add(uuid.toString());
+&#125;
+</code></pre>
+<p>然后我们计算一下排序这个Stream要耗时多久，<br>串行排序：</p>
+<pre><code>long t0 = System.nanoTime();
+long count = values.stream().sorted().count();
+System.out.println(count);
+long t1 = System.nanoTime();
+long millis = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
+System.out.println(String.format(&quot;sequential sort took: %d ms&quot;, millis));
+</code></pre>
+<p>&#x2F;&#x2F; 串行耗时: 899 ms</p>
+<p>并行排序：</p>
+<pre><code>long t0 = System.nanoTime();
+long count = values.parallelStream().sorted().count();
+System.out.println(count);
+long t1 = System.nanoTime();
+long millis = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
+System.out.println(String.format(&quot;parallel sort took: %d ms&quot;, millis));
+</code></pre>
+<p>&#x2F;&#x2F; 并行排序耗时: 472 ms</p>
+<p>上面两个代码几乎是一样的，但是并行版的快了50%之多，唯一需要做的改动就是将stream()改为parallelStream()。</p>
+<h4 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h4><p>前面提到过，Map类型不支持stream，不过Map提供了一些新的有用的方法来处理一些日常任务。</p>
+<pre><code>Map&lt;Integer, String&gt; map = new HashMap&lt;&gt;();
+for (int i = 0; i &lt; 10; i++) &#123;
+    map.putIfAbsent(i, &quot;val&quot; + i);
+&#125;
+</code></pre>
+<p>map.forEach((id, val) -&gt; System.out.println(val));<br>以上代码很容易理解， putIfAbsent 不需要我们做额外的存在性检查，而forEach则接收一个Consumer接口来对map里的每一个键值对进行操作。</p>
+<p>下面的例子展示了map上的其他有用的函数：</p>
+<pre><code>map.computeIfPresent(3, (num, val) -&gt; val + num);
+map.get(3);             // val33
+map.computeIfPresent(9, (num, val) -&gt; null);
+map.containsKey(9);     // false
+map.computeIfAbsent(23, num -&gt; &quot;val&quot; + num);
+map.containsKey(23);    // true
+map.computeIfAbsent(3, num -&gt; &quot;bam&quot;);
+map.get(3);             // val33
+</code></pre>
+<p>接下来展示如何在Map里删除一个键值全都匹配的项：</p>
+<pre><code>map.remove(3, &quot;val3&quot;);
+map.get(3);             // val33
+map.remove(3, &quot;val33&quot;);
+map.get(3);             // null
+</code></pre>
+<p>另外一个有用的方法：</p>
+<pre><code>map.getOrDefault(42, &quot;not found&quot;);  // not found
+</code></pre>
+<p>对Map的元素做合并也变得很容易了：</p>
+<pre><code>map.merge(9, &quot;val9&quot;, (value, newValue) -&gt; value.concat(newValue));
+map.get(9);             // val9
+map.merge(9, &quot;concat&quot;, (value, newValue) -&gt; value.concat(newValue));
+map.get(9);             // val9concat
+</code></pre>
+<p>Merge做的事情是如果键名不存在则插入，否则则对原键对应的值做合并操作并重新插入到map中。</p>
+<h3 id="Date-API"><a href="#Date-API" class="headerlink" title="Date API"></a>Date API</h3><p>Java 8 在包java.time下包含了一组全新的时间日期API。新的日期API和开源的Joda-Time库差不多，但又不完全一样，下面的例子展示了这组新API里最重要的一些部分：</p>
+<h4 id="Clock-时钟"><a href="#Clock-时钟" class="headerlink" title="Clock 时钟"></a>Clock 时钟</h4><p>Clock类提供了访问当前日期和时间的方法，Clock是时区敏感的，可以用来取代 System.currentTimeMillis() 来获取当前的微秒数。某一个特定的时间点也可以使用Instant类来表示，Instant类也可以用来创建老的java.util.Date对象。</p>
+<pre><code>Clock clock = Clock.systemDefaultZone();
+long millis = clock.millis();
+Instant instant = clock.instant();
+Date legacyDate = Date.from(instant);   // legacy java.util.Date
+</code></pre>
+<h4 id="Timezones-时区"><a href="#Timezones-时区" class="headerlink" title="Timezones 时区"></a>Timezones 时区</h4><p>在新API中时区使用ZoneId来表示。时区可以很方便的使用静态方法of来获取到。 时区定义了到UTS时间的时间差，在Instant时间点对象到本地日期对象之间转换的时候是极其重要的。</p>
+<pre><code>System.out.println(ZoneId.getAvailableZoneIds());
+// prints all available timezone ids
+ZoneId zone1 = ZoneId.of(&quot;Europe/Berlin&quot;);
+ZoneId zone2 = ZoneId.of(&quot;Brazil/East&quot;);
+System.out.println(zone1.getRules());
+System.out.println(zone2.getRules());
+// ZoneRules[currentStandardOffset=+01:00]
+// ZoneRules[currentStandardOffset=-03:00]
+</code></pre>
+<h4 id="LocalTime-本地时间"><a href="#LocalTime-本地时间" class="headerlink" title="LocalTime 本地时间"></a>LocalTime 本地时间</h4><p>LocalTime 定义了一个没有时区信息的时间，例如 晚上10点，或者 17:30:15。下面的例子使用前面代码创建的时区创建了两个本地时间。之后比较时间并以小时和分钟为单位计算两个时间的时间差：</p>
+<pre><code>LocalTime now1 = LocalTime.now(zone1);
+LocalTime now2 = LocalTime.now(zone2);
+System.out.println(now1.isBefore(now2));  // false
+long hoursBetween = ChronoUnit.HOURS.between(now1, now2);
+long minutesBetween = ChronoUnit.MINUTES.between(now1, now2);
+System.out.println(hoursBetween);       // -3
+System.out.println(minutesBetween);     // -239
+</code></pre>
+<p>LocalTime 提供了多种工厂方法来简化对象的创建，包括解析时间字符串。</p>
+<pre><code>LocalTime late = LocalTime.of(23, 59, 59);
+System.out.println(late);       // 23:59:59
+DateTimeFormatter germanFormatter =
+    DateTimeFormatter
+        .ofLocalizedTime(FormatStyle.SHORT)
+        .withLocale(Locale.GERMAN);
+LocalTime leetTime = LocalTime.parse(&quot;13:37&quot;, germanFormatter);
+System.out.println(leetTime);   // 13:37
+</code></pre>
+<h4 id="LocalDate-本地日期"><a href="#LocalDate-本地日期" class="headerlink" title="LocalDate 本地日期"></a>LocalDate 本地日期</h4><p>LocalDate 表示了一个确切的日期，比如 2014-03-11。该对象值是不可变的，用起来和LocalTime基本一致。下面的例子展示了如何给Date对象加减天&#x2F;月&#x2F;年。另外要注意的是这些对象是不可变的，操作返回的总是一个新实例。</p>
+<pre><code>LocalDate today = LocalDate.now();
+LocalDate tomorrow = today.plus(1, ChronoUnit.DAYS);
+LocalDate yesterday = tomorrow.minusDays(2);
+LocalDate independenceDay = LocalDate.of(2014, Month.JULY, 4);
+DayOfWeek dayOfWeek = independenceDay.getDayOfWeek();
+
+System.out.println(dayOfWeek);    // FRIDAY
+</code></pre>
+<p>从字符串解析一个LocalDate类型和解析LocalTime一样简单：</p>
+<pre><code>DateTimeFormatter germanFormatter =
+    DateTimeFormatter
+        .ofLocalizedDate(FormatStyle.MEDIUM)
+        .withLocale(Locale.GERMAN);
+LocalDate xmas = LocalDate.parse(&quot;24.12.2014&quot;, germanFormatter);
+System.out.println(xmas);   // 2014-12-24
+</code></pre>
+<h4 id="LocalDateTime-本地日期时间"><a href="#LocalDateTime-本地日期时间" class="headerlink" title="LocalDateTime 本地日期时间"></a>LocalDateTime 本地日期时间</h4><p>LocalDateTime 同时表示了时间和日期，相当于前两节内容合并到一个对象上了。LocalDateTime和LocalTime还有LocalDate一样，都是不可变的。LocalDateTime提供了一些能访问具体字段的方法。</p>
+<pre><code>LocalDateTime sylvester = LocalDateTime.of(2014, Month.DECEMBER, 31, 23, 59, 59);
+DayOfWeek dayOfWeek = sylvester.getDayOfWeek();
+System.out.println(dayOfWeek);      // WEDNESDAY
+Month month = sylvester.getMonth();
+System.out.println(month);          // DECEMBER
+long minuteOfDay = sylvester.getLong(ChronoField.MINUTE_OF_DAY);
+System.out.println(minuteOfDay);    // 1439
+</code></pre>
+<p>只要附加上时区信息，就可以将其转换为一个时间点Instant对象，Instant时间点对象可以很容易的转换为老式的java.util.Date。</p>
+<pre><code>Instant instant = sylvester
+        .atZone(ZoneId.systemDefault())
+        .toInstant();
+Date legacyDate = Date.from(instant);
+System.out.println(legacyDate);     // Wed Dec 31 23:59:59 CET 2014
+</code></pre>
+<p>格式化LocalDateTime和格式化时间和日期一样的，除了使用预定义好的格式外，我们也可以自己定义格式：</p>
+<pre><code>DateTimeFormatter formatter =
+    DateTimeFormatter
+        .ofPattern(&quot;MMM dd, yyyy - HH:mm&quot;);
+LocalDateTime parsed = LocalDateTime.parse(&quot;Nov 03, 2014 - 07:13&quot;, formatter);
+String string = formatter.format(parsed);
+System.out.println(string);     // Nov 03, 2014 - 07:13
+</code></pre>
+<p>和java.text.NumberFormat不一样的是新版的DateTimeFormatter是不可变的，所以它是线程安全的。<br>关于时间日期格式的详细信息：<br><a target="_blank" rel="noopener" href="http://download.java.net/jdk8/docs/api/java/time/format/DateTimeFormatter.html">http://download.java.net/jdk8/docs/api/java/time/format/DateTimeFormatter.html</a></p>
+<h3 id="Annotation-注解"><a href="#Annotation-注解" class="headerlink" title="Annotation 注解"></a>Annotation 注解</h3><p>在Java 8中支持多重注解了，先看个例子来理解一下是什么意思。<br>首先定义一个包装类Hints注解用来放置一组具体的Hint注解：</p>
+<pre><code>@interface Hints &#123;
+    Hint[] value();
+&#125;
+@Repeatable(Hints.class)
+@interface Hint &#123;
+    String value();
+&#125;
+</code></pre>
+<p>Java 8允许我们把同一个类型的注解使用多次，只需要给该注解标注一下@Repeatable即可。</p>
+<p>例 1: 使用包装类当容器来存多个注解（老方法）</p>
+<pre><code>@Hints(&#123;@Hint(&quot;hint1&quot;), @Hint(&quot;hint2&quot;)&#125;)
+class Person &#123;&#125;
+</code></pre>
+<p>例 2：使用多重注解（新方法）</p>
+<pre><code>@Hint(&quot;hint1&quot;)
+@Hint(&quot;hint2&quot;)
+class Person &#123;&#125;
+</code></pre>
+<p>第二个例子里java编译器会隐性的帮你定义好@Hints注解，了解这一点有助于你用反射来获取这些信息：</p>
+<pre><code>Hint hint = Person.class.getAnnotation(Hint.class);
+System.out.println(hint);                   // null
+Hints hints1 = Person.class.getAnnotation(Hints.class);
+System.out.println(hints1.value().length);  // 2
+Hint[] hints2 = Person.class.getAnnotationsByType(Hint.class);
+System.out.println(hints2.length);          // 2
+</code></pre>
+<p>即便我们没有在Person类上定义@Hints注解，我们还是可以通过 getAnnotation(Hints.class) 来获取 @Hints注解，更加方便的方法是使用 getAnnotationsByType 可以直接获取到所有的@Hint注解。</p>
+<p>另外Java 8的注解还增加到两种新的target上了：</p>
+<pre><code>@Target(&#123;ElementType.TYPE_PARAMETER, ElementType.TYPE_USE&#125;)
+@interface MyAnnotation &#123;&#125;
+</code></pre>
+<p>关于Java 8的新特性就写到这了，肯定还有更多的特性等待发掘。JDK 1.8里还有很多很有用的东西，比如Arrays.parallelSort, StampedLock和CompletableFuture等等。</p>
+<p><a target="_blank" rel="noopener" href="http://www.jb51.net/article/48304.htm">原文链接</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/06/21/java8%E6%96%B0%E7%89%B9%E6%80%A7/" data-id="cllui4qz2002nq0ja0gwgc620" data-title="JDK1.8 十大新特性详解" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/27/mybaties/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mybatis常用语法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/10/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关系技能修炼篇&lt;三&gt;</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

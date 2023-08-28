@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>docker部署java程序基本命令 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="使用docker容器部署java程序简单操作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker部署java程序基本命令">
+<meta property="og:url" content="http://example.com/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用docker容器部署java程序简单操作。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-08-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-28T06:28:05.234Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-docker部署java程序基本命令" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time class="dt-published" datetime="2023-08-27T16:00:00.000Z" itemprop="datePublished">2023-08-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      docker部署java程序基本命令
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1、在本地安装docker，这里已windows-11-系统为例"><a href="#1、在本地安装docker，这里已windows-11-系统为例" class="headerlink" title="1、在本地安装docker，这里已windows 11 系统为例"></a>1、在本地安装docker，这里已windows 11 系统为例</h3><ol>
+<li><p>下载docker安装包，直接安装即可。</p>
+<p> <a target="_blank" rel="noopener" href="https://www.docker.com/">https://www.docker.com</a></p>
+</li>
+<li><p>安装完毕后，输入命令查看docker安装信息</p>
+<p> docker version</p>
+</li>
+<li><p>启动docker，如果出现wsl的报错信息，在命令行输入</p>
+<p> wsl –update</p>
+</li>
+</ol>
+<h3 id="2、使用maven构建java项目，在项目根目录下编写对应的文件Dockerfile和docker-build-sh"><a href="#2、使用maven构建java项目，在项目根目录下编写对应的文件Dockerfile和docker-build-sh" class="headerlink" title="2、使用maven构建java项目，在项目根目录下编写对应的文件Dockerfile和docker_build.sh"></a>2、使用maven构建java项目，在项目根目录下编写对应的文件Dockerfile和docker_build.sh</h3><p>Dockerfile文件内容如下</p>
+<pre><code>#Dockerfile
+FROM registry.mlogcn.com/base/adoptopenjdk:8-jre-hotspot AS builder
+WORKDIR application
+ARG JAR_FILE=target/*.jar
+COPY $&#123;JAR_FILE&#125; application.jar
+RUN java -Djarmode=layertools -jar application.jar extract
+
+
+FROM registry.mlogcn.com/base/adoptopenjdk:8-jre-hotspot
+
+ARG user=www
+ARG group=www
+ARG uid=2021
+ARG gid=2021
+
+RUN set -eux; \
+        groupadd --gid=$&#123;gid&#125; $&#123;group&#125;; \
+        useradd --uid=$&#123;uid&#125; --gid=$&#123;gid&#125; --shell=/bin/bash --create-home $&#123;user&#125;; \
+        mkdir -p application; \
+        chown -R $&#123;uid&#125;.$&#123;gid&#125; application
+
+WORKDIR application
+COPY --from=builder --chown=$&#123;uid&#125;:$&#123;gid&#125; application/dependencies/ ./
+COPY --from=builder --chown=$&#123;uid&#125;:$&#123;gid&#125; application/spring-boot-loader/ ./
+COPY --from=builder --chown=$&#123;uid&#125;:$&#123;gid&#125; application/snapshot-dependencies/ ./
+COPY --from=builder --chown=$&#123;uid&#125;:$&#123;gid&#125; application/application/ ./
+
+ENV JVM_OPTS=&quot;-Duser.timezone=Asia/Shanghai -Djava.security.egd=file:/dev/./urandom&quot; \
+    JAVA_OPTS=&quot;&quot;
+
+EXPOSE $&#123;ServerPort&#125;
+USER $&#123;user&#125;
+
+ENTRYPOINT [&quot;sh&quot;, &quot;-c&quot;, &quot;exec java $JVM_OPTS $JAVA_OPTS org.springframework.boot.loader.JarLauncher&quot;]
+
+HEALTHCHECK --start-period=60s --interval=15s --timeout=5s --retries=3 \
+  CMD curl -m 5 -s -f -XGET &quot;http://$&#123;host&#125;:$&#123;ServerPort&#125;/$&#123;checkUrl&#125;&quot; | \
+        jq -e -n &#39;inputs | if has(&quot;status&quot;) then .status==&quot;UP&quot; else false end&#39; &gt; /dev/null || exit 1
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>修改端口号，改成服务部署的端口号 <code>EXPOSE $&#123;ServerPort&#125;</code></li>
+<li>修改健康监测地址： <code>http://$&#123;host&#125;:$&#123;ServerPort&#125;/$&#123;checkUrl&#125;</code> 如果使用spring的actuator，可以直接用 <code>/actuator/health</code></li>
+</ol>
+<p>docker_build.sh内容如下：</p>
+<pre><code>#docker_build.sh
+#!/usr/bin/env bash
+#------------------------------------------
+# image build and push script.
+# 最终的镜像格式为gavial-ng-web:1.3
+#------------------------------------------
+echo $1
+export version=$1
+if [ ! -n &quot;$1&quot; ];then
+  echo &#39;未输入版本，将使用最新版本号 latest&#39;
+  export version=&quot;latest&quot;
+  echo $&#123;version&#125;
+fi
+
+docker login -u $&#123;用户&#125; -p $&#123;密码&#125; $&#123;仓库地址&#125;
+
+image_name=&quot;$&#123;docker仓库地址&#125;/$&#123;部署的java镜像名字&#125;:$&#123;version&#125;&quot;
+
+echo &quot;start build $image_name&quot;
+docker build -f Dockerfile -t $image_name .
+echo &quot;image build success ...&quot;
+echo &quot;start push image ...&quot;
+docker push $image_name
+echo &quot;image push success admin:$&#123;version&#125; ...&quot;
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>需要填写完善docker仓库信息 <code>docker login -u $&#123;用户&#125; -p $&#123;密码&#125; $&#123;仓库地址&#125;</code></li>
+<li>需要填写完善部署的java镜像信息 <code>image_name=&quot;$&#123;docker仓库地址&#125;/$&#123;部署的java镜像名字&#125;:$&#123;version&#125;&quot;</code></li>
+</ol>
+<h3 id="3、修改pom文件的打包方式"><a href="#3、修改pom文件的打包方式" class="headerlink" title="3、修改pom文件的打包方式"></a>3、修改pom文件的打包方式</h3><pre><code>&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.3.3.RELEASE&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;mainClass&gt;$&#123;mainClassPath&#125;&lt;/mainClass&gt;
+                &lt;layers&gt;
+                    &lt;enabled&gt;true&lt;/enabled&gt;
+                &lt;/layers&gt;
+            &lt;/configuration&gt;
+            &lt;executions&gt;
+                &lt;execution&gt;
+                    &lt;goals&gt;
+                        &lt;goal&gt;repackage&lt;/goal&gt;
+                    &lt;/goals&gt;
+                &lt;/execution&gt;
+            &lt;/executions&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>完善启动类路径。 <code>&lt;mainClass&gt;$&#123;mainClassPath&#125;&lt;/mainClass&gt;</code></li>
+</ol>
+<h3 id="4、编译并上传到镜像仓库"><a href="#4、编译并上传到镜像仓库" class="headerlink" title="4、编译并上传到镜像仓库"></a>4、编译并上传到镜像仓库</h3><pre><code>使用默认版本号覆盖上传（当前版本）
+bash docker_build.sh
+
+指定版本号上传
+bash docker_build.sh $&#123;version&#125;
+</code></pre>
+<h3 id="5、使用docker创建网络（这里docker的容器配置暂时不展开描述）"><a href="#5、使用docker创建网络（这里docker的容器配置暂时不展开描述）" class="headerlink" title="5、使用docker创建网络（这里docker的容器配置暂时不展开描述）"></a>5、使用docker创建网络（这里docker的容器配置暂时不展开描述）</h3><p>创建自定义网络</p>
+<pre><code>docker network create $&#123;networkName&#125;
+</code></pre>
+<h3 id="6、编写docker和部署的java程序配置文件：docker-compose-yml"><a href="#6、编写docker和部署的java程序配置文件：docker-compose-yml" class="headerlink" title="6、编写docker和部署的java程序配置文件：docker-compose.yml"></a>6、编写docker和部署的java程序配置文件：docker-compose.yml</h3><p>docker-compose.yml内容如下所示：</p>
+<pre><code>version: &quot;3.9&quot;
+
+services:
+  $&#123;应用名字&#125;:
+    image: $&#123;仓库host&#125;/$&#123;应用路径&#125;:$&#123;版本&#125;
+    container_name: $&#123;应用名字&#125;
+    restart: always
+    networks:
+      - $&#123;networkName&#125;
+    ports:
+      - &quot;$&#123;外部端口&#125;:$&#123;内部端口&#125;&quot;
+    env_file:
+      - &quot;./common.env&quot;
+    volumes:
+      - &quot;/etc/localtime:/etc/localtime:ro&quot;
+      - &quot;./config/$&#123;应用名字&#125;:/application/config:ro&quot;
+      - &quot;./logs/$&#123;应用名字&#125;:/application/logs&quot;
+    healthcheck:
+      test: curl -m 5 -s -f -XGET &quot;http://localhost:$&#123;内部端口&#125;/$&#123;checkUrl&#125;&quot; 
+    | jq -e -n &#39;inputs | if has(&quot;status&quot;) then .status==&quot;UP&quot; else false end&#39; &gt; /dev/null || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    
+networks:
+  spoweress:
+    external: true
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>配置部署的应用名字：<code>$&#123;应用名字&#125;</code>，例如：<code>test-docker-app</code></li>
+<li>配置应用的镜像地址：<code> image: $&#123;仓库host&#125;/$&#123;应用路径&#125;:$&#123;版本&#125;</code>，例如：<code>image: 127.0.0.1/test/test-docker-app:0.02</code></li>
+<li>配置网络：<code> - $&#123;networkName&#125;</code></li>
+<li>配置端口：<code> - &quot;$&#123;外部端口&#125;:$&#123;内部端口&#125;&quot;</code>，例如：<code>8080:8080</code></li>
+<li>公用配置文件：<code>./common.env</code></li>
+<li>专用配置文件：<code>- &quot;./config/$&#123;应用名字&#125;:/application/config:ro&quot;</code></li>
+<li>运行日志路径：<code>- &quot;./logs/$&#123;应用名字&#125;:/application/logs&quot;</code></li>
+<li>健康检查：<code>-XGET &quot;http://localhost:$&#123;内部端口&#125;/$&#123;checkUrl&#125;&quot; </code></li>
+<li>如有多组应用，可以在<code>services</code>下编写多个；</li>
+</ol>
+<h3 id="7、服务器端，在部署目录下编写docker的配置文件：common-env"><a href="#7、服务器端，在部署目录下编写docker的配置文件：common-env" class="headerlink" title="7、服务器端，在部署目录下编写docker的配置文件：common.env"></a>7、服务器端，在部署目录下编写docker的配置文件：common.env</h3><pre><code>server.port=$&#123;ServerPort&#125;
+spring.application.name=$&#123;AppliCationName&#125;
+....
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>这个文件中存放的是java程序中的配置信息，可以在application.properties中通过变量引用获取。</li>
+<li>通常用来放通用的配置项；</li>
+</ol>
+<h3 id="8、提交部署"><a href="#8、提交部署" class="headerlink" title="8、提交部署"></a>8、提交部署</h3><p>不变更版本号的部署：刷新docker镜像：</p>
+<pre><code>docker pull $&#123;镜像地址&#125;:latest  
+</code></pre>
+<p>变更版本号的部署：修改<code>docker-compose.yml</code>中的版本号：</p>
+<pre><code>image: $&#123;仓库host&#125;/$&#123;应用路径&#125;:$&#123;版本&#125;
+</code></pre>
+<h3 id="9、运行实例："><a href="#9、运行实例：" class="headerlink" title="9、运行实例："></a>9、运行实例：</h3><pre><code>docker-compose up -d 
+</code></pre>
+<h3 id="10、查看实例运行状态："><a href="#10、查看实例运行状态：" class="headerlink" title="10、查看实例运行状态："></a>10、查看实例运行状态：</h3><pre><code>docker ps
+</code></pre>
+<h3 id="11、查看实例日志"><a href="#11、查看实例日志" class="headerlink" title="11、查看实例日志"></a>11、查看实例日志</h3><pre><code>docker logs -f $&#123;CONTAINER ID&#125;
+</code></pre>
+<p>说明：</p>
+<ol>
+<li>CONTAINER ID可以通过实例运行状态命令获取。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" data-id="cllui4qyt000vq0ja3clpblkf" data-title="docker部署java程序基本命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Springboot返回json和xml视图</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

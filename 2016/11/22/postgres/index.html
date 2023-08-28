@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>postgresql常用知识点一览 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="PostgreSQL 是一个自由的对象-关系数据库服务器(数据库管理系统)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="postgresql常用知识点一览">
+<meta property="og:url" content="http://example.com/2016/11/22/postgres/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PostgreSQL 是一个自由的对象-关系数据库服务器(数据库管理系统)。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-11-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-28T02:26:10.526Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="postgresql">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-postgres" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/11/22/postgres/" class="article-date">
+  <time class="dt-published" datetime="2016-11-21T16:00:00.000Z" itemprop="datePublished">2016-11-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      postgresql常用知识点一览
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><h3 id="1、连接数据库-默认的用户和数据库是postgres"><a href="#1、连接数据库-默认的用户和数据库是postgres" class="headerlink" title="1、连接数据库, 默认的用户和数据库是postgres"></a>1、连接数据库, 默认的用户和数据库是postgres</h3><pre><code>psql -U user -d dbname 
+</code></pre>
+<h3 id="2、切换数据库-相当于mysql的use-dbname"><a href="#2、切换数据库-相当于mysql的use-dbname" class="headerlink" title="2、切换数据库,相当于mysql的use dbname"></a>2、切换数据库,相当于mysql的use dbname</h3><pre><code>\c dbname
+</code></pre>
+<h3 id="3、选择数据库，相当于mysql的show-databases"><a href="#3、选择数据库，相当于mysql的show-databases" class="headerlink" title="3、选择数据库，相当于mysql的show databases"></a>3、选择数据库，相当于mysql的show databases</h3><pre><code>\l list of databases
+</code></pre>
+<h3 id="4、显示数据库"><a href="#4、显示数据库" class="headerlink" title="4、显示数据库"></a>4、显示数据库</h3><pre><code>\d
+</code></pre>
+<h3 id="5、列举表，相当于mysql的show-tables"><a href="#5、列举表，相当于mysql的show-tables" class="headerlink" title="5、列举表，相当于mysql的show tables"></a>5、列举表，相当于mysql的show tables</h3><pre><code>\dt
+</code></pre>
+<h3 id="6、查看表结构，相当于desc-tblname-show-columns-from-tbname"><a href="#6、查看表结构，相当于desc-tblname-show-columns-from-tbname" class="headerlink" title="6、查看表结构，相当于desc tblname,show columns from tbname"></a>6、查看表结构，相当于desc tblname,show columns from tbname</h3><pre><code>\d tblname 
+</code></pre>
+<h3 id="7、查看索引"><a href="#7、查看索引" class="headerlink" title="7、查看索引"></a>7、查看索引</h3><pre><code>\di
+</code></pre>
+<h3 id="8、创建数据库："><a href="#8、创建数据库：" class="headerlink" title="8、创建数据库："></a>8、创建数据库：</h3><pre><code>create database [数据库名]; 
+create database pgws_ex TEMPLATE=postgre; 可以继承扩展，比如说postgis等
+</code></pre>
+<h3 id="9、删除数据库："><a href="#9、删除数据库：" class="headerlink" title="9、删除数据库："></a>9、删除数据库：</h3><pre><code>drop database [数据库名];  
+</code></pre>
+<h3 id="10、重命名一个表："><a href="#10、重命名一个表：" class="headerlink" title="10、重命名一个表："></a>10、重命名一个表：</h3><pre><code>alter table [表名A] rename to [表名B]; 
+</code></pre>
+<h3 id="11、删除一个表："><a href="#11、删除一个表：" class="headerlink" title="11、删除一个表："></a>11、删除一个表：</h3><pre><code>drop table [表名];  
+</code></pre>
+<h3 id="12、在已有的表里添加字段："><a href="#12、在已有的表里添加字段：" class="headerlink" title="12、在已有的表里添加字段："></a>12、在已有的表里添加字段：</h3><pre><code>alter table [表名] add column [字段名] [类型]; 
+</code></pre>
+<h3 id="13、删除表中的字段："><a href="#13、删除表中的字段：" class="headerlink" title="13、删除表中的字段："></a>13、删除表中的字段：</h3><pre><code>alter table [表名] drop column [字段名]; 
+</code></pre>
+<h3 id="14、重命名一个字段："><a href="#14、重命名一个字段：" class="headerlink" title="14、重命名一个字段："></a>14、重命名一个字段：</h3><pre><code>alter table [表名] rename column [字段名A] to [字段名B]; 
+</code></pre>
+<h3 id="15、给一个字段设置缺省值："><a href="#15、给一个字段设置缺省值：" class="headerlink" title="15、给一个字段设置缺省值："></a>15、给一个字段设置缺省值：</h3><pre><code>alter table [表名] alter column [字段名] set default [新的默认值];
+</code></pre>
+<h3 id="16、去除缺省值："><a href="#16、去除缺省值：" class="headerlink" title="16、去除缺省值："></a>16、去除缺省值：</h3><pre><code>alter table [表名] alter column [字段名] drop default; 
+</code></pre>
+<h3 id="17、在表中插入数据："><a href="#17、在表中插入数据：" class="headerlink" title="17、在表中插入数据："></a>17、在表中插入数据：</h3><pre><code>insert into 表名 ([字段名m],[字段名n],......) values ([列m的值],[列n的值],......); 
+</code></pre>
+<h3 id="18、修改表中的某行某列的数据："><a href="#18、修改表中的某行某列的数据：" class="headerlink" title="18、修改表中的某行某列的数据："></a>18、修改表中的某行某列的数据：</h3><pre><code>update [表名] set [目标字段名]=[目标值] where [该行特征]; 
+</code></pre>
+<h3 id="19、删除表中某行数据："><a href="#19、删除表中某行数据：" class="headerlink" title="19、删除表中某行数据："></a>19、删除表中某行数据：</h3><pre><code>delete from [表名] where [该行特征]; 
+delete from [表名];--删空整个表 
+</code></pre>
+<h3 id="20、创建表："><a href="#20、创建表：" class="headerlink" title="20、创建表："></a>20、创建表：</h3><pre><code>create table ([字段名1] [类型1] ;,[字段名2] [类型2],......&lt;,primary key (字段名m,字段名n,...)&gt;;); 
+</code></pre>
+<h3 id="21、显示-PostgreSQL-的使用和发行条款"><a href="#21、显示-PostgreSQL-的使用和发行条款" class="headerlink" title="21、显示 PostgreSQL 的使用和发行条款"></a>21、显示 PostgreSQL 的使用和发行条款</h3><pre><code>\copyright     
+</code></pre>
+<h3 id="22、显示或设定用户端字元编码"><a href="#22、显示或设定用户端字元编码" class="headerlink" title="22、显示或设定用户端字元编码"></a>22、显示或设定用户端字元编码</h3><pre><code>\encoding [字元编码名称]
+</code></pre>
+<h3 id="23、SQL-命令语法上的说明，用-显示全部命令"><a href="#23、SQL-命令语法上的说明，用-显示全部命令" class="headerlink" title="23、SQL 命令语法上的说明，用 * 显示全部命令"></a>23、SQL 命令语法上的说明，用 * 显示全部命令</h3><pre><code>\h [名称] 
+</code></pre>
+<h3 id="24、名称"><a href="#24、名称" class="headerlink" title="24、名称"></a>24、名称</h3><pre><code>\prompt [文本] 
+</code></pre>
+<h3 id="25、提示用户设定内部变数"><a href="#25、提示用户设定内部变数" class="headerlink" title="25、提示用户设定内部变数"></a>25、提示用户设定内部变数</h3><pre><code>\password [USERNAME] securely change the password for a user
+</code></pre>
+<h3 id="26、退出-psql"><a href="#26、退出-psql" class="headerlink" title="26、退出 psql"></a>26、退出 psql</h3><pre><code>\q              
+</code></pre>
+<h3 id="27、数据库备份"><a href="#27、数据库备份" class="headerlink" title="27、数据库备份"></a>27、数据库备份</h3><pre><code>可以使用pg_dump和pg_dumpall来完成。比如备份sales数据库： 
+pg_dump drupal&gt;/opt/Postgresql/backup/1.bak 
+</code></pre>
+<h1 id="授权管理操作"><a href="#授权管理操作" class="headerlink" title="授权管理操作"></a>授权管理操作</h1><h3 id="1、超级管理员登录"><a href="#1、超级管理员登录" class="headerlink" title="1、超级管理员登录"></a>1、超级管理员登录</h3><pre><code>su postgres
+psql
+或者：sudo -u postgres psql
+</code></pre>
+<h3 id="2、创建用户"><a href="#2、创建用户" class="headerlink" title="2、创建用户"></a>2、创建用户</h3><pre><code>createuser -D -A -P username;
+</code></pre>
+<h3 id="3、创建数据库并继承拓展"><a href="#3、创建数据库并继承拓展" class="headerlink" title="3、创建数据库并继承拓展"></a>3、创建数据库并继承拓展</h3><pre><code>create database dbname TEMPLATE postgres owner username;
+</code></pre>
+<h3 id="4、查询星期几"><a href="#4、查询星期几" class="headerlink" title="4、查询星期几"></a>4、查询星期几</h3><pre><code> SELECT extract(DOW FROM now())
+DOW（day of week）
+DAY（day of week）可以获取当天是当月的第几天
+</code></pre>
+<h3 id="5、使用pg-dump导出数据"><a href="#5、使用pg-dump导出数据" class="headerlink" title="5、使用pg_dump导出数据"></a>5、使用pg_dump导出数据</h3><pre><code>pg_dump --host 10.171.36.53 --port 5432 --username gavial -d gavial -t rnwststation &gt;/home/rnwststation.sql
+    -s 只导出表结构
+    -t table1 -t table2 -t table3 多表导出
+</code></pre>
+<h3 id="6、使用psql导入数据"><a href="#6、使用psql导入数据" class="headerlink" title="6、使用psql导入数据"></a>6、使用psql导入数据</h3><pre><code>psql -d gavial -U gavial --password -f /home/rnwststation.sql
+</code></pre>
+<h1 id="PostgreSQL修改数据库表的列属性-ALTER语句"><a href="#PostgreSQL修改数据库表的列属性-ALTER语句" class="headerlink" title="PostgreSQL修改数据库表的列属性(ALTER语句)"></a>PostgreSQL修改数据库表的列属性(ALTER语句)</h1><h3 id="1、向表中增加一个-varchar-列："><a href="#1、向表中增加一个-varchar-列：" class="headerlink" title="1、向表中增加一个 varchar 列："></a>1、向表中增加一个 varchar 列：</h3><pre><code>ALTER TABLE distributors ADD COLUMN address varchar(30);
+</code></pre>
+<h3 id="2、从表中删除一个字段："><a href="#2、从表中删除一个字段：" class="headerlink" title="2、从表中删除一个字段："></a>2、从表中删除一个字段：</h3><pre><code>ALTER TABLE distributors DROP COLUMN address RESTRICT;
+</code></pre>
+<h3 id="3、在一个操作中修改两个现有字段的类型："><a href="#3、在一个操作中修改两个现有字段的类型：" class="headerlink" title="3、在一个操作中修改两个现有字段的类型："></a>3、在一个操作中修改两个现有字段的类型：</h3><pre><code>ALTER TABLE distributors
+ALTER COLUMN address TYPE varchar(80),
+ALTER COLUMN name TYPE varchar(100);
+</code></pre>
+<h3 id="4、对现存字段改名："><a href="#4、对现存字段改名：" class="headerlink" title="4、对现存字段改名："></a>4、对现存字段改名：</h3><pre><code>ALTER TABLE distributors RENAME COLUMN address TO city;
+</code></pre>
+<h3 id="5、更改现存表的名字∶"><a href="#5、更改现存表的名字∶" class="headerlink" title="5、更改现存表的名字∶"></a>5、更改现存表的名字∶</h3><pre><code>ALTER TABLE distributors RENAME TO suppliers;
+</code></pre>
+<h3 id="6、给一个字段增加一个非空约束："><a href="#6、给一个字段增加一个非空约束：" class="headerlink" title="6、给一个字段增加一个非空约束："></a>6、给一个字段增加一个非空约束：</h3><pre><code>ALTER TABLE distributors ALTER COLUMN street SET NOT NULL;
+</code></pre>
+<h3 id="7、从一个字段里删除一个非空约束："><a href="#7、从一个字段里删除一个非空约束：" class="headerlink" title="7、从一个字段里删除一个非空约束："></a>7、从一个字段里删除一个非空约束：</h3><pre><code>ALTER TABLE distributors ALTER COLUMN street DROP NOT NULL;
+</code></pre>
+<h3 id="8、给一个表增加一个检查约束："><a href="#8、给一个表增加一个检查约束：" class="headerlink" title="8、给一个表增加一个检查约束："></a>8、给一个表增加一个检查约束：</h3><pre><code>ALTER TABLE distributors ADD CONSTRAINT zipchk CHECK (char_length(zipcode) = 5);
+</code></pre>
+<h3 id="9、删除一个表和它的所有子表的监查约束："><a href="#9、删除一个表和它的所有子表的监查约束：" class="headerlink" title="9、删除一个表和它的所有子表的监查约束："></a>9、删除一个表和它的所有子表的监查约束：</h3><pre><code>ALTER TABLE distributors DROP CONSTRAINT zipchk;
+</code></pre>
+<h3 id="10、向表中增加一个外键约束："><a href="#10、向表中增加一个外键约束：" class="headerlink" title="10、向表中增加一个外键约束："></a>10、向表中增加一个外键约束：</h3><pre><code>ALTER TABLE distributors ADD CONSTRAINT distfk FOREIGN KEY (address) REFERENCES addresses(address) MATCH FULL;
+</code></pre>
+<h3 id="11、给表增加一个（多字段）唯一约束："><a href="#11、给表增加一个（多字段）唯一约束：" class="headerlink" title="11、给表增加一个（多字段）唯一约束："></a>11、给表增加一个（多字段）唯一约束：</h3><pre><code>ALTER TABLE distributors ADD CONSTRAINT dist_id_zipcode_key UNIQUE (dist_id, zipcode);
+</code></pre>
+<h3 id="12、给一个表增加一个自动命名的主键约束，要注意的是一个表只能有一个主键："><a href="#12、给一个表增加一个自动命名的主键约束，要注意的是一个表只能有一个主键：" class="headerlink" title="12、给一个表增加一个自动命名的主键约束，要注意的是一个表只能有一个主键："></a>12、给一个表增加一个自动命名的主键约束，要注意的是一个表只能有一个主键：</h3><pre><code>ALTER TABLE distributors ADD PRIMARY KEY (dist_id);
+</code></pre>
+<h3 id="13、把表移动到另外一个表空间："><a href="#13、把表移动到另外一个表空间：" class="headerlink" title="13、把表移动到另外一个表空间："></a>13、把表移动到另外一个表空间：</h3><pre><code>ALTER TABLE distributors SET TABLESPACE fasttablespace;
+</code></pre>
+<h3 id="14、把表移动到另外一个模式："><a href="#14、把表移动到另外一个模式：" class="headerlink" title="14、把表移动到另外一个模式："></a>14、把表移动到另外一个模式：</h3><pre><code>ALTER TABLE myschema.distributors SET SCHEMA yourschema;
+</code></pre>
+<h3 id="15、之前表有2个字段，-id和name-id是主键-现在有需求增加一个index-并且需求是主键改为id和index"><a href="#15、之前表有2个字段，-id和name-id是主键-现在有需求增加一个index-并且需求是主键改为id和index" class="headerlink" title="15、之前表有2个字段， id和name, id是主键,　现在有需求增加一个index, 并且需求是主键改为id和index"></a>15、之前表有2个字段， id和name, id是主键,　现在有需求增加一个index, 并且需求是主键改为id和index</h3><pre><code>alter table test add column test_index smallint not null default 0; 
+alter table test drop constraint pk_test; 
+alter table test add constraint pk_test PRIMARY_KEY(id, test_index); 
+</code></pre>
+<h3 id="16、创建一个和原表结构相同的新表，根据INCLUDING保留原表的约束、索引等。"><a href="#16、创建一个和原表结构相同的新表，根据INCLUDING保留原表的约束、索引等。" class="headerlink" title="16、创建一个和原表结构相同的新表，根据INCLUDING保留原表的约束、索引等。"></a>16、创建一个和原表结构相同的新表，根据INCLUDING保留原表的约束、索引等。</h3><pre><code>create table table_name (like parent_table &#123;INCLUDING|EXCLUDING&#125; &#123;DEFAULTS|CONSTRAINTS|INDEXES|STORAGE|COMMENTS|ALL&#125;);
+</code></pre>
+<p>直接使用LIKE不使用INCLUDING，新表只保留原表的表结构和NOT NULL约束，但是使用INCLUDING CONSTRAINTS配置会保留了主键、唯一键、CHECK约束，并不会保留外键约束。</p>
+<pre><code>create table aqi201701 (like aqi201612 INCLUDING ALL)
+</code></pre>
+<h3 id="17、将sql执行结果导出到文件"><a href="#17、将sql执行结果导出到文件" class="headerlink" title="17、将sql执行结果导出到文件"></a>17、将sql执行结果导出到文件</h3><p>在psql中首先执行\o filename，然后执行要导出结果的sql语句即可。</p>
+<pre><code>psql test_db;
+\o /tmp/test.out
+select username from member where age &gt; 18;
+</code></pre>
+<p>然后在&#x2F;tmp&#x2F;test.out文件中已经有了member表中age&gt;18的所有用户的姓名，下载下来导入到excel中处理吧！</p>
+<h3 id="18、指定表的拥有者"><a href="#18、指定表的拥有者" class="headerlink" title="18、指定表的拥有者"></a>18、指定表的拥有者</h3><pre><code>alter table $&#123;TABLE_NAME&#125; owner to $&#123;NEW_USER&#125; $&#123;DB_NAME&#125;
+</code></pre>
+<h3 id="19、查询postgresql当前的连接数"><a href="#19、查询postgresql当前的连接数" class="headerlink" title="19、查询postgresql当前的连接数"></a>19、查询postgresql当前的连接数</h3><pre><code>select pid,client_addr,query,state from pg_stat_activity order by client_addr
+</code></pre>
+<h3 id="20、查看postgresql的最大连接数"><a href="#20、查看postgresql的最大连接数" class="headerlink" title="20、查看postgresql的最大连接数"></a>20、查看postgresql的最大连接数</h3><pre><code>show max_connections
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/11/22/postgres/" data-id="cllui4qz40038q0jabj4e0cln" data-title="postgresql常用知识点一览" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/22/git/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Git 使用简易指南
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/17/git%E8%AF%A6%E8%A7%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Git 详解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

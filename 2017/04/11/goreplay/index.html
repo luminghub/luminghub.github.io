@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>goreplay构建测试环境 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="goreplay构建测试环境">
+<meta property="og:url" content="http://example.com/2017/04/11/goreplay/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://i.imgur.com/BwjK3aa.png">
+<meta property="og:image" content="http://i.imgur.com/MFORaux.png">
+<meta property="og:image" content="http://i.imgur.com/UYayPOl.png">
+<meta property="og:image" content="http://i.imgur.com/SMZJx7w.png">
+<meta property="article:published_time" content="2017-04-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-28T02:26:18.180Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="goreplay">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://i.imgur.com/BwjK3aa.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-goreplay" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017/04/11/goreplay/" class="article-date">
+  <time class="dt-published" datetime="2017-04-10T16:00:00.000Z" itemprop="datePublished">2017-04-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      goreplay构建测试环境
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="goreplay简介-官方网站-github地址"><a href="#goreplay简介-官方网站-github地址" class="headerlink" title="goreplay简介 官方网站 github地址"></a>goreplay简介 <a target="_blank" rel="noopener" href="https://goreplay.org/">官方网站</a> <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay">github地址</a></h2><p>GoReplay is the simplest and safest way to test your app using real traffic before you put it into production.</p>
+<p>As your application grows, the effort required to test it also grows exponentially. GoReplay offers you the simple idea of reusing your existing traffic for testing, which makes it incredibly powerful. Our state of art technique allows to analyze and record your application traffic without affecting it. This eliminates the risks that come with putting a third party component in the critical path.</p>
+<p>GoReplay increases your confidence in code deployments, configuration changes and infrastructure changes. Did we mention that no coding is required?</p>
+<p>Here is basic workflow: The listener server catches http traffic and sends it to the replay server or saves to file. The replay server forwards traffic to a given address.</p>
+<p><img src="http://i.imgur.com/BwjK3aa.png"></p>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>Download latest binary from <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/releases">https://github.com/buger/gor/releases</a> or <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/wiki/Compilation">compile by yourself</a>.</p>
+<blockquote>
+<p>这里用方法1进行操作。下面是详细步骤</p>
+</blockquote>
+<h3 id="1、下载goreplay最新发布版本"><a href="#1、下载goreplay最新发布版本" class="headerlink" title="1、下载goreplay最新发布版本"></a>1、下载goreplay最新发布版本</h3><p><a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/releases">https://github.com/buger/gor/releases</a></p>
+<p>目前的最新版本是v0.16.0。这里我们下载最新的linux环境版本 gor_0.16.0_x64.tar.gz。</p>
+<h3 id="2、将下载好的文件解压"><a href="#2、将下载好的文件解压" class="headerlink" title="2、将下载好的文件解压"></a>2、将下载好的文件解压</h3><pre><code>tar -zxf gor_0.16.0_x64.tar.gz
+</code></pre>
+<h2 id="Getting-started"><a href="#Getting-started" class="headerlink" title="Getting started"></a>Getting started</h2><p>The most basic setup will be </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-stdout
+</code></pre>
+<p> which acts like tcpdump. If you already have test environment you can start replaying: </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-http http://staging.env.
+</code></pre>
+<p>See the our <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/wiki">documentation</a> and <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/wiki/Getting-Started">Getting started</a> page for more info.</p>
+<h3 id="1、测试环境准备"><a href="#1、测试环境准备" class="headerlink" title="1、测试环境准备"></a>1、测试环境准备</h3><p>假设正式环境App部署端口为 8080，测试环境部署端口为 8090（同一台机器），均正常运行。</p>
+<h3 id="2、测试goreplay是否可以正常运行。"><a href="#2、测试goreplay是否可以正常运行。" class="headerlink" title="2、测试goreplay是否可以正常运行。"></a>2、测试goreplay是否可以正常运行。</h3><p>启动gor，监听正式环境http请求，并列印到日志中</p>
+<pre><code>sudo ./gor --input-raw :8080 --output-stdout
+</code></pre>
+<p>在浏览器中点击正式环境链接，在goreplay的控制台输出为：</p>
+<p><img src="http://i.imgur.com/MFORaux.png"></p>
+<h3 id="正式运行，有以下两种模式可供选择"><a href="#正式运行，有以下两种模式可供选择" class="headerlink" title="正式运行，有以下两种模式可供选择"></a>正式运行，有以下两种模式可供选择</h3><h4 id="1、Replaying"><a href="#1、Replaying" class="headerlink" title="1、Replaying"></a>1、Replaying</h4><p>Now it’s time to replay your original traffic to another environment. Let’s start the same file web server but on a different port: gor file-server :8001.</p>
+<p>Instead of –output-stdout we will use –output-http and provide URL of second server: </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-http=&quot;http://localhost:8001&quot;
+</code></pre>
+<h4 id="2、Saving-requests-to-file-and-replaying-them-later"><a href="#2、Saving-requests-to-file-and-replaying-them-later" class="headerlink" title="2、Saving requests to file and replaying them later"></a>2、Saving requests to file and replaying them later</h4><p>Sometimes it’s not possible to replay requests in real time; Gor allows you to save requests to the file and replay them later.</p>
+<p>First use –output-file to save them: </p>
+<pre><code>sudo ./gor --input-raw :8000 --output-file=requests.gor
+</code></pre>
+<p>This will create new file and continuously write all captured requests to it.</p>
+<p>Let’s re-run Gor, but now to replay requests from file: </p>
+<pre><code>./gor --input-file requests.gor --output-http=&quot;http://localhost:8001&quot;
+</code></pre>
+<p>You should see all the recorded requests coming to the second server, and they will be replayed in the same order and with exactly same timing as they were recorded.</p>
+<blockquote>
+<p>这里用Replaying进行操作。下面是详细步骤</p>
+</blockquote>
+<h3 id="1、运行goreplay"><a href="#1、运行goreplay" class="headerlink" title="1、运行goreplay"></a>1、运行goreplay</h3><pre><code>sudo ./gor --input-raw :8080 --output-http=&quot;http://localhost:8090&quot;
+</code></pre>
+<p><img src="http://i.imgur.com/UYayPOl.png"></p>
+<h3 id="2、查看app1、app2的运行日志"><a href="#2、查看app1、app2的运行日志" class="headerlink" title="2、查看app1、app2的运行日志"></a>2、查看app1、app2的运行日志</h3><p>可以看到app1和app2都被访问了，但是app1的正常访问不受任何影响。</p>
+<p><img src="http://i.imgur.com/SMZJx7w.png"></p>
+<h3 id="3、后台自动运行goreplay"><a href="#3、后台自动运行goreplay" class="headerlink" title="3、后台自动运行goreplay"></a>3、后台自动运行goreplay</h3><pre><code>sudo nohup ./gor --input-raw :8080 --output-http=&quot;http://localhost:8090&quot; &amp;
+
+tail -500f nohup.out
+</code></pre>
+<h3 id="4、不使用root用户运行-Running-as-non-root-user"><a href="#4、不使用root用户运行-Running-as-non-root-user" class="headerlink" title="4、不使用root用户运行 Running as non root user"></a>4、不使用root用户运行 Running as non root user</h3><p>You can enable Gor for non-root users in a secure method by using the following commands</p>
+<pre><code># Following commands assume that you put `gor` binary to /usr/local/bin
+add gor
+addgroup &lt;username&gt; gor
+chgrp gor /usr/local/bin/gor
+chmod 0750 /usr/local/bin/gor
+setcap &quot;cap_net_raw,cap_net_admin+eip&quot; /usr/local/bin/gor
+</code></pre>
+<p>As a brief explanation of the above.</p>
+<ul>
+<li>We create a group called gor.</li>
+<li>We then add the user you want to the new group so they will be able to use gor without sudo</li>
+<li>We then change the user&#x2F;group of gor binary the new group.</li>
+<li>We then make sure the permissions are set on gor binary so that members of the group can execute it but other normal users cannot.</li>
+<li>We then use setcap to give the CAP_NET_RAW and CAP_NET_ADMIN privilege to the executable when it runs. This is so that Gor can open its raw socket which is not normally permitted unless you are root.</li>
+</ul>
+<p>上述大意为</p>
+<ul>
+<li>创建一个组gor</li>
+<li>将对应用户添加到gor组</li>
+<li>授权</li>
+</ul>
+<p>下面是详细步骤</p>
+<h4 id="1、创建gor组"><a href="#1、创建gor组" class="headerlink" title="1、创建gor组"></a>1、创建gor组</h4><pre><code>groupadd gor
+</code></pre>
+<h4 id="2、将需要执行的用户添加到gor组"><a href="#2、将需要执行的用户添加到gor组" class="headerlink" title="2、将需要执行的用户添加到gor组"></a>2、将需要执行的用户添加到gor组</h4><p>将ubuntu用户加入gor组</p>
+<pre><code>addgroup ubuntu gor
+</code></pre>
+<h4 id="3、授权"><a href="#3、授权" class="headerlink" title="3、授权"></a>3、授权</h4><p>编译好的gor二进制文件所在路径为：&#x2F;usr&#x2F;local&#x2F;bin&#x2F;gor</p>
+<pre><code>chgrp gor /usr/local/bin/gor
+
+chmod 0750 /usr/local/bin/gor
+
+setcap &quot;cap_net_raw,cap_net_admin+eip&quot; /usr/local/bin/gor
+</code></pre>
+<h4 id="4、运行"><a href="#4、运行" class="headerlink" title="4、运行"></a>4、运行</h4><p>切换到ubuntu用户</p>
+<pre><code>su ubuntu
+</code></pre>
+<p>切换到gor组</p>
+<pre><code>newgrp gor
+</code></pre>
+<p>进入gor目录</p>
+<pre><code>cd /usr/local/bin
+</code></pre>
+<p>运行gor</p>
+<pre><code>./gor --input-raw :8000 --output-stdout
+</code></pre>
+<h2 id="goreplay高级进阶-更多详情"><a href="#goreplay高级进阶-更多详情" class="headerlink" title="goreplay高级进阶 更多详情"></a>goreplay高级进阶 <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/wiki">更多详情</a></h2><h3 id="1、保存到文件并从文件中转发-Saving-and-Replaying-from-file"><a href="#1、保存到文件并从文件中转发-Saving-and-Replaying-from-file" class="headerlink" title="1、保存到文件并从文件中转发 Saving and Replaying from file"></a>1、保存到文件并从文件中转发 Saving and Replaying from file</h3><p>You can save requests to file, and replay them later. While replaying it will preserve the original time differences between requests. If you apply “percentage based limiting”、”Rate Limiting” timing between requests will be reduced or increased appropriately: this approach opens possibilities like load testing, see below.</p>
+<pre><code># write to file
+gor --input-raw :80 --output-file requests.log
+
+# read from file
+gor --input-file requests.gor --output-http &quot;http://staging.com&quot;
+</code></pre>
+<p>By default Gor writes files in chunks. This configurable using –output-file-append option: the flushed chunk is appended to existence file or not. The default is false. By default, –output-file flushes each chunk to a different path.</p>
+<pre><code>gor ... --output-file %Y%m%d.log
+# append false
+20140608_0.log
+20140608_1.log
+20140609_0.log
+20140609_1.log
+</code></pre>
+<p>This makes parallel file processing easy. But if you want to disable this behavior, you can disable it by adding <code>--output-file-append</code> option:</p>
+<pre><code>gor ... --output-file %Y%m%d.log --output-file-append
+# append true
+20140608.log
+20140609.log
+</code></pre>
+<p>If you run gor multiple times, and it finds existing files, it will continue from last known index.</p>
+<h4 id="Chunk-size"><a href="#Chunk-size" class="headerlink" title="Chunk size"></a>Chunk size</h4><p>You can set chunk limits using <code>--output-file-size-limit</code> and <code>--output-file-queue-limit</code> options. The length of the chunk queue and the size of each chunk, respectively. The default values are 256 and 32mb, respectively. The suffixes “k” (KB), “m” (MB), and “g” (GB) can be used for <code>output-file-size-limit</code>. If you want to have only size constraint, you can set <code>--output-file-queue-limit</code> to 0, and vice versa.</p>
+<pre><code>gor --input-raw :80 --output-file %Y-%m-%d.gz --output-file-size-limit 256m --output-file-queue-limit 0
+</code></pre>
+<h4 id="Using-date-variables-in-file-names"><a href="#Using-date-variables-in-file-names" class="headerlink" title="Using date variables in file names"></a>Using date variables in file names</h4><p>For example, you can tell to create new file each hour: <code>--output-file /mnt/logs/requests-%Y-%m-%d-%H.log</code> It will create new file for each hour: requests-2016-06-01-12.log, requests-2016-06-01-13.log, …</p>
+<p>The time format used as part of the file name. The following characters are replaced with actual values when the file is created:</p>
+<pre><code>%Y: year including the century (at least 4 digits)
+%m: month of the year (01..12)
+%d: Day of the month (01..31)
+%H: Hour of the day, 24-hour clock (00..23)
+%M: Minute of the hour (00..59)
+%S: Second of the minute (00..60)
+</code></pre>
+<p>The default format is %Y%m%d%H, which creates one file per hour.</p>
+<h4 id="GZIP-compression"><a href="#GZIP-compression" class="headerlink" title="GZIP compression"></a>GZIP compression</h4><p>To read or write GZIP compressed files ensure that file extension ends with “.gz”: <code>--output-file log.gz</code></p>
+<h4 id="Replaying-from-multiple-files"><a href="#Replaying-from-multiple-files" class="headerlink" title="Replaying from multiple files"></a>Replaying from multiple files</h4><p><code>--input-file</code> accepts file pattern, for example: <code>--input-file logs-2016-05-*</code>: it will replay all the files, sorting them in lexicographical order.</p>
+<h3 id="2、性能测试-Performance-testing"><a href="#2、性能测试-Performance-testing" class="headerlink" title="2、性能测试 Performance testing"></a>2、性能测试 Performance testing</h3><p>Currently, this functionality supported only by <code>input-file</code> and only when using percentage based limiter. Unlike default limiter for <code>input-file</code> instead of dropping requests it will slowdown or speedup request emitting. Note that limiter is applied to input:</p>
+<pre><code># Replay from file on 2x speed 
+gor --input-file &quot;requests.gor|200%&quot; --output-http &quot;staging.com&quot;
+</code></pre>
+<p>Use <code>--stats --output-http-stats</code> to see latency stats.</p>
+<h4 id="Looping-files-for-replaying-indefinitely"><a href="#Looping-files-for-replaying-indefinitely" class="headerlink" title="Looping files for replaying indefinitely"></a>Looping files for replaying indefinitely</h4><p>You can loop the same set of files, so when the last one replays all the requests, it will not stop, and will start from first one again. Having the only small amount of requests you can do extensive performance testing. Pass <code>--input-file-loop</code>to make it work.</p>
+<h3 id="3、限流-Rate-limiting"><a href="#3、限流-Rate-limiting" class="headerlink" title="3、限流 Rate limiting"></a>3、限流 Rate limiting</h3><p>Rate limiting can be useful if you only want to forward parts of incoming traffic, for example, to not overload your test environment. There are two strategies: dropping random requests or dropping fractions of requests based on Header or URL param value.</p>
+<h4 id="Dropping-random-requests"><a href="#Dropping-random-requests" class="headerlink" title="Dropping random requests"></a>Dropping random requests</h4><p>Every input and output support random rate limiting. There are two limiting algorithms: absolute or percentage based.</p>
+<p><strong>Absolute</strong>: If for current second it reached specified requests limit - disregard the rest, on next second counter reset.</p>
+<p><strong>Percentage</strong>: For input-file it will slowdown or speedup request execution, for the rest it will use the random generator to decide if request pass or not based on the chance you specified.</p>
+<p>You can specify your desired limit using the “|” operator after the server address, see examples below.</p>
+<p>Limiting replay using absolute number</p>
+<pre><code># staging.server will not get more than ten requests per second
+gor --input-tcp :28020 --output-http &quot;http://staging.com|10&quot;
+</code></pre>
+<p>Limiting listener using percentage based limiter</p>
+<pre><code># replay server will not get more than 10% of requests 
+# useful for high-load environments
+gor --input-raw :80 --output-tcp &quot;replay.local:28020|10%&quot;
+</code></pre>
+<h4 id="Consistent-limiting-based-on-Header-or-URL-param-value"><a href="#Consistent-limiting-based-on-Header-or-URL-param-value" class="headerlink" title="Consistent limiting based on Header or URL param value"></a>Consistent limiting based on Header or URL param value</h4><p>If you have unique user id (like API key) stored in header or URL you can consistently forward specified percent of traffic only for the fraction of this users. Basic formula looks like this: <code>FNV32-1A_hashing(value) % 100 &gt;= chance</code>. Examples:</p>
+<pre><code># Limit based on header value
+gor --input-raw :80 --output-tcp &quot;replay.local:28020|10%&quot; --http-header-limiter &quot;X-API-KEY: 10%&quot;
+
+# Limit based on header value
+gor --input-raw :80 --output-tcp &quot;replay.local:28020|10%&quot; --http-param-limiter &quot;api_key: 10%&quot;
+</code></pre>
+<p>When limiting based on header or param only percentage based limiting supported.</p>
+<h3 id="4、请求过滤-Request-filtering"><a href="#4、请求过滤-Request-filtering" class="headerlink" title="4、请求过滤 Request filtering"></a>4、请求过滤 Request filtering</h3><p>Filtering is useful when you need to capture only specific part of traffic, like API requests. It is possible to filter by URL, HTTP header or HTTP method.</p>
+<h4 id="Allow-url-regexp"><a href="#Allow-url-regexp" class="headerlink" title="Allow url regexp"></a>Allow url regexp</h4><pre><code># only forward requests being sent to the /api endpoint
+gor --input-raw :8080 --output-http staging.com --http-allow-url /api
+</code></pre>
+<h4 id="Disallow-url-regexp"><a href="#Disallow-url-regexp" class="headerlink" title="Disallow url regexp"></a>Disallow url regexp</h4><pre><code># only forward requests NOT being sent to the /api... endpoint
+gor --input-raw :8080 --output-http staging.com --http-disallow-url /api
+</code></pre>
+<h4 id="Filter-based-on-regexp-of-header"><a href="#Filter-based-on-regexp-of-header" class="headerlink" title="Filter based on regexp of header"></a>Filter based on regexp of header</h4><pre><code># only forward requests with an api version of 1.0x
+gor --input-raw :8080 --output-http staging.com --http-allow-header api-version:^1\.0\d
+
+# only forward requests NOT containing User-Agent header value &quot;Replayed by Gor&quot;
+gor --input-raw :8080 --output-http staging.com --http-disallow-header &quot;User-Agent: Replayed by Gor&quot;
+</code></pre>
+<h4 id="Filter-based-on-HTTP-method"><a href="#Filter-based-on-HTTP-method" class="headerlink" title="Filter based on HTTP method"></a>Filter based on HTTP method</h4><p>Requests not matching a specified whitelist can be filtered out. For example to strip non-nullipotent requests:</p>
+<pre><code>gor --input-raw :80 --output-http &quot;http://staging.server&quot; \
+    --http-allow-method GET \
+    --http-allow-method OPTIONS
+</code></pre>
+<h3 id="5、请求重写-Request-rewriting"><a href="#5、请求重写-Request-rewriting" class="headerlink" title="5、请求重写 Request rewriting"></a>5、请求重写 Request rewriting</h3><p>Gor supports rewriting of URLs, URL params and headers, see below.</p>
+<p>Rewriting may be useful if you test environment does not have the same data as your production, and you want to perform all actions in the context of <code>test</code> user: for example rewrite all API tokens to some test value. Other possible use cases are toggling features on&#x2F;off using custom headers or rewriting URL’s if they changed in the new environment.</p>
+<p>For more complex logic you can use Middleware.</p>
+<p>Rewrite URL based on a mapping</p>
+<p><code>--http-rewrite-url</code> expects value in “:” format: “:” is a dilimiter. In <code>&lt;replace&gt;</code> section you may use captured regexp group values. This works similar to <code>replace</code> method in Javascript or <code>gsub</code> in Ruby.</p>
+<pre><code># Rewrites all `/v1/user/&lt;user_id&gt;/ping` requests to `/v2/user/&lt;user_id&gt;/ping`
+gor --input-raw :8080 --output-http staging.com --http-rewrite-url /v1/user/([^\\/]+)/ping:/v2/user/$1/ping
+</code></pre>
+<h4 id="Set-URL-param"><a href="#Set-URL-param" class="headerlink" title="Set URL param"></a>Set URL param</h4><p>Set request url param, if param already exists it will be overwritten.</p>
+<pre><code>gor --input-raw :8080 --output-http staging.com --http-set-param api_key=1
+</code></pre>
+<h4 id="Set-Header"><a href="#Set-Header" class="headerlink" title="Set Header"></a>Set Header</h4><p>Set request header, if header already exists it will be overwritten. May be useful if you need to identify requests generated by Gor or enable feature flagged functionality in an application:</p>
+<pre><code>gor --input-raw :80 --output-http &quot;http://staging.server&quot; \
+    --http-header &quot;User-Agent: Replayed by Gor&quot; \
+    --http-header &quot;Enable-Feature-X: true&quot;
+</code></pre>
+<h4 id="Host-header"><a href="#Host-header" class="headerlink" title="Host header"></a>Host header</h4><p>Host header gets special treatment. By default Host get set to the value specified in –output-http. If you manually set –http-header “Host: anonther.com”, Gor will not override Host value.</p>
+<p>If you app accepts traffic from multiple domains, and you want to keep original headers, there is specific <code>--http-original-host</code> with tells Gor do not touch Host header at all.</p>
+<h3 id="6、中间件-Middleware"><a href="#6、中间件-Middleware" class="headerlink" title="6、中间件 Middleware"></a>6、中间件 Middleware</h3><h4 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h4><p>Middleware is a program that accepts request and response payload at STDIN and emits modified requests at STDOUT. You can implement any custom logic like stripping private data, advanced rewriting, support for oAuth and etc. Check examples <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/tree/master/examples/middleware">included into our repo.</a></p>
+<pre><code>                  Original request      +--------------+
++-------------+----------STDIN----------&gt;+              |
+|  Gor input  |                          |  Middleware  |
++-------------+----------STDIN----------&gt;+              |
+                   Original response (1) +------+---+---+
+                                                |   ^
++-------------+    Modified request             v   |
+| Gor output  +&lt;---------STDOUT-----------------+   |
++-----+-------+                                     |
+      |                                             |
+      |            Replayed response                |
+      +------------------STDIN-----------------&gt;----+
+</code></pre>
+<p>(1): Original responses will only be sent to the middleware if the <code>--input-raw-track-response</code> option is specified.</p>
+<p>Middleware can be written in any language, see <code>examples/middleware</code> folder for examples. Middleware program should accept the fact that all communication with Gor is asynchronous, there is no guarantee that original request and response messages will come one after each other. Your app should take care of the state if logic depends on original or replayed response, see <code>examples/middleware/token_modifier.go</code> as example.</p>
+<p>Simple bash echo middleware (returns same request) will look like this:</p>
+<pre><code>while read line; do
+  echo $line
+end
+</code></pre>
+<p>Middleware can be enabled using <code>--middleware</code> option, by specifying path to executable file:</p>
+<pre><code>gor --input-raw :80 --middleware &quot;/opt/middleware_executable&quot; --output-http &quot;http://staging.server&quot;
+</code></pre>
+<h4 id="Communication-protocol"><a href="#Communication-protocol" class="headerlink" title="Communication protocol"></a>Communication protocol</h4><p>All messages should be hex encoded, new line character specifieds the end of the message, eg. new message per line.</p>
+<p>Decoded payload consist of 2 parts: header and HTTP payload, separated by new line character.</p>
+<p>Example request payload:</p>
+<pre><code>1 932079936fa4306fc308d67588178d17d823647c 1439818823587396305
+GET /a HTTP/1.1
+Host: 127.0.0.1
+</code></pre>
+<p>Example response payload (note: you will only receive this if you specify <code>--input-raw-track-response</code>)</p>
+<pre><code>2 8e091765ae902fef8a2b7d9dd960e9d52222bd8c 1439818823587996305 2782013
+HTTP/1.1 200 OK
+Date: Mon, 17 Aug 2015 13:40:23 GMT
+Content-Length: 0
+Content-Type: text/plain; charset=utf-8
+</code></pre>
+<p>Header contains request meta information separated by spaces. First value is payload type, possible values: <code>1</code> - request, <code>2</code> - original response, <code>3</code> - replayed response. Next goes request id: unique among all requests (sha1 of time and Ack), but remain same for original and replayed response, so you can create associations between request and responses. The third argument is the time when request&#x2F;response was initiated&#x2F;received. Forth argument is populated only for responses and means latency.</p>
+<p>HTTP payload is unmodified HTTP requests&#x2F;responses intercepted from network. You can read more about request format <a target="_blank" rel="noopener" href="http://www.jmarshall.com/easy/http/">here</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">here</a> and <a target="_blank" rel="noopener" href="https://www.w3.org/Protocols/rfc2616/rfc2616.html">here</a>. You can operate with payload as you want, add headers, change path, and etc. Basically you just editing a string, just ensure that it is RCF compliant.</p>
+<p>At the end modified (or untouched) request should be emitted back to STDOUT, keeping original header, and hex-encoded. If you want to filter request, just not send it. Emitting responses back is required, even if you did not touch them.</p>
+<h4 id="Advanced-example"><a href="#Advanced-example" class="headerlink" title="Advanced example"></a>Advanced example</h4><p>Imagine that you have auth system that randomly generate access tokens, which used later for accessing secure content. Since there is no pre-defined token value, naive approach without middleware (or if middleware use only request payloads) will fail, because replayed server have own tokens, not synced with origin. To fix this, our middleware should take in account responses of replayed and origin server, store <code>originalToken -&gt; replayedToken</code> aliases and rewrite all requests using this token to use replayed alias. See <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/blob/master/examples/middleware/token_modifier.go">examples&#x2F;middleware&#x2F;token_modifier.go</a> and <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay/blob/master/middleware_test.go">middleware_test.go#TestTokenMiddleware</a> as example of described scheme.</p>
+<h3 id="7、分布式部署-Distributed-configuration"><a href="#7、分布式部署-Distributed-configuration" class="headerlink" title="7、分布式部署 Distributed configuration"></a>7、分布式部署 Distributed configuration</h3><p>Sometimes it makes sense to use separate Gor instance for replaying traffic and performing things like load testing, so your production machines do not spend precious resources. It is possible to configure Gor on your web machines forward traffic to Gor aggregator instance running on the separate server.</p>
+<pre><code># Run on servers where you want to catch traffic. You can run it on each `web` machine.
+sudo gor --input-raw :80 --output-tcp replay.local:28020
+
+# Replay server (replay.local).
+gor --input-tcp replay.local:28020 --output-http http://staging.com
+</code></pre>
+<p>If you have multiple replay machines you can split traffic among them using –split-output option: it will equally split all incoming traffic to all outputs using round robin algorithm.</p>
+<pre><code>gor --input-raw :80 --split-output --output-tcp replay1.local:28020 --output-tcp replay2.local:28020
+</code></pre>
+<p>In case if you are planning a large load testing, you may consider use separate master instance which will control Gor slaves which actually replay traffic. For example:</p>
+<pre><code># This command will read multiple log files, replay them on 10x speed and loop them if needed for 30 seconds, and will distributed traffic (tcp session aware) among multiple workers
+gor --input-file logs_from_multiple_machines.*|1000% --input-file-loop --exit-after 30s --recognize-tcp-sessions --split-output --output-tcp worker1.local --output-tcp worker2.local:27017 --output-tcp worker3.local:27017 ...  --output-tcp workerN.local:27017
+
+# worker 
+gor --input-tcp :27017 --ouput-http load_test.target
+</code></pre>
+<h2 id="附录：go环境构建"><a href="#附录：go环境构建" class="headerlink" title="附录：go环境构建"></a>附录：go环境构建</h2><p>goreplay是用go语言编写，如果自己手动编译goreplay的二进制文件，需要go语言环境。下面是go环境构建的步骤。</p>
+<p>如果是使用官方编译好的二进制文件则不需要运行环境，如本案例。</p>
+<h3 id="下载linux版本的go"><a href="#下载linux版本的go" class="headerlink" title="下载linux版本的go"></a>下载linux版本的go</h3><p><a target="_blank" rel="noopener" href="https://golang.org/dl/">https://golang.org/dl/</a></p>
+<p>目前官方最新版本为：go1.8.1，下载文件go1.8.1.linux-amd64.tar.gz</p>
+<h3 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h3><pre><code>tar -C /usr/local -xzf go1.8.1.linux-amd64.tar.gz
+</code></pre>
+<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><pre><code>export PATH=$PATH:/usr/local/go/bin
+</code></pre>
+<p>更多详细信息，请访问go官方网站 <a target="_blank" rel="noopener" href="https://golang.org/">https://golang.org/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/04/11/goreplay/" data-id="cllui4qyw001gq0jaaol3cchg" data-title="goreplay构建测试环境" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/12/swagger/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          spring boot + swagger 快速简单集成
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/14/mongodb%E5%88%9B%E5%BB%BA%E7%A9%BA%E9%97%B4%E7%B4%A2%E5%BC%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mongodb创建空间索引</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Springboot返回json和xml视图 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="主要讲述通过请求参数的不同返回不同的视图：json和xml，并配置对应的异常返回视图。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Springboot返回json和xml视图">
+<meta property="og:url" content="http://example.com/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="主要讲述通过请求参数的不同返回不同的视图：json和xml，并配置对应的异常返回视图。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-28T02:26:07.606Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="spring">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Springboot返回json和xml视图" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/" class="article-date">
+  <time class="dt-published" datetime="2019-11-20T16:00:00.000Z" itemprop="datePublished">2019-11-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Springboot返回json和xml视图
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="建设目标"><a href="#建设目标" class="headerlink" title="建设目标"></a>建设目标</h3><ol>
+<li>请求接口通过请求参数中设置的output参数&#x3D;xml&#x2F;json来返回对应的视图，默认使用json；</li>
+<li>发生异常时，@ExceptionHandler能自动返回对应视图的异常信息</li>
+</ol>
+<h3 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h3><p>由于spring默认xml的视图优先级高于json视图（视图顺序），需要将json视图的优先级调高。</p>
+<p>controller方法中不指定返回视图类型，创建一个视图拦截器，根据output参数来调整视图MediaType顺序。</p>
+<p>方法如下：</p>
+<p>返回xml视图(默认，不需要设置)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;MediaType&gt; mediaType = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;MediaType&gt;();</span><br><span class="line"></span><br><span class="line">mediaType.add(MediaType.APPLICATION_XML);</span><br><span class="line"></span><br><span class="line">request.setAttribute(HandlerMapping.PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE, mediaType)</span><br></pre></td></tr></table></figure>
+
+<p>返回json视图：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;MediaType&gt; mediaType = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;MediaType&gt;();</span><br><span class="line"></span><br><span class="line">mediaType.add(MediaType.APPLICATION_JSON);</span><br><span class="line"></span><br><span class="line">request.setAttribute(HandlerMapping.PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE, mediaType)</span><br></pre></td></tr></table></figure>
+
+<p>由于在 @ExceptionHandler 中，httprequest中的视图顺序会被重置（具体原因未核实），所以需要在@ExceptionHandler中重新设置视图顺序。</p>
+<p>如果需要在controller中指定返回类型视图，方法如下（与本文无关）：</p>
+<p>返回json视图： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/api/test/json&quot;, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)</span></span><br></pre></td></tr></table></figure>
+
+<p>返回xml视图：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/api/test/json&quot;, produces = MediaType.APPLICATION_XML_VALUE, method = RequestMethod.GET)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="项目搭建"><a href="#项目搭建" class="headerlink" title="项目搭建"></a>项目搭建</h3><p>搭建一个简单的maven项目，引入spring boot的依赖，部分pom.xml配置如下所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- spring boot 核心依赖 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- xml和json视图序列化 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.jaxrs<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-jaxrs-xml-provider<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="编写实体类"><a href="#编写实体类" class="headerlink" title="编写实体类"></a>编写实体类</h3><h4 id="编写UserBean"><a href="#编写UserBean" class="headerlink" title="编写UserBean"></a>编写UserBean</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserBean</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> String user;</span><br><span class="line">  <span class="keyword">private</span> String name;</span><br><span class="line">  <span class="keyword">private</span> String token;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getUser</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUser</span><span class="params">(String user)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.user = user;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> name;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.name = name;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getToken</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> token;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setToken</span><span class="params">(String token)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.token = token;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写ErrorBean"><a href="#编写ErrorBean" class="headerlink" title="编写ErrorBean"></a>编写ErrorBean</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ErrorBean</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> String errorCode;</span><br><span class="line">  <span class="keyword">private</span> String errorInfo;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getErrorCode</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> errorCode;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setErrorCode</span><span class="params">(String errorCode)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.errorCode = errorCode;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getErrorInfo</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> errorInfo;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setErrorInfo</span><span class="params">(String errorInfo)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.errorInfo = errorInfo;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写自定义异常类BaseException"><a href="#编写自定义异常类BaseException" class="headerlink" title="编写自定义异常类BaseException"></a>编写自定义异常类BaseException</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BaseException</span> <span class="keyword">extends</span> <span class="title class_">Exception</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">1L</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">DEFAULT_CODE</span> <span class="operator">=</span> <span class="string">&quot;SR01&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">PARAM_ERROR_CODE</span> <span class="operator">=</span> <span class="string">&quot;PV01&quot;</span>;</span><br><span class="line">  <span class="keyword">private</span> String errCode; </span><br><span class="line">  <span class="keyword">private</span> String errMsg; </span><br><span class="line">  <span class="keyword">private</span> <span class="type">int</span> httpCode;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getHttpCode</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> httpCode;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setHttpCode</span><span class="params">(<span class="type">int</span> httpCode)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.httpCode = httpCode;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">BaseException</span><span class="params">(<span class="type">int</span> httpCode, String errCode, String errMsg)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.httpCode = httpCode;</span><br><span class="line">    <span class="built_in">this</span>.errCode = errCode;</span><br><span class="line">    <span class="built_in">this</span>.errMsg = errMsg;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getErrCode</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> errCode;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> String <span class="title function_">getErrMsg</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> errMsg;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写异常处理类ErrorHandler"><a href="#编写异常处理类ErrorHandler" class="headerlink" title="编写异常处理类ErrorHandler"></a>编写异常处理类ErrorHandler</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ErrorHandler</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">OUTPUT_XML</span> <span class="operator">=</span> <span class="string">&quot;xml&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">OUTPUT_JSON</span> <span class="operator">=</span> <span class="string">&quot;josn&quot;</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> Set&lt;MediaType&gt; xmlMediaType = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;MediaType&gt;();</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> Set&lt;MediaType&gt; jsonMediaType = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;MediaType&gt;();</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(ErrorHandler.class);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    xmlMediaType.add(MediaType.APPLICATION_XML) ;</span><br><span class="line">    jsonMediaType.add(MediaType.APPLICATION_JSON);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ExceptionHandler</span></span><br><span class="line">  <span class="meta">@ResponseBody</span></span><br><span class="line">  <span class="keyword">public</span> ErrorBean <span class="title function_">exceptionHandle</span><span class="params">(Exception ex, HttpServletRequest request,</span></span><br><span class="line"><span class="params">      HttpServletResponse response)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ErrorHandler.OUTPUT_XML.equals(request.getParameter(<span class="string">&quot;output&quot;</span>))) &#123;</span><br><span class="line">      request.setAttribute(HandlerMapping.PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE,</span><br><span class="line">          ErrorHandler.jsonMediaType);</span><br><span class="line">      logger.info(<span class="string">&quot;Exception 设置json视图 ...&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      logger.info(<span class="string">&quot;Exception 设置xml视图 ...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">ErrorBean</span> <span class="variable">error</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ErrorBean</span>();</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&quot;MissingServletRequestParameterException&quot;</span>.equals(ex.getClass().getSimpleName())) &#123;</span><br><span class="line">      ex = <span class="keyword">new</span> <span class="title class_">BaseException</span>(<span class="number">401</span>, BaseException.PARAM_ERROR_CODE, <span class="string">&quot;缺少必要的请求参数&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;MethodArgumentTypeMismatchException&quot;</span>.equals(ex.getClass().getSimpleName())) &#123;</span><br><span class="line">      ex = <span class="keyword">new</span> <span class="title class_">BaseException</span>(<span class="number">401</span>, BaseException.PARAM_ERROR_CODE, <span class="string">&quot;请求参数类型错误&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (BaseException.class.isAssignableFrom(ex.getClass())) &#123;</span><br><span class="line">      <span class="type">BaseException</span> <span class="variable">se</span> <span class="operator">=</span> (BaseException) ex;</span><br><span class="line">      response.setStatus(se.getHttpCode());</span><br><span class="line">      error.setErrorCode(se.getErrCode());</span><br><span class="line">      error.setErrorInfo(se.getErrMsg());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      response.setStatus(<span class="number">500</span>);</span><br><span class="line">      error.setErrorCode(BaseException.DEFAULT_CODE);</span><br><span class="line">      error.setErrorInfo(<span class="string">&quot;服务繁忙&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> error;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写controller类TestController"><a href="#编写controller类TestController" class="headerlink" title="编写controller类TestController"></a>编写controller类TestController</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> <span class="keyword">extends</span> <span class="title class_">ErrorHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@RequestMapping(value = &quot;/test/api&quot;, method = RequestMethod.GET)</span></span><br><span class="line">  <span class="keyword">public</span> Object <span class="title function_">testJsonView</span><span class="params">(<span class="meta">@RequestParam(value = &quot;token&quot;)</span> String token)</span> <span class="keyword">throws</span> BaseException &#123;</span><br><span class="line">    <span class="type">UserBean</span> <span class="variable">userBean</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UserBean</span>();</span><br><span class="line">    userBean.setName(<span class="string">&quot;千山鸟飞绝&quot;</span>);</span><br><span class="line">    userBean.setUser(<span class="string">&quot;万径人踪灭&quot;</span>);</span><br><span class="line">    userBean.setToken(token);</span><br><span class="line">    <span class="keyword">if</span> (System.currentTimeMillis() % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BaseException</span>(<span class="number">403</span>, <span class="string">&quot;哎呀，出错了&quot;</span>, <span class="string">&quot;时间不对&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> userBean;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写权限认证业务类"><a href="#编写权限认证业务类" class="headerlink" title="编写权限认证业务类"></a>编写权限认证业务类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AuthService</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">auth</span><span class="params">(String token)</span> <span class="keyword">throws</span> BaseException &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="string">&quot;123456789&quot;</span>.equals(token)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BaseException</span>(<span class="number">401</span>, BaseException.PARAM_ERROR_CODE, <span class="string">&quot;token验证不通过&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写拦截器"><a href="#编写拦截器" class="headerlink" title="编写拦截器"></a>编写拦截器</h3><h4 id="视图拦截器ModuleViewInterceptor"><a href="#视图拦截器ModuleViewInterceptor" class="headerlink" title="视图拦截器ModuleViewInterceptor"></a>视图拦截器ModuleViewInterceptor</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ModuleViewInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(ModuleViewInterceptor.class);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span></span><br><span class="line">      <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    logger.info(<span class="string">&quot;执行 ModuleViewInterceptor ...&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (!ErrorHandler.OUTPUT_XML.equals(request.getParameter(<span class="string">&quot;output&quot;</span>))) &#123;</span><br><span class="line">      request.setAttribute(HandlerMapping.PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE,</span><br><span class="line">          ErrorHandler.jsonMediaType);</span><br><span class="line">      logger.info(<span class="string">&quot;设置json视图 ...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="权限拦截器AuthInterceptor"><a href="#权限拦截器AuthInterceptor" class="headerlink" title="权限拦截器AuthInterceptor"></a>权限拦截器AuthInterceptor</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AuthInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> AuthService authService;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(AuthInterceptor.class);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span></span><br><span class="line">      <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    logger.info(<span class="string">&quot;执行 AuthInterceptor ...&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (authService == <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="keyword">synchronized</span> (AuthInterceptor.class.getName()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (authService == <span class="literal">null</span>) &#123;</span><br><span class="line">          logger.info(<span class="string">&quot;authService is null!!!&quot;</span>);</span><br><span class="line">          <span class="type">BeanFactory</span> <span class="variable">factory</span> <span class="operator">=</span> WebApplicationContextUtils</span><br><span class="line">              .getRequiredWebApplicationContext(request.getServletContext());</span><br><span class="line">          authService = (AuthService) factory.getBean(<span class="string">&quot;authService&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    authService.auth(request.getParameter(<span class="string">&quot;token&quot;</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置类ComponentConfig"><a href="#配置类ComponentConfig" class="headerlink" title="配置类ComponentConfig"></a>配置类ComponentConfig</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ComponentConfig</span> <span class="keyword">extends</span> <span class="title class_">WebMvcConfigurationSupport</span> &#123;</span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> Environment env;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> &#123;</span><br><span class="line">    registry.addInterceptor(<span class="keyword">new</span> <span class="title class_">AuthInterceptor</span>()).addPathPatterns(<span class="string">&quot;/test/api&quot;</span>);</span><br><span class="line">    registry.addInterceptor(<span class="keyword">new</span> <span class="title class_">ModuleViewInterceptor</span>()).addPathPatterns(<span class="string">&quot;/test/api&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> CorsConfiguration <span class="title function_">buildConfig</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">CorsConfiguration</span> <span class="variable">corsConfiguration</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CorsConfiguration</span>();</span><br><span class="line">    corsConfiguration.addAllowedOrigin(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">    corsConfiguration.addAllowedHeader(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">    corsConfiguration.addAllowedMethod(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">    corsConfiguration.setAllowCredentials(<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">return</span> corsConfiguration;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="keyword">public</span> CorsFilter <span class="title function_">corsFilter</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">UrlBasedCorsConfigurationSource</span> <span class="variable">source</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UrlBasedCorsConfigurationSource</span>();</span><br><span class="line">    source.registerCorsConfiguration(<span class="string">&quot;/**&quot;</span>, buildConfig());</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">CorsFilter</span>(source);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动主类WebTestApp"><a href="#启动主类WebTestApp" class="headerlink" title="启动主类WebTestApp"></a>启动主类WebTestApp</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebTestApp</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    SpringApplication.run(WebTestApp.class, args);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试验证"><a href="#测试验证" class="headerlink" title="测试验证"></a>测试验证</h3><p>打开浏览器，输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8080/api/test</span><br><span class="line"></span><br><span class="line">http://localhost:8080/api/test?token=123456</span><br><span class="line"></span><br><span class="line">http://localhost:8080/api/test?token=123456789</span><br><span class="line"></span><br><span class="line">http://localhost:8080/api/test?output=xml</span><br><span class="line"></span><br><span class="line">http://localhost:8080/api/test?output=xml&amp;token=123456</span><br><span class="line"></span><br><span class="line">http://localhost:8080/api/test?output=xml&amp;token=123456789</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/" data-id="cllui4qyr000jq0ja4f9tc9vq" data-title="Springboot返回json和xml视图" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/" rel="tag">spring</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          docker部署java程序基本命令
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Git 清理commits历史记录</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
