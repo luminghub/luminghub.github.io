@@ -1,113 +1,233 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>goreplay构建测试环境 | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in">
 <meta property="og:type" content="article">
 <meta property="og:title" content="goreplay构建测试环境">
 <meta property="og:url" content="http://example.com/2017/04/11/goreplay/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="一条缝小眼睛的个人博客">
 <meta property="og:description" content="GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://i.imgur.com/BwjK3aa.png">
 <meta property="og:image" content="http://i.imgur.com/MFORaux.png">
 <meta property="og:image" content="http://i.imgur.com/UYayPOl.png">
 <meta property="og:image" content="http://i.imgur.com/SMZJx7w.png">
 <meta property="article:published_time" content="2017-04-10T16:00:00.000Z">
 <meta property="article:modified_time" content="2023-08-28T02:26:18.180Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="小明同学">
 <meta property="article:tag" content="goreplay">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://i.imgur.com/BwjK3aa.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+<link rel="canonical" href="http://example.com/2017/04/11/goreplay/">
 
-  
-  
-<meta name="generator" content="Hexo 6.3.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2017/04/11/goreplay/","path":"2017/04/11/goreplay/","title":"goreplay构建测试环境"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>goreplay构建测试环境 | 一条缝小眼睛的个人博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">一条缝小眼睛的个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
         
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#goreplay%E7%AE%80%E4%BB%8B-%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99-github%E5%9C%B0%E5%9D%80"><span class="nav-number">1.</span> <span class="nav-text">goreplay简介 官方网站 github地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation"><span class="nav-number">2.</span> <span class="nav-text">Installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%B8%8B%E8%BD%BDgoreplay%E6%9C%80%E6%96%B0%E5%8F%91%E5%B8%83%E7%89%88%E6%9C%AC"><span class="nav-number">2.1.</span> <span class="nav-text">1、下载goreplay最新发布版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%B0%86%E4%B8%8B%E8%BD%BD%E5%A5%BD%E7%9A%84%E6%96%87%E4%BB%B6%E8%A7%A3%E5%8E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">2、将下载好的文件解压</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-started"><span class="nav-number">3.</span> <span class="nav-text">Getting started</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">3.1.</span> <span class="nav-text">1、测试环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%B5%8B%E8%AF%95goreplay%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E6%AD%A3%E5%B8%B8%E8%BF%90%E8%A1%8C%E3%80%82"><span class="nav-number">3.2.</span> <span class="nav-text">2、测试goreplay是否可以正常运行。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%BC%8F%E8%BF%90%E8%A1%8C%EF%BC%8C%E6%9C%89%E4%BB%A5%E4%B8%8B%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F%E5%8F%AF%E4%BE%9B%E9%80%89%E6%8B%A9"><span class="nav-number">3.3.</span> <span class="nav-text">正式运行，有以下两种模式可供选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81Replaying"><span class="nav-number">3.3.1.</span> <span class="nav-text">1、Replaying</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81Saving-requests-to-file-and-replaying-them-later"><span class="nav-number">3.3.2.</span> <span class="nav-text">2、Saving requests to file and replaying them later</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E8%BF%90%E8%A1%8Cgoreplay"><span class="nav-number">3.4.</span> <span class="nav-text">1、运行goreplay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%9F%A5%E7%9C%8Bapp1%E3%80%81app2%E7%9A%84%E8%BF%90%E8%A1%8C%E6%97%A5%E5%BF%97"><span class="nav-number">3.5.</span> <span class="nav-text">2、查看app1、app2的运行日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%90%8E%E5%8F%B0%E8%87%AA%E5%8A%A8%E8%BF%90%E8%A1%8Cgoreplay"><span class="nav-number">3.6.</span> <span class="nav-text">3、后台自动运行goreplay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E4%B8%8D%E4%BD%BF%E7%94%A8root%E7%94%A8%E6%88%B7%E8%BF%90%E8%A1%8C-Running-as-non-root-user"><span class="nav-number">3.7.</span> <span class="nav-text">4、不使用root用户运行 Running as non root user</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BAgor%E7%BB%84"><span class="nav-number">3.7.1.</span> <span class="nav-text">1、创建gor组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%B0%86%E9%9C%80%E8%A6%81%E6%89%A7%E8%A1%8C%E7%9A%84%E7%94%A8%E6%88%B7%E6%B7%BB%E5%8A%A0%E5%88%B0gor%E7%BB%84"><span class="nav-number">3.7.2.</span> <span class="nav-text">2、将需要执行的用户添加到gor组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E6%8E%88%E6%9D%83"><span class="nav-number">3.7.3.</span> <span class="nav-text">3、授权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E8%BF%90%E8%A1%8C"><span class="nav-number">3.7.4.</span> <span class="nav-text">4、运行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#goreplay%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6-%E6%9B%B4%E5%A4%9A%E8%AF%A6%E6%83%85"><span class="nav-number">4.</span> <span class="nav-text">goreplay高级进阶 更多详情</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%BF%9D%E5%AD%98%E5%88%B0%E6%96%87%E4%BB%B6%E5%B9%B6%E4%BB%8E%E6%96%87%E4%BB%B6%E4%B8%AD%E8%BD%AC%E5%8F%91-Saving-and-Replaying-from-file"><span class="nav-number">4.1.</span> <span class="nav-text">1、保存到文件并从文件中转发 Saving and Replaying from file</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Chunk-size"><span class="nav-number">4.1.1.</span> <span class="nav-text">Chunk size</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Using-date-variables-in-file-names"><span class="nav-number">4.1.2.</span> <span class="nav-text">Using date variables in file names</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GZIP-compression"><span class="nav-number">4.1.3.</span> <span class="nav-text">GZIP compression</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Replaying-from-multiple-files"><span class="nav-number">4.1.4.</span> <span class="nav-text">Replaying from multiple files</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95-Performance-testing"><span class="nav-number">4.2.</span> <span class="nav-text">2、性能测试 Performance testing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Looping-files-for-replaying-indefinitely"><span class="nav-number">4.2.1.</span> <span class="nav-text">Looping files for replaying indefinitely</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E9%99%90%E6%B5%81-Rate-limiting"><span class="nav-number">4.3.</span> <span class="nav-text">3、限流 Rate limiting</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Dropping-random-requests"><span class="nav-number">4.3.1.</span> <span class="nav-text">Dropping random requests</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Consistent-limiting-based-on-Header-or-URL-param-value"><span class="nav-number">4.3.2.</span> <span class="nav-text">Consistent limiting based on Header or URL param value</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E8%AF%B7%E6%B1%82%E8%BF%87%E6%BB%A4-Request-filtering"><span class="nav-number">4.4.</span> <span class="nav-text">4、请求过滤 Request filtering</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Allow-url-regexp"><span class="nav-number">4.4.1.</span> <span class="nav-text">Allow url regexp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Disallow-url-regexp"><span class="nav-number">4.4.2.</span> <span class="nav-text">Disallow url regexp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Filter-based-on-regexp-of-header"><span class="nav-number">4.4.3.</span> <span class="nav-text">Filter based on regexp of header</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Filter-based-on-HTTP-method"><span class="nav-number">4.4.4.</span> <span class="nav-text">Filter based on HTTP method</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E8%AF%B7%E6%B1%82%E9%87%8D%E5%86%99-Request-rewriting"><span class="nav-number">4.5.</span> <span class="nav-text">5、请求重写 Request rewriting</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Set-URL-param"><span class="nav-number">4.5.1.</span> <span class="nav-text">Set URL param</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Set-Header"><span class="nav-number">4.5.2.</span> <span class="nav-text">Set Header</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Host-header"><span class="nav-number">4.5.3.</span> <span class="nav-text">Host header</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E4%B8%AD%E9%97%B4%E4%BB%B6-Middleware"><span class="nav-number">4.6.</span> <span class="nav-text">6、中间件 Middleware</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Overview"><span class="nav-number">4.6.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Communication-protocol"><span class="nav-number">4.6.2.</span> <span class="nav-text">Communication protocol</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Advanced-example"><span class="nav-number">4.6.3.</span> <span class="nav-text">Advanced example</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E3%80%81%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2-Distributed-configuration"><span class="nav-number">4.7.</span> <span class="nav-text">7、分布式部署 Distributed configuration</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%BD%95%EF%BC%9Ago%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA"><span class="nav-number">5.</span> <span class="nav-text">附录：go环境构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDlinux%E7%89%88%E6%9C%AC%E7%9A%84go"><span class="nav-number">5.1.</span> <span class="nav-text">下载linux版本的go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B"><span class="nav-number">5.2.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">5.3.</span> <span class="nav-text">配置环境变量</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小明同学"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">小明同学</p>
+  <div class="site-description" itemprop="description">这个人的眼睛很小很小，笑起来的时候就会变成一条缝</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
       </div>
     </div>
-  </div>
-</header>
 
-      <div class="outer">
-        <section id="main"><article id="post-goreplay" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2017/04/11/goreplay/" class="article-date">
-  <time class="dt-published" datetime="2017-04-10T16:00:00.000Z" itemprop="datePublished">2017-04-11</time>
-</a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Study/">Study</a>
-  </div>
+  </aside>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      goreplay构建测试环境
-    </h1>
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
   
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/04/11/goreplay/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="小明同学">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一条缝小眼睛的个人博客">
+      <meta itemprop="description" content="这个人的眼睛很小很小，笑起来的时候就会变成一条缝">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="goreplay构建测试环境 | 一条缝小眼睛的个人博客">
+      <meta itemprop="description" content="GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in code deployments, configuration changes and infrastructure changes. https://goreplay.org">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          goreplay构建测试环境
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-04-11 00:00:00" itemprop="dateCreated datePublished" datetime="2017-04-11T00:00:00+08:00">2017-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-28 10:26:18" itemprop="dateModified" datetime="2023-08-28T10:26:18+08:00">2023-08-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Study/" itemprop="url" rel="index"><span itemprop="name">Study</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environment in order to continuously test your system with real data. It can be used to increase confidence in code deployments, configuration changes and infrastructure changes. https://goreplay.org</div>
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="goreplay简介-官方网站-github地址"><a href="#goreplay简介-官方网站-github地址" class="headerlink" title="goreplay简介 官方网站 github地址"></a>goreplay简介 <a target="_blank" rel="noopener" href="https://goreplay.org/">官方网站</a> <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay">github地址</a></h2><p>GoReplay is the simplest and safest way to test your app using real traffic before you put it into production.</p>
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="goreplay简介-官方网站-github地址"><a href="#goreplay简介-官方网站-github地址" class="headerlink" title="goreplay简介 官方网站 github地址"></a>goreplay简介 <a target="_blank" rel="noopener" href="https://goreplay.org/">官方网站</a> <a target="_blank" rel="noopener" href="https://github.com/buger/goreplay">github地址</a></h2><p>GoReplay is the simplest and safest way to test your app using real traffic before you put it into production.</p>
 <p>As your application grows, the effort required to test it also grows exponentially. GoReplay offers you the simple idea of reusing your existing traffic for testing, which makes it incredibly powerful. Our state of art technique allows to analyze and record your application traffic without affecting it. This eliminates the risks that come with putting a third party component in the critical path.</p>
 <p>GoReplay increases your confidence in code deployments, configuration changes and infrastructure changes. Did we mention that no coding is required?</p>
 <p>Here is basic workflow: The listener server catches http traffic and sends it to the replay server or saves to file. The replay server forwards traffic to a given address.</p>
@@ -375,157 +495,93 @@ gor --input-tcp :27017 --ouput-http load_test.target
 </code></pre>
 <p>更多详细信息，请访问go官方网站 <a target="_blank" rel="noopener" href="https://golang.org/">https://golang.org/</a></p>
 
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/04/11/goreplay/" data-id="cllui4qyw001gq0jaaol3cchg" data-title="goreplay构建测试环境" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li></ul>
 
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/goreplay/" rel="tag"># goreplay</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/03/14/mongodb%E5%88%9B%E5%BB%BA%E7%A9%BA%E9%97%B4%E7%B4%A2%E5%BC%95/" rel="prev" title="mongodb创建空间索引">
+                  <i class="fa fa-angle-left"></i> mongodb创建空间索引
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/04/12/swagger/" rel="next" title="spring boot + swagger 快速简单集成">
+                  spring boot + swagger 快速简单集成 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">小明同学</span>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/04/12/swagger/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          spring boot + swagger 快速简单集成
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/03/14/mongodb%E5%88%9B%E5%BB%BA%E7%A9%BA%E9%97%B4%E7%B4%A2%E5%BC%95/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">mongodb创建空间索引</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/improve/">improve</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/technical-article/">technical article</a></li></ul>
-    </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECS/" rel="tag">ECS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIT/" rel="tag">GIT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Snappy/" rel="tag">Snappy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Cloud/" rel="tag">Spring Cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tomcat/" rel="tag">Tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cassandra/" rel="tag">cassandra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/commons-math3/" rel="tag">commons-math3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/" rel="tag">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goreplay/" rel="tag">goreplay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/" rel="tag">mongodb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/" rel="tag">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ossutil/" rel="tag">ossutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/" rel="tag">postgresql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protobuf/" rel="tag">protobuf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger/" rel="tag">swagger</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" rel="tag">软件架构师的12项修炼</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/ECS/" style="font-size: 10px;">ECS</a> <a href="/tags/GIT/" style="font-size: 17.5px;">GIT</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Redis/" style="font-size: 12.5px;">Redis</a> <a href="/tags/Snappy/" style="font-size: 10px;">Snappy</a> <a href="/tags/Spring-Cloud/" style="font-size: 10px;">Spring Cloud</a> <a href="/tags/Tomcat/" style="font-size: 12.5px;">Tomcat</a> <a href="/tags/cassandra/" style="font-size: 12.5px;">cassandra</a> <a href="/tags/commons-math3/" style="font-size: 10px;">commons-math3</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/gRPC/" style="font-size: 10px;">gRPC</a> <a href="/tags/goreplay/" style="font-size: 10px;">goreplay</a> <a href="/tags/gradle/" style="font-size: 10px;">gradle</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/mongodb/" style="font-size: 15px;">mongodb</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/ossutil/" style="font-size: 10px;">ossutil</a> <a href="/tags/postgresql/" style="font-size: 12.5px;">postgresql</a> <a href="/tags/protobuf/" style="font-size: 10px;">protobuf</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%B8%88%E7%9A%8412%E9%A1%B9%E4%BF%AE%E7%82%BC/" style="font-size: 15px;">软件架构师的12项修炼</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/08/28/docker%E9%83%A8%E7%BD%B2java%E7%A8%8B%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">docker部署java程序基本命令</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/21/Springboot%E8%BF%94%E5%9B%9Ejson%E5%92%8Cxml%E8%A7%86%E5%9B%BE/">Springboot返回json和xml视图</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/27/git%E6%B8%85%E7%90%86commits%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/">Git 清理commits历史记录</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/17/access%E6%97%A5%E5%BF%97%E8%87%AA%E5%8A%A8%E4%B8%8A%E4%BC%A0OSS%E5%BD%92%E6%A1%A3/">access日志通过OSSutil自动上传OSS归档</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/11/postgis%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">postgis常用函数</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2023 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
 
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
+  </footer>
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
 </body>
 </html>
