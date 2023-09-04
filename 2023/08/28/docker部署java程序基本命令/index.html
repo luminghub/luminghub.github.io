@@ -112,7 +112,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%9C%A8%E6%9C%AC%E5%9C%B0%E5%AE%89%E8%A3%85docker%EF%BC%8C%E8%BF%99%E9%87%8C%E5%B7%B2windows-11-%E7%B3%BB%E7%BB%9F%E4%B8%BA%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">1、在本地安装docker，这里已windows 11 系统为例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%BD%BF%E7%94%A8maven%E6%9E%84%E5%BB%BAjava%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%9C%A8%E9%A1%B9%E7%9B%AE%E6%A0%B9%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%BC%96%E5%86%99%E5%AF%B9%E5%BA%94%E7%9A%84%E6%96%87%E4%BB%B6Dockerfile%E5%92%8Cdocker-build-sh"><span class="nav-number">2.</span> <span class="nav-text">2、使用maven构建java项目，在项目根目录下编写对应的文件Dockerfile和docker_build.sh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E4%BF%AE%E6%94%B9pom%E6%96%87%E4%BB%B6%E7%9A%84%E6%89%93%E5%8C%85%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">3、修改pom文件的打包方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93"><span class="nav-number">4.</span> <span class="nav-text">4、编译并上传到镜像仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E4%BD%BF%E7%94%A8docker%E5%88%9B%E5%BB%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E8%BF%99%E9%87%8Cdocker%E7%9A%84%E5%AE%B9%E5%99%A8%E9%85%8D%E7%BD%AE%E6%9A%82%E6%97%B6%E4%B8%8D%E5%B1%95%E5%BC%80%E6%8F%8F%E8%BF%B0%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">5、使用docker创建网络（这里docker的容器配置暂时不展开描述）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E7%BC%96%E5%86%99docker%E5%92%8C%E9%83%A8%E7%BD%B2%E7%9A%84java%E7%A8%8B%E5%BA%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%9Adocker-compose-yml"><span class="nav-number">6.</span> <span class="nav-text">6、编写docker和部署的java程序配置文件：docker-compose.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%EF%BC%8C%E5%9C%A8%E9%83%A8%E7%BD%B2%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%BC%96%E5%86%99docker%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%9Acommon-env"><span class="nav-number">7.</span> <span class="nav-text">7、服务器端，在部署目录下编写docker的配置文件：common.env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8%E3%80%81%E6%8F%90%E4%BA%A4%E9%83%A8%E7%BD%B2"><span class="nav-number">8.</span> <span class="nav-text">8、提交部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%E3%80%81%E8%BF%90%E8%A1%8C%E5%AE%9E%E4%BE%8B%EF%BC%9A"><span class="nav-number">9.</span> <span class="nav-text">9、运行实例：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10%E3%80%81%E6%9F%A5%E7%9C%8B%E5%AE%9E%E4%BE%8B%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81%EF%BC%9A"><span class="nav-number">10.</span> <span class="nav-text">10、查看实例运行状态：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11%E3%80%81%E6%9F%A5%E7%9C%8B%E5%AE%9E%E4%BE%8B%E6%97%A5%E5%BF%97"><span class="nav-number">11.</span> <span class="nav-text">11、查看实例日志</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%9C%A8%E6%9C%AC%E5%9C%B0%E5%AE%89%E8%A3%85docker%EF%BC%8C%E8%BF%99%E9%87%8C%E5%B7%B2windows-11-%E7%B3%BB%E7%BB%9F%E4%B8%BA%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">1、在本地安装docker，这里已windows 11 系统为例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%BD%BF%E7%94%A8maven%E6%9E%84%E5%BB%BAjava%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%9C%A8%E9%A1%B9%E7%9B%AE%E6%A0%B9%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%BC%96%E5%86%99%E5%AF%B9%E5%BA%94%E7%9A%84%E6%96%87%E4%BB%B6Dockerfile%E5%92%8Cdocker-build-sh"><span class="nav-number">2.</span> <span class="nav-text">2、使用maven构建java项目，在项目根目录下编写对应的文件Dockerfile和docker_build.sh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E4%BF%AE%E6%94%B9pom%E6%96%87%E4%BB%B6%E7%9A%84%E6%89%93%E5%8C%85%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">3、修改pom文件的打包方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93"><span class="nav-number">4.</span> <span class="nav-text">4、编译并上传到镜像仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E4%BD%BF%E7%94%A8docker%E5%88%9B%E5%BB%BA%E7%BD%91%E7%BB%9C%EF%BC%88%E8%BF%99%E9%87%8Cdocker%E7%9A%84%E5%AE%B9%E5%99%A8%E9%85%8D%E7%BD%AE%E6%9A%82%E6%97%B6%E4%B8%8D%E5%B1%95%E5%BC%80%E6%8F%8F%E8%BF%B0%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">5、使用docker创建网络（这里docker的容器配置暂时不展开描述）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E7%BC%96%E5%86%99docker%E5%92%8C%E9%83%A8%E7%BD%B2%E7%9A%84java%E7%A8%8B%E5%BA%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%9Adocker-compose-yml"><span class="nav-number">6.</span> <span class="nav-text">6、编写docker和部署的java程序配置文件：docker-compose.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%EF%BC%8C%E5%9C%A8%E9%83%A8%E7%BD%B2%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%BC%96%E5%86%99docker%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%9Acommon-env"><span class="nav-number">7.</span> <span class="nav-text">7、服务器端，在部署目录下编写docker的配置文件：common.env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8%E3%80%81%E6%8F%90%E4%BA%A4%E9%83%A8%E7%BD%B2"><span class="nav-number">8.</span> <span class="nav-text">8、提交部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%E3%80%81%E8%BF%90%E8%A1%8C%E5%AE%9E%E4%BE%8B%EF%BC%9A"><span class="nav-number">9.</span> <span class="nav-text">9、运行实例：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10%E3%80%81%E6%9F%A5%E7%9C%8B%E5%AE%9E%E4%BE%8B%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81%E7%AD%89%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-number">10.</span> <span class="nav-text">10、查看实例运行状态等信息：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11%E3%80%81%E6%9F%A5%E7%9C%8B%E5%AE%9E%E4%BE%8B%E6%97%A5%E5%BF%97"><span class="nav-number">11.</span> <span class="nav-text">11、查看实例日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12%E3%80%81%E8%BF%9B%E5%85%A5%E8%BF%90%E8%A1%8C%E9%83%A8%E7%BD%B2%E7%9A%84%E7%9B%AE%E5%BD%95"><span class="nav-number">12.</span> <span class="nav-text">12、进入运行部署的目录</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,7 +137,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -327,7 +327,10 @@ echo &quot;image push success admin:$&#123;version&#125; ...&quot;
 <ol>
 <li>完善启动类路径。 <code>&lt;mainClass&gt;$&#123;mainClassPath&#125;&lt;/mainClass&gt;</code></li>
 </ol>
-<h3 id="4、编译并上传到镜像仓库"><a href="#4、编译并上传到镜像仓库" class="headerlink" title="4、编译并上传到镜像仓库"></a>4、编译并上传到镜像仓库</h3><pre><code>使用默认版本号覆盖上传（当前版本）
+<h3 id="4、编译并上传到镜像仓库"><a href="#4、编译并上传到镜像仓库" class="headerlink" title="4、编译并上传到镜像仓库"></a>4、编译并上传到镜像仓库</h3><pre><code>使用maven命令执行编译
+mvn clean install -Dmaven.test.skip=true
+
+使用默认版本号覆盖上传（当前版本）
 bash docker_build.sh
 
 指定版本号上传
@@ -388,21 +391,21 @@ spring.application.name=$&#123;AppliCationName&#125;
 <li>通常用来放通用的配置项；</li>
 </ol>
 <h3 id="8、提交部署"><a href="#8、提交部署" class="headerlink" title="8、提交部署"></a>8、提交部署</h3><p>不变更版本号的部署：刷新docker镜像：</p>
-<pre><code>docker pull $&#123;镜像地址&#125;:latest  
+<pre><code>docker pull $&#123;镜像地址&#125;:$&#123;版本号&#125;  
 </code></pre>
 <p>变更版本号的部署：修改<code>docker-compose.yml</code>中的版本号：</p>
 <pre><code>image: $&#123;仓库host&#125;/$&#123;应用路径&#125;:$&#123;版本&#125;
 </code></pre>
 <h3 id="9、运行实例："><a href="#9、运行实例：" class="headerlink" title="9、运行实例："></a>9、运行实例：</h3><pre><code>docker-compose up -d 
 </code></pre>
-<h3 id="10、查看实例运行状态："><a href="#10、查看实例运行状态：" class="headerlink" title="10、查看实例运行状态："></a>10、查看实例运行状态：</h3><pre><code>docker ps
+<h3 id="10、查看实例运行状态等信息："><a href="#10、查看实例运行状态等信息：" class="headerlink" title="10、查看实例运行状态等信息："></a>10、查看实例运行状态等信息：</h3><pre><code>docker ps
 </code></pre>
 <h3 id="11、查看实例日志"><a href="#11、查看实例日志" class="headerlink" title="11、查看实例日志"></a>11、查看实例日志</h3><pre><code>docker logs -f $&#123;CONTAINER ID&#125;
 </code></pre>
 <p>说明：</p>
-<ol>
-<li>CONTAINER ID可以通过实例运行状态命令获取。</li>
-</ol>
+<p>1.<code>$&#123;CONTAINER ID&#125;</code>可以通过<code>docker ps</code>命令获取</p>
+<h3 id="12、进入运行部署的目录"><a href="#12、进入运行部署的目录" class="headerlink" title="12、进入运行部署的目录"></a>12、进入运行部署的目录</h3><pre><code>docker exec -it $&#123;CONTAINER ID&#125; /bin/bash
+</code></pre>
 
     </div>
 
@@ -424,6 +427,9 @@ spring.application.name=$&#123;AppliCationName&#125;
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/09/04/maven%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="next" title="maven常用基本命令">
+                  maven常用基本命令 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
