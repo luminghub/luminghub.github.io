@@ -19,35 +19,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"luminghub.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="配置tomcat的https访问。">
+    <meta name="description" content="SpringBoot集成Redis哨兵模式。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Tomcat配置Https">
-<meta property="og:url" content="https://luminghub.github.io/2017/04/27/Tomcat%E9%85%8D%E7%BD%AEhttps/index.html">
+<meta property="og:title" content="SpringBoot集成Redis哨兵">
+<meta property="og:url" content="https://luminghub.github.io/2023/09/13/SpringBoot%E9%9B%86%E6%88%90Redis%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="一条缝小眼睛的个人博客">
-<meta property="og:description" content="配置tomcat的https访问。">
+<meta property="og:description" content="SpringBoot集成Redis哨兵模式。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://i.imgur.com/hXp5XSB.png">
-<meta property="og:image" content="http://i.imgur.com/SeZDz9v.png">
-<meta property="og:image" content="http://i.imgur.com/G9DMZ0A.png">
-<meta property="og:image" content="http://i.imgur.com/rdqkeq9.png">
-<meta property="og:image" content="http://i.imgur.com/gn2udMP.png">
-<meta property="og:image" content="http://i.imgur.com/fc8L9l9.png">
-<meta property="article:published_time" content="2017-04-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2017-04-26T16:00:00.000Z">
+<meta property="article:published_time" content="2023-09-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-12T16:00:00.000Z">
 <meta property="article:author" content="小明同学">
-<meta property="article:tag" content="Tomcat">
+<meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://i.imgur.com/hXp5XSB.png">
 
 
-<link rel="canonical" href="https://luminghub.github.io/2017/04/27/Tomcat%E9%85%8D%E7%BD%AEhttps/">
+<link rel="canonical" href="https://luminghub.github.io/2023/09/13/SpringBoot%E9%9B%86%E6%88%90Redis%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://luminghub.github.io/2017/04/27/Tomcat%E9%85%8D%E7%BD%AEhttps/","path":"2017/04/27/Tomcat配置https/","title":"Tomcat配置Https"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://luminghub.github.io/2023/09/13/SpringBoot%E9%9B%86%E6%88%90Redis%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/","path":"2023/09/13/SpringBoot集成Redis哨兵模式/","title":"SpringBoot集成Redis哨兵"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Tomcat配置Https | 一条缝小眼睛的个人博客</title>
+<title>SpringBoot集成Redis哨兵 | 一条缝小眼睛的个人博客</title>
   
 
 
@@ -119,7 +112,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E7%94%9F%E6%88%90%E8%AF%81%E4%B9%A6"><span class="nav-number">1.</span> <span class="nav-text">1、生成证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%AF%BC%E5%87%BA%E8%AF%81%E4%B9%A6"><span class="nav-number">2.</span> <span class="nav-text">2、导出证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%B0%86%E8%AF%81%E4%B9%A6%E5%AF%BC%E5%85%A5%E5%88%B0jre"><span class="nav-number">3.</span> <span class="nav-text">3、将证书导入到jre</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E9%85%8D%E7%BD%AEtomcat"><span class="nav-number">4.</span> <span class="nav-text">4、配置tomcat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E9%AA%8C%E8%AF%81"><span class="nav-number">5.</span> <span class="nav-text">5、验证</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5Redis%E7%9A%84maven%E4%BE%9D%E8%B5%96"><span class="nav-number">1.</span> <span class="nav-text">引入Redis的maven依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="nav-number">2.</span> <span class="nav-text">配置信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8RedisTemplate%E6%89%A7%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">使用RedisTemplate执行操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RedisTemplate%E6%96%B9%E6%B3%95%E8%AF%B4%E6%98%8E"><span class="nav-number">4.</span> <span class="nav-text">RedisTemplate方法说明</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -171,7 +164,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://luminghub.github.io/2017/04/27/Tomcat%E9%85%8D%E7%BD%AEhttps/">
+    <link itemprop="mainEntityOfPage" href="https://luminghub.github.io/2023/09/13/SpringBoot%E9%9B%86%E6%88%90Redis%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -184,12 +177,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Tomcat配置Https | 一条缝小眼睛的个人博客">
-      <meta itemprop="description" content="配置tomcat的https访问。">
+      <meta itemprop="name" content="SpringBoot集成Redis哨兵 | 一条缝小眼睛的个人博客">
+      <meta itemprop="description" content="SpringBoot集成Redis哨兵模式。">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Tomcat配置Https
+          SpringBoot集成Redis哨兵
         </h1>
 
         <div class="post-meta-container">
@@ -200,7 +193,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2017-04-27 00:00:00" itemprop="dateCreated datePublished" datetime="2017-04-27T00:00:00+08:00">2017-04-27</time>
+      <time title="创建时间：2023-09-13 00:00:00" itemprop="dateCreated datePublished" datetime="2023-09-13T00:00:00+08:00">2023-09-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -215,60 +208,54 @@
   
 </div>
 
-            <div class="post-description">配置tomcat的https访问。</div>
+            <div class="post-description">SpringBoot集成Redis哨兵模式。</div>
         </div>
       </header>
 
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="1、生成证书"><a href="#1、生成证书" class="headerlink" title="1、生成证书"></a>1、生成证书</h2><p>用java jdk自带的keytool生成keystore密钥文件</p>
-<p><a target="_blank" rel="noopener" href="http://www.micmiu.com/lang/java/keytool-start-guide/">更多信息</a></p>
-<pre><code>keytool -genkey -alias casserver -keyalg RSA -keysize 1024 -keypass lumingclient -validity 365 -keystore d:\sso\casserver.keystore -storepass lumingclient
+    <div class="post-body" itemprop="articleBody"><h3 id="引入Redis的maven依赖"><a href="#引入Redis的maven依赖" class="headerlink" title="引入Redis的maven依赖"></a>引入Redis的maven依赖</h3><pre><code>&lt;!-- Redis --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;!-- 连接池 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+    &lt;artifactId&gt;commons-pool2&lt;/artifactId&gt;
+&lt;/dependency&gt;
 </code></pre>
-<p><img src="http://i.imgur.com/hXp5XSB.png"></p>
-<blockquote>
-<p>截图中需要输入的姓名和上面hosts文件中配置的一致（也可以是主机名） ;</p>
-</blockquote>
-<blockquote>
-<p>keypass 和 storepass 两个密码要一致，否则下面tomcat 配置https 访问失败。</p>
-</blockquote>
-<h2 id="2、导出证书"><a href="#2、导出证书" class="headerlink" title="2、导出证书"></a>2、导出证书</h2><p>从keystore文件中导出crt证书。</p>
-<pre><code>keytool -export -alias casserver -keystore d:\sso\casserver.keystore -file d:\sso\casserver.crt -storepass lumingclient
+<h3 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h3><pre><code>spring.redis.sentinel.master=mymaster
+spring.redis.sentinel.nodes=ip1:port1,ip2:port2,ip3:port3
+spring.redis.password=$&#123;password&#125;
+spring.redis.lettuce.pool.max-idle=10
+spring.redis.lettuce.pool.max-active=20
+spring.redis.lettuce.pool.min-idle=5
+spring.redis.lettuce.pool.max-wait=10000ms
 </code></pre>
-<p><img src="http://i.imgur.com/SeZDz9v.png"></p>
-<h2 id="3、将证书导入到jre"><a href="#3、将证书导入到jre" class="headerlink" title="3、将证书导入到jre"></a>3、将证书导入到jre</h2><p>将生成的crt证书导入到部署服务器的jre中。</p>
-<pre><code>keytool -import -keystore %JAVA_HOME%\jre\lib\security\cacerts -file d:\sso\casserver.crt -alias casserver
+<p>配置项说明</p>
+<ol>
+<li>max-active：连接池中最大活跃连接数（默认值为8）。当连接数达到最大活跃连接数时，新的请求将会等待，直到有可用的连接为止。</li>
+<li>max-idle：连接池中最大空闲连接数（默认值为8）。当空闲连接数超过最大空闲连接数时，多余的空闲连接将被释放。</li>
+<li>min-idle：连接池中最小空闲连接数（默认值为0）。连接池中保持的最小空闲连接数，当请求连接时，如果空闲连接数不足，则会创建新的连接。</li>
+<li>max-wait：连接池中获取连接的最大等待时间（默认-1，表示无限等待）。当连接池中的连接都被占用且达到最大活跃连接数时，新的请求会等待一段时间，如果超过最大等待时间，则会抛出异常。</li>
+<li>test-on-create：在创建新的连接时，是否进行连接的测试验证（默认值为false）。如果设置为true，则在创建连接的时候会执行一次测试命令，确保连接可用。</li>
+<li>test-on-borrow：在从连接池中借用连接时，是否进行连接的测试验证（默认值为false）。如果设置为true，则在从连接池中获取连接的时候会执行一次测试命令，确保连接可用。</li>
+<li>test-on-return：在归还连接到连接池时，是否进行连接的测试验证（默认值为false）。如果设置为true，则在归还连接到连接池的时候会执行一次测试命令，确保连接可用。</li>
+<li>test-while-idle：在连接空闲一段时间后，是否进行连接的测试验证（默认值为true）。如果设置为true，则连接空闲一段时间后会执行一次测试命令，确保连接可用。</li>
+</ol>
+<h3 id="使用RedisTemplate执行操作"><a href="#使用RedisTemplate执行操作" class="headerlink" title="使用RedisTemplate执行操作"></a>使用RedisTemplate执行操作</h3><pre><code>@Autowired
+private RedisTemplate&lt;String, Object&gt; redisTemplate;
 </code></pre>
-<p>或者在JAVA_HOME路径下：</p>
-<pre><code>keytool -import -keystore ../jre/lib/security/cacerts -file d:\sso\casserver.crt -alias casserver
-</code></pre>
-<blockquote>
-<p>该命令中输入的密码和上面输入的不是同一个密码；如果是多台机器演示，需要在每一台客户端导入该证书。<br>如果JAVA_HOME路径中含有空格，可以将含空格的文件名用双引号包裹起来。<br>如：Program File 用 “Program File”</p>
-</blockquote>
-<p><img src="http://i.imgur.com/G9DMZ0A.png"></p>
-<p>默认password：</p>
-<pre><code>changeit
-</code></pre>
-<h2 id="4、配置tomcat"><a href="#4、配置tomcat" class="headerlink" title="4、配置tomcat"></a>4、配置tomcat</h2><p>在tomcat的conf&#x2F;server.xml文件中，找到</p>
-<pre><code> &lt;!--
-    &lt;Connector port=&quot;8443&quot; protocol=&quot;org.apache.coyote.http11.Http11Protocol&quot;
-               maxThreads=&quot;150&quot; SSLEnabled=&quot;true&quot; scheme=&quot;https&quot; secure=&quot;true&quot;
-               clientAuth=&quot;false&quot; sslProtocol=&quot;TLS&quot; /&gt;
- --&gt;
-</code></pre>
-<p>将其修改成</p>
-<pre><code>&lt;Connector port=&quot;8443&quot; protocol=&quot;org.apache.coyote.http11.Http11Protocol&quot;
-               maxThreads=&quot;150&quot; SSLEnabled=&quot;true&quot; scheme=&quot;https&quot; secure=&quot;true&quot;
-               clientAuth=&quot;false&quot; sslProtocol=&quot;TLS&quot; 
-    keystoreFile=&quot;/home/ubuntu/keystore/weatherserver.keystore&quot; keystorePass=&quot;mlogcn@2016&quot; URIEncoding=&quot;UTF-8&quot;
-/&gt;
-</code></pre>
-<p><img src="http://i.imgur.com/rdqkeq9.png"></p>
-<h2 id="5、验证"><a href="#5、验证" class="headerlink" title="5、验证"></a>5、验证</h2><p>启动tomcat，打开浏览器输入配置的https地址<code>https://www.cas.server.mlog.com:8443</code></p>
-<p><img src="http://i.imgur.com/gn2udMP.png"></p>
-<p><img src="http://i.imgur.com/fc8L9l9.png"></p>
-<p>出现上述画面，表示https配置成功。</p>
+<h3 id="RedisTemplate方法说明"><a href="#RedisTemplate方法说明" class="headerlink" title="RedisTemplate方法说明"></a>RedisTemplate方法说明</h3><ol>
+<li>opsForValue：返回一个用于操作String类型的ValueOperations对象，可以对Redis中的字符串键值对进行操作</li>
+<li>opsForHash：返回一个用于操作Hash类型的HashOperations对象，可以对Redis中的哈希数据结构进行操作</li>
+<li>opsForList：返回一个用于操作List类型的ListOperations对象，可以对Redis中的列表数据结构进行操作</li>
+<li>opsForSet：返回一个用于操作Sorted Set类型的ZSetOperations对象，可以对Redis中的有序集合数据结构进行操作</li>
+<li>opsForZSet：返回一个用于操作Sorted Set类型的ZSetOperations对象，可以对Redis中的有序集合数据结构进行操作</li>
+<li>execute：用于执行自定义的Redis操作，可以通过实现RedisCallback接口来自定义要执行的操作</li>
+</ol>
 
     </div>
 
@@ -278,21 +265,18 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Tomcat/" rel="tag"># Tomcat</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2017/04/17/Spring%E7%9B%B8%E5%85%B3/" rel="prev" title="springBoot常用配置">
-                  <i class="fa fa-angle-left"></i> springBoot常用配置
+                <a href="/2023/09/11/Spring%20Boot%E9%9B%86%E6%88%90RocketMQ/" rel="prev" title="Spring Boot集成RocketMQ">
+                  <i class="fa fa-angle-left"></i> Spring Boot集成RocketMQ
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2017/04/27/Nginx%E9%85%8D%E7%BD%AEhttps/" rel="next" title="Nginx配置Https">
-                  Nginx配置Https <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
